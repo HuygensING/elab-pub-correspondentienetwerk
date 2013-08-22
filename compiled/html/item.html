@@ -1,0 +1,63 @@
+
+<div class="header">
+  <div class="row span12">
+    <div class="cell span5 back"><a href="/">Resultaatlijst</a></div>
+    <div class="cell span5 other"><a href="/back">Vorige brief</a><a href="/forward">Volgende brief</a><a href="/print">Print...</a></div>
+    <div class="cell span2 huygens-logo"><img src="/images/HuygensING.png"/></div>
+  </div>
+</div>
+<div class="item">
+  <div class="row span12 metadata">
+    <div class="cell span1">
+      <h3>Metadata</h3>
+    </div>
+    <div class="cell span8">
+      <ul>
+        <li>
+          <h5>Afzender(s)</h5>
+          <div class="value">Zondervan, Henri</div>
+        </li>
+        <li>
+          <h5>Ontvanger(s)</h5>
+          <div class="value">Verwey, Albert/Tweemaandelijksch Tijdschrift</div>
+        </li>
+        <li>
+          <h5>Verstuurd uit</h5>
+          <div class="value">Bergen op Zoom (nl)</div>
+        </li>
+        <li>
+          <h5>Datum</h5>
+          <div class="value">1895-12-10</div>
+        </li>
+      </ul>
+    </div>
+    <div class="cell span3 more">
+      <div class="padder no-border">
+        <button class="green">Meer metadata</button>
+      </div>
+    </div>
+  </div>
+  <div class="row span12 contents">
+    <div class="cell span1">
+      <h3>Blad 1</h3><img src="http://placehold.it/40x55"/>
+    </div>
+    <div class="cell span8">
+      <ul class="versions"><% _.each(item.paralleltexts, function (value, name) { %>
+        <li>
+          <button><%= name %></button>
+        </li><% }); %>
+      </ul>
+      <div class="text"><%= item.paralleltexts ? item.paralleltexts.Translation.text : '' %></div>
+    </div>
+    <div class="cell span3 annotations">
+      <div class="padder">
+        <button class="green">Parallel text view</button>
+        <ol>
+          <li>Bergen.op.Zoom Het is mij niet geheel duidelijk of hier streepjes of puntjes tussen de woorden zijn gebruikt</li>
+          <li>Wel[xxx] Weled. (NR)</li>
+          <li>door Geperforeerd, niet volledig te lezen.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

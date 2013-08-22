@@ -1,0 +1,19 @@
+{
+  "name": "managers",
+  "version": "0.0.1",
+  "author": {
+    "name": "Gijsjan Brouwer",
+    "email": "",
+    "url": "https://github.com/Gijsjan"
+  },
+  "scripts": {
+    "test": "node ./.test/bin/server.js"
+  },
+  "devDependencies": {
+    "coffee-script": "*",
+    "grunt": "*",
+    "grunt-shell": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-coffee": "*"
+  }
+}

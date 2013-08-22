@@ -1,0 +1,10 @@
+.row.span12
+	.span4.faceted-search
+	.span8.results
+		h2 Results
+		ul
+			| <% console.log("H", w) %>
+			| <% _.each(w.entryIds, function (e) { %>
+			li
+				| <a href="/item/<%- String(e).replace('.json', '') %>"><%- e %></a>
+			| <% }) %>

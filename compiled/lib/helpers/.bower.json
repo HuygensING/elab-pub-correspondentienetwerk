@@ -1,0 +1,12 @@
+{
+  "name": "helpers",
+  "homepage": "https://github.com/Gijsjan/helpers",
+  "_release": "6c428c7a76",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6c428c7a76bb0f94ced7938a277a6a1ba26dd278"
+  },
+  "_source": "git@github.com:Gijsjan/helpers.git",
+  "_target": "*"
+}

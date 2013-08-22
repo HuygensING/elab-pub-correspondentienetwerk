@@ -1,0 +1,27 @@
+{
+  "name": "faceted-search",
+  "dependencies": {
+    "almond": "*",
+    "requirejs": "*",
+    "requirejs-text": "*",
+    "requirejs-domready": "*",
+    "jquery": "*",
+    "underscore-amd": "*",
+    "backbone-amd": "*",
+    "helpers": "https://github.com/Gijsjan/helpers.git",
+    "managers": "https://github.com/Gijsjan/managers.git"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "underscore": "~1.4.4"
+  },
+  "_release": "5eeebfb1ce",
+  "_resolution": {
+    "type": "branch",
+    "branch": "elaborate",
+    "commit": "5eeebfb1cea5713279b2ba2f50d7c529297a265d"
+  },
+  "_source": "ssh://jonaa@hi7dev.huygens.knaw.nl/data/git/git/faceted-search.git",
+  "_target": "elaborate"
+}
