@@ -3,8 +3,12 @@
 		.cell.span5.back
 			a(href="/") Resultaatlijst
 		.cell.span5.other
-			a(href="/back") Vorige brief
-			a(href="/forward") Volgende brief
+			a(href!="<%= item.prevURL %>", class="prev")
+				span &#9666;
+				| &nbsp;Vorige brief
+			a(href!="<%= item.nextURL %>", class="next")
+				| Volgende brief&nbsp;
+				span &#9656;
 			a(href="/print") Print...
 		.cell.span2.huygens-logo
 			img(src="/images/HuygensING.png")
@@ -13,33 +17,22 @@
 		.cell.span1
 			h3 Metadata
 		.cell.span8
-			ul
-				li
-					h5 Afzender(s)
-					.value Zondervan, Henri
-				li
-					h5 Ontvanger(s)
-					.value Verwey, Albert/Tweemaandelijksch Tijdschrift
-				li
-					h5 Verstuurd uit
-					.value Bergen op Zoom (nl)
-				li
-					h5 Datum
-					.value 1895-12-10
 		.cell.span3.more
 			.padder.no-border
 				button.green Meer metadata
 	.row.span12.contents
 		.cell.span1
 			h3 Blad 1
-			img(src="http://placehold.it/40x55")
+			| <% if (item.facsimiles && item.facsimiles.length) { %>
+			| <img src="<%= item.facsimiles[0].thumbnail %>">
+			| <% } %>
 		.cell.span8
 			ul.versions
 				| <% _.each(item.paralleltexts, function (value, name) { %>
-				li: button <%= name %>
+				li: button(data-toggle!="<%= name %>") <%= name %>
 				| <% }); %>
 			.text
-					<%= item.paralleltexts ? item.paralleltexts.Translation.text : '' %>
+				<%= item.paralleltexts ? (item.paralleltexts.Translation || {}).text : '' %>
 		.cell.span3.annotations
 			.padder
 				button.green Parallel text view

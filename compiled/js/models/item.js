@@ -17,6 +17,26 @@
         return "/data/" + this.id + ".json";
       };
 
+      Item.prototype.text = function(key) {
+        var texts;
+        texts = this.get('paralleltexts');
+        if (texts && key in texts) {
+          return texts[key].text;
+        } else {
+          return void 0;
+        }
+      };
+
+      Item.prototype.annotations = function(key) {
+        var texts;
+        texts = this.get('paralleltexts');
+        if (texts && key in texts) {
+          return texts[key].annotations;
+        } else {
+          return void 0;
+        }
+      };
+
       return Item;
 
     })(BaseModel);

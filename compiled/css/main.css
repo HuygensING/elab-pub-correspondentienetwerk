@@ -260,6 +260,8 @@ h1{font-family:Samba;font-weight:normal;color:#b325a0}
 footer{border-top:1px solid #8f8f8f;padding-top:20px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
 .header{border-bottom:2px solid #8f8f8f;margin-bottom:25px;}
 .header .other a{margin:0 20px}
+.header .other .next.hide,.header .other .prev.hide{visibility:hidden}
+.header .other .next span,.header .other .prev span{color:#8f8f8f}
 .header .huygens-logo{text-align:right;}
 .header .huygens-logo img{display:inline-block;margin-bottom:10px}
 .item{font-family:sans-serif;font-size:11pt;}
@@ -274,8 +276,8 @@ footer{border-top:1px solid #8f8f8f;padding-top:20px;color:#e6e6e6;font-family:s
 .item .metadata ul li h5{margin:.8em 0 0 0}
 .item .metadata .cell.more .padder{position:relative;height:100%;}
 .item .metadata .cell.more .padder button{bottom:15px;left:0}
-.item .contents ul{list-style:none;margin:0;padding:0;padding-top:15px;text-align:right;}
-.item .contents ul li{display:inline-block}
+.item .contents ul.versions{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
+.item .contents ul.versions li{display:inline-block}
 .item .annotations{color:#8f8f8f;font-size:9pt}
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}

@@ -3,7 +3,10 @@
     var config;
     return config = {
       appRootElement: '#app',
-      baseURL: ''
+      baseURL: '',
+      itemURL: function(id) {
+        return "/item/" + (String(id).replace('.json', ''));
+      }
     };
   });
 

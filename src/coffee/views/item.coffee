@@ -1,12 +1,33 @@
 define (require) ->
 
+	configData = require 'models/configdata'
+	config = require 'config'
 	BaseView = require 'views/base'
 
 	Item = require 'models/item'
 	Templates =
 		Home: require 'text!html/item.html'
+		Metadata: require 'text!html/metadata.html'
+		Annotations: require 'text!html/annotations.html'
 
 	class Home extends BaseView
+		events:
+			'click .versions li button': 'changeTextVersion'
+			'click .more button': 'toggleMoreMetadata'
+
+		changeTextVersion: (e) ->
+			@currentTextVersion = $(e.currentTarget).data 'toggle'
+			@renderContent()
+
+		toggleMoreMetadata: (e) ->
+			more = not $(e.currentTarget).hasClass 'more'
+			$(e.currentTarget).toggleClass 'more'
+
+			if more
+				@numMetadataItems = @model.get('metadata')?.length
+			else
+				@numMetadataItems = 4
+			@renderMetadata()
 
 		initialize: ->
 			super
@@ -15,16 +36,52 @@ define (require) ->
 				@model = new Item id: @options.id
 				@model.fetch success: => @render()
 
+			@currentTextVersion = 'Translation'
+			@numMetadataItems = 4
+
 			@render()
+
+		renderAnnotations: ->
+			annotations = @model.annotations @currentTextVersion
+			tmpl = _.template Templates.Annotations
+			@$('.contents .annotations .padder').html tmpl annotations: annotations
+			@
+
+		renderMetadata: ->
+			tmpl = _.template Templates.Metadata
+			metadata = @model.get('metadata') || []
+			@$('.metadata .span8').html tmpl metadata: metadata[0..@numMetadataItems-1]
+			@
+
+		renderContent: ->
+			text = @model.text @currentTextVersion
+			@$('.contents .text').html text
+			@renderAnnotations()
+
+			@
+
+
+		renderNavigation: ->
+			prev = configData.findPrev @options.id
+			if prev
+				@$('.prev').attr href: config.itemURL prev
+			next = configData.findNext @options.id
+			if next
+				@$('.next').attr href: config.itemURL next
+
+			@$('.prev').toggleClass 'hide', not prev
+			@$('.next').toggleClass 'hide', not next
 
 		render: ->
 			rtpl = _.template Templates.Home
-			
-			if @model.has 'name'
-				console.log @model.attributes
-				@$el.html rtpl item: @model.attributes
-			else
-				@$el.html rtpl item: {}
+			@$el.html rtpl item: {}
 
+			item = @model.attributes
+			if 'name' of item
+				@$el.html rtpl item: item
+
+			@renderNavigation()
+			@renderMetadata()
+			@renderAnnotations()
 
 			@
