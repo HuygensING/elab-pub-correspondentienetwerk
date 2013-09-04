@@ -27,7 +27,10 @@
       };
 
       Home.prototype.changeTextVersion = function(e) {
-        this.currentTextVersion = $(e.currentTarget).data('toggle');
+        var target;
+        target = $(e.currentTarget);
+        target.addClass('active').siblings().removeClass('active');
+        this.currentTextVersion = target.data('toggle');
         return this.renderContent();
       };
 

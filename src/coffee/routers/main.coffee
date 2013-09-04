@@ -8,6 +8,7 @@ define (require) ->
 		Home: require 'views/home'
 		Search: require 'views/search'
 		Item: require 'views/item'
+		ParallelView: require 'views/parallel-view'
 
 	class MainRouter extends Backbone.Router
 
@@ -18,10 +19,14 @@ define (require) ->
 
 		'routes':
 			'': 'home'
+			'parallel/:id': 'parallelView'
 			'item/:id': 'item'
 
 		home: ->
 			viewManager.show Views.Search
+
+		parallelView: (id) ->
+			viewManager.show Views.ParallelView, id: id
 
 		item: (id) ->
 			viewManager.show Views.Item, id: id

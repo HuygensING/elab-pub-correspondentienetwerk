@@ -11,7 +11,8 @@
     Views = {
       Home: require('views/home'),
       Search: require('views/search'),
-      Item: require('views/item')
+      Item: require('views/item'),
+      ParallelView: require('views/parallel-view')
     };
     return MainRouter = (function(_super) {
       __extends(MainRouter, _super);
@@ -28,11 +29,18 @@
 
       MainRouter.prototype['routes'] = {
         '': 'home',
+        'parallel/:id': 'parallelView',
         'item/:id': 'item'
       };
 
       MainRouter.prototype.home = function() {
         return viewManager.show(Views.Search);
+      };
+
+      MainRouter.prototype.parallelView = function(id) {
+        return viewManager.show(Views.ParallelView, {
+          id: id
+        });
       };
 
       MainRouter.prototype.item = function(id) {

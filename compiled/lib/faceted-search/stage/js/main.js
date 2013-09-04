@@ -12,7 +12,7 @@
 // }(this, function ($, Backbone, text, Fn, ajax) {
 
 /**
- * almond 0.2.5 Copyright (c) 2011-2012, The Dojo Foundation All Rights Reserved.
+ * almond 0.2.6 Copyright (c) 2011-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/almond for details
  */
@@ -395,6 +395,11 @@ var requirejs, require, define;
         }
         return req;
     };
+
+    /**
+     * Expose module registry for debugging and tooling
+     */
+    requirejs._defined = defined;
 
     define = function (name, deps, callback) {
 
@@ -1741,7 +1746,7 @@ define("../lib/almond/almond", function(){});
   // AMD define happens at the end for compatibility with AMD loaders
   // that don't enforce next-turn semantics on modules.
   if (typeof define === 'function' && define.amd) {
-    define('underscore',[], function() {
+    define('underscore', [],function() {
       return _;
     });
   }
@@ -3467,7 +3472,7 @@ define("../lib/almond/almond", function(){});
 }).call(this);
 
 /**
- * @license RequireJS text 2.0.9 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
+ * @license RequireJS text 2.0.10 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/requirejs/text for details
  */
@@ -3491,7 +3496,7 @@ define('text',['module'], function (module) {
         masterConfig = (module.config && module.config()) || {};
 
     text = {
-        version: '2.0.9',
+        version: '2.0.10',
 
         strip: function (content) {
             //Strips <?xml ...?> declarations so that external SVG and XML
@@ -3643,6 +3648,12 @@ define('text',['module'], function (module) {
                 url = req.toUrl(nonStripName),
                 useXhr = (masterConfig.useXhr) ||
                          text.useXhr;
+
+            // Do not load if it is an empty: url
+            if (url.indexOf('empty:') === 0) {
+                onLoad();
+                return;
+            }
 
             //Load the text. Use XHR if possible and in a browser.
             if (!hasLocation || useXhr(url, defaultProtocol, defaultHostName, defaultPort)) {
@@ -3847,7 +3858,7 @@ define('text',['module'], function (module) {
     return text;
 });
 
-define('text!html/facet.html',[],function () { return '\n<div class="placeholder pad4">\n  <header>\n    <h3 data-name="<%= name %>"><%= title %></h3><small>&#8711;</small>\n    <div class="options"></div>\n  </header>\n  <div class="body"></div>\n</div>';});
+define('text!html/facet.html',[],function () { return '<div class="placeholder pad4"><header><h3 data-name="<%= name %>"><%= title %></h3><small>&#8711;</small><div class="options"></div></header><div class="body"></div></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -3908,7 +3919,7 @@ define('text!html/facet.html',[],function () { return '\n<div class="placeholder
 
 }).call(this);
 
-define('text!html/facet/boolean.body.html',[],function () { return '\n<div class="options">\n  <ul><% _.each(options, function(option) { %>\n    <li class="option">\n      <div class="row span6">\n        <div class="cell span5"><input id="<%= name %>_<%= option.name %>" name="<%= name %>_<%= option.name %>" type="checkbox" data-value="<%= option.name %>">\n          <label for="<%= name %>_<%= option.name %>"><%= ucfirst(option.name) %></label>\n        </div>\n        <div class="cell span1 right">\n          <div class="count"><%= option.count %></div>\n        </div>\n      </div>\n    </li><% }); %>\n  </ul>\n</div>';});
+define('text!html/facet/boolean.body.html',[],function () { return '<div class="options"><ul><% _.each(options, function(option) { %><li class="option"><div class="row span6"><div class="cell span5"><input id="<%= name %>_<%= option.name %>" name="<%= name %>_<%= option.name %>" type="checkbox" data-value="<%= option.name %>"><label for="<%= name %>_<%= option.name %>"><%= ucfirst(option.name) %></label></div><div class="cell span1 right"><div class="count"><%= option.count %></div></div></div></li><% }); %></ul></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -4018,7 +4029,7 @@ define('text!html/facet/boolean.body.html',[],function () { return '\n<div class
 
 }).call(this);
 
-define('text!html/facet/date.html',[],function () { return '\n<header>\n  <h3 data-name="<%= name %>"><%= title %></h3>\n</header>\n<div class="body">\n  <label>From:</label>\n  <select><% _.each(options, function(option) { %>\n    <option><%= option %></option><% }); %>\n  </select>\n  <label>To:</label>\n  <select><% _.each(options.reverse(), function(option) { %>\n    <option><%= option %></option><% }); %>\n  </select>\n</div>';});
+define('text!html/facet/date.html',[],function () { return '<header><h3 data-name="<%= name %>"><%= title %></h3></header><div class="body"><label>From:</label><select><% _.each(options, function(option) { %><option><%= option %></option><% }); %></select><label>To:</label><select><% _.each(options.reverse(), function(option) { %><option><%= option %></option><% }); %></select></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -4076,6 +4087,8 @@ define('text!html/facet/date.html',[],function () { return '\n<header>\n  <h3 da
 }).call(this);
 
 (function() {
+  var __hasProp = {}.hasOwnProperty;
+
   define('helpers/general',['require','jquery'],function(require) {
     var $;
     $ = require('jquery');
@@ -4126,7 +4139,137 @@ define('text!html/facet/date.html',[],function () { return '\n<header>\n  <h3 da
           clearTimeout(timer);
           return timer = setTimeout(cb, ms);
         };
-      })()
+      })(),
+      /*
+      	Highlight text between two nodes. 
+      
+      	Creates a span.hilite between two given nodes, surrounding the contents of the nodes
+      
+      	Example usage:
+      	hl = Fn.highlighter
+      		className: 'highlight' # optional
+      		tagName: 'div' # optional
+      
+      	supEnter = (ev) -> hl.on
+      		startNode: el.querySelector(#someid) # required
+      		endNode: ev.currentTarget # required
+      	supLeave = -> hl.off()
+      	$(sup).hover supEnter, supLeave
+      */
+
+      highlighter: function(args) {
+        var className, el, tagName;
+        if (args == null) {
+          args = {};
+        }
+        className = args.className, tagName = args.tagName;
+        if (className == null) {
+          className = 'hilite';
+        }
+        if (tagName == null) {
+          tagName = 'span';
+        }
+        el = null;
+        return {
+          on: function(args) {
+            var endNode, range, startNode;
+            startNode = args.startNode, endNode = args.endNode;
+            range = document.createRange();
+            range.setStartAfter(startNode);
+            range.setEndBefore(endNode);
+            el = document.createElement(tagName);
+            el.className = className;
+            el.appendChild(range.extractContents());
+            return range.insertNode(el);
+          },
+          off: function() {
+            return $(el).replaceWith(function() {
+              return $(this).contents();
+            });
+          }
+        };
+      },
+      /*
+      	Native alternative to jQuery's $.offset()
+      
+      	http://www.quirksmode.org/js/findpos.html
+      */
+
+      boundingBox: function(el) {
+        var box;
+        box = $(el).offset();
+        box.width = el.clientWidth;
+        box.height = el.clientHeight;
+        box.right = box.left + box.width;
+        box.bottom = box.top + box.height;
+        return box;
+      },
+      /*
+      	Is child el a descendant of parent el?
+      
+      	http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
+      */
+
+      isDescendant: function(parent, child) {
+        var node;
+        node = child.parentNode;
+        while (node != null) {
+          if (node === parent) {
+            return true;
+          }
+          node = node.parentNode;
+        }
+        return false;
+      },
+      /*
+      	Removes an element found by indexOf from an array
+      */
+
+      removeFromArray: function(arr, item) {
+        var index;
+        index = arr.indexOf(item);
+        return arr.splice(index, 1);
+      },
+      /* Escape a regular expression*/
+
+      escapeRegExp: function(str) {
+        return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      },
+      /*
+      	Flattens an object
+      
+      	songs:
+      		mary:
+      			had:
+      				little: 'lamb'
+      
+      	becomes
+      
+      	songs:
+      		mary.had.little: 'lamb'
+      
+      	Taken from: http://thedersen.com/projects/backbone-validation
+      */
+
+      flattenObject: function(obj, into, prefix) {
+        var k, v;
+        if (into == null) {
+          into = {};
+        }
+        if (prefix == null) {
+          prefix = '';
+        }
+        for (k in obj) {
+          if (!__hasProp.call(obj, k)) continue;
+          v = obj[k];
+          if (_.isObject(v) && !_.isArray(v) && !_.isFunction(v)) {
+            this.flattenObject(v, into, prefix + k + '.');
+          } else {
+            into[prefix + k] = v;
+          }
+        }
+        return into;
+      }
     };
   });
 
@@ -4258,15 +4401,15 @@ define('text!html/facet/date.html',[],function () { return '\n<header>\n  <h3 da
 
 }).call(this);
 
-define('text!html/facet/list.html',[],function () { return '';});
+define('text!html/facet/list.menu.html',[],function () { return '<div class="row span4 align middle"><div class="cell span2"><input type="text" name="listsearch" class="listsearch"/></div><div class="cell span1"><small class="optioncount"></small></div><div class="cell span1 right"><nav><ul><li class="all">All </li><li class="none">None</li></ul></nav></div></div>';});
 
-define('text!html/facet/list.options.html',[],function () { return '\n<ul>\n  <% _.each(options, function(option) { %>\n  <% var randomId = generateID(); %>\n  <% var checked = (option.get(\'checked\')) ? \'checked\' : \'\'; %>\n  <% var count = (option.get(\'count\') === 0) ? option.get(\'total\') : option.get(\'count\'); %>\n  <% var labelText = (option.id === \':empty\') ? \'<i>(empty)</i>\' : option.id %>\n  <li class="option">\n    <div data-count="<%= option.get(\'count\') %>" class="row span6">\n      <div class="cell span5"><input id="<%= randomId %>" name="<%= randomId %>" type="checkbox" data-value="<%= option.id %>" <%= checked %>>\n        <label for="<%= randomId %>"><%= labelText %></label>\n      </div>\n      <div class="cell span1 right">\n        <div class="count"><%= count %></div>\n      </div>\n    </div>\n  </li><% }); %>\n</ul>';});
+define('text!html/facet/list.options.html',[],function () { return '<ul><% _.each(options, function(option) { %>\n<% var randomId = generateID(); %>\n<% var checked = (option.get(\'checked\')) ? \'checked\' : \'\'; %>\n<% var count = (option.get(\'count\') === 0) ? option.get(\'total\') : option.get(\'count\'); %>\n<% var labelText = (option.id === \':empty\') ? \'<i>(empty)</i>\' : option.id %><li class="option"><div data-count="<%= option.get(\'count\') %>" class="row span6"><div class="cell span5"><input id="<%= randomId %>" name="<%= randomId %>" type="checkbox" data-value="<%= option.id %>" <%= checked %>><label for="<%= randomId %>"><%= labelText %></label></div><div class="cell span1 right"><div class="count"><%= count %></div></div></div></li><% }); %></ul>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define('views/facets/list.options',['require','helpers/general','views/base','models/list','text!html/facet/list.html','text!html/facet/list.options.html'],function(require) {
+  define('views/facets/list.options',['require','helpers/general','views/base','models/list','text!html/facet/list.menu.html','text!html/facet/list.options.html'],function(require) {
     var Fn, ListOptions, Models, Templates, Views, _ref;
     Fn = require('helpers/general');
     Views = {
@@ -4276,7 +4419,7 @@ define('text!html/facet/list.options.html',[],function () { return '\n<ul>\n  <%
       List: require('models/list')
     };
     Templates = {
-      List: require('text!html/facet/list.html'),
+      List: require('text!html/facet/list.menu.html'),
       Options: require('text!html/facet/list.options.html')
     };
     return ListOptions = (function(_super) {
@@ -4347,9 +4490,7 @@ define('text!html/facet/list.options.html',[],function () { return '\n<ul>\n  <%
 
 }).call(this);
 
-define('text!html/facet/list.menu.html',[],function () { return '\n<div class="row span4 align middle">\n  <div class="cell span2">\n    <input type="text" name="listsearch" class="listsearch"/>\n  </div>\n  <div class="cell span1"><small class="optioncount"></small></div>\n  <div class="cell span1 right">\n    <nav>\n      <ul>\n        <li class="all">All </li>\n        <li class="none">None</li>\n      </ul>\n    </nav>\n  </div>\n</div>';});
-
-define('text!html/facet/list.body.html',[],function () { return '\n<div class="options">\n  <ul></ul>\n</div>';});
+define('text!html/facet/list.body.html',[],function () { return '<div class="options"><ul></ul></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -4489,6 +4630,7 @@ define('text!html/facet/list.body.html',[],function () { return '\n<div class="o
   define('managers/ajax',['require','jquery'],function(require) {
     var $;
     $ = require('jquery');
+    $.support.cors = true;
     return {
       token: null,
       get: function(args) {
@@ -4682,9 +4824,9 @@ define("models/restclient", function(){});
 
 }).call(this);
 
-define('text!html/facet/search.menu.html',[],function () { return '\n<div class="row span1 align middle">\n  <div class="cell span1 casesensitive">\n    <input id="cb_casesensitive" type="checkbox" name="cb_casesensitive" data-prop="caseSensitive"/>\n    <label for="cb_casesensitive">Match case</label>\n  </div>\n</div><% console.log(\'searchInAnnotations\' in searchOptions); %>\n<% if (\'searchInAnnotations\' in searchOptions || \'searchInTranscriptions\' in searchOptions) { %>\n<% cb_searchin_annotations_checked = (\'searchInAnnotations\' in searchOptions && searchOptions.searchInAnnotations) ? \' checked \' : \'\' %>\n<% cb_searchin_transcriptions_checked = (\'searchInTranscriptions\' in searchOptions && searchOptions.searchInTranscriptions) ? \' checked \' : \'\' %>\n<div class="row span1">\n  <div class="cell span1">\n    <h4>Search in</h4>\n    <ul class="searchins"><% if (\'searchInAnnotations\' in searchOptions) { %>\n      <li class="searchin"><input id="cb_searchin_annotations" type="checkbox" data-prop="searchInAnnotations"<%= cb_searchin_annotations_checked %>>\n        <label for="cb_searchin_annotations">Annotations</label>\n      </li><% } %>\n      <% if (\'searchInTranscriptions\' in searchOptions) { %>\n      <li class="searchin"><input id="cb_searchin_transcriptions" type="checkbox" data-prop="searchInTranscriptions"<%= cb_searchin_transcriptions_checked %>>\n        <label for="cb_searchin_transcriptions">Transcriptions</label>\n      </li><% } %>\n    </ul>\n  </div>\n</div><% } %>\n<% if (\'textLayers\' in searchOptions) { %>\n<div class="row span1">\n  <div class="cell span1">\n    <h4>Text layers</h4>\n    <ul class="textlayers"><% _.each(textLayers, function(tl) { %>\n      <li class="textlayer">\n        <input id="cb_textlayer_<%= tl %>" type="checkbox" data-proparr="textLayers"/>\n        <label for="cb_textlayer_<%= tl %>"><%= tl %></label>\n      </li><% }); %>\n    </ul>\n  </div>\n</div><% } %>';});
+define('text!html/facet/search.menu.html',[],function () { return '<div class="row span1 align middle"><div class="cell span1 casesensitive"><input id="cb_casesensitive" type="checkbox" name="cb_casesensitive" data-prop="caseSensitive"/><label for="cb_casesensitive">Match case</label></div></div><% console.log(\'searchInAnnotations\' in searchOptions); %>\n<% if (\'searchInAnnotations\' in searchOptions || \'searchInTranscriptions\' in searchOptions) { %>\n<% cb_searchin_annotations_checked = (\'searchInAnnotations\' in searchOptions && searchOptions.searchInAnnotations) ? \' checked \' : \'\' %>\n<% cb_searchin_transcriptions_checked = (\'searchInTranscriptions\' in searchOptions && searchOptions.searchInTranscriptions) ? \' checked \' : \'\' %><div class="row span1"><div class="cell span1"><h4>Search in</h4><ul class="searchins"><% if (\'searchInAnnotations\' in searchOptions) { %><li class="searchin"><input id="cb_searchin_annotations" type="checkbox" data-prop="searchInAnnotations"<%= cb_searchin_annotations_checked %>><label for="cb_searchin_annotations">Annotations</label></li><% } %>\n<% if (\'searchInTranscriptions\' in searchOptions) { %><li class="searchin"><input id="cb_searchin_transcriptions" type="checkbox" data-prop="searchInTranscriptions"<%= cb_searchin_transcriptions_checked %>><label for="cb_searchin_transcriptions">Transcriptions</label></li><% } %></ul></div></div><% } %>\n<% if (\'textLayers\' in searchOptions) { %><div class="row span1"><div class="cell span1"><h4>Text layers</h4><ul class="textlayers"><% _.each(textLayers, function(tl) { %><li class="textlayer"><input id="cb_textlayer_<%= tl %>" type="checkbox" data-proparr="textLayers"/><label for="cb_textlayer_<%= tl %>"><%= tl %></label></li><% }); %></ul></div></div><% } %>';});
 
-define('text!html/facet/search.body.html',[],function () { return '\n<div class="row span4 align middle">\n  <div class="cell span3">\n    <div class="padr4">\n      <input id="search" type="text" name="search"/>\n    </div>\n  </div>\n  <div class="cell span1">\n    <button class="search">Search</button>\n  </div>\n</div>';});
+define('text!html/facet/search.body.html',[],function () { return '<div class="row span4 align middle"><div class="cell span3"><div class="padr4"><input id="search" type="text" name="search"/></div></div><div class="cell span1"><button class="search">Search</button></div></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -4773,7 +4915,7 @@ define('text!html/facet/search.body.html',[],function () { return '\n<div class=
 
 }).call(this);
 
-define('text!html/faceted-search.html',[],function () { return '\n<div class="faceted-search">\n  <form>\n    <div class="search-placeholder"></div>\n    <div class="facets">\n      <div style="display: none; text-align: center; margin-top: 20px" class="loader">\n        <h4>Loading facets...</h4><br/><img src="../images/faceted-search/loader.gif"/>\n      </div>\n    </div>\n  </form>\n</div>';});
+define('text!html/faceted-search.html',[],function () { return '<div class="faceted-search"><form><div class="search-placeholder"></div><div class="facets"><div style="display: none; text-align: center; margin-top: 20px" class="loader"><h4>Loading facets...</h4><br/><img src="../images/faceted-search/loader.gif"/></div></div></form></div>';});
 
 (function() {
   var __hasProp = {}.hasOwnProperty,
@@ -4808,17 +4950,16 @@ define('text!html/faceted-search.html',[],function () { return '\n<div class="fa
       }
 
       FacetedSearch.prototype.initialize = function(options) {
-        var facetNameMap, queryOptions,
+        var queryOptions,
           _this = this;
         FacetedSearch.__super__.initialize.apply(this, arguments);
         this.facetViews = {};
         this.firstRender = true;
         _.extend(facetViewMap, options.facetViewMap);
         delete options.facetViewMap;
-        _.extend(config, options);
-        facetNameMap = options.facetNameMap;
+        _.extend(config.facetNameMap, options.facetNameMap);
         delete options.facetNameMap;
-        _.extend(config.facetNameMap, facetNameMap);
+        _.extend(config, options);
         queryOptions = _.extend(config.queryOptions, config.textSearchOptions);
         this.model = new Models.FacetedSearch(queryOptions);
         this.subscribe('unauthorized', function() {
@@ -4835,6 +4976,7 @@ define('text!html/faceted-search.html',[],function () { return '\n<div class="fa
         rtpl = _.template(Templates.FacetedSearch);
         this.$el.html(rtpl);
         this.$('.loader').fadeIn('slow');
+        console.log("HERE FS");
         if (config.search) {
           search = new Views.Search();
           this.$('.search-placeholder').html(search.$el);

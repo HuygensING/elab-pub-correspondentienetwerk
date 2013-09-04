@@ -49,6 +49,8 @@ define (require) ->
  
 			@$('.loader').fadeIn('slow')
 
+			console.log "HERE FS"
+
 			if config.search
 				search = new Views.Search()
 				@$('.search-placeholder').html search.$el

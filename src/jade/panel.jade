@@ -1,0 +1,11 @@
+.selection
+	.current
+		| &#9666; &#9656;
+		| <%= item ? _.keys(item.paralleltexts || {})[0] : '' %>
+		| &#9662;
+	ul
+		| <% _.each(item ? _.keys(item.paralleltexts || {}) : [], function (t) { %>
+		li(data-toggle!="<%= t %>") <%= t %>
+		| <% }) %>
+.view
+	h2 View

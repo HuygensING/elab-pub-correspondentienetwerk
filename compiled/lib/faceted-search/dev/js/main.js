@@ -57,6 +57,7 @@
         rtpl = _.template(Templates.FacetedSearch);
         this.$el.html(rtpl);
         this.$('.loader').fadeIn('slow');
+        console.log("HERE FS");
         if (config.search) {
           search = new Views.Search();
           this.$('.search-placeholder').html(search.$el);

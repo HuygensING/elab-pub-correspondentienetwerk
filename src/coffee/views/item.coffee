@@ -16,7 +16,10 @@ define (require) ->
 			'click .more button': 'toggleMoreMetadata'
 
 		changeTextVersion: (e) ->
-			@currentTextVersion = $(e.currentTarget).data 'toggle'
+			target = $(e.currentTarget)
+			target.addClass('active').siblings().removeClass('active')
+
+			@currentTextVersion = target.data 'toggle'
 			@renderContent()
 
 		toggleMoreMetadata: (e) ->
