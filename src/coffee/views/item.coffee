@@ -3,6 +3,7 @@ define (require) ->
 	configData = require 'models/configdata'
 	config = require 'config'
 	BaseView = require 'views/base'
+	TextView = require 'views/text'
 
 	Item = require 'models/item'
 	Templates =
@@ -12,15 +13,15 @@ define (require) ->
 
 	class Home extends BaseView
 		events:
-			'click .versions li button': 'changeTextVersion'
+			'click .versions li': 'changeTextVersion'
 			'click .more button': 'toggleMoreMetadata'
 
 		changeTextVersion: (e) ->
 			target = $(e.currentTarget)
 			target.addClass('active').siblings().removeClass('active')
-
 			@currentTextVersion = target.data 'toggle'
-			@renderContent()
+
+			@textView.setView @currentTextVersion
 
 		toggleMoreMetadata: (e) ->
 			more = not $(e.currentTarget).hasClass 'more'
@@ -44,25 +45,11 @@ define (require) ->
 
 			@render()
 
-		renderAnnotations: ->
-			annotations = @model.annotations @currentTextVersion
-			tmpl = _.template Templates.Annotations
-			@$('.contents .annotations .padder').html tmpl annotations: annotations
-			@
-
 		renderMetadata: ->
 			tmpl = _.template Templates.Metadata
 			metadata = @model.get('metadata') || []
 			@$('.metadata .span8').html tmpl metadata: metadata[0..@numMetadataItems-1]
 			@
-
-		renderContent: ->
-			text = @model.text @currentTextVersion
-			@$('.contents .text').html text
-			@renderAnnotations()
-
-			@
-
 
 		renderNavigation: ->
 			prev = configData.findPrev @options.id
@@ -85,6 +72,9 @@ define (require) ->
 
 			@renderNavigation()
 			@renderMetadata()
-			@renderAnnotations()
+
+			@textView = new TextView
+				model: @model
+				el: @$('.text-view')
 
 			@

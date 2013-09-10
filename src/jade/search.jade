@@ -1,10 +1,23 @@
 .row.span12
-	.span4.faceted-search
-	.span8.results
-		h2 Results
-		ul
-			| <% console.log("H", w) %>
-			| <% _.each(w.entryIds, function (e) { %>
-			li
-				| <a href="/item/<%- String(e).replace('.json', '') %>"><%- e %></a>
-			| <% }) %>
+	.cell.span4.faceted-search
+	.cell.span8.results
+		.controls
+			h3
+				span.number-of-results
+				&nbsp;results
+			.sort
+		.cursor
+			span.previous Previous
+			span.position
+				| Page&nbsp;
+				span.current
+				| &nbsp;of&nbsp;
+				span.total
+			img.loader(src="/images/loader.gif")
+			span.next Next
+		.list
+			ul
+				| <% _.each(w.results, function (e) { %>
+				li
+					| <a href="/item/<%- String(e).replace('.json', '') %>"><%- e %></a>
+				| <% }) %>

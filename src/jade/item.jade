@@ -1,13 +1,13 @@
 .header
 	.row.span12
 		.cell.span5.back
-			a(href="/") Resultaatlijst
+			a(href="/") Results
 		.cell.span5.other
 			a(href!="<%= item.prevURL %>", class="prev")
 				span &#9666;
-				| &nbsp;Vorige brief
+				| &nbsp;Previous	
 			a(href!="<%= item.nextURL %>", class="next")
-				| Volgende brief&nbsp;
+				| Next&nbsp;
 				span &#9656;
 			a(href="/print") Print...
 		.cell.span2.huygens-logo
@@ -19,24 +19,21 @@
 		.cell.span8
 		.cell.span3.more
 			.padder.no-border
-				button.green Meer metadata
+				button.green More metadata
 	.row.span12.contents
 		.cell.span1
 			h3 Blad 1
 			| <% if (item.facsimiles && item.facsimiles.length) { %>
 			| <img src="<%= item.facsimiles[0].thumbnail %>">
 			| <% } %>
-		.cell.span8
-			ul.versions
-				| <% _.each(item.paralleltexts, function (value, name) { %>
-				li: button(data-toggle!="<%= name %>") <%= name %>
-				| <% }); %>
-			.text
+		.cell.span11
+			.row.span12
+				.cell.span8
+					ul.versions
+						| <% _.each(item.paralleltexts, function (value, name) { %>
+						li(data-toggle!="<%= name %>"): button <%= name %>
+						| <% }); %>
+				.cell.span3
+					button.green Parallel text view
+			.text-view
 				<%= item.paralleltexts ? (item.paralleltexts.Translation || {}).text : '' %>
-		.cell.span3.annotations
-			.padder
-				button.green Parallel text view
-				ol
-					li Bergen.op.Zoom Het is mij niet geheel duidelijk of hier streepjes of puntjes tussen de woorden zijn gebruikt
-					li Wel[xxx] Weled. (NR)
-					li door Geperforeerd, niet volledig te lezen.

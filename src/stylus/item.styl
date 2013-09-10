@@ -1,0 +1,61 @@
+.item
+	font-family sans-serif
+	font-size 11pt
+
+	h3, h5
+		font-weight normal
+		font-family sans-serif
+		color medium-grey
+		
+	h3
+		font-size 11pt
+	h5
+		font-size 9pt
+
+	.padder
+		margin-left pTop
+		border-top 1px solid light-grey
+		padding-top pTop
+
+		&.no-border
+			border none
+
+	.metadata
+		padding-top pTop
+		ul
+			list-style none
+			margin 0
+			padding 0
+			li
+				float left
+				padding-bottom pTop
+				border-bottom 1px solid light-grey
+				width 50%
+
+				h5
+					margin .8em 0 0 0
+
+		.cell.more
+			.padder
+				position relative
+				height 100%
+				button
+					// position absolute
+					bottom 15px
+					left 0
+	.contents
+		ul.versions
+			list-style none
+			margin 0
+			padding pTop 0 (pTop + 10) 0
+			text-align right
+			li
+				display inline-block
+				&.active button
+					background-color medium-grey
+					color white
+
+	
+	.annotations
+		color medium-grey
+		font-size 9pt

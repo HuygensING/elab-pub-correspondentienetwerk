@@ -1,7 +1,65 @@
-h2
-	font-family sans-serif
+.controls
+	h3
+		float left
+
+	.sort
+		float right
+		margin-top 1em
+
+	&:after
+		content ""
+		display block
+		clear both
+
+.cursor
+	display none
+	position relative
+	margin-bottom 1em
+	padding-top 1em
+	height 2em
+	// border-top 1px solid grey
+
+	.previous, .next
+		position absolute
+		display inline-block
+		padding 1em
+		top 0
+		cursor pointer
+		background-color controlsButtonColor
+		color white
+		font-size 12px
+		box-shadow none
+		border-radius 3px
+		width auto
+		padding 5px 5px
+		margin 10px 0
+
+		&:hover
+			background-color lighten(controlsButtonColor, 5%)
+
+		&:active
+			background-color darken(controlsButtonColor, 5%)
+
+	.previous
+		// padding-left 0
+		left 0
+	.next
+		right 0
+		// padding-right 0
+
+	.position
+		display block
+		width 200px
+		margin 0 auto
+		text-align center
+	img.loader
+		width 16px
+		margin 0 auto
+		display block
 
 .results
+	box-sizing border-box
+	padding-left 30px
 	font-size 10pt
 	font-family sans-serif
 
@@ -11,6 +69,7 @@ h2
 		padding 0
 		li
 			padding 10px
+			border-bottom 1px solid light-blue-grey
 			&:hover
 				background #eee
 				cursor pointer

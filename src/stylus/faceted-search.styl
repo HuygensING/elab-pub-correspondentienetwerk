@@ -1,0 +1,32 @@
+.faceted-search
+	&:before // the huygens slant
+		width 0
+		height 0
+		content ""
+		display block
+		border-bottom 20px solid #f1f1f1
+		border-left 0 solid transparent
+		border-right 0 solid transparent
+		margin-top -20px
+
+	.row .cell
+		font-size .8rem
+
+
+	form button
+		background turquoise
+		color white
+		box-shadow none
+		&:hover
+			background lighten(controlsButtonColor, 10%)
+		&:active
+			background darken(controlsButtonColor, 10%)
+
+
+	.facet 
+		header h3
+			font-size 16px
+		.options ul
+			padding-left 0
+			li label, li input
+				cursor pointer
