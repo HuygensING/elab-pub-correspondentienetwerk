@@ -1,5 +1,7 @@
 ol
 	| <% _.each(annotations, function (a, i) { %>
-	li
+	li(data-id!="<%= a.n %>")
+		.number
+			span <%= i+1 %>
 		| <%= a.text %>
 	| <% }) %>

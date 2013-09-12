@@ -3,11 +3,16 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var Backbone, MainRouter, Pubsub, Views, currentUser, viewManager, _ref;
+    var Backbone, MainRouter, Pubsub, Views, configData, currentUser, viewManager, _ref,
+      _this = this;
     Backbone = require('backbone');
     viewManager = require('managers/view');
     Pubsub = require('managers/pubsub');
     currentUser = require('models/currentUser');
+    configData = require('models/configdata');
+    configData.on('change', function() {
+      return $('title').text(configData.get('title'));
+    });
     Views = {
       Home: require('views/home'),
       Search: require('views/search'),
@@ -29,17 +34,26 @@
 
       MainRouter.prototype['routes'] = {
         '': 'home',
-        'parallel/:id': 'parallelView',
-        'item/:id': 'item'
+        'item/:id': 'item',
+        'item/:id/parallel': 'itemParallelView',
+        'item/:id/:version': 'itemVersionView'
       };
 
       MainRouter.prototype.home = function() {
         return viewManager.show(Views.Search);
       };
 
-      MainRouter.prototype.parallelView = function(id) {
+      MainRouter.prototype.itemParallelView = function(id) {
         return viewManager.show(Views.ParallelView, {
-          id: id
+          id: id,
+          mode: 'parallel'
+        });
+      };
+
+      MainRouter.prototype.itemVersionView = function(id, version) {
+        return viewManager.show(Views.Item, {
+          id: id,
+          version: version
         });
       };
 

@@ -1,5 +1,7 @@
 define (require) ->
 	config = require 'config'
+	configData = require 'models/configdata'
+
 	entriesList = JSON.parse require 'text!../../../data/config.json'
 	BaseView = require 'views/base'
 	FacetedSearch = require '../../lib/faceted-search/stage/js/main'
@@ -78,10 +80,11 @@ define (require) ->
 			@renderCursor()
 
 		render: ->
+			$('title').text configData.get 'title'
 			@$el.html @template w: entriesList
 
 			@search = new FacetedSearch
-				searchUrl: 'http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/api/search' # config.searchPath
+				searchUrl: config.searchPath
 				queryOptions:
 					resultRows: config.resultRows
 					term: '*'

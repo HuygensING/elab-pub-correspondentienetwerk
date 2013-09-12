@@ -36,6 +36,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 
+	grunt.registerTask 'w', 'watch'
 	grunt.registerTask 'init', [
 		'coffee:compile'
 	]

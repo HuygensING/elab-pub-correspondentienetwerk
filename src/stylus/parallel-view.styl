@@ -1,4 +1,7 @@
 .parallel-view
+	z-index 1000
+	position relative
+	background-color white
 	.add, .close
 		span
 			margin-right 1em
@@ -6,8 +9,6 @@
 	.close
 		float right
 
-	.panels
-		background lighten(yellow,80%)
-		margin-left -100%
-		margin-right -100%
-		// max-height 300px
+	.panel-container
+		position relative
+		margin-top 50px

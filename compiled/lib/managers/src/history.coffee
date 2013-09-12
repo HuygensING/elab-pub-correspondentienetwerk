@@ -2,15 +2,15 @@ define (require) ->
 	Backbone = require 'backbone'
 	_ = require 'underscore'
 
-	Pubsub = require 'managers/pubsub'
+	# Pubsub = require 'managers/pubsub'
 
 	class History
 
 		history: []
 
-		constructor: ->
-			_.extend @, Backbone.Events
-			_.extend @, Pubsub
+		# constructor: ->
+		# 	_.extend @, Backbone.Events
+		# 	_.extend @, Pubsub
 
 		update: ->
 			@history.push window.location.pathname

@@ -1,0 +1,15 @@
+.row.span12
+	.cell.span5.back
+		a(href="/")
+			span &#9666;
+			| &nbsp;Results
+	.cell.span5.other
+		a(href!="<%= item.prevURL %>", class="prev")
+			span &#9666;
+			| &nbsp;Previous	
+		a(href!="<%= item.nextURL %>", class="next")
+			| Next&nbsp;
+			span &#9656;
+		a(href="/print") Print...
+	.cell.span2.huygens-logo
+		img(src="/images/HuygensING.png")

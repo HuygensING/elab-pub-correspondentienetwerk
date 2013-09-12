@@ -6,6 +6,6 @@ define (require) ->
 
 	# Files
 	mixin = require '/dev/jquery.mixin.js'
-	Fn = require '/dev/fns.js'
+	Fn = require '/dev/general.js'
 
 	chai.should()

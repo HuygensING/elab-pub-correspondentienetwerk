@@ -2,56 +2,77 @@ define (require) ->
 
 	configData = require 'models/configdata'
 	config = require 'config'
+
 	BaseView = require 'views/base'
 	TextView = require 'views/text'
+	ParallelView = require 'views/parallel-view'
 
 	Item = require 'models/item'
-	Templates =
-		Home: require 'text!html/item.html'
-		Metadata: require 'text!html/metadata.html'
-		Annotations: require 'text!html/annotations.html'
 
 	class Home extends BaseView
+		baseTemplate: require 'text!html/item/base.html'
+		headerTemplate: require 'text!html/item/header.html'
+		metadataTemplate: require 'text!html/item/metadata.html'
+		contentsTemplate: require 'text!html/item/contents.html'
+		# annotationsTemplate: require 'text!html/item/annotations.html'
+
 		events:
 			'click .versions li': 'changeTextVersion'
 			'click .more button': 'toggleMoreMetadata'
+			'click .parallel button': 'showParallelView'
+
+		setActiveTextVersion: (version) ->
+			li = @$(".versions li[data-toggle=#{version}]")
+			console.log "LI", li, ".versions li[data-toggle=#{version}]"
+			li.addClass('active').siblings().removeClass('active')
 
 		changeTextVersion: (e) ->
-			target = $(e.currentTarget)
-			target.addClass('active').siblings().removeClass('active')
-			@currentTextVersion = target.data 'toggle'
-
+			@currentTextVersion = $(e.currentTarget).data 'toggle'
+			@setActiveTextVersion @currentTextVersion
 			@textView.setView @currentTextVersion
 
 		toggleMoreMetadata: (e) ->
-			more = not $(e.currentTarget).hasClass 'more'
-			$(e.currentTarget).toggleClass 'more'
+			@$('.metadata').toggleClass 'more' # fields
+			$(e.currentTarget).toggleClass 'more' # button
 
-			if more
-				@numMetadataItems = @model.get('metadata')?.length
+		showParallelView: (e) ->
+			if not @pv
+				@pv = new ParallelView model: @model
+				@$('.header').after @pv.el
 			else
-				@numMetadataItems = 4
-			@renderMetadata()
+				@pv.show()
+			
 
 		initialize: ->
 			super
+
+			@baseTemplate = _.template @baseTemplate
+			@headerTemplate = _.template @headerTemplate
+			@metadataTemplate = _.template @metadataTemplate
+			@contentsTemplate = _.template @contentsTemplate
 
 			if 'id' of @options
 				@model = new Item id: @options.id
 				@model.fetch success: => @render()
 
-			@currentTextVersion = 'Translation'
-			@numMetadataItems = 4
+			@options.mode = 'normal' unless @options.mode
+
+			@currentTextVersion = @options.version || config.defaultTextVersion
+			@numMetadataItems = @options.numMetadataItems || 4
 
 			@render()
 
 		renderMetadata: ->
-			tmpl = _.template Templates.Metadata
 			metadata = @model.get('metadata') || []
-			@$('.metadata .span8').html tmpl metadata: metadata[0..@numMetadataItems-1]
+			@$('.metadata').html @metadataTemplate
+				metadata: metadata
+
 			@
 
-		renderNavigation: ->
+		renderHeader: ->
+			@$('.header').html @headerTemplate
+				item: @model.attributes
+
 			prev = configData.findPrev @options.id
 			if prev
 				@$('.prev').attr href: config.itemURL prev
@@ -62,19 +83,25 @@ define (require) ->
 			@$('.prev').toggleClass 'hide', not prev
 			@$('.next').toggleClass 'hide', not next
 
-		render: ->
-			rtpl = _.template Templates.Home
-			@$el.html rtpl item: {}
-
-			item = @model.attributes
-			if 'name' of item
-				@$el.html rtpl item: item
-
-			@renderNavigation()
-			@renderMetadata()
+		renderContents: ->
+			@$('.contents').html @contentsTemplate
+				item: @model.attributes
+				config: config
 
 			@textView = new TextView
 				model: @model
-				el: @$('.text-view')
+				version: @currentTextVersion
+				el: @$('.contents .text-view')
+
+		renderItem: ->
+			@renderHeader()
+			@renderMetadata()
+			@renderContents()
+
+			@setActiveTextVersion @currentTextVersion
+
+		render: ->
+			@$el.html @baseTemplate()
+			@renderItem()
 
 			@

@@ -1,11 +1,12 @@
 define(function(require) {
   var $, Fn, chai, mixin;
   chai = require('chai');
-  mixin = require('/dev/jquery.mixin.js');
   $ = require('jquery');
-  Fn = require('/dev/fns.js');
+  mixin = require('/dev/jquery.mixin.js');
+  Fn = require('/dev/general.js');
   chai.should();
   describe("Fn", function() {
+    Fn = require('../dev/general.js');
     describe("generateID()", function() {
       it("Without parameters the ID should have 8 chars", function() {
         return Fn.generateID().should.have.length(8);
@@ -66,24 +67,101 @@ define(function(require) {
         }), 50);
       });
     });
-    describe("stripTags(str)", function() {
-      return it("should strip the tags from a string", function() {
-        var str;
-        str = "This is <b>very</b> <input /> strange";
-        Fn.stripTags(str).should.not.contain("<b>");
-        Fn.stripTags(str).should.not.contain("</b>");
-        return Fn.stripTags(str).should.not.contain("<input />");
+    describe("compareJSON()", function() {
+      var changed, changes, current;
+      current = {
+        test: 'toets',
+        taat: 12,
+        trier: 'teflon',
+        tramp: ['tre', ['tro'], ['try']],
+        trap: {
+          la: 'li',
+          lo: {
+            le: 'ly'
+          }
+        },
+        lamp: {
+          lem: ['tre', ['tro'], ['try']]
+        },
+        lip: [
+          {
+            la: 'lomp'
+          }, {
+            le: 'limp'
+          }, {
+            ly: 'lemp'
+          }
+        ]
+      };
+      changed = {
+        tast: 'toets',
+        taat: 14,
+        trier: 'teflan',
+        tramp: ['tre', ['tro'], ['tre']],
+        trap: {
+          la: 'li',
+          lo: {
+            le: 'lo'
+          }
+        },
+        lamp: {
+          lem: ['tre', ['tro'], ['tre']]
+        },
+        lip: [
+          {
+            la: 'lomp'
+          }, {
+            le: 'lamp'
+          }, {
+            ly: 'lemp'
+          }
+        ]
+      };
+      changes = Fn.compareJSON(current, changed);
+      it("should set test to removed", function() {
+        return changes.test.should.eql('removed');
+      });
+      it("should set tast to added", function() {
+        return changes.tast.should.eql('added');
+      });
+      it("should set trier value (String) to the new value ('teflan')", function() {
+        return changes.trier.should.eql(changed.trier);
+      });
+      it("should set taat value (Number) to the new value (14)", function() {
+        return changes.taat.should.eql(changed.taat);
+      });
+      it("should set tramp value (Array) to the new value (Array)", function() {
+        return changes.tramp.should.eql(changed.tramp);
+      });
+      it("should set trap value (Object) to the new value (Object)", function() {
+        return changes.trap.should.eql(changed.trap);
+      });
+      it("should set lip value (Array of Objects) to the new value (Array of Object)", function() {
+        return changes.lip.should.eql(changed.lip);
+      });
+      return it("should set lamp value (Object with nested Array) to the new value (Object with nested Array)", function() {
+        return changes.lamp.should.eql(changed.lamp);
       });
     });
-    return describe("onlyNumbers", function() {
-      return it("should strip all non numbers from a string", function() {
-        var str;
-        str = "<10>_$%11 There were 12 little piggies, what! 14? Yeah! 13";
-        return Fn.onlyNumbers(str).should.equal("1011121413");
+    return describe("isObjectLiteral()", function() {
+      it("should return true on an object literal", function() {
+        return Fn.isObjectLiteral({}).should.be.ok;
+      });
+      it("should return true on an instantiated object", function() {
+        return Fn.isObjectLiteral(new Object()).should.be.ok;
+      });
+      it("should return false on an array", function() {
+        return Fn.isObjectLiteral([]).should.not.be.ok;
+      });
+      it("should return false on a string", function() {
+        return Fn.isObjectLiteral('lali').should.not.be.ok;
+      });
+      return it("should return false on an instantiated object", function() {
+        return Fn.isObjectLiteral(new Number()).should.not.be.ok;
       });
     });
   });
-  return describe("$", function() {
+  describe("jQuery mixins", function() {
     describe("(el:contains(query))", function() {
       var $div;
       $div = null;
@@ -153,6 +231,33 @@ define(function(require) {
           $span.hasClass("highlight").should.not.be.ok;
           return done();
         }), 300);
+      });
+    });
+  });
+  return describe("StringFn", function() {
+    var StringFn;
+    StringFn = require('../dev/string.js');
+    describe("slugify", function() {
+      return it("should slugify strings", function() {
+        StringFn.slugify("Jack & Jill like numbers 1,2,3 and 4 and silly characters ?%.$!/").should.equal("jack-jill-like-numbers-123-and-4-and-silly-characters");
+        StringFn.slugify("Un éléphant à l'orée du bois").should.equal("un-elephant-a-loree-du-bois");
+        return StringFn.slugify("I am a word too, even though I am but a single letter: i!").should.equal("i-am-a-word-too-even-though-i-am-but-a-single-letter--i");
+      });
+    });
+    describe("stripTags(str)", function() {
+      return it("should strip the tags from a string", function() {
+        var str;
+        str = "This is <b>very</b> <input /> strange";
+        StringFn.stripTags(str).should.not.contain("<b>");
+        StringFn.stripTags(str).should.not.contain("</b>");
+        return StringFn.stripTags(str).should.not.contain("<input />");
+      });
+    });
+    return describe("onlyNumbers", function() {
+      return it("should strip all non numbers from a string", function() {
+        var str;
+        str = "<10>_$%11 There were 12 little piggies, what! 14? Yeah! 13";
+        return StringFn.onlyNumbers(str).should.equal("1011121413");
       });
     });
   });

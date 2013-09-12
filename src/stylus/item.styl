@@ -20,8 +20,11 @@
 		&.no-border
 			border none
 
+	button-padding = pTop 0 (pTop + 10) 0
+
 	.metadata
 		padding-top pTop
+		transition height .5s ease 0s
 		ul
 			list-style none
 			margin 0
@@ -35,26 +38,52 @@
 				h5
 					margin .8em 0 0 0
 
+				&:nth-child(n+5)
+					display none
+					opacity 0
+					// -webkit-transition opacity 1s ease-out
+					transition opacity 1s ease-out
+
+		&.more
+			li:nth-child(n)
+				display block
+				transition opacity 1s ease-out
+				opacity 1
+
 		.cell.more
 			.padder
 				position relative
 				height 100%
 				button
-					// position absolute
 					bottom 15px
 					left 0
-	.contents
-		ul.versions
-			list-style none
-			margin 0
-			padding pTop 0 (pTop + 10) 0
-			text-align right
-			li
-				display inline-block
-				&.active button
-					background-color medium-grey
-					color white
+					span.less
+						display none
+					span.more
+						display inline
 
+					&.more
+						span.more
+							display none
+						span.less
+							display inline
+
+	.contents
+		.versions 
+			margin-right 15px
+			ul
+				list-style none
+				margin 0
+				padding button-padding
+				text-align right
+				li
+					display inline-block
+					&.active button
+						background-color medium-grey
+						color white
+
+		.parallel
+			padding button-padding
 	
 	.annotations
 		color medium-grey

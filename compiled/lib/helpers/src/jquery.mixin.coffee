@@ -35,3 +35,50 @@ define (require) ->
 			setTimeout (=>
 				@removeClass 'highlight'
 			), delay
+
+		###
+		Render remove button in element
+		###
+		jQuery.fn.appendCloseButton = (args={}) ->
+			{corner, html} = args
+
+			html ?= '<img src="/images/icon.close.png">'
+			corner ?= 'topright'
+
+			$closeButton = $('<div class="closebutton">').html html
+
+			switch corner
+				when 'topright'
+					$closeButton.css 'position', 'absolute'
+					$closeButton.css 'right', '8px'
+					$closeButton.css 'top', '8px'
+					$closeButton.css 'opacity', '0.2'
+					$closeButton.css 'cursor', 'pointer'
+
+			@prepend $closeButton
+
+			$closeButton.hover ((ev) -> $closeButton.css 'opacity', 100), ((ev) -> $closeButton.css 'opacity', 0.2)
+			$closeButton.click => @trigger 'close'
+
+
+
+
+
+			
+			# visible = false
+
+			# closeButton.onmouseover = 
+
+			# mousemoveEl.onmousemove = (ev) =>
+			# 	console.log 'move'
+			# 	if ev.target is el or @isDescendant el, ev.target
+			# 		if corner is 'topright' and bb.right - 30 < ev.pageX < bb.right and bb.top < ev.pageY < bb.top + 30
+			# 			if not visible
+			# 				closeButton.style.display = 'block'
+			# 				visible = true
+			# 		else
+			# 			closeButton.style.display = 'none'
+			# 			visible = false
+			# 	else
+			# 		closeButton.style.display = 'none'
+			# 		visible = false

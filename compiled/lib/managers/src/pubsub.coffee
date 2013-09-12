@@ -1,3 +1,5 @@
+### UP FOR REMOVAL ###
+
 define (require) ->
 	Backbone = require 'backbone'
 

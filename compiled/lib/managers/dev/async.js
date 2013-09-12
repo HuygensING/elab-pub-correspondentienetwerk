@@ -23,8 +23,13 @@
       };
 
       Async.prototype.called = function(name, data) {
+        if (data == null) {
+          data = true;
+        }
+        console.log('called', name, data);
         this.callbacksCalled[name] = data;
         if (_.every(this.callbacksCalled, function(called) {
+          console.log(called);
           return called !== false;
         })) {
           return this.ready();
@@ -32,6 +37,7 @@
       };
 
       Async.prototype.ready = function() {
+        console.log('ready!!');
         return this.trigger('ready', this.callbacksCalled);
       };
 

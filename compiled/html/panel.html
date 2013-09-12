@@ -1,14 +1,11 @@
 
 <div class="selection">
-  <div class="current">
-    &#9666; &#9656;
-    <%= item ? _.keys(item.paralleltexts || {})[0] : '' %>
-    &#9662;
-  </div>
-  <ul><% _.each(item ? _.keys(item.paralleltexts || {}) : [], function (t) { %>
-    <li data-toggle="<%= t %>"><%= t %></li><% }) %>
+  <div class="current">&#9666; &#9656;<span><%= version %></span>&#9662;</div>
+  <ul><% _.each(versions, function (v) { %>
+    <li data-toggle="<%= v %>"><%= v %></li><% }) %>
   </ul>
 </div>
+<div class="close"></div>
 <div class="view">
   <h2>View</h2>
 </div>

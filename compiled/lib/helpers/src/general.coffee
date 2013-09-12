@@ -47,20 +47,143 @@ define (require) ->
 	Highlight text between two nodes. 
 
 	Creates a span.hilite between two given nodes, surrounding the contents of the nodes
+
+	Example usage:
+	hl = Fn.highlighter
+		className: 'highlight' # optional
+		tagName: 'div' # optional
+
+	supEnter = (ev) -> hl.on
+		startNode: el.querySelector(#someid) # required
+		endNode: ev.currentTarget # required
+	supLeave = -> hl.off()
+	$(sup).hover supEnter, supLeave
+
 	###
-	highlightBetweenNodes: (args)->
-		{startNode, endNode, className, tagName} = args
+	highlighter: (args={}) ->
+		{className, tagName} = args
 
 		className = 'hilite' if not className?
 		tagName = 'span' if not tagName?
 
-		range = document.createRange()
+		el = null # Create reference to the element doing the highlighting
+		
+		on: (args) ->
+			{startNode, endNode} = args
 
-		range.setStartAfter startNode
-		range.setEndBefore endNode
+			range = document.createRange()
+			range.setStartAfter startNode
+			range.setEndBefore endNode
 
-		el = document.createElement tagName
-		el.className = className
+			el = document.createElement tagName
+			el.className = className
+			el.appendChild range.extractContents()
+			
+			range.insertNode el
 
-		el.appendChild range.extractContents()
-		range.insertNode el
+		off: ->
+			$(el).replaceWith -> $(@).contents()
+
+
+	###
+	Native alternative to jQuery's $.offset()
+
+	http://www.quirksmode.org/js/findpos.html
+	###
+	position: (el, parent) ->
+		left = 0
+		top = 0
+
+		while el isnt parent
+			left += el.offsetLeft
+			top += el.offsetTop
+			el = el.offsetParent
+
+		left: left
+		top: top
+
+	boundingBox: (el) ->
+		box = $(el).offset()
+		box.width = el.clientWidth
+		box.height = el.clientHeight
+		box.right = box.left + box.width
+		box.bottom = box.top + box.height
+
+		box
+
+	###
+	Is child el a descendant of parent el?
+
+	http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
+	###
+	isDescendant: (parent, child) ->
+		node = child.parentNode
+		
+		while node?
+			return true if node is parent
+			node = node.parentNode
+
+		return false
+
+	###
+	Removes an element found by indexOf from an array
+	###
+	removeFromArray: (arr, item) ->
+		index = arr.indexOf item
+		arr.splice index, 1
+
+	### Escape a regular expression ###
+	escapeRegExp: (str) -> str.replace /[-\/\\^$*+?.()|[\]{}]/g, '\\$&'
+
+	###
+	Flattens an object
+
+	songs:
+		mary:
+			had:
+				little: 'lamb'
+
+	becomes
+
+	songs:
+		mary.had.little: 'lamb'
+
+	Taken from: http://thedersen.com/projects/backbone-validation
+	###
+	flattenObject: (obj, into, prefix) ->
+		into ?= {}
+		prefix ?= ''
+
+		for own k, v of obj
+			if _.isObject(v) and not _.isArray(v) and not _.isFunction(v)
+				@flattenObject v, into, prefix + k + '.'
+			else
+				into[prefix+k] = v
+
+		into
+
+	compareJSON: (current, changed) ->
+		changes = {}
+
+		for own attr, value of current
+			changes[attr] = 'removed' unless changed.hasOwnProperty attr
+
+		for own attr, value of changed
+			if current.hasOwnProperty attr
+				if _.isArray(value) or @isObjectLiteral(value)
+					changes[attr] = changed[attr] unless _.isEqual current[attr], changed[attr]
+				else
+					changes[attr] = changed[attr] unless current[attr] is changed[attr]
+			else
+				changes[attr] = 'added'
+
+		changes
+
+	isObjectLiteral: (obj) ->
+		return false if not obj? or typeof obj isnt "object"
+
+		ObjProto = obj
+
+		0 while Object.getPrototypeOf(ObjProto = Object.getPrototypeOf(ObjProto)) isnt null
+
+		Object.getPrototypeOf(obj) is ObjProto

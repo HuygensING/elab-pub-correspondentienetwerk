@@ -1,19 +1,17 @@
 define (require) ->
-
 	BaseView = require 'views/base'
-
-	Templates =
-		Home: require 'text!html/home.html'
+	configData = require 'models/configdata'
 
 	class Home extends BaseView
-
+		template: require 'text!html/home.html'
 		initialize: ->
 			super
-
 			@render()
 
 		render: ->
-			rtpl = _.template Templates.Home
-			@$el.html rtpl
+			@template = _.template @template
+			@$el.html @template()
+
+			@$('h1').text configData.get 'title'
 
 			@

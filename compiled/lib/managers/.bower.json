@@ -1,12 +1,12 @@
 {
   "name": "managers",
   "homepage": "https://github.com/Gijsjan/managers",
-  "_release": "57151caefd",
+  "_release": "6c443d42db",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "57151caefd386e616962125e0aa8478a814b1689"
+    "commit": "6c443d42db7394dca89cc62bb0955ce0955241b8"
   },
-  "_source": "git@github.com:Gijsjan/managers.git",
+  "_source": "https://github.com/Gijsjan/managers.git",
   "_target": "*"
 }

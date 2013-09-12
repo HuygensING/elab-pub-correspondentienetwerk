@@ -1,24 +1,56 @@
+internalPadding = 40px
+
 .panel
-	position relative
+	position absolute
 	display inline-block
-	min-width 400px
-	max-width 400px
+	width 600px
+
+	background-color white
+	transition background-color .4s ease-in-out 0s
+
+	// transition left .2s ease-out 0s
+
+	easeOutQuint()
+
+	&.new
+		background-color light-yellow
+		transition background-color .4s ease-in-out 0s
+
+	// sizes
+	&.large
+		width 600px
+	&.medium
+		width 500px
+	&.small
+		width 400px
+
 	box-sizing border-box
 	border 1px solid light-grey
 	border-left none
-	padding 40px
+	padding internalPadding
 
 	&:first-child
 		border-left 1px solid light-grey
 
-
-	/*
-    Dragging
-	*/
-
+	/*** Dragging ***/
 	&.ui-draggable-dragging
 		// transform rotate(45deg)
 		-webkit-transform rotate(5deg)
+
+
+	/*** Close button ***/
+	.close
+		background-image url('/images/close-button.png')
+		width 12px
+		height 12px
+		cursor pointer
+		opacity 0.5
+		margin-top 8 + (-1 * internalPadding)
+		margin-right 8 + (-1 * internalPadding)
+		&:hover
+			opacity 1
+	&:only-child .close
+		display none
 
 	/*** Selection tab ***/
 
@@ -42,6 +74,10 @@
 		border-bottom 0px solid transparent
 		border 1px solid darken(light-grey, 20%)
 
+		.current
+			span
+				margin 0 5px
+
 		&:hover
 			background lighten(light-grey, 20%)
 			ul
@@ -50,6 +86,7 @@
 		ul
 			padding 0 0
 			margin 0
+			width 100%
 			list-style none
 			display none
 			li

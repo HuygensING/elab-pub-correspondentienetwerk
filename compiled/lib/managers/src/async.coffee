@@ -13,8 +13,13 @@ define (require) ->
 			for name in names
 				@callbacksCalled[name] = false
 				
-		called: (name, data) -> 
+		called: (name, data = true) ->
+			console.log 'called', name, data
 			@callbacksCalled[name] = data
-			@ready() if _.every @callbacksCalled, (called) -> called isnt false
+			@ready() if _.every @callbacksCalled, (called) -> 
+				console.log called
+				called isnt false
 
-		ready: -> @trigger 'ready', @callbacksCalled
+		ready: -> 
+			console.log 'ready!!'
+			@trigger 'ready', @callbacksCalled

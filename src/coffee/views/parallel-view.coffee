@@ -7,10 +7,12 @@ define (require) ->
 	Templates =
 		ParallelView: require 'text!html/parallel-view.html'
 
-	class Home extends BaseView
+	class ParallelView extends BaseView
 		className: 'parallel-view'
 		events:
-			'click .add': 'addPanel'
+			'click .add': 'addPanelEvent'
+			'click .panel .close': 'closePanel'
+			'click button.close': 'closeParallelView'
 
 		initialize: ->
 			super
@@ -21,20 +23,68 @@ define (require) ->
 				@model = new Item id: @options.id
 				@model.fetch success: => @render()
 
+			@addPanel()
 			@render()
 
-		addPanel: (e) ->
-			panel = new PanelView id: @options.id
-			@$('.panel-container').append panel.el
+		closeParallelView: ->	@hide()
+		show: -> @$el.show()
+		hide: -> @$el.hide()
+
+		closePanel: (e) ->
+			pNumber = $(e.currentTarget).closest('.panel').index()
+			[panel] = @panels.splice pNumber, 1
+			panel.remove()
+			@repositionPanels()
+
+		addPanelEvent: (e) ->
+			@addPanel()
+
+			last = @panels.length - 1
+			lastPanel = @panels[last]
+			@appendPanel lastPanel
+			
+			lastPanel.$el.addClass 'new'
+			removeNew = -> lastPanel.$el.removeClass 'new'
+			setTimeout removeNew, 1300
+
+			$('html, body').animate
+				scrollLeft: @panels[last].$el.offset().left
+
+
+		addPanel: ->
+			panel = new PanelView model: @model
 			@panels.push panel
-			panel.render()
 
 			@
+
+		positionPanel: (p, pos=0) ->
+			p.$el.css
+				top: 0
+				# assuming they're all the same size:
+				left: (pos * p.$el.outerWidth()) + 'px'
+
+		repositionPanels: ->
+			for p, pos in @panels
+				console.log "Pois", pos
+				p.$el.css
+					left: (pos * p.$el.outerWidth()) + 'px'
+
+		appendPanel: (p) ->
+			@$('.panel-container').append p.el
+			@positionPanel p, @panels.length - 1
+			p.positionSelectionTab()
+
+		renderPanels: ->
+			@$('.panel-container').empty()
+			for p, pos in @panels
+				@appendPanel p
+				@positionPanel p, pos
+
 
 		render: ->
 			tmpl = _.template Templates.ParallelView
 			@$el.html tmpl item: @model?.attributes
 
-			@addPanel().addPanel().addPanel()
+			@renderPanels()
 
 			@

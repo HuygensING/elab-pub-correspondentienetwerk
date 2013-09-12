@@ -1,0 +1,31 @@
+highlightColor = lighten(annotationsBackground, 70%)
+numberHighlight = #BA5DB6
+
+.text
+	sup[data-marker]
+		cursor pointer
+		color darken(annotationsBackground, 30%)
+		margin-right
+		&:hover
+			color black
+			background-color highlightColor
+	div.highlight
+		display inline
+		background-color highlightColor
+
+.annotations
+	li
+		&.highlight .number span
+			color white
+			background-color numberHighlight
+		&:hover
+			cursor pointer
+	.number span
+		background-color light-grey
+		color medium-grey
+		padding 0 2px
+		border-radius 2px
+
+	li:hover .number span
+		background-color numberHighlight
+		color white

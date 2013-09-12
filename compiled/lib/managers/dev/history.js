@@ -1,16 +1,12 @@
 (function() {
   define(function(require) {
-    var Backbone, History, Pubsub, _;
+    var Backbone, History, _;
     Backbone = require('backbone');
     _ = require('underscore');
-    Pubsub = require('managers/pubsub');
     History = (function() {
-      History.prototype.history = [];
+      function History() {}
 
-      function History() {
-        _.extend(this, Backbone.Events);
-        _.extend(this, Pubsub);
-      }
+      History.prototype.history = [];
 
       History.prototype.update = function() {
         this.history.push(window.location.pathname);

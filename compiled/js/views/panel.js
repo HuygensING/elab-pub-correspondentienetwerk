@@ -3,14 +3,12 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var Item, PanelTextView, PanelView, Templates, jqu, _ref;
+    var FacsimileView, Item, PanelView, TextView, config, jq, _ref;
+    config = require('config');
     Item = require('models/item');
-    PanelTextView = require('views/panel-text-view');
-    Templates = {
-      Panel: require('text!html/panel.html')
-    };
-    jqu = require('jquery-ui/jquery-ui');
-    console.log(jqu);
+    TextView = require('views/text');
+    FacsimileView = require('views/facsimile');
+    jq = require('jquery-ui/jquery-ui');
     return PanelView = (function(_super) {
       __extends(PanelView, _super);
 
@@ -21,12 +19,17 @@
 
       PanelView.prototype.className = 'panel';
 
+      PanelView.prototype.template = require('text!html/panel.html');
+
       PanelView.prototype.events = {
         'click .selection li': 'selectText'
       };
 
       PanelView.prototype.initialize = function() {
-        var _this = this;
+        var _ref1,
+          _this = this;
+        this.template = _.template(this.template);
+        this.textVersion = ((_ref1 = this.options) != null ? _ref1.textVersion : void 0) || 'Translation';
         if ('id' in this.options && !this.model) {
           this.model = new Item({
             id: this.options.id
@@ -42,14 +45,14 @@
       };
 
       PanelView.prototype.selectText = function(e) {
-        var target, textVersion;
+        var target;
         target = $(e.currentTarget);
-        textVersion = target.data('toggle');
-        this.subView = new PanelTextView({
-          model: this.model,
-          version: textVersion
-        });
-        return this.$('.view').html(this.subView.el);
+        this.textVersion = target.data('toggle');
+        return this.renderContent();
+      };
+
+      PanelView.prototype.selectedVersion = function() {
+        return this.textVersion;
       };
 
       PanelView.prototype.positionSelectionTab = function() {
@@ -63,12 +66,35 @@
         });
       };
 
+      PanelView.prototype.renderCurrentSelection = function() {
+        return this.$('.selection .current span').text(this.textVersion);
+      };
+
+      PanelView.prototype.renderContent = function() {
+        if (this.textVersion === 'Facsimile') {
+          this.subView = new FacsimileView({
+            model: this.model
+          });
+          return this.$('.view').html(this.subView.el);
+        } else {
+          this.subView = new TextView({
+            model: this.model,
+            version: this.textVersion
+          });
+          return this.$('.view').html(this.subView.el);
+        }
+      };
+
       PanelView.prototype.render = function() {
-        var tmpl, _ref1;
-        tmpl = _.template(Templates.Panel);
-        this.$el.html(tmpl({
-          item: (_ref1 = this.model) != null ? _ref1.attributes : void 0
+        var _ref1;
+        this.$el.html(this.template({
+          item: (_ref1 = this.model) != null ? _ref1.attributes : void 0,
+          versions: _.flatten(['Facsimile', this.model.textVersions()]),
+          version: this.textVersion
         }));
+        this.renderCurrentSelection();
+        this.renderContent();
+        this.$el.addClass(config.panelSize);
         this.positionSelectionTab();
         return this;
       };

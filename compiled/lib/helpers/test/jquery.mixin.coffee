@@ -1,4 +1,4 @@
-	describe "$", ->
+	describe "jQuery mixins", ->
 		describe "(el:contains(query))", ->
 			$div = null
 
