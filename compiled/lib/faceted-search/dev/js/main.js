@@ -40,7 +40,6 @@
         _.extend(config.facetNameMap, options.facetNameMap);
         delete options.facetNameMap;
         _.extend(config, options);
-        console.log("CONFIG", config, options);
         queryOptions = _.extend(config.queryOptions, config.textSearchOptions);
         this.model = new Models.FacetedSearch(queryOptions);
         this.subscribe('unauthorized', function() {

@@ -12,7 +12,9 @@ define (require) ->
 				managed: false
 				title: configData.get 'title'
 			$('header.wrapper').prepend header.$el
-			Backbone.history.start pushState: true   
+			Backbone.history.start
+				root: window.location.pathname
+				pushState: true   
 
 			$(document).on 'click', 'a:not([data-bypass])', (e) ->
 				href = $(@).attr 'href'

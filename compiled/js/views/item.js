@@ -61,7 +61,8 @@
       };
 
       Home.prototype.initialize = function() {
-        var _this = this;
+        var doCheck,
+          _this = this;
         Home.__super__.initialize.apply(this, arguments);
         this.baseTemplate = _.template(this.baseTemplate);
         this.headerTemplate = _.template(this.headerTemplate);
@@ -82,7 +83,26 @@
         }
         this.currentTextVersion = this.options.version || config.defaultTextVersion;
         this.numMetadataItems = this.options.numMetadataItems || 4;
+        this.didScroll = false;
+        this.$el.click(function() {
+          return this.didScroll = true;
+        });
+        doCheck = function() {
+          var didScroll;
+          if (_this.didScroll) {
+            didScroll = false;
+            return _this.positionTextView();
+          }
+        };
+        setInterval(doCheck, 250);
         return this.render();
+      };
+
+      Home.prototype.positionTextView = function() {
+        console.log("YELLOW");
+        return this.$('.text-view').css({
+          'background-color': 'yellow'
+        });
       };
 
       Home.prototype.renderMetadata = function() {
@@ -97,6 +117,7 @@
       Home.prototype.renderHeader = function() {
         var next, prev;
         this.$('.header').html(this.headerTemplate({
+          config: config,
           item: this.model.attributes
         }));
         prev = configData.findPrev(this.options.id);

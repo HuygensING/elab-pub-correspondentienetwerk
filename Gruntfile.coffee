@@ -52,8 +52,13 @@ module.exports = (grunt) ->
 
 		createSymlinks:
 			compiled: [
-				src: 'images'
-				dest: 'compiled/images'
+				
+					src: 'images'
+					dest: 'compiled/images'
+				,
+					src: 'data'
+					dest: 'compiled/data'
+				
 			# ,
 			# 	src: '/home/gijs/Projects/faceted-search'
 			# 	dest: 'compiled/lib/faceted-search'
@@ -61,18 +66,13 @@ module.exports = (grunt) ->
 			# 	src: '/home/gijs/Projects/faceted-search/images'
 			# 	dest: 'images/faceted-search'
 			]
-			dist: [{
-				src: 'images'
-				dest: 'dist/images'
-			}]
-			data: [{
-				src: 'data'
-				dest: 'compiled/data'
-			},{
-				src: 'data'
-				dest: 'dist/data'
-			}]
-
+			dist: [
+					src: 'images'
+					dest: 'dist/images'
+				,
+					src: 'data'
+					dest: 'dist/data'
+			]
 
 		shell:
 			'mocha-phantomjs': 
@@ -139,11 +139,11 @@ module.exports = (grunt) ->
 				replacements: [
 					{
 						from: '<script data-main="/js/main" src="/lib/requirejs/require.js"></script>'
-						to: '<script src="/js/main.js"></script>'
+						to: '<script src="js/main.js"></script>'
 					}
 					{
 						from: '<link rel="stylesheet" type="text/css" href="/lib/faceted-search/stage/css/main.css">'
-						to: '<link rel="stylesheet" type="text/css" href="/css/faceted-search.css">'
+						to: '<link rel="stylesheet" type="text/css" href="css/faceted-search.css">'
 					}
 				]
 
@@ -221,6 +221,11 @@ module.exports = (grunt) ->
 						'helpers': '../lib/helpers/dev'
 						'html': '../html'
 					wrap: true
+		copy:
+			data:
+				files:
+					expand: true
+					src: ['data/**'], dest: 'dist/data/'
 
 		watch:
 			options:
@@ -266,6 +271,7 @@ module.exports = (grunt) ->
 		'jade:init'
 		'stylus:compile'
 		'concat:css'
+		# 'copy:data'
 	]
 
 	grunt.registerTask 'build', [
@@ -274,6 +280,7 @@ module.exports = (grunt) ->
 		'replace:html' # Copy and replace index.html
 		'cssmin:dist'
 		'requirejs:compile' # Run r.js
+		# 'copy:data'
 		# 'shell:rsync' # Rsync to test server
 	]
 

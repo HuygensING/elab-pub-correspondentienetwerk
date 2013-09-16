@@ -1,8 +1,9 @@
 define (require) ->
 	BaseModel = require 'models/base'
+	config = require 'config'
 	
 	class ConfigData extends BaseModel
-		url: -> "/data/config.json"
+		url: -> config.configDataURL
 		findPrev: (id) ->
 			ids = @get 'entryIds'
 			pos = ids.indexOf "#{id}.json"

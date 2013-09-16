@@ -32,7 +32,6 @@ define (require) ->
 			delete options.facetNameMap
 
 			_.extend config, options
-			console.log "CONFIG", config, options
 
 			queryOptions = _.extend config.queryOptions, config.textSearchOptions
 			@model = new Models.FacetedSearch queryOptions

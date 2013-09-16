@@ -3,8 +3,9 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseModel, ConfigData, _ref;
+    var BaseModel, ConfigData, config, _ref;
     BaseModel = require('models/base');
+    config = require('config');
     ConfigData = (function(_super) {
       __extends(ConfigData, _super);
 
@@ -14,7 +15,7 @@
       }
 
       ConfigData.prototype.url = function() {
-        return "/data/config.json";
+        return config.configDataURL;
       };
 
       ConfigData.prototype.findPrev = function(id) {

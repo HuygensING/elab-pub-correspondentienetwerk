@@ -59,13 +59,27 @@ define (require) ->
 			@currentTextVersion = @options.version || config.defaultTextVersion
 			@numMetadataItems = @options.numMetadataItems || 4
 
-			@$('body').scroll (e) =>
-				if 
-					@$('.text-view').addClass 'fixed'
-				else if not @$('.text-view').hasClass 'fixed'
-					@fixTextView()
+			@didScroll = false
+			@$el.click -> @didScroll = true
+
+			doCheck = =>
+				# console.log @$el, @didScroll
+				if @didScroll
+					didScroll = false
+					@positionTextView()
+			setInterval doCheck, 250
+
+			# @$('body').scroll (e) =>
+			# 	if 
+			# 		@$('.text-view').addClass 'fixed'
+			# 	else if not @$('.text-view').hasClass 'fixed'
+			# 		@fixTextView()
 
 			@render()
+
+		positionTextView: ->
+			console.log  "YELLOW"
+			@$('.text-view').css 'background-color': 'yellow'
 
 		renderMetadata: ->
 			metadata = @model.get('metadata') || []
@@ -76,6 +90,7 @@ define (require) ->
 
 		renderHeader: ->
 			@$('.header').html @headerTemplate
+				config: config
 				item: @model.attributes
 
 			prev = configData.findPrev @options.id

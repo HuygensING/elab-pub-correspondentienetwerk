@@ -20,6 +20,7 @@
             });
             $('header.wrapper').prepend(header.$el);
             Backbone.history.start({
+              root: window.location.pathname,
               pushState: true
             });
             return $(document).on('click', 'a:not([data-bypass])', function(e) {
