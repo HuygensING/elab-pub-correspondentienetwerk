@@ -21,6 +21,8 @@
         return _ref;
       }
 
+      Home.prototype.className = 'wrapper';
+
       Home.prototype.events = {
         'click .results .body li': 'resultClicked',
         'click .results .next': 'nextResults',
@@ -116,7 +118,7 @@
           w: entriesList
         }));
         this.search = new FacetedSearch({
-          searchUrl: config.searchPath,
+          searchPath: config.searchPath,
           queryOptions: {
             resultRows: config.resultRows,
             term: '*'

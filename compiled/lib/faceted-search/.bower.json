@@ -16,11 +16,11 @@
     "chai": "*",
     "underscore": "~1.4.4"
   },
-  "_release": "5eeebfb1ce",
+  "_release": "b1ec71afdb",
   "_resolution": {
     "type": "branch",
     "branch": "elaborate",
-    "commit": "5eeebfb1cea5713279b2ba2f50d7c529297a265d"
+    "commit": "b1ec71afdb4a19e3808282c4bfd56a95f93bcd24"
   },
   "_source": "ssh://jonaa@hi7dev.huygens.knaw.nl/data/git/git/faceted-search.git",
   "_target": "elaborate"

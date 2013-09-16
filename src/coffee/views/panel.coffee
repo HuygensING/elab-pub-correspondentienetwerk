@@ -5,7 +5,7 @@ define (require) ->
 	TextView = require 'views/text'
 	FacsimileView = require 'views/facsimile'
 
-	jq = require 'jquery-ui/jquery-ui'
+	# jq = require 'jquery-ui/jquery-ui'
 
 	class PanelView extends Backbone.View
 		className: 'panel'

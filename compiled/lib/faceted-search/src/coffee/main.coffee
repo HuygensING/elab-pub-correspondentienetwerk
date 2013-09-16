@@ -5,7 +5,6 @@ define (require) ->
 
 	Models = 
 		FacetedSearch: require 'models/main'
-		RestClient: require 'models/restclient'
 
 	Views =
 		Base: require 'views/base'
@@ -33,13 +32,13 @@ define (require) ->
 			delete options.facetNameMap
 
 			_.extend config, options
+			console.log "CONFIG", config, options
 
 			queryOptions = _.extend config.queryOptions, config.textSearchOptions
 			@model = new Models.FacetedSearch queryOptions
 			
 			@subscribe 'unauthorized', => @trigger 'unauthorized'
-			@subscribe 'results:change', (response) =>
-				@trigger 'faceted-search:results', response # TODO: Change to 'results:change'
+			@subscribe 'results:change', (response) => @trigger 'results:change', response
 
 			@render()
 
@@ -48,8 +47,6 @@ define (require) ->
 			@$el.html rtpl
  
 			@$('.loader').fadeIn('slow')
-
-			console.log "HERE FS"
 
 			if config.search
 				search = new Views.Search()

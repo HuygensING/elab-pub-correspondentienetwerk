@@ -6,16 +6,12 @@ define (require) ->
 		Header: require 'text!html/ui/header.html'
 
 	class Header extends Views.Base
-
-		tagName: 'header'
-
 		initialize: ->
 			super
-
 			@render()
 
 		render: ->
 			rtpl = _.template Templates.Header
-			@$el.html rtpl
+			@$el.html rtpl title: @options.title
 
 			@

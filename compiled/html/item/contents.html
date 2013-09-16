@@ -1,24 +1,3 @@
-
-<div class="row span12">
-  <div class="cell span1">
-    <% if (item.facsimiles) { %>
-      <% _.each(item.facsimiles, function (f, n) { %>
-    <h3>Blad <%= n+1 %> </h3><img src="<%= f.thumbnail %>"/>  <% }); %>
-    <% } %>
-  </div>
-  <div class="cell span11">
-    <div class="row span12">
-      <div class="cell span8 versions">
-        <ul><% _.each(item.paralleltexts, function (value, name) { %>
-          <li data-toggle="<%= name %>">
-            <button><%= name %></button>
-          </li><% }); %>
-        </ul>
-      </div>
-      <div class="cell span3 parallel">
-        <button class="green">Parallel text view</button>
-      </div>
-    </div>
-    <div class="text-view"><%= item.paralleltexts ? (item.paralleltexts[config.defaultTextVersion] || {}).text : '' %></div>
-  </div>
-</div>
+<div class="row span12"><div class="cell span1"><% if (item.facsimiles) { %>
+  <% _.each(item.facsimiles, function (f, n) { %><h3>Blad <%= n+1 %> </h3><img src="<%= f.thumbnail %>"/>  <% }); %>
+<% } %></div><div class="cell span11"><div class="row span12"><div class="cell span8 versions"><ul><% _.each(item.paralleltexts, function (value, name) { %><li data-toggle="<%= name %>"><button><%= name %></button></li><% }); %></ul></div><div class="cell span3 parallel"><button class="green">Parallel text view</button></div></div><div class="text-view"><%= item.paralleltexts ? (item.paralleltexts[config.defaultTextVersion] || {}).text : '' %></div></div></div>

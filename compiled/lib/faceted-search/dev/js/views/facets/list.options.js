@@ -12,7 +12,7 @@
       List: require('models/list')
     };
     Templates = {
-      List: require('text!html/facet/list.menu.html'),
+      List: require('text!html/facet/list.html'),
       Options: require('text!html/facet/list.options.html')
     };
     return ListOptions = (function(_super) {

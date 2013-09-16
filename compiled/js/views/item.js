@@ -35,7 +35,6 @@
       Home.prototype.setActiveTextVersion = function(version) {
         var li;
         li = this.$(".versions li[data-toggle=" + version + "]");
-        console.log("LI", li, ".versions li[data-toggle=" + version + "]");
         return li.addClass('active').siblings().removeClass('active');
       };
 

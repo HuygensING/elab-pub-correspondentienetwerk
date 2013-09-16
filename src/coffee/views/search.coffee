@@ -10,6 +10,7 @@ define (require) ->
 		ResultsList: require 'text!html/results-list.html'
 
 	class Home extends BaseView
+		className: 'wrapper'
 		events:
 			'click .results .body li': 'resultClicked'
 			'click .results .next': 'nextResults'
@@ -84,7 +85,7 @@ define (require) ->
 			@$el.html @template w: entriesList
 
 			@search = new FacetedSearch
-				searchUrl: config.searchPath
+				searchPath: config.searchPath
 				queryOptions:
 					resultRows: config.resultRows
 					term: '*'

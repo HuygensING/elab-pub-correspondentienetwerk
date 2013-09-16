@@ -18,8 +18,6 @@
         return _ref;
       }
 
-      Header.prototype.tagName = 'header';
-
       Header.prototype.initialize = function() {
         Header.__super__.initialize.apply(this, arguments);
         return this.render();
@@ -28,7 +26,9 @@
       Header.prototype.render = function() {
         var rtpl;
         rtpl = _.template(Templates.Header);
-        this.$el.html(rtpl);
+        this.$el.html(rtpl({
+          title: this.options.title
+        }));
         return this;
       };
 

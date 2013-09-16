@@ -65,10 +65,13 @@ module.exports = (grunt) ->
 				src: 'images'
 				dest: 'dist/images'
 			}]
-			data: [
+			data: [{
 				src: 'data'
 				dest: 'compiled/data'
-			]
+			},{
+				src: 'data'
+				dest: 'dist/data'
+			}]
 
 
 		shell:
@@ -134,8 +137,14 @@ module.exports = (grunt) ->
 				src: 'compiled/index.html'
 				dest: 'dist/index.html'
 				replacements: [
-					from: '<script data-main="/js/main" src="/lib/requirejs/require.js"></script>'
-					to: '<script src="/js/main.js"></script>'
+					{
+						from: '<script data-main="/js/main" src="/lib/requirejs/require.js"></script>'
+						to: '<script src="/js/main.js"></script>'
+					}
+					{
+						from: '<link rel="stylesheet" type="text/css" href="/lib/faceted-search/stage/css/main.css">'
+						to: '<link rel="stylesheet" type="text/css" href="/css/faceted-search.css">'
+					}
 				]
 
 		### CSS ###
@@ -166,6 +175,7 @@ module.exports = (grunt) ->
 			dist:
 				files:
 					'dist/css/main.css': 'compiled/css/main.css'
+					'dist/css/faceted-search.css': 'compiled/lib/faceted-search/stage/css/main.css'
 
 		### JS ###
 

@@ -39,7 +39,12 @@
       	Starts a timer which resets when it is called again.
       	
       	Example: with a scroll event, when a user stops scrolling, the timer ends.
-      		Without the reset, the timer would fire dozens of times.
+      	Without the reset, the timer would fire dozens of times.
+      	Can also be handy to avoid double clicks.
+      
+      	Example usage:
+      	div.addEventListener 'scroll', (ev) ->
+      		Fn.timeoutWithReset 200, -> console.log('finished!')
       	
       	return Function
       */
@@ -148,7 +153,7 @@
         return false;
       },
       /*
-      	Removes an element found by indexOf from an array
+      	Removes an item from an array
       */
 
       removeFromArray: function(arr, item) {
@@ -235,6 +240,37 @@
           0;
         }
         return Object.getPrototypeOf(obj) === ObjProto;
+      },
+      getScrollPercentage: function(el, orientation) {
+        var scrolled, total;
+        if (orientation == null) {
+          orientation = 'vertical';
+        }
+        if (orientation === 'vertical') {
+          scrolled = el.scrollTop;
+          total = el.scrollHeight - el.clientHeight;
+        } else {
+          scrolled = el.scrollLeft;
+          total = el.scrollWidth - el.clientWidth;
+        }
+        return Math.floor((scrolled / total) * 100);
+      },
+      setScrollPercentage: function(el, percentage, orientation) {
+        var clientHeight, clientWidth, left, scrollHeight, scrollWidth, top;
+        if (orientation == null) {
+          orientation = 'vertical';
+        }
+        clientWidth = el.clientWidth;
+        scrollWidth = el.scrollWidth;
+        clientHeight = el.clientHeight;
+        scrollHeight = el.scrollHeight;
+        top = 0;
+        left = 0;
+        if (orientation === 'vertical') {
+          return el.scrollTop = (scrollHeight - clientHeight) * percentage / 100;
+        } else {
+          return el.scrollLeft = (scrollWidth - clientWidth) * percentage / 100;
+        }
       }
     };
   });

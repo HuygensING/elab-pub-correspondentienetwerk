@@ -15,9 +15,10 @@
             var header, mainRouter;
             mainRouter = new MainRouter();
             header = new Views.Header({
-              managed: false
+              managed: false,
+              title: configData.get('title')
             });
-            $('.wrapper').prepend(header.$el);
+            $('header.wrapper').prepend(header.$el);
             Backbone.history.start({
               pushState: true
             });

@@ -33,7 +33,12 @@ define (require) ->
 	Starts a timer which resets when it is called again.
 	
 	Example: with a scroll event, when a user stops scrolling, the timer ends.
-		Without the reset, the timer would fire dozens of times.
+	Without the reset, the timer would fire dozens of times.
+	Can also be handy to avoid double clicks.
+
+	Example usage:
+	div.addEventListener 'scroll', (ev) ->
+		Fn.timeoutWithReset 200, -> console.log('finished!')
 	
 	return Function
 	###
@@ -126,7 +131,7 @@ define (require) ->
 		return false
 
 	###
-	Removes an element found by indexOf from an array
+	Removes an item from an array
 	###
 	removeFromArray: (arr, item) ->
 		index = arr.indexOf item
@@ -187,3 +192,27 @@ define (require) ->
 		0 while Object.getPrototypeOf(ObjProto = Object.getPrototypeOf(ObjProto)) isnt null
 
 		Object.getPrototypeOf(obj) is ObjProto
+
+	getScrollPercentage: (el, orientation='vertical') ->
+		if orientation is 'vertical'
+			scrolled = el.scrollTop
+			total = el.scrollHeight - el.clientHeight
+		# orientation is 'horizontal'
+		else
+			scrolled = el.scrollLeft
+			total = el.scrollWidth - el.clientWidth
+
+		Math.floor (scrolled/total) * 100
+
+	setScrollPercentage: (el, percentage, orientation='vertical') ->
+			clientWidth = el.clientWidth
+			scrollWidth = el.scrollWidth
+			clientHeight = el.clientHeight
+			scrollHeight = el.scrollHeight
+			top = 0
+			left = 0
+
+			if orientation is 'vertical'
+				el.scrollTop = (scrollHeight - clientHeight) * percentage/100
+			else
+				el.scrollLeft = (scrollWidth - clientWidth) * percentage/100

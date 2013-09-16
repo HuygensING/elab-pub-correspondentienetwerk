@@ -7,8 +7,7 @@
     config = require('config');
     facetViewMap = require('facetviewmap');
     Models = {
-      FacetedSearch: require('models/main'),
-      RestClient: require('models/restclient')
+      FacetedSearch: require('models/main')
     };
     Views = {
       Base: require('views/base'),
@@ -41,13 +40,14 @@
         _.extend(config.facetNameMap, options.facetNameMap);
         delete options.facetNameMap;
         _.extend(config, options);
+        console.log("CONFIG", config, options);
         queryOptions = _.extend(config.queryOptions, config.textSearchOptions);
         this.model = new Models.FacetedSearch(queryOptions);
         this.subscribe('unauthorized', function() {
           return _this.trigger('unauthorized');
         });
         this.subscribe('results:change', function(response) {
-          return _this.trigger('faceted-search:results', response);
+          return _this.trigger('results:change', response);
         });
         return this.render();
       };
@@ -57,7 +57,6 @@
         rtpl = _.template(Templates.FacetedSearch);
         this.$el.html(rtpl);
         this.$('.loader').fadeIn('slow');
-        console.log("HERE FS");
         if (config.search) {
           search = new Views.Search();
           this.$('.search-placeholder').html(search.$el);

@@ -23,7 +23,6 @@ define (require) ->
 
 		setActiveTextVersion: (version) ->
 			li = @$(".versions li[data-toggle=#{version}]")
-			console.log "LI", li, ".versions li[data-toggle=#{version}]"
 			li.addClass('active').siblings().removeClass('active')
 
 		changeTextVersion: (e) ->
@@ -59,6 +58,12 @@ define (require) ->
 
 			@currentTextVersion = @options.version || config.defaultTextVersion
 			@numMetadataItems = @options.numMetadataItems || 4
+
+			@$('body').scroll (e) =>
+				if 
+					@$('.text-view').addClass 'fixed'
+				else if not @$('.text-view').hasClass 'fixed'
+					@fixTextView()
 
 			@render()
 
