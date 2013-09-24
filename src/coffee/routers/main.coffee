@@ -12,7 +12,7 @@ define (require) ->
 	Views =
 		Home: require 'views/home'
 		Search: require 'views/search'
-		Item: require 'views/item'
+		Entry: require 'views/entry'
 		ParallelView: require 'views/parallel-view'
 
 	class MainRouter extends Backbone.Router
@@ -23,22 +23,22 @@ define (require) ->
 
 		'routes':
 			'': 'home'
-			'item/:id': 'item'
-			'item/:id/parallel': 'itemParallelView'
-			'item/:id/:version': 'itemVersionView'
+			'entry/:id': 'entry'
+			'entry/:id/parallel': 'entryParallelView'
+			'entry/:id/:version': 'entryVersionView'
 
 		home: ->
 			viewManager.show Views.Search
 
-		itemParallelView: (id) ->
+		entryParallelView: (id) ->
 			viewManager.show Views.ParallelView,
 				id: id
 				mode: 'parallel'
 
-		itemVersionView: (id, version) ->
-			viewManager.show Views.Item,
+		entryVersionView: (id, version) ->
+			viewManager.show Views.Entry,
 				id: id
 				version: version
 
-		item: (id) ->
-			viewManager.show Views.Item, id: id
+		entry: (id) ->
+			viewManager.show Views.Entry, id: id

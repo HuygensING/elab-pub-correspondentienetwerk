@@ -4,9 +4,10 @@ define (require) ->
 	config =
 		appRootElement: '#app'
 		baseURL: ''
-		configDataURL: "#{basePath}data/config.json"
-		itemURL: (id) -> "item/#{String(id).replace '.json', ''}"
-		parallelURL: (id) -> "#{basePath}item/#{id}/parallel"
+		configDataURL: "data/config.json"
+		entryURL: (id) -> "entry/#{id}"
+		entryDataURL: (id) -> "/data-entry/#{id}"
+		parallelURL: (id) -> "#{basePath}entry/#{id}/parallel"
 		defaultTextVersion: 'Diplomatic'
 		resultRows: 10
 		panelSize: 'large'

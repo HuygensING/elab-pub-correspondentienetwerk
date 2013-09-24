@@ -7,14 +7,14 @@ define (require) ->
 	TextView = require 'views/text'
 	ParallelView = require 'views/parallel-view'
 
-	Item = require 'models/item'
+	Entry = require 'models/entry'
 
 	class Home extends BaseView
-		baseTemplate: require 'text!html/item/base.html'
-		headerTemplate: require 'text!html/item/header.html'
-		metadataTemplate: require 'text!html/item/metadata.html'
-		contentsTemplate: require 'text!html/item/contents.html'
-		# annotationsTemplate: require 'text!html/item/annotations.html'
+		baseTemplate: require 'text!html/entry/base.html'
+		headerTemplate: require 'text!html/entry/header.html'
+		metadataTemplate: require 'text!html/entry/metadata.html'
+		contentsTemplate: require 'text!html/entry/contents.html'
+		# annotationsTemplate: require 'text!html/entry/annotations.html'
 
 		events:
 			'click .versions li': 'changeTextVersion'
@@ -51,13 +51,13 @@ define (require) ->
 			@contentsTemplate = _.template @contentsTemplate
 
 			if 'id' of @options
-				@model = new Item id: @options.id
+				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 
 			@options.mode = 'normal' unless @options.mode
 
 			@currentTextVersion = @options.version || config.defaultTextVersion
-			@numMetadataItems = @options.numMetadataItems || 4
+			@numMetadataEntrys = @options.numMetadataEntrys || 4
 
 			@didScroll = false
 			@$el.click -> @didScroll = true
@@ -91,21 +91,21 @@ define (require) ->
 		renderHeader: ->
 			@$('.header').html @headerTemplate
 				config: config
-				item: @model.attributes
+				entry: @model.attributes
 
 			prev = configData.findPrev @options.id
 			if prev
-				@$('.prev').attr href: config.itemURL prev
+				@$('.prev').attr href: config.entryURL prev
 			next = configData.findNext @options.id
 			if next
-				@$('.next').attr href: config.itemURL next
+				@$('.next').attr href: config.entryURL next
 
 			@$('.prev').toggleClass 'hide', not prev
 			@$('.next').toggleClass 'hide', not next
 
 		renderContents: ->
 			@$('.contents').html @contentsTemplate
-				item: @model.attributes
+				entry: @model.attributes
 				config: config
 
 			@textView = new TextView
@@ -113,7 +113,7 @@ define (require) ->
 				version: @currentTextVersion
 				el: @$('.contents .text-view')
 
-		renderItem: ->
+		renderEntry: ->
 			@renderHeader()
 			@renderMetadata()
 			@renderContents()
@@ -122,6 +122,6 @@ define (require) ->
 
 		render: ->
 			@$el.html @baseTemplate()
-			@renderItem()
+			@renderEntry()
 
 			@

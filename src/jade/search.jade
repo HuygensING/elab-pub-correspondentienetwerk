@@ -19,5 +19,5 @@
 			ul
 				| <% _.each(w.results, function (e) { %>
 				li
-					| <a href="/item/<%- String(e).replace('.json', '') %>"><%- e %></a>
+					| <a href="<%- config.entryURL(String(e).replace('.json', '')) %>"><%- e %></a>
 				| <% }) %>

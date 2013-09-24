@@ -1,7 +1,7 @@
 .row.span12
 	.cell.span1
-		| <% if (item.facsimiles) { %>
-		|   <% _.each(item.facsimiles, function (f, n) { %>
+		| <% if (entry.facsimiles) { %>
+		|   <% _.each(entry.facsimiles, function (f, n) { %>
 		h3 Blad <%= n+1 %> 
 		img(src!="<%= f.thumbnail %>")
 		|   <% }); %>
@@ -10,10 +10,10 @@
 		.row.span12
 			.cell.span8.versions
 				ul
-					| <% _.each(item.paralleltexts, function (value, name) { %>
+					| <% _.each(entry.paralleltexts, function (value, name) { %>
 					li(data-toggle!="<%= name %>"): button <%= name %>
 					| <% }); %>
 			.cell.span3.parallel
 				button.green Parallel text view
 		.text-view
-			<%= item.paralleltexts ? (item.paralleltexts[config.defaultTextVersion] || {}).text : '' %>
+			<%= entry.paralleltexts ? (entry.paralleltexts[config.defaultTextVersion] || {}).text : '' %>

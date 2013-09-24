@@ -1,7 +1,7 @@
 .text
-	| <%= item.paralleltexts[version].text %>
+	| <%= entry.paralleltexts[version].text %>
 .annotations
 	ol
-		| <% _.each(item.paralleltexts[version].annotations, function (a) { %>
+		| <% _.each(entry.paralleltexts[version].annotations, function (a) { %>
 		li <%= a.text %>
 		| <% }); %>

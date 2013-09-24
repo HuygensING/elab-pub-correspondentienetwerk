@@ -1,6 +1,6 @@
 define (require) ->
 	config = require 'config'
-	Item = require 'models/item'
+	Entry = require 'models/entry'
 
 	TextView = require 'views/text'
 	FacsimileView = require 'views/facsimile'
@@ -19,7 +19,7 @@ define (require) ->
 			@textVersion = @options?.textVersion || 'Translation'
 
 			if 'id' of @options and not @model
-				@model = new Item id: @options.id
+				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 			else if @model
 				@render()
@@ -54,7 +54,7 @@ define (require) ->
 
 		render: ->
 			@$el.html @template
-				item: @model?.attributes
+				entry: @model?.attributes
 				versions: _.flatten [ 'Facsimile', @model.textVersions() ]
 				version: @textVersion
 			@renderCurrentSelection()

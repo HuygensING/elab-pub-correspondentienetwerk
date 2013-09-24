@@ -2,7 +2,7 @@ define (require) ->
 	BaseView = require 'views/base'
 	PanelView = require 'views/panel'
 
-	Item = require 'models/item'
+	Entry = require 'models/entry'
 
 	Templates =
 		ParallelView: require 'text!html/parallel-view.html'
@@ -20,7 +20,7 @@ define (require) ->
 			@panels = []
 
 			if 'id' of @options
-				@model = new Item id: @options.id
+				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 
 			@addPanel()
@@ -83,7 +83,7 @@ define (require) ->
 
 		render: ->
 			tmpl = _.template Templates.ParallelView
-			@$el.html tmpl item: @model?.attributes
+			@$el.html tmpl entry: @model?.attributes
 
 			@renderPanels()
 

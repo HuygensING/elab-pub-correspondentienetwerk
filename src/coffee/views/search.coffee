@@ -70,6 +70,7 @@ define (require) ->
 		renderResults: ->
 			@$('.results .list').html @resultsTemplate
 				results: @results
+				config: config
 			@renderResultsCount()
 
 			@$('.position .current').text @search.currentPosition?()

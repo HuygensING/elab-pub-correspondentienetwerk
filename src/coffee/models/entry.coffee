@@ -2,8 +2,8 @@ define (require) ->
 	BaseModel = require 'models/base'
 	config = require 'config'
 	
-	class Item extends BaseModel
-		url: -> "#{config.basePath}/data/#{@id}.json"
+	class Entry extends BaseModel
+		url: config.entryDataURL
 
 		parse: (data) ->
 			# Replace <ab />s (annotation begin) and <ae />s (annotation end) with <span />s and <sup />s
