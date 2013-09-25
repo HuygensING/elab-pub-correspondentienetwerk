@@ -1,9 +1,15 @@
 define (require) ->
 	class Facsimile extends Backbone.View
+		template: require 'text!html/facsimile-zoom.html'
 		initialize: ->
+			@template = _.template @template
 			@size = @options.size || 'large'
+			@page = @options.page || 0
 			@render()
 
 		render: ->
-			@$el.html "<img src='#{@model.facsimileURL(size: @size)}' alt='Facsimile view' class='#{@size}'>"
-			@$('img').css width: '100%'
+			@$el.html @template
+				model: @model
+				entry: @model.attributes
+				page: @page
+				size: @size

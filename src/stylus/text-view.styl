@@ -1,10 +1,20 @@
 .text-view, .panel
 	.text
+		position relative
 		display inline-block
 		width 205px
 		margin-right 15px
 
 		font-family textFont
+
+		line-height 22px
+		.line-numbers
+			position absolute
+			top 0
+			left -1.5em
+			line-height 22px
+			font-size 10px
+			color medium-grey
 
 	.annotations
 		display inline-block

@@ -4,12 +4,12 @@
 			span &#9666;
 			| &nbsp;Results
 	.cell.span5.other
-		a(href!="<%= entry.prevURL %>", class="prev")
+		a.prev(href!="<%= entry.prevURL %>")
 			span &#9666;
 			| &nbsp;Previous	
-		a(href!="<%= entry.nextURL %>", class="next")
+		a.next(href!="<%= entry.nextURL %>")
 			| Next&nbsp;
 			span &#9656;
-		a(href="/print") Print...
+		a.print(href="#", data-bypass="true") Print...
 	.cell.span2.huygens-logo
 		img(src!="<%= config.basePath %>images/HuygensING.png")

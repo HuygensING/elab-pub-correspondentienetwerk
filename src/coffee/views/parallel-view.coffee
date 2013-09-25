@@ -50,12 +50,10 @@ define (require) ->
 			$('html, body').animate
 				scrollLeft: @panels[last].$el.offset().left
 
-
 		addPanel: ->
 			panel = new PanelView model: @model
 			@panels.push panel
-
-			@
+			panel
 
 		positionPanel: (p, pos=0) ->
 			p.$el.css
@@ -69,17 +67,24 @@ define (require) ->
 				p.$el.css
 					left: (pos * p.$el.outerWidth()) + 'px'
 
+		panel: (idx) ->
+			console.log("PANELS", @panels)
+			@panels[idx]
+
 		appendPanel: (p) ->
 			@$('.panel-container').append p.el
 			@positionPanel p, @panels.length - 1
 			p.positionSelectionTab()
+
+		clearPanels: ->
+			@panels = []
+			@renderPanels()
 
 		renderPanels: ->
 			@$('.panel-container').empty()
 			for p, pos in @panels
 				@appendPanel p
 				@positionPanel p, pos
-
 
 		render: ->
 			tmpl = _.template Templates.ParallelView

@@ -26,7 +26,14 @@ define (require) ->
 
 		selectText: (e) ->
 			target = $(e.currentTarget)
-			@textVersion = target.data 'toggle'
+			@setVersion target.data 'toggle'
+
+		versionIsFacsimile: -> @textVersion is 'Facsimile'
+
+		# Page is only relevant if version is 'Facsimile'
+		setVersion: (version, page=null) ->
+			@textVersion = version
+			@page = page if @versionIsFacsimile()
 			@renderContent()
 
 		selectedVersion: -> @textVersion
@@ -43,8 +50,9 @@ define (require) ->
 			@$('.selection .current span').text @textVersion
 
 		renderContent: ->
-			if @textVersion is 'Facsimile'
-				@subView = new FacsimileView model: @model
+			if @versionIsFacsimile()
+				@subView = new FacsimileView
+					model: @model, page: @page
 				@$('.view').html @subView.el
 			else
 				@subView = new TextView

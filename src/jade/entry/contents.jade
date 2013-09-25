@@ -3,7 +3,8 @@
 		| <% if (entry.facsimiles) { %>
 		|   <% _.each(entry.facsimiles, function (f, n) { %>
 		h3 Blad <%= n+1 %> 
-		img(src!="<%= f.thumbnail %>")
+		.thumbnail(data-page!="<%= n %>")
+			img(src!="<%= f.thumbnail %>")
 		|   <% }); %>
 		| <% } %>
 	.cell.span11

@@ -23,9 +23,9 @@ define (require) ->
 
 		'routes':
 			'': 'home'
-			'entry/:id': 'entry'
 			'entry/:id/parallel': 'entryParallelView'
 			'entry/:id/:version': 'entryVersionView'
+			'entry/:id': 'entry'
 
 		home: ->
 			viewManager.show Views.Search
@@ -41,4 +41,5 @@ define (require) ->
 				version: version
 
 		entry: (id) ->
+			console.log "Entry #{id}"
 			viewManager.show Views.Entry, id: id

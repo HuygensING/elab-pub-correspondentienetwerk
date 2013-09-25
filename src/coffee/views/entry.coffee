@@ -16,10 +16,14 @@ define (require) ->
 		contentsTemplate: require 'text!html/entry/contents.html'
 		# annotationsTemplate: require 'text!html/entry/annotations.html'
 
+		className: 'entry'
+
 		events:
 			'click .versions li': 'changeTextVersion'
 			'click .more button': 'toggleMoreMetadata'
 			'click .parallel button': 'showParallelView'
+			'click .thumbnail': 'showThumbnailParallelView'
+			'click a.print': 'printEntry'
 
 		setActiveTextVersion: (version) ->
 			li = @$(".versions li[data-toggle=#{version}]")
@@ -34,13 +38,28 @@ define (require) ->
 			@$('.metadata').toggleClass 'more' # fields
 			$(e.currentTarget).toggleClass 'more' # button
 
-		showParallelView: (e) ->
+		showParallelView: ->
 			if not @pv
 				@pv = new ParallelView model: @model
 				@$('.header').after @pv.el
 			else
 				@pv.show()
-			
+
+			@pv
+
+		showThumbnailParallelView: (e) ->
+			target = $(e.currentTarget)
+			page = target.data 'page'
+
+			@pv = @showParallelView()
+			@pv.clearPanels()
+			@pv.addPanel().setVersion 'Facsimile', page	
+			@pv.addPanel().setVersion @currentTextVersion
+			@pv.renderPanels()
+
+		printEntry: (e) ->
+			e.preventDefault()
+			window.print()
 
 		initialize: ->
 			super
@@ -51,6 +70,7 @@ define (require) ->
 			@contentsTemplate = _.template @contentsTemplate
 
 			if 'id' of @options
+				console.log "new Entry #{@options.id}"
 				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 
@@ -113,10 +133,20 @@ define (require) ->
 				version: @currentTextVersion
 				el: @$('.contents .text-view')
 
+		renderLineNumbering: ->
+			lineNumbers = $('<div>').addClass 'line-numbers'
+			lines = ""
+			for n in [1..200]
+				lines += "#{n}<br>"
+			lineNumbers.html lines
+			@$('.text .line-numbers').remove()
+			@$('.text').append lineNumbers
+
 		renderEntry: ->
 			@renderHeader()
 			@renderMetadata()
 			@renderContents()
+			@renderLineNumbering()
 
 			@setActiveTextVersion @currentTextVersion
 

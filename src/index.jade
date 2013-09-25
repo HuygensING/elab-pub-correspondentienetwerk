@@ -3,9 +3,12 @@ html(lang="en")
 	head
 		meta(charset="utf-8")
 		title elaborate-publication
-		link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/faceted-search.css")
-		link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/main.css")
-		script(data-main="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/js/main", src="lib/requirejs/require.js")
+		// link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/faceted-search.css")
+		// link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/main.css")
+		link(rel="stylesheet", type="text/css", href="/lib/faceted-search/css/main.css")
+		link(rel="stylesheet", type="text/css", href="/css/main.css")
+		// script(data-main="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/js/main", src="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/js/require.js")
+		script(data-main="/js/main", src="/lib/requirejs/require.js", type="text/javascript")
 	body
 		header.wrapper
 		#main

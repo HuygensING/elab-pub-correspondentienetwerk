@@ -3,7 +3,7 @@ define (require) ->
 	config = require 'config'
 	
 	class Entry extends BaseModel
-		url: config.entryDataURL
+		url: -> config.entryDataURL(@id)
 
 		parse: (data) ->
 			# Replace <ab />s (annotation begin) and <ae />s (annotation end) with <span />s and <sup />s
@@ -12,6 +12,7 @@ define (require) ->
 					i = 1
 					data.paralleltexts[version].text = data.paralleltexts[version].text.replace /<ab id="(.*?)"\/>/g, (match, p1, offset, string) => '<span data-marker="begin" data-id="'+p1+'"></span>'
 					data.paralleltexts[version].text = data.paralleltexts[version].text.replace /<ae id="(.*?)"\/>/g, (match, p1, offset, string) => '<sup data-marker="end" data-id="'+p1+'">'+(i++)+'</sup> '
+					data.paralleltexts[version].text = data.paralleltexts[version].text.replace /\n/, '<br>'
 			data
 
 		text: (key) ->
@@ -24,6 +25,9 @@ define (require) ->
 		annotations: (key) ->
 			texts = @get 'paralleltexts'
 			if texts and key of texts then texts[key].annotations else undefined
+
+		facsimileZoomURL: (page) ->
+			@get('facsimiles')?[page]?.zoom
 
 		facsimileURL: (options) ->
 			sizes =

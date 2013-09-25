@@ -20,6 +20,6 @@ require.config
 			exports: '$'
 			deps: ['jquery']
 
-require ['domready', 'app'], (domready, app) ->
+require ['domready', 'config', 'app'], (domready, config, app) ->
 	domready ->
 		app.initialize()
