@@ -59,10 +59,21 @@ define (require) ->
 
 			@
 
+		renderLineNumbering: ->
+			lineNumbers = $('<div>').addClass 'line-numbers'
+			lines = ""
+			for n in [1..1000] # TODO: hard-coded, but maybe better to compute?
+				lines += "#{n}<br>"
+			lineNumbers.html lines
+			@$('.text .line-numbers').remove()
+			@$('.text').append lineNumbers
+			lineNumbers.css height: @$('.text').outerHeight()
+
 		renderContent: ->
 			text = @model.text @currentTextVersion
 			@$('.text').html text
 			@renderAnnotations()
+			@renderLineNumbering()
 
 			@
 

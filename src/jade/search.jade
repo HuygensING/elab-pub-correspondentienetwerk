@@ -19,5 +19,5 @@
 			ul
 				| <% _.each(w.results, function (e) { %>
 				li
-					| <a href="<%- config.entryURL(e) %>"><%- e %></a>
+					a(href!="<%- config.entryURL(e) %>") <%- e %>
 				| <% }) %>

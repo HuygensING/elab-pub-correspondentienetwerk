@@ -193,26 +193,25 @@ define (require) ->
 
 		Object.getPrototypeOf(obj) is ObjProto
 
-	getScrollPercentage: (el, orientation='vertical') ->
-		if orientation is 'vertical'
-			scrolled = el.scrollTop
-			total = el.scrollHeight - el.clientHeight
-		# orientation is 'horizontal'
-		else
-			scrolled = el.scrollLeft
-			total = el.scrollWidth - el.clientWidth
+	getScrollPercentage: (el) ->
+		scrolledTop = el.scrollTop
+		totalTop = el.scrollHeight - el.clientHeight
 
-		Math.floor (scrolled/total) * 100
+		scrolledLeft = el.scrollLeft
+		totalLeft = el.scrollWidth - el.clientWidth
 
-	setScrollPercentage: (el, percentage, orientation='vertical') ->
-			clientWidth = el.clientWidth
-			scrollWidth = el.scrollWidth
-			clientHeight = el.clientHeight
-			scrollHeight = el.scrollHeight
-			top = 0
-			left = 0
+		top: Math.floor (scrolledTop/totalTop) * 100
+		left: Math.floor (scrolledLeft/totalLeft) * 100
 
-			if orientation is 'vertical'
-				el.scrollTop = (scrollHeight - clientHeight) * percentage/100
-			else
-				el.scrollLeft = (scrollWidth - clientWidth) * percentage/100
+	setScrollPercentage: (el, percentages) ->
+		clientWidth = el.clientWidth
+		scrollWidth = el.scrollWidth
+		clientHeight = el.clientHeight
+		scrollHeight = el.scrollHeight
+
+		el.scrollTop = (scrollHeight - clientHeight) * percentages.top/100
+		el.scrollLeft = (scrollWidth - clientWidth) * percentages.left/100
+
+	checkCheckboxes: (selector, checked=true, baseEl=document) ->
+		checkboxes = baseEl.querySelectorAll selector
+		cb.checked = checked for cb in checkboxes

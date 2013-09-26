@@ -1,16 +1,17 @@
 (function() {
   define(function(require) {
-    var Backbone, MainRouter, Views, configData;
+    var Backbone, MainRouter, Views, config, configData;
     Backbone = require('backbone');
     MainRouter = require('routers/main');
     configData = require('models/configdata');
+    config = require('config');
     Views = {
       Header: require('views/ui/header')
     };
     return {
       initialize: function() {
         var _this = this;
-        return configData.fetch({
+        configData.fetch({
           success: function() {
             var header, mainRouter;
             mainRouter = new MainRouter();
@@ -20,7 +21,7 @@
             });
             $('header.wrapper').prepend(header.$el);
             Backbone.history.start({
-              root: window.location.pathname,
+              root: config.basePath || '',
               pushState: true
             });
             return $(document).on('click', 'a:not([data-bypass])', function(e) {
@@ -35,6 +36,11 @@
             });
           }
         });
+        return {
+          error: function() {
+            return console.log("Could not fetch config data");
+          }
+        };
       }
     };
   });

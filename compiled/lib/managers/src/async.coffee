@@ -14,12 +14,8 @@ define (require) ->
 				@callbacksCalled[name] = false
 				
 		called: (name, data = true) ->
-			console.log 'called', name, data
 			@callbacksCalled[name] = data
 			@ready() if _.every @callbacksCalled, (called) -> 
-				console.log called
 				called isnt false
 
-		ready: -> 
-			console.log 'ready!!'
-			@trigger 'ready', @callbacksCalled
+		ready: -> @trigger 'ready', @callbacksCalled

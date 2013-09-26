@@ -16,7 +16,7 @@
     Views = {
       Home: require('views/home'),
       Search: require('views/search'),
-      Item: require('views/item'),
+      Entry: require('views/entry'),
       ParallelView: require('views/parallel-view')
     };
     return MainRouter = (function(_super) {
@@ -34,31 +34,33 @@
 
       MainRouter.prototype['routes'] = {
         '': 'home',
-        'item/:id': 'item',
-        'item/:id/parallel': 'itemParallelView',
-        'item/:id/:version': 'itemVersionView'
+        'entry/:id/parallel': 'entryParallelView',
+        'entry/:id/:version': 'entryVersionView',
+        'entry/:id': 'entry'
       };
 
       MainRouter.prototype.home = function() {
         return viewManager.show(Views.Search);
       };
 
-      MainRouter.prototype.itemParallelView = function(id) {
+      MainRouter.prototype.entryParallelView = function(id) {
         return viewManager.show(Views.ParallelView, {
           id: id,
           mode: 'parallel'
         });
       };
 
-      MainRouter.prototype.itemVersionView = function(id, version) {
-        return viewManager.show(Views.Item, {
+      MainRouter.prototype.entryVersionView = function(id, version) {
+        console.log("Showing version " + version + " for " + id);
+        return viewManager.show(Views.Entry, {
           id: id,
           version: version
         });
       };
 
-      MainRouter.prototype.item = function(id) {
-        return viewManager.show(Views.Item, {
+      MainRouter.prototype.entry = function(id) {
+        console.log("Entry " + id);
+        return viewManager.show(Views.Entry, {
           id: id
         });
       };

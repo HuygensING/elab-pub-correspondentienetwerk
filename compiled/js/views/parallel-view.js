@@ -3,10 +3,10 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Item, PanelView, ParallelView, Templates, _ref;
+    var BaseView, Entry, PanelView, ParallelView, Templates, _ref;
     BaseView = require('views/base');
     PanelView = require('views/panel');
-    Item = require('models/item');
+    Entry = require('models/entry');
     Templates = {
       ParallelView: require('text!html/parallel-view.html')
     };
@@ -31,7 +31,7 @@
         ParallelView.__super__.initialize.apply(this, arguments);
         this.panels = [];
         if ('id' in this.options) {
-          this.model = new Item({
+          this.model = new Entry({
             id: this.options.id
           });
           this.model.fetch({
@@ -86,7 +86,7 @@
           model: this.model
         });
         this.panels.push(panel);
-        return this;
+        return panel;
       };
 
       ParallelView.prototype.positionPanel = function(p, pos) {
@@ -113,10 +113,20 @@
         return _results;
       };
 
+      ParallelView.prototype.panel = function(idx) {
+        console.log("PANELS", this.panels);
+        return this.panels[idx];
+      };
+
       ParallelView.prototype.appendPanel = function(p) {
         this.$('.panel-container').append(p.el);
         this.positionPanel(p, this.panels.length - 1);
         return p.positionSelectionTab();
+      };
+
+      ParallelView.prototype.clearPanels = function() {
+        this.panels = [];
+        return this.renderPanels();
       };
 
       ParallelView.prototype.renderPanels = function() {
@@ -136,7 +146,7 @@
         var tmpl, _ref1;
         tmpl = _.template(Templates.ParallelView);
         this.$el.html(tmpl({
-          item: (_ref1 = this.model) != null ? _ref1.attributes : void 0
+          entry: (_ref1 = this.model) != null ? _ref1.attributes : void 0
         }));
         this.renderPanels();
         return this;

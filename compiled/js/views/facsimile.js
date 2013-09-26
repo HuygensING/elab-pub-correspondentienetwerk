@@ -12,18 +12,22 @@
         return _ref;
       }
 
+      Facsimile.prototype.template = require('text!html/facsimile-zoom.html');
+
       Facsimile.prototype.initialize = function() {
+        this.template = _.template(this.template);
         this.size = this.options.size || 'large';
+        this.page = this.options.page || 0;
         return this.render();
       };
 
       Facsimile.prototype.render = function() {
-        this.$el.html("<img src='" + (this.model.facsimileURL({
+        return this.$el.html(this.template({
+          model: this.model,
+          entry: this.model.attributes,
+          page: this.page,
           size: this.size
-        })) + "' alt='Facsimile view' class='" + this.size + "'>");
-        return this.$('img').css({
-          width: '100%'
-        });
+        }));
       };
 
       return Facsimile;

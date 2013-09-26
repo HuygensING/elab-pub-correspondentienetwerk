@@ -23,11 +23,12 @@ define (require) ->
 
 		'routes':
 			'': 'home'
-			'entry/:id/parallel': 'entryParallelView'
-			'entry/:id/:version': 'entryVersionView'
-			'entry/:id': 'entry'
+			"#{config.basePath}entry/:id/parallel": 'entryParallelView'
+			"#{config.basePath}entry/:id/:version": 'entryVersionView'
+			"#{config.basePath}entry/:id": 'entry'
 
 		home: ->
+			console.log "Showuing home"
 			viewManager.show Views.Search
 
 		entryParallelView: (id) ->
@@ -36,6 +37,7 @@ define (require) ->
 				mode: 'parallel'
 
 		entryVersionView: (id, version) ->
+			console.log "Showing version #{version} for #{id}"
 			viewManager.show Views.Entry,
 				id: id
 				version: version

@@ -2,13 +2,15 @@ define (require) ->
 	basePath = window.location.pathname
 
 	# Perhaps not the best way to ensure relative paths refer to correct location
-	basePath = basePath.replace /\/(?:entry(?:\/\d+))/, '/'
+	basePath = basePath.replace /(?:\/entry(?:\/[^\/]*)+)+/, '/'
 	console.log "BASE PATH", basePath
 
 	config =
 		appRootElement: '#app'
 		baseURL: ''
 		configDataURL: "#{basePath}data/config.json"
+		itemLabel: 'entry'
+		itemLabelPlural: 'entries'
 		entryURL: (id) -> "#{basePath}entry/#{id}"
 		entryDataURL: (id) -> 
 			console.log "Fetching entry #{id}"

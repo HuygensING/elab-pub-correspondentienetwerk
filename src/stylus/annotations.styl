@@ -1,7 +1,10 @@
-highlightColor = lighten(annotationsBackground, 70%)
+highlightColor = lighten(annotationsBackground, 40%)
 numberHighlight = #BA5DB6
 
 .text
+	@media print
+		width auto
+
 	sup[data-marker]
 		cursor pointer
 		color darken(annotationsBackground, 30%)
@@ -14,6 +17,9 @@ numberHighlight = #BA5DB6
 		background-color highlightColor
 
 .annotations
+	@media print
+		width auto
+
 	li
 		&.highlight .number span
 			color white

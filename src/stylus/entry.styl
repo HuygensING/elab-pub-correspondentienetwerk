@@ -25,24 +25,18 @@
 	.header
 		border-bottom 2px solid medium-grey
 		margin-bottom 25px
-		min-height 76px
+		min-height 45px
 
 		@media print
 			display none
 
-		.other a
-			margin 0 20px
+		a.next-entry, a.next-result, a.prev-entry, a.prev-result
+			// margin 0 20px
 		.back a, .next, .prev
 			&.hide
 				visibility hidden
 			span
 				color medium-grey
-
-		.huygens-logo
-			text-align right
-			img
-				display inline-block
-				margin-bottom 10px
 
 	.metadata
 		padding-top pTop

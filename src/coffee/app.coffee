@@ -2,6 +2,7 @@ define (require) ->
 	Backbone = require 'backbone'
 	MainRouter = require 'routers/main'
 	configData = require 'models/configdata'
+	config = require 'config'
 	Views = Header: require 'views/ui/header'
 
 	initialize: ->
@@ -14,7 +15,7 @@ define (require) ->
 					title: configData.get 'title'
 				$('header.wrapper').prepend header.$el
 				Backbone.history.start
-					root: window.location.pathname
+					root: config.basePath || ''
 					pushState: true   
 
 				$(document).on 'click', 'a:not([data-bypass])', (e) ->

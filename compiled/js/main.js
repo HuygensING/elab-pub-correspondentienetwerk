@@ -26,7 +26,7 @@
     }
   });
 
-  require(['domready', 'app'], function(domready, app) {
+  require(['domready', 'config', 'app'], function(domready, config, app) {
     return domready(function() {
       return app.initialize();
     });

@@ -100,7 +100,8 @@
       Home.prototype.renderResults = function() {
         var _base, _base1;
         this.$('.results .list').html(this.resultsTemplate({
-          results: this.results
+          results: this.results,
+          config: config
         }));
         this.renderResultsCount();
         this.$('.position .current').text(typeof (_base = this.search).currentPosition === "function" ? _base.currentPosition() : void 0);

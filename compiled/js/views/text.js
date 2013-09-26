@@ -94,11 +94,27 @@
         return this;
       };
 
+      TextView.prototype.renderLineNumbering = function() {
+        var lineNumbers, lines, n, _i;
+        lineNumbers = $('<div>').addClass('line-numbers');
+        lines = "";
+        for (n = _i = 1; _i <= 1000; n = ++_i) {
+          lines += "" + n + "<br>";
+        }
+        lineNumbers.html(lines);
+        this.$('.text .line-numbers').remove();
+        this.$('.text').append(lineNumbers);
+        return lineNumbers.css({
+          height: this.$('.text').outerHeight()
+        });
+      };
+
       TextView.prototype.renderContent = function() {
         var text;
         text = this.model.text(this.currentTextVersion);
         this.$('.text').html(text);
         this.renderAnnotations();
+        this.renderLineNumbering();
         return this;
       };
 

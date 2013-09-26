@@ -241,36 +241,41 @@
         }
         return Object.getPrototypeOf(obj) === ObjProto;
       },
-      getScrollPercentage: function(el, orientation) {
-        var scrolled, total;
-        if (orientation == null) {
-          orientation = 'vertical';
-        }
-        if (orientation === 'vertical') {
-          scrolled = el.scrollTop;
-          total = el.scrollHeight - el.clientHeight;
-        } else {
-          scrolled = el.scrollLeft;
-          total = el.scrollWidth - el.clientWidth;
-        }
-        return Math.floor((scrolled / total) * 100);
+      getScrollPercentage: function(el) {
+        var scrolledLeft, scrolledTop, totalLeft, totalTop;
+        scrolledTop = el.scrollTop;
+        totalTop = el.scrollHeight - el.clientHeight;
+        scrolledLeft = el.scrollLeft;
+        totalLeft = el.scrollWidth - el.clientWidth;
+        return {
+          top: Math.floor((scrolledTop / totalTop) * 100),
+          left: Math.floor((scrolledLeft / totalLeft) * 100)
+        };
       },
-      setScrollPercentage: function(el, percentage, orientation) {
-        var clientHeight, clientWidth, left, scrollHeight, scrollWidth, top;
-        if (orientation == null) {
-          orientation = 'vertical';
-        }
+      setScrollPercentage: function(el, percentages) {
+        var clientHeight, clientWidth, scrollHeight, scrollWidth;
         clientWidth = el.clientWidth;
         scrollWidth = el.scrollWidth;
         clientHeight = el.clientHeight;
         scrollHeight = el.scrollHeight;
-        top = 0;
-        left = 0;
-        if (orientation === 'vertical') {
-          return el.scrollTop = (scrollHeight - clientHeight) * percentage / 100;
-        } else {
-          return el.scrollLeft = (scrollWidth - clientWidth) * percentage / 100;
+        el.scrollTop = (scrollHeight - clientHeight) * percentages.top / 100;
+        return el.scrollLeft = (scrollWidth - clientWidth) * percentages.left / 100;
+      },
+      checkCheckboxes: function(selector, checked, baseEl) {
+        var cb, checkboxes, _i, _len, _results;
+        if (checked == null) {
+          checked = true;
         }
+        if (baseEl == null) {
+          baseEl = document;
+        }
+        checkboxes = baseEl.querySelectorAll(selector);
+        _results = [];
+        for (_i = 0, _len = checkboxes.length; _i < _len; _i++) {
+          cb = checkboxes[_i];
+          _results.push(cb.checked = checked);
+        }
+        return _results;
       }
     };
   });

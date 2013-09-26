@@ -1,1 +1,16 @@
-<div class="row span12"><div class="cell span4 faceted-search"></div><div class="cell span8 results"><div class="controls"><h3><span class="number-of-results"></span>&nbsp;results</h3><div class="sort"></div></div><div class="cursor"><span class="previous">Previous</span><span class="position">Page&nbsp;<span class="current"></span>&nbsp;of&nbsp;<span class="total"></span></span><img src="/images/loader.gif" class="loader"/><span class="next">Next</span></div><div class="list"><ul><% _.each(w.results, function (e) { %><li><a href="/item/<%- String(e).replace('.json', '') %>"><%- e %></a></li><% }) %></ul></div></div></div>
+
+<div class="row span12">
+  <div class="cell span4 faceted-search"></div>
+  <div class="cell span8 results">
+    <div class="controls">
+      <h3><span class="number-of-results"></span>&nbsp;results</h3>
+      <div class="sort"></div>
+    </div>
+    <div class="cursor"><span class="previous">Previous</span><span class="position">Page&nbsp;<span class="current"></span>&nbsp;of&nbsp;<span class="total"></span></span><img src="/images/loader.gif" class="loader"/><span class="next">Next</span></div>
+    <div class="list">
+      <ul><% _.each(w.results, function (e) { %>
+        <li><a href="<%- config.entryURL(e) %>"><%- e %></a></li><% }) %>
+      </ul>
+    </div>
+  </div>
+</div>

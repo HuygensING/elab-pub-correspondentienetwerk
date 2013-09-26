@@ -1,419 +1,48 @@
-/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
-
-/* ==========================================================================
-   HTML5 display definitions
-   ========================================================================== */
-
-/**
- * Correct `block` display not defined in IE 8/9.
- */
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-    display: block;
-}
-
-/**
- * Correct `inline-block` display not defined in IE 8/9.
- */
-
-audio,
-canvas,
-video {
-    display: inline-block;
-}
-
-/**
- * Prevent modern browsers from displaying `audio` without controls.
- * Remove excess height in iOS 5 devices.
- */
-
-audio:not([controls]) {
-    display: none;
-    height: 0;
-}
-
-/**
- * Address `[hidden]` styling not present in IE 8/9.
- * Hide the `template` element in IE, Safari, and Firefox < 22.
- */
-
-[hidden],
-template {
-    display: none;
-}
-
-/* ==========================================================================
-   Base
-   ========================================================================== */
-
-/**
- * 1. Set default font family to sans-serif.
- * 2. Prevent iOS text size adjust after orientation change, without disabling
- *    user zoom.
- */
-
-html {
-    font-family: sans-serif; /* 1 */
-    -ms-text-size-adjust: 100%; /* 2 */
-    -webkit-text-size-adjust: 100%; /* 2 */
-}
-
-/**
- * Remove default margin.
- */
-
-body {
-    margin: 0;
-}
-
-/* ==========================================================================
-   Links
-   ========================================================================== */
-
-/**
- * Remove the gray background color from active links in IE 10.
- */
-
-a {
-    background: transparent;
-}
-
-/**
- * Address `outline` inconsistency between Chrome and other browsers.
- */
-
-a:focus {
-    outline: thin dotted;
-}
-
-/**
- * Improve readability when focused and also mouse hovered in all browsers.
- */
-
-a:active,
-a:hover {
-    outline: 0;
-}
-
-/* ==========================================================================
-   Typography
-   ========================================================================== */
-
-/**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari 5, and Chrome.
- */
-
-h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
-}
-
-/**
- * Address styling not present in IE 8/9, Safari 5, and Chrome.
- */
-
-abbr[title] {
-    border-bottom: 1px dotted;
-}
-
-/**
- * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
- */
-
-b,
-strong {
-    font-weight: bold;
-}
-
-/**
- * Address styling not present in Safari 5 and Chrome.
- */
-
-dfn {
-    font-style: italic;
-}
-
-/**
- * Address differences between Firefox and other browsers.
- */
-
-hr {
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 0;
-}
-
-/**
- * Address styling not present in IE 8/9.
- */
-
-mark {
-    background: #ff0;
-    color: #000;
-}
-
-/**
- * Correct font family set oddly in Safari 5 and Chrome.
- */
-
-code,
-kbd,
-pre,
-samp {
-    font-family: monospace, serif;
-    font-size: 1em;
-}
-
-/**
- * Improve readability of pre-formatted text in all browsers.
- */
-
-pre {
-    white-space: pre-wrap;
-}
-
-/**
- * Set consistent quote types.
- */
-
-q {
-    quotes: "\201C" "\201D" "\2018" "\2019";
-}
-
-/**
- * Address inconsistent and variable font size in all browsers.
- */
-
-small {
-    font-size: 80%;
-}
-
-/**
- * Prevent `sub` and `sup` affecting `line-height` in all browsers.
- */
-
-sub,
-sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-}
-
-sup {
-    top: -0.5em;
-}
-
-sub {
-    bottom: -0.25em;
-}
-
-/* ==========================================================================
-   Embedded content
-   ========================================================================== */
-
-/**
- * Remove border when inside `a` element in IE 8/9.
- */
-
-img {
-    border: 0;
-}
-
-/**
- * Correct overflow displayed oddly in IE 9.
- */
-
-svg:not(:root) {
-    overflow: hidden;
-}
-
-/* ==========================================================================
-   Figures
-   ========================================================================== */
-
-/**
- * Address margin not present in IE 8/9 and Safari 5.
- */
-
-figure {
-    margin: 0;
-}
-
-/* ==========================================================================
-   Forms
-   ========================================================================== */
-
-/**
- * Define consistent border, margin, and padding.
- */
-
-fieldset {
-    border: 1px solid #c0c0c0;
-    margin: 0 2px;
-    padding: 0.35em 0.625em 0.75em;
-}
-
-/**
- * 1. Correct `color` not being inherited in IE 8/9.
- * 2. Remove padding so people aren't caught out if they zero out fieldsets.
- */
-
-legend {
-    border: 0; /* 1 */
-    padding: 0; /* 2 */
-}
-
-/**
- * 1. Correct font family not being inherited in all browsers.
- * 2. Correct font size not being inherited in all browsers.
- * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
- */
-
-button,
-input,
-select,
-textarea {
-    font-family: inherit; /* 1 */
-    font-size: 100%; /* 2 */
-    margin: 0; /* 3 */
-}
-
-/**
- * Address Firefox 4+ setting `line-height` on `input` using `!important` in
- * the UA stylesheet.
- */
-
-button,
-input {
-    line-height: normal;
-}
-
-/**
- * Address inconsistent `text-transform` inheritance for `button` and `select`.
- * All other form control elements do not inherit `text-transform` values.
- * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
- * Correct `select` style inheritance in Firefox 4+ and Opera.
- */
-
-button,
-select {
-    text-transform: none;
-}
-
-/**
- * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
- *    and `video` controls.
- * 2. Correct inability to style clickable `input` types in iOS.
- * 3. Improve usability and consistency of cursor style between image-type
- *    `input` and others.
- */
-
-button,
-html input[type="button"], /* 1 */
-input[type="reset"],
-input[type="submit"] {
-    -webkit-appearance: button; /* 2 */
-    cursor: pointer; /* 3 */
-}
-
-/**
- * Re-set default cursor for disabled elements.
- */
-
-button[disabled],
-html input[disabled] {
-    cursor: default;
-}
-
-/**
- * 1. Address box sizing set to `content-box` in IE 8/9/10.
- * 2. Remove excess padding in IE 8/9/10.
- */
-
-input[type="checkbox"],
-input[type="radio"] {
-    box-sizing: border-box; /* 1 */
-    padding: 0; /* 2 */
-}
-
-/**
- * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
- * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
- *    (include `-moz` to future-proof).
- */
-
-input[type="search"] {
-    -webkit-appearance: textfield; /* 1 */
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box; /* 2 */
-    box-sizing: content-box;
-}
-
-/**
- * Remove inner padding and search cancel button in Safari 5 and Chrome
- * on OS X.
- */
-
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-}
-
-/**
- * Remove inner padding and border in Firefox 4+.
- */
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-}
-
-/**
- * 1. Remove default vertical scrollbar in IE 8/9.
- * 2. Improve readability and alignment in all browsers.
- */
-
-textarea {
-    overflow: auto; /* 1 */
-    vertical-align: top; /* 2 */
-}
-
-/* ==========================================================================
-   Tables
-   ========================================================================== */
-
-/**
- * Remove most spacing between table cells.
- */
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.text sup[data-marker]{cursor:pointer;color:#ff42ff;}
-.text sup[data-marker] margin-right,.text sup[data-marker]:hover{color:#000;background-color:#fff0ff}
-.text div.highlight{display:inline;background-color:#fff0ff}
-.annotations li.highlight .number span{color:#fff;background-color:#ba5db6}
+@media print{.text{width:auto}
+}.text sup[data-marker]{cursor:pointer;color:#ff42ff;}
+.text sup[data-marker] margin-right,.text sup[data-marker]:hover{color:#000;background-color:#ffe0ff}
+.text div.highlight{display:inline;background-color:#ffe0ff}
+@media print{.annotations{width:auto}
+}.annotations li.highlight .number span{color:#fff;background-color:#ba5db6}
 .annotations li:hover{cursor:pointer}
 .annotations .number span{background-color:#e6e6e6;color:#8f8f8f;padding:0 2px;border-radius:2px}
 .annotations li:hover .number span{background-color:#ba5db6;color:#fff}
+
+@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+.entry{font-family:sans-serif;font-size:11pt;}
+.entry h3,.entry h5{font-weight:normal;font-family:sans-serif;color:#8f8f8f}
+.entry h3{font-size:11pt}
+.entry h5{font-size:9pt}
+.entry .padder{margin-left:15px;border-top:1px solid #e6e6e6;padding-top:15px;}
+.entry .padder.no-border{border:none}
+.entry .header{border-bottom:2px solid #8f8f8f;margin-bottom:25px;min-height:45px;}
+@media print{.entry .header{display:none}
+}.entry .header .back a.hide,.entry .header .next.hide,.entry .header .prev.hide{visibility:hidden}
+.entry .header .back a span,.entry .header .next span,.entry .header .prev span{color:#8f8f8f}
+.entry .metadata{padding-top:15px;transition:height .5s ease 0;}
+.entry .metadata ul{list-style:none;margin:0;padding:0;}
+.entry .metadata ul li{float:left;padding-bottom:15px;border-bottom:1px solid #e6e6e6;width:50%;}
+.entry .metadata ul li h5{margin:.8em 0 0 0}
+.entry .metadata ul li:nth-child(n+5){display:none;opacity:0;transition:opacity 1s ease-out}
+.entry .metadata.more li:nth-child(n){display:block;transition:opacity 1s ease-out;opacity:1}
+.entry .metadata .cell.more .padder{position:relative;height:100%;}
+.entry .metadata .cell.more .padder button{bottom:15px;left:0;}
+@media print{.entry .metadata .cell.more .padder button{display:none}
+}.entry .metadata .cell.more .padder button span.less{display:none}
+.entry .metadata .cell.more .padder button span.more{display:inline}
+.entry .metadata .cell.more .padder button.more span.more{display:none}
+.entry .metadata .cell.more .padder button.more span.less{display:inline}
+.entry .thumbnail{cursor:pointer}
+.entry .contents .versions{margin-right:15px;}
+.entry .contents .versions ul{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
+.entry .contents .versions ul li{display:inline-block;margin-right:5px;}
+.entry .contents .versions ul li.active button{background-color:#8f8f8f;color:#fff}
+.entry .contents .versions ul li:last-child{margin-right:0}
+.entry .contents .parallel{padding:15px 0 25px 0}
+.entry .annotations{color:#8f8f8f;font-size:9pt}
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
@@ -425,34 +54,6 @@ table {
 .faceted-search .facet header h3{font-size:16px}
 .faceted-search .facet .options ul{padding-left:0;}
 .faceted-search .facet .options ul li label,.faceted-search .facet .options ul li input{cursor:pointer}
-
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.item{font-family:sans-serif;font-size:11pt;}
-.item h3,.item h5{font-weight:normal;font-family:sans-serif;color:#8f8f8f}
-.item h3{font-size:11pt}
-.item h5{font-size:9pt}
-.item .padder{margin-left:15px;border-top:1px solid #e6e6e6;padding-top:15px;}
-.item .padder.no-border{border:none}
-.item .metadata{padding-top:15px;transition:height .5s ease 0;}
-.item .metadata ul{list-style:none;margin:0;padding:0;}
-.item .metadata ul li{float:left;padding-bottom:15px;border-bottom:1px solid #e6e6e6;width:50%;}
-.item .metadata ul li h5{margin:.8em 0 0 0}
-.item .metadata ul li:nth-child(n+5){display:none;opacity:0;transition:opacity 1s ease-out}
-.item .metadata.more li:nth-child(n){display:block;transition:opacity 1s ease-out;opacity:1}
-.item .metadata .cell.more .padder{position:relative;height:100%;}
-.item .metadata .cell.more .padder button{bottom:15px;left:0;}
-.item .metadata .cell.more .padder button span.less{display:none}
-.item .metadata .cell.more .padder button span.more{display:inline}
-.item .metadata .cell.more .padder button.more span.more{display:none}
-.item .metadata .cell.more .padder button.more span.less{display:inline}
-.item .contents .versions{margin-right:15px;}
-.item .contents .versions ul{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
-.item .contents .versions ul li{display:inline-block;margin-right:5px;}
-.item .contents .versions ul li.active button{background-color:#8f8f8f;color:#fff}
-.item .contents .versions ul li:last-child{margin-right:0}
-.item .contents .parallel{padding:15px 0 25px 0}
-.item .annotations{color:#8f8f8f;font-size:9pt}
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
@@ -717,21 +318,22 @@ button.active:hover,a.button.active:hover{background-color:#9a9a9a}
 button.green,a.button.green{background-color:#8cd5d5;color:#000;}
 button.green:hover,a.button.green:hover{background-color:#98d9d9}
 h1{font-family:Samba;font-weight:normal;color:#b325a0}
+header{padding-top:1em;}
+header h1{float:left}
+header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;background-image:url("../images/HuygensING.png");width:92px;height:66px}
+header:after{content:"";clear:both;display:block;margin-bottom:2em}
 footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
-.header{border-bottom:2px solid #8f8f8f;margin-bottom:25px;min-height:76px;}
-.header .other a{margin:0 20px}
-.header .back a.hide,.header .next.hide,.header .prev.hide{visibility:hidden}
-.header .back a span,.header .next span,.header .prev span{color:#8f8f8f}
-.header .huygens-logo{text-align:right;}
-.header .huygens-logo img{display:inline-block;margin-bottom:10px}
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
 .panel{position:absolute;display:inline-block;width:600px;background-color:#fff;transition:background-color .4s ease-in-out 0;-webkit-transition:all 600ms cubic-bezier(.23,1,.32,1);transition:all 600ms cubic-bezier(.23,1,.32,1);overflow-y:auto;box-sizing:border-box;border:1px solid #e6e6e6;border-left:none;padding:40px;}
 .panel.new{background-color:#fffeed;transition:background-color .4s ease-in-out 0}
-.panel.large{width:600px;height:700px}
-.panel.medium{width:500px;height:650px}
-.panel.small{width:400px;height:500px}
+.panel.large{width:600px;height:700px;}
+.panel.large iframe.facsimile-zoom{width:504px;height:600px}
+.panel.medium{width:500px;height:650px;}
+.panel.medium iframe.facsimile-zoom{width:404px;height:500px}
+.panel.small{width:400px;height:500px;}
+.panel.small iframe.facsimile-zoom{width:304px;height:400px}
 .panel:first-child{border-left:1px solid #e6e6e6}
 .panel.ui-draggable-dragging{-webkit-transform:rotate(5deg)}
 .panel .close{background-image:url("/images/close-button.png");width:12px;height:12px;cursor:pointer;opacity:.5;margin-top:-32px;margin-right:-32px;}
@@ -746,11 +348,16 @@ footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+.parallel-overlay{position:fixed;width:100%;height:100%;background:#fff}
 .parallel-view{z-index:1000;position:relative;background-color:#fff;}
 .parallel-view .add span,.parallel-view .close span{margin-right:1em}
 .parallel-view .close{float:right}
 .parallel-view .panel-container{position:relative;margin-top:50px}
 
+@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@media print{.entry .row > .text,.entry .row > .annotations{width:auto}
+}
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
 .controls h3{float:left}
@@ -771,7 +378,8 @@ footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6
 
 @font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.text-view .text,.panel .text{display:inline-block;width:205px;margin-right:15px;font-family:"Junicode","Arial unicode MS","times new roman","serif"}
+.text-view .text,.panel .text{position:relative;display:inline-block;width:205px;margin-right:15px;font-family:"Junicode","Arial unicode MS","times new roman","serif";line-height:22px;}
+.text-view .text .line-numbers,.panel .text .line-numbers{position:absolute;top:0;left:-3em;text-align:right;line-height:22px;font-size:10px;color:#8f8f8f;overflow:hidden}
 .text-view .annotations,.panel .annotations{display:inline-block;width:100px;font-size:12px;font-family:sans-serif;color:#8f8f8f;}
 .text-view .annotations ol,.panel .annotations ol{list-style:none;padding-left:0;}
 .text-view .annotations ol li,.panel .annotations ol li{font-size:12px;margin-top:10px}

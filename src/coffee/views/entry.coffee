@@ -83,11 +83,15 @@ define (require) ->
 			@$el.click -> @didScroll = true
 
 			doCheck = =>
-				# console.log @$el, @didScroll
+				console.log @$el, @didScroll
 				if @didScroll
 					didScroll = false
 					@positionTextView()
-			setInterval doCheck, 250
+			# setInterval doCheck, 1000
+
+			$('body, html').scroll (e) =>
+				console.log "SCROLL"
+				@didScroll = true
 
 			# @$('body').scroll (e) =>
 			# 	if 
@@ -133,20 +137,10 @@ define (require) ->
 				version: @currentTextVersion
 				el: @$('.contents .text-view')
 
-		renderLineNumbering: ->
-			lineNumbers = $('<div>').addClass 'line-numbers'
-			lines = ""
-			for n in [1..200]
-				lines += "#{n}<br>"
-			lineNumbers.html lines
-			@$('.text .line-numbers').remove()
-			@$('.text').append lineNumbers
-
 		renderEntry: ->
 			@renderHeader()
 			@renderMetadata()
 			@renderContents()
-			@renderLineNumbering()
 
 			@setActiveTextVersion @currentTextVersion
 

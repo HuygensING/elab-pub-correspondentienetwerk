@@ -208,7 +208,7 @@ module.exports = (grunt) ->
 					include: 'main'
 					preserveLicenseComments: false
 					out: "dist/js/main.js"
-					# optimize: 'none' # Uncomment for debugging
+					optimize: 'none' # Uncomment for debugging
 					paths:
 						'jquery': '../lib/jquery/jquery.min'
 						'underscore': '../lib/underscore-amd/underscore'
@@ -282,6 +282,10 @@ module.exports = (grunt) ->
 		'requirejs:compile' # Run r.js
 		# 'copy:data'
 		# 'shell:rsync' # Rsync to test server
+	]
+
+	grunt.registerTask 'deploy', [
+		# pass in tag, change index.jade
 	]
 
 	grunt.registerTask 'server', [
