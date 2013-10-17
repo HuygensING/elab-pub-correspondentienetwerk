@@ -18,7 +18,7 @@ define (require) ->
 
 		constructor: ->
 			# TODO: Make div#main optional
-			@main = $ 'div#main'
+			@main = if @main then $ @main else $ 'div#main'
 
 
 		clear: (view) ->

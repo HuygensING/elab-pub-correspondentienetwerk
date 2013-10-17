@@ -25,7 +25,11 @@
       };
 
       function ViewManager() {
-        this.main = $('div#main');
+        if (this.main) {
+          this.main = $(this.main);
+        } else {
+          this.main = $('div#main');
+        }
       }
 
       ViewManager.prototype.clear = function(view) {

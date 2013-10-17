@@ -34,12 +34,13 @@
 
       MainRouter.prototype['routes'] = {
         '': 'home',
-        'entry/:id/parallel': 'entryParallelView',
-        'entry/:id/:version': 'entryVersionView',
-        'entry/:id': 'entry'
+        "entry/:id/parallel": 'entryParallelView',
+        "entry/:id/:version": 'entryVersionView',
+        "entry/:id": 'entry'
       };
 
       MainRouter.prototype.home = function() {
+        viewManager.main = $('#main');
         return viewManager.show(Views.Search);
       };
 

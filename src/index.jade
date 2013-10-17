@@ -2,16 +2,11 @@ doctype
 html(lang="en")
 	head
 		meta(charset="utf-8")
-		title elaborate-publication
-		// link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/faceted-search.css")
-		// link(rel="stylesheet", type="text/css", href="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/css/main.css")
-		link(rel="stylesheet", type="text/css", href="/lib/faceted-search/stage/css/main.css")
-		link(rel="stylesheet", type="text/css", href="/css/main.css")
-		// script(data-main="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/js/main", src="http://maven.huygens.knaw.nl/cdn/elaborate/v0.0.1/js/require.js")
+		meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+		title Huygens ING
+		link(rel="stylesheet", type="text/css", href="#{__DEPLOYMENT__}/css/main.css")
 		script.
-			var DATA_LOCATION = '$DATA_LOCATION';
-		script(data-main="/js/main", src="/lib/requirejs/require.js", type="text/javascript")
+			var BASE_URL = '${BASE_URL}';
+		script(data-main="#{__DEPLOYMENT__}/js/main", src="#{__DEPLOYMENT__}/lib/requirejs/require.js")
 	body
-		header.wrapper
-		#main
-		footer.wrapper Huygens ING &copy; 2013
+		| Loading, please wait. 

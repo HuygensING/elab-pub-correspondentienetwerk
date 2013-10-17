@@ -3,11 +3,10 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, FacetedSearch, Home, Templates, config, configData, entriesList, _ref;
+    var Backbone, FacetedSearch, Home, Templates, config, configData, _ref;
+    Backbone = require('backbone');
     config = require('config');
     configData = require('models/configdata');
-    entriesList = JSON.parse(require('text!../../../data/config.json'));
-    BaseView = require('views/base');
     FacetedSearch = require('../../lib/faceted-search/stage/js/main');
     Templates = {
       Search: require('text!html/search.html'),
@@ -31,9 +30,9 @@
       };
 
       Home.prototype.initialize = function() {
-        Home.__super__.initialize.apply(this, arguments);
         this.template = _.template(Templates.Search);
         this.resultsTemplate = _.template(Templates.ResultsList);
+        console.log("REE");
         return this.render();
       };
 
@@ -116,7 +115,7 @@
         var _this = this;
         $('title').text(configData.get('title'));
         this.$el.html(this.template({
-          w: entriesList
+          w: configData.get('entryIds')
         }));
         this.search = new FacetedSearch({
           searchPath: config.searchPath,
@@ -138,7 +137,7 @@
 
       return Home;
 
-    })(BaseView);
+    })(Backbone.View);
   });
 
 }).call(this);

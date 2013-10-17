@@ -23,12 +23,12 @@ define (require) ->
 
 		'routes':
 			'': 'home'
-			"#{config.basePath}entry/:id/parallel": 'entryParallelView'
-			"#{config.basePath}entry/:id/:version": 'entryVersionView'
-			"#{config.basePath}entry/:id": 'entry'
+			"entry/:id/parallel": 'entryParallelView'
+			"entry/:id/:version": 'entryVersionView'
+			"entry/:id": 'entry'
 
 		home: ->
-			console.log "Showuing home"
+			viewManager.main = $('#main')
 			viewManager.show Views.Search
 
 		entryParallelView: (id) ->

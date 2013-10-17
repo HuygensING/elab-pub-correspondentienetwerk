@@ -15,6 +15,8 @@
         return _ref;
       }
 
+      BaseView.prototype.main = '#main';
+
       BaseView.prototype.defaults = function() {
         return {
           managed: true

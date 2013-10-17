@@ -3,9 +3,10 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Home, configData, _ref;
-    BaseView = require('views/base');
+    var Backbone, Home, SearchView, configData, _ref;
+    Backbone = require('backbone');
     configData = require('models/configdata');
+    SearchView = require('views/search');
     return Home = (function(_super) {
       __extends(Home, _super);
 
@@ -17,20 +18,22 @@
       Home.prototype.template = require('text!html/home.html');
 
       Home.prototype.initialize = function() {
-        Home.__super__.initialize.apply(this, arguments);
+        this.searchView = new SearchView;
         return this.render();
       };
 
       Home.prototype.render = function() {
+        console.log("Hioem render");
         this.template = _.template(this.template);
         this.$el.html(this.template());
         this.$('h1').text(configData.get('title'));
+        this.$el.append(this.searchView.$el);
         return this;
       };
 
       return Home;
 
-    })(BaseView);
+    })(Backbone.View);
   });
 
 }).call(this);

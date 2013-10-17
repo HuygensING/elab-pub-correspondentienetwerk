@@ -1,25 +1,29 @@
 (function() {
   define(function(require) {
-    var Backbone, MainRouter, Views, config, configData;
+    var Backbone, MainRouter, Views, bootstrapTemplate, config, configData, configURL;
     Backbone = require('backbone');
     MainRouter = require('routers/main');
     configData = require('models/configdata');
     config = require('config');
     Views = {
-      Header: require('views/ui/header')
+      Main: require('views/home')
     };
+    bootstrapTemplate = _.template(require('text!html/body.html'));
+    configURL = "" + (window.BASE_URL === '/' ? '' : window.BASE_URL) + "/data/config.json";
+    console.log("Loading " + configURL);
     return {
       initialize: function() {
         var _this = this;
-        configData.fetch({
+        return configData.fetch({
+          url: configURL,
           success: function() {
-            var header, mainRouter;
-            mainRouter = new MainRouter();
-            header = new Views.Header({
-              managed: false,
-              title: configData.get('title')
+            var mainRouter, mainView;
+            $('body').html(bootstrapTemplate());
+            $('header h1').text(configData.get('title'));
+            mainRouter = new MainRouter;
+            mainView = new Views.Main({
+              el: '#main'
             });
-            $('header.wrapper').prepend(header.$el);
             Backbone.history.start({
               root: config.basePath || '',
               pushState: true
@@ -34,13 +38,11 @@
                 });
               }
             });
-          }
-        });
-        return {
+          },
           error: function() {
             return console.log("Could not fetch config data");
           }
-        };
+        });
       }
     };
   });

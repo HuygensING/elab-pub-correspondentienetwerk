@@ -1,15 +1,16 @@
 define (require) ->
+	Backbone = require 'backbone'
+
 	config = require 'config'
 	configData = require 'models/configdata'
 
-	entriesList = JSON.parse require 'text!../../../data/config.json'
-	BaseView = require 'views/base'
 	FacetedSearch = require '../../lib/faceted-search/stage/js/main'
+
 	Templates =
 		Search: require 'text!html/search.html'
 		ResultsList: require 'text!html/results-list.html'
 
-	class Home extends BaseView
+	class Home extends Backbone.View
 		className: 'wrapper'
 		events:
 			'click .results .body li': 'resultClicked'
@@ -18,9 +19,10 @@ define (require) ->
 			'change .sort select': 'sortResults'
 
 		initialize: ->
-			super
 			@template = _.template Templates.Search
 			@resultsTemplate = _.template Templates.ResultsList
+
+			console.log "REE"
 
 			@render()
 
@@ -83,7 +85,7 @@ define (require) ->
 
 		render: ->
 			$('title').text configData.get 'title'
-			@$el.html @template w: entriesList
+			@$el.html @template w: configData.get 'entryIds'
 
 			@search = new FacetedSearch
 				searchPath: config.searchPath

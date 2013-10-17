@@ -5,7 +5,7 @@ define (require) ->
 	viewManager = require 'managers/view'
 
 	class BaseView extends Backbone.View
-
+		main: '#main'
 		defaults: ->
 			managed: true # option to determine if the view is managed by the view manager
 

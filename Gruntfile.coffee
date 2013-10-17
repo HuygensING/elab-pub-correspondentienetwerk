@@ -8,6 +8,7 @@
 
 fs = require 'fs'
 path = require 'path'
+shell = require 'shelljs'
 
 connect_middleware = (connect, options) ->
 	[
@@ -23,9 +24,11 @@ connect_middleware = (connect, options) ->
 				'.jpeg': 'image/jpeg'
 				'.png': 'image/png'
 				'.ico': 'image/x-icon'
+				'.ttf': 'application/octet-stream'
 
 			sendFile = (reqUrl) ->
 				filePath = path.join options.base, reqUrl
+				console.log "Fetching #{filePath}"
 				
 				res.writeHead 200,
 					'Content-Type': contentTypesMap[extName] || 'text/html'
@@ -33,9 +36,12 @@ connect_middleware = (connect, options) ->
 
 				readStream = fs.createReadStream filePath
 				readStream.pipe res
+
+			# Create a favicon on the fly if it does not exist
+			if req.url is '/favicon.ico' and not fs.existsSync(options.base + req.url)
+				fs.openSync options.base + req.url, 'w'
 			
 			extName = path.extname req.url
-
 			if contentTypesMap[extName]?
 				sendFile req.url
 			else
@@ -43,6 +49,14 @@ connect_middleware = (connect, options) ->
 	]
 
 module.exports = (grunt) ->
+	cfg =
+		deployment:
+			host: 'jonaa@hi7dev.huygens.knaw.nl'
+			baseDir: '/data/cdn/elaborate/publication/collection'
+			baseURL: grunt.option('deployment') ? 'http://hi7dev.huygens.knaw.nl/cdn/elaborate/publication/collection'
+		tag: String( shell.exec('git describe --tags', silent: true).output ).replace "\n", ''
+
+	cfg.deployURL = "#{cfg.deployment.baseURL}/#{cfg.tag}"
 
 	##############
 	### CONFIG ###
@@ -50,15 +64,32 @@ module.exports = (grunt) ->
 
 	grunt.initConfig
 
+		### SHELL ###
+
+		shell:
+			options:
+				stdout: true
+				stderr: true
+			mocha: 
+				command: 'mocha-phantomjs -R dot http://localhost:9002/.test/index.html'
+			emptydist:
+				command:
+					'rm -rf dist/*'
+			emptycompiled:
+				command:
+					'rm -rf compiled/*'
+			# rsync:
+			# 	command:
+			# 		'rsync --copy-links --compress --archive --verbose --checksum --exclude=.svn --chmod=a+r dist/ elaborate4@hi14hingtest.huygens.knaw.nl:elab4testFE/'
+			bowerinstall:
+				command: 'bower install'
+			groc:
+				command: 'groc "src/coffee/**/*.coffee" --out=compiled/docs'
+
 		createSymlinks:
 			compiled: [
-				
-					src: 'images'
-					dest: 'compiled/images'
-				,
-					src: 'data'
-					dest: 'compiled/data'
-				
+				src: 'images'
+				dest: 'compiled/images'
 			# ,
 			# 	src: '/home/gijs/Projects/faceted-search'
 			# 	dest: 'compiled/lib/faceted-search'
@@ -66,44 +97,20 @@ module.exports = (grunt) ->
 			# 	src: '/home/gijs/Projects/faceted-search/images'
 			# 	dest: 'images/faceted-search'
 			]
-			dist: [
-					src: 'images'
-					dest: 'dist/images'
-				,
-					src: 'data'
-					dest: 'dist/data'
-			]
-
-		shell:
-			'mocha-phantomjs': 
-				command: 'mocha-phantomjs -R dot http://localhost:8000/.test/index.html'
-				options:
-					stdout: true
-					stderr: true
-
-			emptydist:
-				command:
-					'rm -rf dist/*'
-
-			emptycompiled:
-				command:
-					'rm -rf compiled/*'
-
-			# rsync:
-			# 	command:
-			# 		'rsync --copy-links --compress --archive --verbose --checksum --exclude=.svn --chmod=a+r dist/ elaborate4@hi14hingtest.huygens.knaw.nl:elab4testFE/'
-			# 	options:
-			# 		stdout: true
-
-			bowerinstall:
-				command: 'bower install'
-				options:
-					stdout: true
-					stderr: true
+			dist: [{
+				src: 'images'
+				dest: 'dist/images'
+			}]
 
 		### SERVER ###	
 
 		connect:
+			keepalive:
+				options:
+					port: 9000
+					base: 'compiled'
+					middleware: connect_middleware
+					keepalive: true
 			compiled:
 				options:
 					port: 9000
@@ -113,38 +120,92 @@ module.exports = (grunt) ->
 				options:
 					port: 9001
 					base: 'dist'
+					middleware: connect_middleware			
+			test:
+				options:
+					port: 9002
+					base: ''
 					middleware: connect_middleware
+
+		### STATIC FILES ###
+		rsync:
+			options:
+				args: ["--verbose", "-i"]
+				exclude: [".git*"]
+				recursive: true
+			compiled:
+				options:
+					src: ["./src/static/"]
+					dest: "./compiled"
+			dist:
+				options:
+					src: "./src/static/"
+					dest: "./dist"
+			deploy:
+				options:
+					syncDest: true
+					syncDestIgnoreExcl: true
+					src: "./dist/"
+					dest: "#{cfg.deployment.host}:#{cfg.deployment.baseDir}/#{cfg.tag}/"
+					exclude: [
+						'data'
+						'index.html'
+					]
 
 		### HTML ###
 		
 		jade:
-			init:
+			compile:
 				files: [
 					expand: true
 					cwd: 'src/jade'
 					src: '**/*.jade'
 					dest: 'compiled/html'
-					ext: '.html'			
+					rename: (dest, src) -> 
+						dest + '/' + src.replace(/.jade/, '.html') # Use rename to preserve multiple dots in filenames (nav.user.coffee => nav.user.js)
 				,
 					'compiled/index.html': 'src/index.jade'
 				]
-			compile:
 				options:
 					pretty: true
+					data:
+						__DEPLOYMENT__: ''
+			dist:
+				files: [
+					'dist/index.html': 'src/index.jade'
+				]
+				options:
+					pretty: false
+					data:
+						__DEPLOYMENT__: "#{cfg.deployURL}"
 
 		replace:
 			html:
 				src: 'compiled/index.html'
 				dest: 'dist/index.html'
 				replacements: [
-					{
-						from: '<script data-main="/js/main" src="/lib/requirejs/require.js"></script>'
-						to: '<script src="js/main.js"></script>'
-					}
-					{
-						from: '<link rel="stylesheet" type="text/css" href="/lib/faceted-search/stage/css/main.css">'
-						to: '<link rel="stylesheet" type="text/css" href="css/faceted-search.css">'
-					}
+						from: "<script data-main=\"/js/main\" src=\"/lib/requirejs/require.js\"></script>"
+						to: "<script src=\"#{cfg.deployURL}/js/main.js\"></script>"
+					,
+						from: "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/project.css\">"
+						to: "<link rel=\"stylesheet\" type=\"text/css\" href=\"#{cfg.deployURL}/css/main.css\">"
+				]
+			'base-url':
+				src: 'compiled/index.html'
+				dest: 'compiled/index.html'
+				replacements: [
+					from: '${BASE_URL}'
+					to: grunt.option('base-url') or '/'
+				]
+			dist:
+				src: 'dist/index.html'
+				dest: 'dist/index.html'
+				replacements: [
+						from: "<script data-main=\"#{cfg.deployURL}/js/main\" src=\"#{cfg.deployURL}/lib/requirejs/require.js\"></script>"
+						to: "<script src=\"${ELABORATE_CDN}/publication/${TYPE}/${VERSION}/js/main.js\"></script>"
+					,
+						from: "<link rel=\"stylesheet\" type=\"text/css\" href=\"#{cfg.deployURL}/css/main.css\">"
+						to: "<link rel=\"stylesheet\" type=\"text/css\" href=\"${ELABORATE_CDN}/publication/${TYPE}/${VERSION}/css/main.css\">"
 				]
 
 		### CSS ###
@@ -155,7 +216,7 @@ module.exports = (grunt) ->
 					paths: ['src/stylus/import']
 					import: ['variables', 'functions']
 				files:
-					'compiled/css/main.css': [
+					'compiled/css/project.css': [
 						'src/stylus/**/*.styl'
 						'!src/stylus/import/*.styl'
 					]
@@ -164,9 +225,8 @@ module.exports = (grunt) ->
 			css:
 				src: [
 					'compiled/lib/normalize-css/normalize.css'
-					'compiled/css/main.css'
-					# 'compiled/lib/faceted-search/compiled/css/main.css'
-					# 'compiled/lib/supertinyeditor/main.css'
+					'compiled/lib/faceted-search/dev/css/main.css'
+					'compiled/css/project.css'
 				]
 				dest:
 					'compiled/css/main.css'
@@ -175,7 +235,6 @@ module.exports = (grunt) ->
 			dist:
 				files:
 					'dist/css/main.css': 'compiled/css/main.css'
-					'dist/css/faceted-search.css': 'compiled/lib/faceted-search/stage/css/main.css'
 
 		### JS ###
 
@@ -186,7 +245,8 @@ module.exports = (grunt) ->
 					cwd: 'src/coffee'
 					src: '**/*.coffee'
 					dest: 'compiled/js'
-					ext: '.js'
+					rename: (dest, src) -> 
+						dest + '/' + src.replace(/.coffee/, '.js') # Use rename to preserve multiple dots in filenames (nav.user.coffee => nav.user.js)
 				,
 					'.test/tests.js': ['.test/head.coffee', 'test/**/*.coffee']
 				]
@@ -198,7 +258,7 @@ module.exports = (grunt) ->
 					'.test/tests.js': ['.test/head.coffee', 'test/**/*.coffee']
 			compile:
 				options:
-					bare: false # UglyHack: set a property to its default value to be able to call coffee:compile
+					bare: false # UglyHack: set a property to its default value to be able to call coffee:compiled
 		
 		requirejs:
 			compile:
@@ -208,7 +268,7 @@ module.exports = (grunt) ->
 					include: 'main'
 					preserveLicenseComments: false
 					out: "dist/js/main.js"
-					optimize: 'none' # Uncomment for debugging
+					# optimize: 'none' # Uncomment for debugging
 					paths:
 						'jquery': '../lib/jquery/jquery.min'
 						'underscore': '../lib/underscore-amd/underscore'
@@ -221,11 +281,6 @@ module.exports = (grunt) ->
 						'helpers': '../lib/helpers/dev'
 						'html': '../html'
 					wrap: true
-		copy:
-			data:
-				files:
-					expand: true
-					src: ['data/**'], dest: 'dist/data/'
 
 		watch:
 			options:
@@ -233,65 +288,107 @@ module.exports = (grunt) ->
 				nospawn: true
 			coffeetest:
 				files: 'test/**/*.coffee'
-				tasks: ['coffee:test', 'shell:mocha-phantomjs']
+				tasks: ['coffee:test', 'shell:mocha']
 			coffee:
 				files: 'src/coffee/**/*.coffee'
 				tasks: 'coffee:compile'
 			jade:
-				files: ['src/index.jade', 'src/jade/**/*.jade']
+				files: ['src/jade/**/*.jade']
 				tasks: 'jade:compile'
+			index:
+				files: ['src/index.jade']
+				tasks: ['jade:compile', 'replace:base-url']
 			stylus:
 				files: ['src/stylus/**/*.styl']
-				tasks: 'stylus:compile'
+				tasks: ['stylus:compile', 'concat:css']
 
 	#############
 	### TASKS ###
 	#############
 
-	grunt.loadNpmTasks 'grunt-contrib-coffee'
-	grunt.loadNpmTasks 'grunt-contrib-concat'
-	grunt.loadNpmTasks 'grunt-contrib-connect'
-	grunt.loadNpmTasks 'grunt-contrib-copy'
-	grunt.loadNpmTasks 'grunt-contrib-cssmin'
-	grunt.loadNpmTasks 'grunt-contrib-jade'
-	grunt.loadNpmTasks 'grunt-contrib-requirejs'
-	grunt.loadNpmTasks 'grunt-contrib-stylus'
-	grunt.loadNpmTasks 'grunt-contrib-uglify'
-	grunt.loadNpmTasks 'grunt-contrib-watch'
-	grunt.loadNpmTasks 'grunt-shell'
-	grunt.loadNpmTasks 'grunt-text-replace'
-
-	grunt.registerTask('default', ['shell:mocha-phantomjs']);
-
-	grunt.registerTask 'compile', [
-		'shell:emptycompiled' # rm -rf compiled/
-		'shell:bowerinstall' # Get dependencies first, cuz css needs to be included (and maybe images?)
-		'createSymlinks:compiled'
-		'coffee:init'
-		'jade:init'
-		'stylus:compile'
-		'concat:css'
-		# 'copy:data'
+	tasks = [
+		'grunt-contrib-coffee'
+		'grunt-contrib-concat'
+		'grunt-contrib-connect'
+		'grunt-contrib-copy'
+		'grunt-contrib-cssmin'
+		'grunt-contrib-jade'
+		'grunt-contrib-requirejs'
+		'grunt-contrib-stylus'
+		'grunt-contrib-uglify'
+		'grunt-contrib-watch'
+		'grunt-shell'
+		'grunt-text-replace'
+		'grunt-groc'
+		'grunt-rsync'
 	]
 
-	grunt.registerTask 'build', [
-		'shell:emptydist'
-		'createSymlinks:dist'
-		'replace:html' # Copy and replace index.html
-		'cssmin:dist'
-		'requirejs:compile' # Run r.js
-		# 'copy:data'
-		# 'shell:rsync' # Rsync to test server
+	grunt.loadNpmTasks task for task in tasks
+
+	jobs = [
+			# default
+			aliases: ['default']
+			tasks: ['sw']
+		,
+			# generate docs
+			aliases: ['d']
+			tasks: ['shell:groc']
+		,
+			# server
+			aliases: ['s']
+			tasks:['connect:keepalive']
+		,
+			# watch
+			aliases: ['w']
+			tasks: ['watch']
+		,
+			# server and watch
+			aliases: ['sw']
+			tasks: [
+				'connect:compiled'
+				'connect:dist'
+				'connect:test'
+				'watch'
+			]
+		,
+			# compile
+			aliases: ['c', 'compile']
+			tasks: [
+				'shell:emptycompiled' # rm -rf compiled/
+				'shell:bowerinstall' # Get dependencies first, cuz css needs to be included (and maybe images?)
+				'rsync:compiled' # copy static files
+				'coffee:init'
+				'jade:compile'
+				'replace:base-url'
+				'stylus:compile'
+				'concat:css'
+			]
+		,
+			# build
+			aliases: ['b', 'build']
+			tasks: [
+				'shell:emptydist'
+				'rsync:dist' # copy static files
+				'jade:dist'
+				'replace:dist' # Copy and replace index.html
+				'cssmin:dist'
+				'requirejs:compile' # Run r.js
+				# 'shell:rsync' # Rsync to test server			
+			]
+		,
+			# deploy
+			aliases: ['deploy']
+			tasks: ['build', 'rsync:deploy']
+		,
+			# all
+			aliases: ['all']
+			tasks: ['c', 'd', 'b', 'sw']
 	]
 
-	grunt.registerTask 'deploy', [
-		# pass in tag, change index.jade
-	]
+	for job in jobs
+		for alias in job.aliases
+			grunt.registerTask alias, job.tasks
 
-	grunt.registerTask 'server', [
-		'connect'
-		'watch'
-	]
 
 	grunt.registerMultiTask 'createSymlinks', 'Creates a symlink', ->
 		for own index, config of this.data
@@ -309,31 +406,20 @@ module.exports = (grunt) ->
 			fs.symlinkSync src, dest
 
 
-
-
 	##############
 	### EVENTS ###
 	##############
 
 	grunt.event.on 'watch', (action, srcPath) ->
-		if srcPath.substr(0, 3) is 'src' # Make sure file comes from src/		
-			type = 'coffee' if srcPath.substr(-7) is '.coffee'
-			type = 'jade' if srcPath.substr(-5) is '.jade'
+		if srcPath.substr(0, 3) is 'src' # Make sure file comes from src/
+			type = (srcPath.split('.').splice -1)[0]
 
 			if type is 'coffee'
 				testDestPath = srcPath.replace 'src/coffee', 'test'
 				destPath = 'compiled'+srcPath.replace(new RegExp(type, 'g'), 'js').substr(3);
 
 			if type is 'jade'
-				if srcPath.substr(0, 18) is 'src/coffee/modules' # If the .jade comes from a module
-					a = srcPath.split('/')
-					a[0] = 'compiled'
-					a[1] = 'html'
-					a.splice(4, 1)
-					destPath = a.join('/')
-					destPath = destPath.slice(0, -4) + 'html'
-				else # If the .jade comes from the main app
-					destPath = 'compiled'+srcPath.replace(new RegExp(type, 'g'), 'html').substr(3);
+				destPath = 'compiled' + srcPath.replace(new RegExp(type, 'g'), 'html').substr(3);
 
 			if type? and action is 'changed' or action is 'added'
 				data = {}
