@@ -12,7 +12,6 @@ define (require) ->
 			@render()
 
 		render: ->
-			console.log "Hioem render"
 			@template = _.template @template
 			@$el.html @template()
 			@$('h1').text configData.get 'title'

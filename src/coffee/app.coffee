@@ -11,8 +11,6 @@ define (require) ->
 	bootstrapTemplate = _.template require 'text!html/body.html'
 
 	configURL = "#{if window.BASE_URL is '/' then '' else window.BASE_URL}/data/config.json"
-	console.log "Loading #{configURL}"
-
 	initialize: ->
 		configData.fetch
 			url: configURL,
