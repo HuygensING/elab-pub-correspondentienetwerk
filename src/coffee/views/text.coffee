@@ -9,7 +9,7 @@ define (require) ->
 		template: require 'text!html/text.html'
 		annotationsTemplate: require 'text!html/annotations.html'
 
-		initialize: ->
+		initialize: (@options) ->
 			@template = _.template @template
 			@annotationsTemplate = _.template @annotationsTemplate
 			@currentTextVersion = @options.version || config.defaultTextVersion

@@ -21,9 +21,6 @@ define (require) ->
 		initialize: ->
 			@template = _.template Templates.Search
 			@resultsTemplate = _.template Templates.ResultsList
-
-			console.log "REE"
-
 			@render()
 
 		showLoader: ->
@@ -33,6 +30,11 @@ define (require) ->
 					@$('.position').hide()
 					@$('.loader').fadeIn('fast')
 			_.delay doIt, 200
+
+		hideLoader: ->
+			@displayLoader = false
+			@$('.position').fadeIn 'fast'
+			@$('.loader').fadeOut 'fast'
 
 		nextResults: ->
 			@showLoader()
@@ -64,7 +66,6 @@ define (require) ->
 			@$('.results h3 .number-of-results').text(@results.numFound)
 
 		renderCursor: ->
-			console.log "Has next/prev", @search.hasNext(), @search.hasPrev()
 			@$('.cursor').toggle @search.hasNext() or @search.hasPrev()
 			@$('.cursor .next').toggle @search.hasNext()
 			@$('.cursor .previous').toggle @search.hasPrev()
@@ -77,8 +78,7 @@ define (require) ->
 
 			@$('.position .current').text @search.currentPosition?()
 			@$('.position .total').text @search.numPages?()
-			@$('.position').show()
-			@$('.loader').hide()
+			@hideLoader()
 
 			@renderSortableFields()
 			@renderCursor()
@@ -93,7 +93,7 @@ define (require) ->
 					resultRows: config.resultRows
 					term: '*'
 
-			@search.subscribe 'results:change', (response) =>
+			@search.subscribe 'faceted-search:results', (response) =>
 				@results = response
 				if 'sortableFields' of response
 					@sortableFields = response.sortableFields

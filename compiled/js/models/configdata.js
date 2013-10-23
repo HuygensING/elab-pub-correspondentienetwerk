@@ -32,6 +32,14 @@
         return (_ref1 = ids[pos + 1]) != null ? _ref1.replace('.json', '') : void 0;
       };
 
+      ConfigData.prototype.nextURL = function(id) {
+        return config.entryURL(this.findNext(id));
+      };
+
+      ConfigData.prototype.prevURL = function(id) {
+        return config.entryURL(this.findPrev(id));
+      };
+
       return ConfigData;
 
     })(BaseModel);

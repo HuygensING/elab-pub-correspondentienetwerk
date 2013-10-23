@@ -14,7 +14,7 @@ define (require) ->
 			'click .panel .close': 'closePanel'
 			'click button.close': 'closeParallelView'
 
-		initialize: ->
+		initialize: (@options) ->
 			super
 
 			@panels = []

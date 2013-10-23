@@ -3,7 +3,8 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var Facsimile, _ref;
+    var Backbone, Facsimile, _ref;
+    Backbone = require('backbone');
     return Facsimile = (function(_super) {
       __extends(Facsimile, _super);
 
@@ -14,7 +15,8 @@
 
       Facsimile.prototype.template = require('text!html/facsimile-zoom.html');
 
-      Facsimile.prototype.initialize = function() {
+      Facsimile.prototype.initialize = function(options) {
+        this.options = options;
         this.template = _.template(this.template);
         this.size = this.options.size || 'large';
         this.page = this.options.page || 0;

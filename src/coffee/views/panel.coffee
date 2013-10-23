@@ -13,7 +13,7 @@ define (require) ->
 		events:
 			'click .selection li': 'selectText'
 
-		initialize: ->
+		initialize: (@options) ->
 			@template = _.template @template
 
 			@textVersion = @options?.textVersion || 'Translation'

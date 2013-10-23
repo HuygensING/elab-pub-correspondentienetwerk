@@ -11,9 +11,9 @@
 		"underscore-amd": "*",
 		"backbone-amd": "*",
 		"normalize-css": "*",
+		"unsemantic": "https://raw.github.com/nathansmith/unsemantic/master/assets/stylesheets/unsemantic-grid-responsive.css",
 		"helpers": "git@github.com:Gijsjan/helpers.git",
-		"managers": "git@github.com:Gijsjan/managers.git",
-		"faceted-search": "ssh://jonaa@hi7dev.huygens.knaw.nl/data/git/git/faceted-search.git#elaborate"
+		"managers": "git@github.com:Gijsjan/managers.git"
 	},
 	"devDependencies": {
 		"mocha": "*",

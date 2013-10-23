@@ -3,9 +3,10 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Entry, Home, ParallelView, TextView, config, configData, _ref;
+    var BaseView, Entry, Home, ParallelView, TextView, config, configData, events, _ref;
     configData = require('models/configdata');
     config = require('config');
+    events = require('events');
     BaseView = require('views/base');
     TextView = require('views/text');
     ParallelView = require('views/parallel-view');
@@ -81,9 +82,10 @@
         return window.print();
       };
 
-      Home.prototype.initialize = function() {
-        var doCheck,
+      Home.prototype.initialize = function(options) {
+        var doCheck, _ref1,
           _this = this;
+        this.options = options;
         Home.__super__.initialize.apply(this, arguments);
         this.baseTemplate = _.template(this.baseTemplate);
         this.headerTemplate = _.template(this.headerTemplate);
@@ -100,6 +102,14 @@
             }
           });
         }
+        events.on('change:view:entry', function(options) {
+          _this.model = new Entry({
+            id: options.id
+          });
+          return _this.model.fetch().done(function() {
+            return _this.render();
+          });
+        });
         if (!this.options.mode) {
           this.options.mode = 'normal';
         }
@@ -118,14 +128,14 @@
           }
         };
         $('body, html').scroll(function(e) {
-          console.log("SCROLL");
           return _this.didScroll = true;
         });
-        return this.render();
+        if ((_ref1 = this.model) != null ? _ref1.id : void 0) {
+          return this.render();
+        }
       };
 
       Home.prototype.positionTextView = function() {
-        console.log("YELLOW");
         return this.$('.text-view').css({
           'background-color': 'yellow'
         });
@@ -144,7 +154,8 @@
         var next, prev;
         this.$('.header').html(this.headerTemplate({
           config: config,
-          entry: this.model.attributes
+          entry: this.model.attributes,
+          entries: configData
         }));
         prev = configData.findPrev(this.options.id);
         if (prev) {

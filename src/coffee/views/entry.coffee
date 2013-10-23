@@ -3,6 +3,8 @@ define (require) ->
 	configData = require 'models/configdata'
 	config = require 'config'
 
+	events = require 'events'
+
 	BaseView = require 'views/base'
 	TextView = require 'views/text'
 	ParallelView = require 'views/parallel-view'
@@ -61,7 +63,7 @@ define (require) ->
 			e.preventDefault()
 			window.print()
 
-		initialize: ->
+		initialize: (@options) ->
 			super
 
 			@baseTemplate = _.template @baseTemplate
@@ -73,6 +75,10 @@ define (require) ->
 				console.log "new Entry #{@options.id}"
 				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
+
+			events.on 'change:view:entry', (options) =>
+				@model = new Entry id: options.id
+				@model.fetch().done => @render()
 
 			@options.mode = 'normal' unless @options.mode
 
@@ -90,7 +96,6 @@ define (require) ->
 			# setInterval doCheck, 1000
 
 			$('body, html').scroll (e) =>
-				console.log "SCROLL"
 				@didScroll = true
 
 			# @$('body').scroll (e) =>
@@ -99,10 +104,9 @@ define (require) ->
 			# 	else if not @$('.text-view').hasClass 'fixed'
 			# 		@fixTextView()
 
-			@render()
+			@render() if @model?.id
 
 		positionTextView: ->
-			console.log  "YELLOW"
 			@$('.text-view').css 'background-color': 'yellow'
 
 		renderMetadata: ->
@@ -116,6 +120,7 @@ define (require) ->
 			@$('.header').html @headerTemplate
 				config: config
 				entry: @model.attributes
+				entries: configData
 
 			prev = configData.findPrev @options.id
 			if prev

@@ -20,7 +20,8 @@
 
       TextView.prototype.annotationsTemplate = require('text!html/annotations.html');
 
-      TextView.prototype.initialize = function() {
+      TextView.prototype.initialize = function(options) {
+        this.options = options;
         this.template = _.template(this.template);
         this.annotationsTemplate = _.template(this.annotationsTemplate);
         this.currentTextVersion = this.options.version || config.defaultTextVersion;

@@ -24,9 +24,10 @@
         'click .selection li': 'selectText'
       };
 
-      PanelView.prototype.initialize = function() {
+      PanelView.prototype.initialize = function(options) {
         var _ref1,
           _this = this;
+        this.options = options;
         this.template = _.template(this.template);
         this.textVersion = ((_ref1 = this.options) != null ? _ref1.textVersion : void 0) || 'Translation';
         if ('id' in this.options && !this.model) {

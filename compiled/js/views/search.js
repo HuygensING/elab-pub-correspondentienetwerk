@@ -32,7 +32,6 @@
       Home.prototype.initialize = function() {
         this.template = _.template(Templates.Search);
         this.resultsTemplate = _.template(Templates.ResultsList);
-        console.log("REE");
         return this.render();
       };
 
@@ -47,6 +46,12 @@
           }
         };
         return _.delay(doIt, 200);
+      };
+
+      Home.prototype.hideLoader = function() {
+        this.displayLoader = false;
+        this.$('.position').fadeIn('fast');
+        return this.$('.loader').fadeOut('fast');
       };
 
       Home.prototype.nextResults = function() {
@@ -90,7 +95,6 @@
       };
 
       Home.prototype.renderCursor = function() {
-        console.log("Has next/prev", this.search.hasNext(), this.search.hasPrev());
         this.$('.cursor').toggle(this.search.hasNext() || this.search.hasPrev());
         this.$('.cursor .next').toggle(this.search.hasNext());
         return this.$('.cursor .previous').toggle(this.search.hasPrev());
@@ -105,8 +109,7 @@
         this.renderResultsCount();
         this.$('.position .current').text(typeof (_base = this.search).currentPosition === "function" ? _base.currentPosition() : void 0);
         this.$('.position .total').text(typeof (_base1 = this.search).numPages === "function" ? _base1.numPages() : void 0);
-        this.$('.position').show();
-        this.$('.loader').hide();
+        this.hideLoader();
         this.renderSortableFields();
         return this.renderCursor();
       };
@@ -124,7 +127,7 @@
             term: '*'
           }
         });
-        this.search.subscribe('results:change', function(response) {
+        this.search.subscribe('faceted-search:results', function(response) {
           _this.results = response;
           if ('sortableFields' in response) {
             _this.sortableFields = response.sortableFields;

@@ -1,23 +1,25 @@
-.row.span12
-	.cell.span11.back
+.grid-container
+	.grid-50.back
 		a(href="/")
 			span &#9666;
 			| &nbsp;Back to results
-	.cell.span1.pull-right
+	.grid-20.prefix-30.right
 		a.print(href="#", data-bypass="true") Print...
-.row.span12.navigate-results
-		.cell.span5.other
-			a.prev-result(href!="<%= entry.prevURL %>")
-				span &#9666;
-				| &nbsp;Previous result
-			a.next-result(href!="<%= entry.nextURL %>")
-				| Next result&nbsp;
-				span &#9656;
-.row.span12.navigate-entries
-		.cell.span5
-			a.prev-entry(href="foo")
+//- .row.span12.navigate-results
+//- 		.cell.span5.other
+//- 			a.prev-result(href!="<%= entry.prevURL %>")
+//- 				span &#9666;
+//- 				| &nbsp;Previous result
+//- 			a.next-result(href!="<%= entry.nextURL %>")
+//- 				| Next result&nbsp;
+//- 				span &#9656;
+
+.grid-container.navigate-entries
+		.grid-20.left
+			a.prev-entry(href!="<%= entries.prevURL(entry.id)%>")
 				span &#9666;
 				| &nbsp;Previous  <%= config.itemLabel %>
-			a.next-entry(href="foo")
+		.grid-20.prefix-60.right
+			a.next-entry(href!="<%= entries.nextURL(entry.id) %>")
 				| Next <%= config.itemLabel %>&nbsp;
 				span &#9656;

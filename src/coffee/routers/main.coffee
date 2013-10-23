@@ -1,8 +1,8 @@
 define (require) ->
 	Backbone = require 'backbone'
 	viewManager = require 'managers/view'
-	Pubsub = require 'managers/pubsub'
-	currentUser = require 'models/currentUser'
+
+	events = require 'events'
 
 	# Set page title
 	configData = require 'models/configdata'
@@ -17,9 +17,9 @@ define (require) ->
 
 	class MainRouter extends Backbone.Router
 		initialize: ->
-			_.extend @, Pubsub
-
 			@on 'route', @show, @
+			@on 'route', =>
+				events.trigger 'change:view', arguments
 
 		'routes':
 			'': 'home'
@@ -28,20 +28,26 @@ define (require) ->
 			"entry/:id": 'entry'
 
 		home: ->
-			viewManager.main = $('#main')
-			viewManager.show Views.Search
+			events.trigger 'change:view:search'
+			# events.trigger 'change:view:home', arguments
+			# viewManager.main = $('#main')
+			# viewManager.show Views.Search
 
 		entryParallelView: (id) ->
-			viewManager.show Views.ParallelView,
+			events.trigger 'change:view:entry',
 				id: id
 				mode: 'parallel'
+			# viewManager.show Views.ParallelView,
+			# 	id: id
+			# 	mode: 'parallel'
 
 		entryVersionView: (id, version) ->
-			console.log "Showing version #{version} for #{id}"
-			viewManager.show Views.Entry,
+			# viewManager.show Views.Entry,
+			events.trigger 'change:view:entry',
 				id: id
 				version: version
 
 		entry: (id) ->
-			console.log "Entry #{id}"
-			viewManager.show Views.Entry, id: id
+			console.log "showing entry?", id
+			events.trigger 'change:view:entry', id: id
+			# viewManager.show Views.Entry, id: id

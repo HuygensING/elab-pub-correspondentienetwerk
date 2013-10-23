@@ -224,6 +224,7 @@ module.exports = (grunt) ->
 		concat:
 			css:
 				src: [
+					'compiled/lib/unsemantic/assets/stylesheets/unsemantic-grid-responsive.css'
 					'compiled/lib/normalize-css/normalize.css'
 					'compiled/lib/faceted-search/dev/css/main.css'
 					'compiled/css/project.css'

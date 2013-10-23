@@ -3,12 +3,11 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var Backbone, MainRouter, Pubsub, Views, configData, currentUser, viewManager, _ref,
+    var Backbone, MainRouter, Views, configData, events, viewManager, _ref,
       _this = this;
     Backbone = require('backbone');
     viewManager = require('managers/view');
-    Pubsub = require('managers/pubsub');
-    currentUser = require('models/currentUser');
+    events = require('events');
     configData = require('models/configdata');
     configData.on('change', function() {
       return $('title').text(configData.get('title'));
@@ -28,8 +27,11 @@
       }
 
       MainRouter.prototype.initialize = function() {
-        _.extend(this, Pubsub);
-        return this.on('route', this.show, this);
+        var _this = this;
+        this.on('route', this.show, this);
+        return this.on('route', function() {
+          return events.trigger('change:view', arguments);
+        });
       };
 
       MainRouter.prototype['routes'] = {
@@ -40,28 +42,26 @@
       };
 
       MainRouter.prototype.home = function() {
-        viewManager.main = $('#main');
-        return viewManager.show(Views.Search);
+        return events.trigger('change:view:search');
       };
 
       MainRouter.prototype.entryParallelView = function(id) {
-        return viewManager.show(Views.ParallelView, {
+        return events.trigger('change:view:entry', {
           id: id,
           mode: 'parallel'
         });
       };
 
       MainRouter.prototype.entryVersionView = function(id, version) {
-        console.log("Showing version " + version + " for " + id);
-        return viewManager.show(Views.Entry, {
+        return events.trigger('change:view:entry', {
           id: id,
           version: version
         });
       };
 
       MainRouter.prototype.entry = function(id) {
-        console.log("Entry " + id);
-        return viewManager.show(Views.Entry, {
+        console.log("showing entry?", id);
+        return events.trigger('change:view:entry', {
           id: id
         });
       };

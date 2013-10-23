@@ -26,8 +26,9 @@
         'click button.close': 'closeParallelView'
       };
 
-      ParallelView.prototype.initialize = function() {
+      ParallelView.prototype.initialize = function(options) {
         var _this = this;
+        this.options = options;
         ParallelView.__super__.initialize.apply(this, arguments);
         this.panels = [];
         if ('id' in this.options) {
