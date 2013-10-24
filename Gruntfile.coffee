@@ -51,12 +51,19 @@ connect_middleware = (connect, options) ->
 module.exports = (grunt) ->
 	cfg =
 		deployment:
-			host: 'jonaa@hi7dev.huygens.knaw.nl'
-			baseDir: '/data/cdn/elaborate/publication/collection'
-			baseURL: grunt.option('deployment') ? 'http://hi7dev.huygens.knaw.nl/cdn/elaborate/publication/collection'
-		tag: String( shell.exec('git describe --tags', silent: true).output ).replace "\n", ''
+			host: 'jonaa@hi7.huygens.knaw.nl'
+			baseDir: '/data/htdocs/cdn/elaborate/publication/collection'
+			baseURL: grunt.option('deployment') ? 'http://cdn.huygens.knaw.nl/elaborate/publication/collection'
+		release: grunt.option('release')
 
-	cfg.deployURL = "#{cfg.deployment.baseURL}/#{cfg.tag}"
+	# If not specified, attempt to determine through current tag
+	if not cfg.release?
+		cfg.release = String( shell.exec('git describe --tags', silent: true).output ).replace "\n", ''
+		cfg.release = 'latest' if cfg.release.match /^fatal/ or not cfg.release
+
+	console.warn "Using release tag #{cfg.release.red} for deployment"
+
+	cfg.deployURL = "#{cfg.deployment.baseURL}/#{cfg.release}"
 
 	##############
 	### CONFIG ###
@@ -146,7 +153,7 @@ module.exports = (grunt) ->
 					syncDest: true
 					syncDestIgnoreExcl: true
 					src: "./dist/"
-					dest: "#{cfg.deployment.host}:#{cfg.deployment.baseDir}/#{cfg.tag}/"
+					dest: "#{cfg.deployment.host}:#{cfg.deployment.baseDir}/#{cfg.release}/"
 					exclude: [
 						'data'
 						'index.html'
