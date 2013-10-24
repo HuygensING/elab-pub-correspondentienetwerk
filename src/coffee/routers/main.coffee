@@ -7,7 +7,8 @@ define (require) ->
 	# Set page title
 	configData = require 'models/configdata'
 	configData.on 'change', =>
-		$('title').text configData.get 'title'
+		# Use document.title to ensure IE compatibility
+		document.title = configData.get 'title'
 
 	Views =
 		Home: require 'views/home'
@@ -20,6 +21,7 @@ define (require) ->
 			@on 'route', @show, @
 			@on 'route', =>
 				events.trigger 'change:view', arguments
+				console.log "Changing view to ", arguments
 
 		'routes':
 			'': 'home'

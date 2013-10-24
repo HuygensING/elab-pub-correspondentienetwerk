@@ -84,7 +84,7 @@ define (require) ->
 			@renderCursor()
 
 		render: ->
-			$('title').text configData.get 'title'
+			document.title = configData.get 'title'
 			@$el.html @template w: configData.get 'entryIds'
 
 			@search = new FacetedSearch

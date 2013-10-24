@@ -9,7 +9,11 @@ define (require) ->
 		Main: require 'views/home'
 
 	bootstrapTemplate = _.template require 'text!html/body.html'
+	
+	# Backbone expects a path, not a full URI
+	rootURL = window.BASE_URL.replace /https?:\/\/[^\/]+/, ''
 
+	
 	configURL = "#{if window.BASE_URL is '/' then '' else window.BASE_URL}/data/config.json"
 	initialize: ->
 		configData.fetch
@@ -24,7 +28,7 @@ define (require) ->
 				mainView = new Views.Main el: '#main'
 
 				Backbone.history.start
-					root: config.basePath || ''
+					root: rootURL
 					pushState: true   
 
 				$(document).on 'click', 'a:not([data-bypass])', (e) ->
