@@ -9,6 +9,7 @@
 fs = require 'fs'
 path = require 'path'
 shell = require 'shelljs'
+colors = require 'colors'
 
 connect_middleware = (connect, options) ->
 	[
