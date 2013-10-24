@@ -35,6 +35,7 @@
     "grunt-contrib-connect": "*",
     "shelljs": "~0.2.6",
     "grunt-rsync": "~0.2.1",
-    "grunt-groc": "~0.4.0"
+    "grunt-groc": "~0.4.0",
+    "colors": "~0.6.2"
   }
 }
