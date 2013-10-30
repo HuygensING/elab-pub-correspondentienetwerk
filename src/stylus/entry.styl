@@ -45,6 +45,9 @@
 		.right
 			text-align right
 
+	.thumbnails
+		min-height 100px // so text isn't pushed left
+
 	.metadata
 		padding-top pTop
 		transition height .5s ease 0s
@@ -73,27 +76,26 @@
 				transition opacity 1s ease-out
 				opacity 1
 
-		.cell.more
-			.padder
-				position relative
-				// height 100%
-				button
+		.more
+			position relative
+			// height 100%
+			button
 
-					@media print
-						display none
+				@media print
+					display none
 
-					bottom 15px
-					left 0
-					span.less
-						display none
+				bottom 15px
+				left 0
+				span.less
+					display none
+				span.more
+					display inline
+
+				&.more
 					span.more
+						display none
+					span.less
 						display inline
-
-					&.more
-						span.more
-							display none
-						span.less
-							display inline
 
 	.thumbnail
 		cursor pointer

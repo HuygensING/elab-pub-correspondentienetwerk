@@ -1,19 +1,21 @@
-.row.span12.metadata
-	.cell.span1
+.metadata.grid-100
+	.grid-10
 		h3 Metadata
-	.cell.span8
-		ul
-			| <% if (metadata) { %>
-			| <% _.each(metadata, function (m, i) { %>
-			li
-				h5
-					| <%= m.field %>
-				.value
-					| <%= m.value || '&nbsp;' %>
-			|	<% }); %>
-			| <% } %>
-	.cell.span3.more
-		.padder.no-border
-			button.green
-				span.more &#x25BC; More metadata
-				span.less &#x25B2; Less metadata
+	.grid-70
+		.grid-100
+			ul
+				| <% if (metadata) { %>
+				| <% _.each(metadata, function (m, i) { %>
+				li
+					h5
+						| <%= m.field %>
+					.value
+						| <%= m.value || '&nbsp;' %>
+				|	<% }); %>
+				| <% } %>
+	.grid-20
+		.more
+			.no-border
+				button.green
+					span.more &#x25BC; More metadata
+					span.less &#x25B2; Less metadata

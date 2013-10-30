@@ -1,5 +1,5 @@
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 @media print{.text{width:auto}
 }.text sup[data-marker]{cursor:pointer;color:#ff42ff;}
 .text sup[data-marker] margin-right,.text sup[data-marker]:hover{color:#000;background-color:#ffe0ff}
@@ -10,8 +10,8 @@
 .annotations .number span{background-color:#e6e6e6;color:#8f8f8f;padding:0 2px;border-radius:2px}
 .annotations li:hover .number span{background-color:#ba5db6;color:#fff}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .entry{font-family:sans-serif;font-size:11pt;}
 .entry h3,.entry h5{font-weight:normal;font-family:sans-serif;color:#8f8f8f}
 .entry h3{font-size:11pt}
@@ -24,19 +24,20 @@
 .entry .header .back a span,.entry .header .next span,.entry .header .prev span{color:#8f8f8f}
 .entry .header .navigate-entries{margin:1em 0}
 .entry .header .right{text-align:right}
+.entry .thumbnails{min-height:100px}
 .entry .metadata{padding-top:15px;transition:height .5s ease 0;}
 .entry .metadata ul{list-style:none;margin:0;padding:0;}
 .entry .metadata ul li{float:left;padding-bottom:15px;border-bottom:1px solid #e6e6e6;width:50%;}
 .entry .metadata ul li h5{margin:.8em 0 0 0}
 .entry .metadata ul li:nth-child(n+5){display:none;opacity:0;transition:opacity 1s ease-out}
 .entry .metadata.more li:nth-child(n){display:block;transition:opacity 1s ease-out;opacity:1}
-.entry .metadata .cell.more .padder{position:relative;height:100%;}
-.entry .metadata .cell.more .padder button{bottom:15px;left:0;}
-@media print{.entry .metadata .cell.more .padder button{display:none}
-}.entry .metadata .cell.more .padder button span.less{display:none}
-.entry .metadata .cell.more .padder button span.more{display:inline}
-.entry .metadata .cell.more .padder button.more span.more{display:none}
-.entry .metadata .cell.more .padder button.more span.less{display:inline}
+.entry .metadata .more{position:relative;}
+.entry .metadata .more button{bottom:15px;left:0;}
+@media print{.entry .metadata .more button{display:none}
+}.entry .metadata .more button span.less{display:none}
+.entry .metadata .more button span.more{display:inline}
+.entry .metadata .more button.more span.more{display:none}
+.entry .metadata .more button.more span.less{display:inline}
 .entry .thumbnail{cursor:pointer}
 .entry .contents .versions{margin-right:15px;}
 .entry .contents .versions ul{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
@@ -46,8 +47,8 @@
 .entry .contents .parallel{padding:15px 0 25px 0}
 .entry .annotations{color:#8f8f8f;font-size:9pt}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .faceted-search:before{width:0;height:0;content:"";display:block;border-bottom:20px solid #f1f1f1;border-left:0 solid transparent;border-right:0 solid transparent;margin-top:-20px}
 .faceted-search .row .cell{font-size:.8rem}
 .faceted-search form button{background:#8cd5d5;color:#fff;box-shadow:none;border-radius:2px;}
@@ -59,12 +60,12 @@
 .faceted-search .facet .options ul{padding-left:0;}
 .faceted-search .facet .options ul li label,.faceted-search .facet .options ul li input{cursor:pointer}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.wrapper{width:900px;margin:0 auto}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.wrapper{margin:0 auto}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 html{overflow-y:scroll}
 body{font-family:sans-serif;margin:0;padding:0}
 a{color:#6ca1e5;text-decoration:none;font-family:sans-serif;font-size:10pt}
@@ -79,10 +80,10 @@ header{padding-top:1em;}
 header h1{float:left}
 header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;background-image:url("../images/HuygensING.png");width:92px;height:66px}
 header:after{content:"";clear:both;display:block;margin-bottom:2em}
-footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
+footer{border-top:1px solid #8f8f8f;padding:20px 0;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .panel{position:absolute;display:inline-block;width:600px;background-color:#fff;transition:background-color .4s ease-in-out 0;-webkit-transition:all 600ms cubic-bezier(.23,1,.32,1);transition:all 600ms cubic-bezier(.23,1,.32,1);overflow-y:auto;box-sizing:border-box;border:1px solid #e6e6e6;border-left:none;padding:40px;}
 .panel.new{background-color:#fffeed;transition:background-color .4s ease-in-out 0}
 .panel.large{width:600px;height:700px;}
@@ -103,20 +104,20 @@ footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6
 .panel .selection ul{padding:0 0;margin:0;width:100%;list-style:none;display:none;}
 .panel .selection ul li{margin:5px 0}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.parallel-overlay{position:fixed;width:100%;height:100%;background:#fff}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.parallel-overlay{position:fixed;top:0;width:100%;height:100%;background:#fff}
 .parallel-view{z-index:1000;position:relative;background-color:#fff;}
 .parallel-view .add span,.parallel-view .close span{margin-right:1em}
 .parallel-view .close{float:right}
 .parallel-view .panel-container{position:relative;margin-top:50px}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 @media print{.entry .row > .text,.entry .row > .annotations{width:auto}
 }
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .controls h3{float:left}
 .controls .sort{float:right;margin-top:1em}
 .controls:after{content:"";display:block;clear:both}
@@ -133,10 +134,10 @@ footer{border-top:1px solid #8f8f8f;padding-top:20px;margin-top:50px;color:#e6e6
 .results ul li{padding:10px;border-bottom:1px solid #e2ecee;}
 .results ul li:hover{background:#eee;cursor:pointer}
 
-@font-face{font-family:Samba;src:url("Samba-webfont.ttf")}
-@font-face{font-family:"Junicode";src:url("../fonts/Junicode.ttf") format('truetype')}
-.text-view .text,.panel .text{position:relative;display:inline-block;width:205px;margin-right:15px;font-family:"Junicode","Arial unicode MS","times new roman","serif";line-height:22px;}
-.text-view .text .line-numbers,.panel .text .line-numbers{position:absolute;top:0;left:-3em;text-align:right;line-height:22px;font-size:10px;color:#8f8f8f;overflow:hidden}
-.text-view .annotations,.panel .annotations{display:inline-block;width:100px;font-size:12px;font-family:sans-serif;color:#8f8f8f;}
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.text-view .text,.panel .text{position:relative;display:inline-block;padding-left:30px;font-family:"Junicode","Arial unicode MS","times new roman","serif";line-height:22px;}
+.text-view .text .line-numbers,.panel .text .line-numbers{position:absolute;top:0;left:0;text-align:right;line-height:22px;font-size:10px;color:#8f8f8f;overflow:hidden}
+.text-view .annotations,.panel .annotations{font-size:12px;font-family:sans-serif;color:#8f8f8f;}
 .text-view .annotations ol,.panel .annotations ol{list-style:none;padding-left:0;}
 .text-view .annotations ol li,.panel .annotations ol li{font-size:12px;margin-top:10px}

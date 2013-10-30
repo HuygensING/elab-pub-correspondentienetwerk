@@ -232,7 +232,7 @@ module.exports = (grunt) ->
 		concat:
 			css:
 				src: [
-					'compiled/lib/unsemantic/assets/stylesheets/unsemantic-grid-responsive.css'
+					'compiled/lib/unsemantic/index.css'
 					'compiled/lib/normalize-css/normalize.css'
 					'compiled/lib/faceted-search/dev/css/main.css'
 					'compiled/css/project.css'
@@ -279,6 +279,7 @@ module.exports = (grunt) ->
 					out: "dist/js/main.js"
 					# optimize: 'none' # Uncomment for debugging
 					paths:
+						'json3': '../lib/json3/lib/json3.min'
 						'jquery': '../lib/jquery/jquery.min'
 						'underscore': '../lib/underscore-amd/underscore'
 						'backbone': '../lib/backbone-amd/backbone'

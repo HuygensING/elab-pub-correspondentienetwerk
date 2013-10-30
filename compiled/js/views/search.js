@@ -116,7 +116,7 @@
 
       Home.prototype.render = function() {
         var _this = this;
-        $('title').text(configData.get('title'));
+        document.title = configData.get('title');
         this.$el.html(this.template({
           w: configData.get('entryIds')
         }));

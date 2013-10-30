@@ -21,14 +21,14 @@
       ConfigData.prototype.findPrev = function(id) {
         var ids, pos, _ref1;
         ids = this.get('entryIds');
-        pos = ids.indexOf("" + id + ".json");
+        pos = _.indexOf(ids, "" + id + ".json");
         return (_ref1 = ids[pos - 1]) != null ? _ref1.replace('.json', '') : void 0;
       };
 
       ConfigData.prototype.findNext = function(id) {
         var ids, pos, _ref1;
         ids = this.get('entryIds');
-        pos = ids.indexOf("" + id + ".json");
+        pos = _.indexOf(ids, "" + id + ".json");
         return (_ref1 = ids[pos + 1]) != null ? _ref1.replace('.json', '') : void 0;
       };
 

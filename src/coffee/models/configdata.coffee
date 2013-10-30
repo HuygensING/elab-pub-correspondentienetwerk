@@ -7,11 +7,11 @@ define (require) ->
 
 		findPrev: (id) ->
 			ids = @get 'entryIds'
-			pos = ids.indexOf "#{id}.json"
+			pos = _.indexOf ids, "#{id}.json"
 			ids[pos - 1]?.replace '.json', ''
 		findNext: (id) ->
 			ids = @get 'entryIds'
-			pos = ids.indexOf "#{id}.json"
+			pos = _.indexOf ids, "#{id}.json"
 			ids[pos + 1]?.replace '.json', ''
 
 		nextURL: (id) ->

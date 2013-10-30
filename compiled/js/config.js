@@ -6,18 +6,18 @@
       basePath = '';
     }
     config = {
+      basePath: basePath,
       configDataURL: "" + basePath + "/data/config.json",
       itemLabel: 'entry',
       itemLabelPlural: 'entries',
       entryURL: function(id) {
-        return "" + basePath + "/entry/" + id;
+        return "/entry/" + id;
       },
       entryDataURL: function(id) {
-        console.log("Fetching entry " + id);
         return "" + basePath + "/data/" + id + ".json";
       },
       parallelURL: function(id) {
-        return "" + basePath + "/entry/" + id + "/parallel";
+        return "/entry/" + id + "/parallel";
       },
       defaultTextVersion: 'Diplomatic',
       resultRows: 10,

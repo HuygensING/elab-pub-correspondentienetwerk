@@ -106,7 +106,6 @@
         _results = [];
         for (pos = _i = 0, _len = _ref1.length; _i < _len; pos = ++_i) {
           p = _ref1[pos];
-          console.log("Pois", pos);
           _results.push(p.$el.css({
             left: (pos * p.$el.outerWidth()) + 'px'
           }));
@@ -115,7 +114,6 @@
       };
 
       ParallelView.prototype.panel = function(idx) {
-        console.log("PANELS", this.panels);
         return this.panels[idx];
       };
 

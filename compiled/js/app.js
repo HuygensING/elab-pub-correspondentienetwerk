@@ -1,6 +1,6 @@
 (function() {
   define(function(require) {
-    var Backbone, MainRouter, Views, bootstrapTemplate, config, configData, configURL;
+    var Backbone, MainRouter, Views, bootstrapTemplate, config, configData, configURL, rootURL;
     Backbone = require('backbone');
     MainRouter = require('routers/main');
     configData = require('models/configdata');
@@ -9,8 +9,8 @@
       Main: require('views/home')
     };
     bootstrapTemplate = _.template(require('text!html/body.html'));
+    rootURL = window.BASE_URL.replace(/https?:\/\/[^\/]+/, '');
     configURL = "" + (window.BASE_URL === '/' ? '' : window.BASE_URL) + "/data/config.json";
-    console.log("Loading " + configURL);
     return {
       initialize: function() {
         var _this = this;
@@ -25,7 +25,7 @@
               el: '#main'
             });
             Backbone.history.start({
-              root: config.basePath || '',
+              root: rootURL,
               pushState: true
             });
             return $(document).on('click', 'a:not([data-bypass])', function(e) {
@@ -39,8 +39,8 @@
               }
             });
           },
-          error: function() {
-            return console.log("Could not fetch config data");
+          error: function(m, o) {
+            return console.log("Could not fetch config data", JSON.stringify(o));
           }
         });
       }

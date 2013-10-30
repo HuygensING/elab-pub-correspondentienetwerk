@@ -6,6 +6,7 @@
 		"requirejs": "*",
 		"requirejs-text": "*",
 		"requirejs-domready": "*",
+		"json3": "*",
 		"jquery": "*",
 		"jquery-ui": "*",
 		"underscore-amd": "*",

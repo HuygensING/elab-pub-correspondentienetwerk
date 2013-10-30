@@ -10,7 +10,7 @@
     events = require('events');
     configData = require('models/configdata');
     configData.on('change', function() {
-      return $('title').text(configData.get('title'));
+      return document.title = configData.get('title');
     });
     Views = {
       Home: require('views/home'),
@@ -60,7 +60,6 @@
       };
 
       MainRouter.prototype.entry = function(id) {
-        console.log("showing entry?", id);
         return events.trigger('change:view:entry', {
           id: id
         });

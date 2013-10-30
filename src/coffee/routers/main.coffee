@@ -19,9 +19,7 @@ define (require) ->
 	class MainRouter extends Backbone.Router
 		initialize: ->
 			@on 'route', @show, @
-			@on 'route', =>
-				events.trigger 'change:view', arguments
-				console.log "Changing view to ", arguments
+			@on 'route', => events.trigger 'change:view', arguments
 
 		'routes':
 			'': 'home'
@@ -49,7 +47,5 @@ define (require) ->
 				id: id
 				version: version
 
-		entry: (id) ->
-			console.log "showing entry?", id
-			events.trigger 'change:view:entry', id: id
+		entry: (id) -> events.trigger 'change:view:entry', id: id
 			# viewManager.show Views.Entry, id: id

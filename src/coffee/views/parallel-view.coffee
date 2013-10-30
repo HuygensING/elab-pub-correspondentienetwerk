@@ -63,12 +63,10 @@ define (require) ->
 
 		repositionPanels: ->
 			for p, pos in @panels
-				console.log "Pois", pos
 				p.$el.css
 					left: (pos * p.$el.outerWidth()) + 'px'
 
 		panel: (idx) ->
-			console.log("PANELS", @panels)
 			@panels[idx]
 
 		appendPanel: (p) ->

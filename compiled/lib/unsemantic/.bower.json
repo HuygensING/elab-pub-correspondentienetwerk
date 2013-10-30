@@ -1,0 +1,13 @@
+{
+  "name": "unsemantic",
+  "_cacheHeaders": {
+    "ETag": "\"1a20f44495159372fc2cbd049864e5d7\"",
+    "Content-Length": "42798",
+    "Content-Type": "text/plain; charset=utf-8",
+    "Content-Disposition": "inline"
+  },
+  "_release": "e-tag:1a20f4449",
+  "main": "index.css",
+  "_source": "https://raw.github.com/nathansmith/unsemantic/master/assets/stylesheets/unsemantic-grid-responsive.css",
+  "_target": "*"
+}

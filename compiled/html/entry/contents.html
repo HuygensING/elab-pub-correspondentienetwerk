@@ -1,25 +1,21 @@
 
-<div class="row span12">
-  <div class="cell span1">
-    <% if (entry.facsimiles) { %>
-      <% _.each(entry.facsimiles, function (f, n) { %>
-    <h3>Blad <%= n+1 %> </h3>
-    <div data-page="<%= n %>" class="thumbnail"><img src="<%= f.thumbnail %>"/></div>  <% }); %>
-    <% } %>
-  </div>
-  <div class="cell span11">
-    <div class="row span12">
-      <div class="cell span8 versions">
-        <ul><% _.each(entry.paralleltexts, function (value, name) { %>
-          <li data-toggle="<%= name %>">
-            <button><%= name %></button>
-          </li><% }); %>
-        </ul>
-      </div>
-      <div class="cell span3 parallel">
-        <button class="green">Parallel text view</button>
-      </div>
-    </div>
-    <div class="text-view"><%= entry.paralleltexts ? (entry.paralleltexts[config.defaultTextVersion] || {}).text : '' %></div>
+<div class="grid-10 thumbnails">
+  <% if (entry.facsimiles) { %>
+    <% _.each(entry.facsimiles, function (f, n) { %>
+  <h3>Blad <%= n+1 %> </h3>
+  <div data-page="<%= n %>" class="thumbnail"><img src="<%= f.thumbnail %>"/></div>  <% }); %>
+  <% } %>
+</div>
+<div class="grid-70">
+  <div class="grid-100 versions">
+    <ul><% _.each(entry.paralleltexts, function (value, name) { %>
+      <li data-toggle="<%= name %>">
+        <button><%= name %></button>
+      </li><% }); %>
+    </ul>
   </div>
 </div>
+<div class="grid-20 parallel">
+  <button class="green">Parallel text view</button>
+</div>
+<div class="text-view"><%= entry.paralleltexts ? (entry.paralleltexts[config.defaultTextVersion] || {}).text : '' %></div>

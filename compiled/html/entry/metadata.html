@@ -1,22 +1,26 @@
 
-<div class="row span12 metadata">
-  <div class="cell span1">
+<div class="metadata grid-100">
+  <div class="grid-10">
     <h3>Metadata</h3>
   </div>
-  <div class="cell span8">
-    <ul>
-      <% if (metadata) { %>
-      <% _.each(metadata, function (m, i) { %>
-      <li>
-        <h5><%= m.field %></h5>
-        <div class="value"><%= m.value || '&nbsp;' %></div>
-      </li>	<% }); %>
-      <% } %>
-    </ul>
+  <div class="grid-70">
+    <div class="grid-100">
+      <ul>
+        <% if (metadata) { %>
+        <% _.each(metadata, function (m, i) { %>
+        <li>
+          <h5><%= m.field %></h5>
+          <div class="value"><%= m.value || '&nbsp;' %></div>
+        </li>	<% }); %>
+        <% } %>
+      </ul>
+    </div>
   </div>
-  <div class="cell span3 more">
-    <div class="padder no-border">
-      <button class="green"><span class="more">&#x25BC; More metadata</span><span class="less">&#x25B2; Less metadata</span></button>
+  <div class="grid-20">
+    <div class="more">
+      <div class="no-border">
+        <button class="green"><span class="more">&#x25BC; More metadata</span><span class="less">&#x25B2; Less metadata</span></button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 (function() {
   require.config({
     paths: {
+      'json3': '../lib/json3/lib/json3.min',
       'jquery': '../lib/jquery/jquery',
       'jquery-ui': '../lib/jquery-ui/ui',
       'underscore': '../lib/underscore-amd/underscore',
@@ -16,7 +17,7 @@
         exports: '_'
       },
       'backbone': {
-        deps: ['underscore', 'jquery'],
+        deps: ['underscore', 'jquery', 'json3'],
         exports: 'Backbone'
       },
       'jquery-ui': {
@@ -26,8 +27,9 @@
     }
   });
 
-  require(['domready', 'config', 'app'], function(domready, config, app) {
+  require(['json3', 'domready', 'config', 'app'], function(json3, domready, config, app) {
     return domready(function() {
+      window.JSON = json3;
       return app.initialize();
     });
   });

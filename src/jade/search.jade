@@ -1,23 +1,22 @@
-.row
-	.grid-35.faceted-search
-	.grid-65.results
-		.controls
-			h3
-				span.number-of-results
-				&nbsp;results
-			.sort
-		.cursor
-			span.previous Previous
-			span.position
-				| Page&nbsp;
-				span.current
-				| &nbsp;of&nbsp;
-				span.total
-			img.loader(src="/images/loader.gif")
-			span.next Next
-		.list
-			ul
-				| <% _.each(w.results, function (e) { %>
-				li
-					a(href!="<%- config.entryURL(e) %>") <%- e %>
-				| <% }) %>
+.grid-35.faceted-search
+.grid-65.results
+	.controls
+		h3
+			span.number-of-results
+			&nbsp;results
+		.sort
+	.cursor
+		span.previous Previous
+		span.position
+			| Page&nbsp;
+			span.current
+			| &nbsp;of&nbsp;
+			span.total
+		img.loader(src="/images/loader.gif")
+		span.next Next
+	.list
+		ul
+			| <% _.each(w.results, function (e) { %>
+			li
+				a(href!="<%- config.entryURL(e) %>") <%- e %>
+			| <% }) %>

@@ -37,4 +37,4 @@ define (require) ->
 					if href?
 						e.preventDefault()
 						Backbone.history.navigate href, trigger: true
-			error: => console.log "Could not fetch config data"
+			error: (m, o) => console.log "Could not fetch config data", JSON.stringify o

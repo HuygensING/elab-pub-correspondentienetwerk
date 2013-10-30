@@ -1,5 +1,6 @@
 require.config 
 	paths:
+		'json3': '../lib/json3/lib/json3.min'
 		'jquery': '../lib/jquery/jquery'
 		'jquery-ui': '../lib/jquery-ui/ui'
 		'underscore': '../lib/underscore-amd/underscore'
@@ -14,12 +15,13 @@ require.config
 		'underscore':
 			exports: '_'
 		'backbone':
-			deps: ['underscore', 'jquery']
+			deps: ['underscore', 'jquery', 'json3']
 			exports: 'Backbone'
 		'jquery-ui':
 			exports: '$'
 			deps: ['jquery']
 
-require ['domready', 'config', 'app'], (domready, config, app) ->
+require ['json3', 'domready', 'config', 'app'], (json3, domready, config, app) ->
 	domready ->
+		window.JSON = json3
 		app.initialize()

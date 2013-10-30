@@ -72,7 +72,6 @@ define (require) ->
 			@contentsTemplate = _.template @contentsTemplate
 
 			if 'id' of @options
-				console.log "new Entry #{@options.id}"
 				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 
@@ -89,7 +88,6 @@ define (require) ->
 			@$el.click -> @didScroll = true
 
 			doCheck = =>
-				console.log @$el, @didScroll
 				if @didScroll
 					didScroll = false
 					@positionTextView()

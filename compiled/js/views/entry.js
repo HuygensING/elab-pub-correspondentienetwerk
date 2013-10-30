@@ -92,7 +92,6 @@
         this.metadataTemplate = _.template(this.metadataTemplate);
         this.contentsTemplate = _.template(this.contentsTemplate);
         if ('id' in this.options) {
-          console.log("new Entry " + this.options.id);
           this.model = new Entry({
             id: this.options.id
           });
@@ -121,7 +120,6 @@
         });
         doCheck = function() {
           var didScroll;
-          console.log(_this.$el, _this.didScroll);
           if (_this.didScroll) {
             didScroll = false;
             return _this.positionTextView();
