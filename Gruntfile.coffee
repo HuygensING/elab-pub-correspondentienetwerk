@@ -175,7 +175,7 @@ module.exports = (grunt) ->
 					'compiled/index.html': 'src/index.jade'
 				]
 				options:
-					pretty: true
+					pretty: false
 					data:
 						__DEPLOYMENT__: ''
 			dist:
@@ -232,7 +232,7 @@ module.exports = (grunt) ->
 		concat:
 			css:
 				src: [
-					'compiled/lib/unsemantic/index.css'
+					'compiled/lib/unsemantic/assets/stylesheets/unsemantic-grid-responsive.css'
 					'compiled/lib/normalize-css/normalize.css'
 					'compiled/lib/faceted-search/dev/css/main.css'
 					'compiled/css/project.css'
@@ -281,6 +281,8 @@ module.exports = (grunt) ->
 					paths:
 						'json3': '../lib/json3/lib/json3.min'
 						'jquery': '../lib/jquery/jquery.min'
+						'jquery-visible': '../lib/jquery.visible/jquery.visible.min'
+						'unsemantic-html5shim': '../lib/unsemantic/assets/javascripts/html5'
 						'underscore': '../lib/underscore-amd/underscore'
 						'backbone': '../lib/backbone-amd/backbone'
 						'text': '../lib/requirejs-text/text'

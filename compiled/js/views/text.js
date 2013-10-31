@@ -3,11 +3,12 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Helpers, TextView, config, configData, _ref;
+    var BaseView, Helpers, TextView, config, configData, jqv, _ref;
     configData = require('models/configdata');
     config = require('config');
     BaseView = require('views/base');
     Helpers = require('helpers/general');
+    jqv = require('jquery-visible');
     return TextView = (function(_super) {
       __extends(TextView, _super);
 
@@ -19,6 +20,10 @@
       TextView.prototype.template = require('text!html/text.html');
 
       TextView.prototype.annotationsTemplate = require('text!html/annotations.html');
+
+      TextView.prototype.events = {
+        'click .annotations li': 'scrollToAnnotation'
+      };
 
       TextView.prototype.initialize = function(options) {
         this.options = options;
@@ -32,6 +37,19 @@
       TextView.prototype.setView = function(version) {
         this.currentTextVersion = version;
         return this.renderContent();
+      };
+
+      TextView.prototype.scrollToAnnotation = function(e) {
+        var annID, annotation, target;
+        target = $(e.currentTarget);
+        annID = target.attr('data-id');
+        annotation = this.$(".text span[data-marker=begin][data-id=" + annID + "]");
+        console.log(jqv);
+        if (annotation.visible()) {
+          return console.log("Annotation is visible", annID);
+        } else {
+          return console.log("Not visible");
+        }
       };
 
       TextView.prototype.renderAnnotations = function() {
@@ -58,40 +76,44 @@
         this.$('.annotations').html(this.annotationsTemplate({
           annotations: orderedAnnotations
         }));
-        hl = Helpers.highlighter({
-          className: 'highlight',
-          tagName: 'div'
-        });
-        supEnter = function(ev) {
-          var el, markerID;
-          el = ev.currentTarget;
-          markerID = $(el).data('id');
-          _this.$(".annotations li[data-id=" + markerID + "]").addClass('highlight');
-          return hl.on({
-            startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
-            endNode: ev.currentTarget
+        if (document.createRange) {
+          hl = Helpers.highlighter({
+            className: 'highlight',
+            tagName: 'div'
           });
-        };
-        supLeave = function(ev) {
-          var markerID;
-          markerID = $(ev.currentTarget).data('id');
-          _this.$(".annotations li[data-id=" + markerID + "]").removeClass('highlight');
-          return hl.off();
-        };
-        this.$('.text sup[data-marker]').hover(supEnter, supLeave);
-        liEnter = function(ev) {
-          var el, markerID;
-          el = ev.currentTarget;
-          markerID = $(el).data('id');
-          return hl.on({
-            startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
-            endNode: _this.$(".text sup[data-marker=end][data-id=" + markerID + "]")[0]
-          });
-        };
-        liLeave = function() {
-          return hl.off();
-        };
-        this.$('.annotations li').hover(liEnter, liLeave);
+          supEnter = function(ev) {
+            var el, markerID;
+            el = ev.currentTarget;
+            markerID = $(el).data('id');
+            _this.$(".annotations li[data-id=" + markerID + "]").addClass('highlight');
+            return hl.on({
+              startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
+              endNode: ev.currentTarget
+            });
+          };
+          supLeave = function(ev) {
+            var markerID;
+            markerID = $(ev.currentTarget).data('id');
+            _this.$(".annotations li[data-id=" + markerID + "]").removeClass('highlight');
+            return hl.off();
+          };
+          this.$('.text sup[data-marker]').hover(supEnter, supLeave);
+          liEnter = function(ev) {
+            var el, markerID;
+            el = ev.currentTarget;
+            markerID = $(el).data('id');
+            return hl.on({
+              startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
+              endNode: _this.$(".text sup[data-marker=end][data-id=" + markerID + "]")[0]
+            });
+          };
+          liLeave = function() {
+            return hl.off();
+          };
+          this.$('.annotations li').hover(liEnter, liLeave);
+        } else {
+
+        }
         return this;
       };
 

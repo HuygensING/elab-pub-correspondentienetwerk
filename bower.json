@@ -1,5 +1,5 @@
 {
-	"name": "elaborate-publication",
+	"name": "elaborate-publication-collection",
 	"version": "0.0.0",
 	"dependencies": {
 		"almond": "*",
@@ -7,12 +7,13 @@
 		"requirejs-text": "*",
 		"requirejs-domready": "*",
 		"json3": "*",
-		"jquery": "*",
-		"jquery-ui": "*",
+		"jquery": "1.*",
+		"jquery-ui": "1.9.*",
+		"jquery.visible": "*",
 		"underscore-amd": "*",
 		"backbone-amd": "*",
 		"normalize-css": "*",
-		"unsemantic": "https://raw.github.com/nathansmith/unsemantic/master/assets/stylesheets/unsemantic-grid-responsive.css",
+		"unsemantic": "*",
 		"helpers": "git@github.com:Gijsjan/helpers.git",
 		"managers": "git@github.com:Gijsjan/managers.git"
 	},

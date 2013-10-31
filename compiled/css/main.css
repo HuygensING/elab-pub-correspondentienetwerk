@@ -2174,7 +2174,7 @@ table {
 .entry .metadata ul li:nth-child(n+5){display:none;opacity:0;transition:opacity 1s ease-out}
 .entry .metadata.more li:nth-child(n){display:block;transition:opacity 1s ease-out;opacity:1}
 .entry .metadata .more{position:relative;}
-.entry .metadata .more button{bottom:15px;left:0;}
+.entry .metadata .more button{left:0;}
 @media print{.entry .metadata .more button{display:none}
 }.entry .metadata .more button span.less{display:none}
 .entry .metadata .more button span.more{display:inline}
@@ -2218,11 +2218,11 @@ button.active:hover,a.button.active:hover{background-color:#9a9a9a}
 button.green,a.button.green{background-color:#8cd5d5;color:#000;}
 button.green:hover,a.button.green:hover{background-color:#98d9d9}
 h1{font-family:Samba;font-weight:normal;color:#b325a0}
-header{padding-top:1em;}
-header h1{float:left}
-header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;background-image:url("../images/HuygensING.png");width:92px;height:66px}
-header:after{content:"";clear:both;display:block;margin-bottom:2em}
-footer{border-top:1px solid #8f8f8f;padding:20px 0;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
+.page-header{padding-top:1em;}
+.page-header h1{float:left}
+.page-header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;background-image:url("../images/HuygensING.png");width:92px;height:66px}
+.page-header:after{content:"";clear:both;display:block;margin-bottom:2em}
+.page-footer{border-top:1px solid #8f8f8f;padding:20px 0;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
@@ -2248,11 +2248,13 @@ footer{border-top:1px solid #8f8f8f;padding:20px 0;margin-top:50px;color:#e6e6e6
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
-.parallel-overlay{position:fixed;top:0;width:100%;height:100%;background:#fff}
-.parallel-view{z-index:1000;position:relative;background-color:#fff;}
+.parallel-overlay{position:fixed;left:0;top:0;width:100%;height:100%;background:#fff;overflow-x:scroll;overflow-y:hidden}
+.parallel-controls{position:fixed;width:100%;top:0;padding:20px;}
+.parallel-controls button{padding:10px 15px;box-shadow:1px 1px 1px #ccc}
+.parallel-view{z-index:1000;position:relative;top:100px;background-color:#fff;}
 .parallel-view .add span,.parallel-view .close span{margin-right:1em}
-.parallel-view .close{float:right}
-.parallel-view .panel-container{position:relative;margin-top:50px}
+.parallel-view .close{float:right;margin-right:40px}
+.parallel-view .panel-container{position:relative;margin-top:100px}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}

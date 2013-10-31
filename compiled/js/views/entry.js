@@ -55,11 +55,13 @@
       };
 
       Home.prototype.showParallelView = function() {
+        console.log("Showing PV", this.pv);
         if (!this.pv) {
           this.pv = new ParallelView({
             model: this.model
           });
           this.$('.header').after(this.pv.el);
+          this.pv.show();
         } else {
           this.pv.show();
         }

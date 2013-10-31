@@ -1,7 +1,1 @@
-
-<div class="text"><%= entry.paralleltexts[version].text %></div>
-<div class="annotations">
-  <ol><% _.each(entry.paralleltexts[version].annotations, function (a) { %>
-    <li><%= a.text %></li><% }); %>
-  </ol>
-</div>
+<div class="text"><%= entry.paralleltexts[version].text %></div><div class="annotations"><ol><% _.each(entry.paralleltexts[version].annotations, function (a) { %><li><%= a.text %></li><% }); %></ol></div>
