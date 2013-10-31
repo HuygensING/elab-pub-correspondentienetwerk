@@ -41,9 +41,11 @@ define (require) ->
 			$(e.currentTarget).toggleClass 'more' # button
 
 		showParallelView: ->
+			console.log "Showing PV", @pv
 			if not @pv
 				@pv = new ParallelView model: @model
 				@$('.header').after @pv.el
+				@pv.show()
 			else
 				@pv.show()
 
