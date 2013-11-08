@@ -2,20 +2,41 @@
 	.text
 		position relative
 		display inline-block
-		padding-left 30px // to show line numbers
 
 		font-family textFont
 
-		line-height 22px
-		.line-numbers
-			position absolute
-			top 0
-			left 0
-			text-align right
-			line-height 22px
-			font-size 10px
-			color medium-grey
-			overflow hidden
+		lineHeight = 22px
+		line-height lineHeight
+
+		lineNumberOffset = 30px
+		// margin-left -1 * lineNumberOffset
+		padding-left lineNumberOffset
+
+		.line
+			position relative
+			padding-left 10px
+			.number
+				position absolute
+				top 0
+				width lineNumberOffset
+				left -1 * lineNumberOffset
+				min-height lineHeight
+				text-align right
+				line-height lineHeight
+				font-size 80%
+				font-family sans-serif
+				color darken(medium-grey, 40%)
+
+
+		// .line-numbers
+		// 	position absolute
+		// 	top 0
+		// 	left 0
+		// 	text-align right
+		// 	line-height 22px
+		// 	font-size 10px
+		// 	color medium-grey
+		// 	overflow hidden
 
 	.annotations
 		font-size 12px

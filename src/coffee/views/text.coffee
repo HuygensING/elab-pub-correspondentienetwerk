@@ -15,6 +15,8 @@ define (require) ->
 			@currentTextVersion = @options.version || config.defaultTextVersion
 
 			@highlighter = new Helpers.highlighter
+				className: 'highlight'	# optional
+				tagName: 'div' 					# optional
 
 			@render()
 
@@ -31,43 +33,43 @@ define (require) ->
 			@$('.annotations').html @annotationsTemplate
 				annotations: orderedAnnotations
 
-			hl = Helpers.highlighter
-				className: 'highlight' # optional
-				tagName: 'div' # optional
-
 			supEnter = (ev) =>
 				el = ev.currentTarget
 				markerID = $(el).data 'id'
 				@$(".annotations li[data-id=#{markerID}]").addClass 'highlight'
-				hl.on
+				@highlighter.on
 					startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
 					endNode: ev.currentTarget # required
 			supLeave = (ev) =>
 				markerID = $(ev.currentTarget).data 'id'
 				@$(".annotations li[data-id=#{markerID}]").removeClass 'highlight'
-				hl.off()
+				@highlighter.off()
 			@$('.text sup[data-marker]').hover supEnter, supLeave
 
 			liEnter = (ev) =>
 				el = ev.currentTarget
 				markerID = $(el).data 'id'
-				hl.on
+				@highlighter.on
 					startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
 					endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
-			liLeave = -> hl.off()
+			liLeave = => @highlighter.off()
 			@$('.annotations li').hover liEnter, liLeave
 
 			@
 
 		renderLineNumbering: ->
-			lineNumbers = $('<div>').addClass 'line-numbers'
-			lines = ""
-			for n in [1..1000] # TODO: hard-coded, but maybe better to compute?
-				lines += "#{n}<br>"
-			lineNumbers.html lines
-			@$('.text .line-numbers').remove()
-			@$('.text').append lineNumbers
-			lineNumbers.css height: @$('.text').outerHeight()
+			@$('.line').each (n, line) =>
+				$(line).prepend $('<div class="number"/>').text(n+1)
+
+		# renderLineNumbering: ->
+		# 	lineNumbers = $('<div>').addClass 'line-numbers'
+		# 	lines = ""
+		# 	for n in [1..1000] # TODO: hard-coded, but maybe better to compute?
+		# 		lines += "#{n}<br>"
+		# 	lineNumbers.html lines
+		# 	@$('.text .line-numbers').remove()
+		# 	@$('.text').append lineNumbers
+		# 	lineNumbers.css height: @$('.text').outerHeight()
 
 		renderContent: ->
 			text = @model.text @currentTextVersion

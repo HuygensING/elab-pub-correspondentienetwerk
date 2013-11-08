@@ -22,7 +22,7 @@ define (require) ->
 				# Load first before any views,
 				# so views can attach to elements
 				$('body').html bootstrapTemplate()
-				$('header h1').text configData.get 'title'
+				$('header h1 a').text configData.get 'title'
 
 				mainRouter = new MainRouter
 				mainView = new Views.Main el: '#main'

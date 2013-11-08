@@ -8,7 +8,7 @@ define (require) ->
 	# jq = require 'jquery-ui/jquery-ui'
 
 	class PanelView extends Backbone.View
-		className: 'panel'
+		className: 'panel-frame'
 		template: require 'text!html/panel.html'
 		events:
 			'click .selection li': 'selectText'
