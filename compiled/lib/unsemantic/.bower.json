@@ -1,13 +1,12 @@
 {
   "name": "unsemantic",
-  "_cacheHeaders": {
-    "ETag": "\"1a20f44495159372fc2cbd049864e5d7\"",
-    "Content-Length": "42798",
-    "Content-Type": "text/plain; charset=utf-8",
-    "Content-Disposition": "inline"
+  "homepage": "https://github.com/nathansmith/unsemantic",
+  "_release": "4a505f3f56",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4a505f3f56a9ca00fb85adad6a50912482433b83"
   },
-  "_release": "e-tag:1a20f4449",
-  "main": "index.css",
-  "_source": "https://raw.github.com/nathansmith/unsemantic/master/assets/stylesheets/unsemantic-grid-responsive.css",
+  "_source": "git://github.com/nathansmith/unsemantic.git",
   "_target": "*"
 }
