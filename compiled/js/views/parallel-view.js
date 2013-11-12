@@ -59,25 +59,26 @@
 
       ParallelView.prototype.closePanel = function(e) {
         var pNumber, panel;
-        pNumber = $(e.currentTarget).closest('.panel').index();
+        pNumber = $(e.currentTarget).closest('.panel-frame').index();
         panel = this.panels.splice(pNumber, 1)[0];
         panel.remove();
         return this.repositionPanels();
       };
 
       ParallelView.prototype.addPanelEvent = function(e) {
-        var last, lastPanel, removeNew;
+        var last, lastPanel, po, removeNew;
         this.addPanel();
         last = this.panels.length - 1;
         lastPanel = this.panels[last];
         this.appendPanel(lastPanel);
-        lastPanel.$el.addClass('new');
+        lastPanel.$('.panel').addClass('new');
         removeNew = function() {
-          return lastPanel.$el.removeClass('new');
+          return lastPanel.$('.panel').removeClass('new');
         };
-        setTimeout(removeNew, 1300);
-        return $('html, body').animate({
-          scrollLeft: this.panels[last].$el.offset().left
+        setTimeout(removeNew, 1500);
+        po = this.$('.parallel-overlay');
+        return po.animate({
+          scrollLeft: po[0].scrollWidth - po[0].clientWidth
         });
       };
 
@@ -119,6 +120,9 @@
 
       ParallelView.prototype.appendPanel = function(p) {
         this.$('.panel-container').append(p.el);
+        p.$el.css({
+          height: '200px'
+        });
         this.positionPanel(p, this.panels.length - 1);
         return p.positionSelectionTab();
       };

@@ -31,7 +31,7 @@ define (require) ->
 		hide: -> @$el.hide()
 
 		closePanel: (e) ->
-			pNumber = $(e.currentTarget).closest('.panel').index()
+			pNumber = $(e.currentTarget).closest('.panel-frame').index()
 			[panel] = @panels.splice pNumber, 1
 			panel.remove()
 			@repositionPanels()
@@ -43,12 +43,13 @@ define (require) ->
 			lastPanel = @panels[last]
 			@appendPanel lastPanel
 			
-			lastPanel.$el.addClass 'new'
-			removeNew = -> lastPanel.$el.removeClass 'new'
-			setTimeout removeNew, 1300
+			lastPanel.$('.panel').addClass 'new'
+			removeNew = -> lastPanel.$('.panel').removeClass 'new'
+			setTimeout removeNew, 1500
 
-			$('html, body').animate
-				scrollLeft: @panels[last].$el.offset().left
+			po = @$('.parallel-overlay')
+			po.animate
+				scrollLeft: po[0].scrollWidth - po[0].clientWidth
 
 		addPanel: ->
 			panel = new PanelView model: @model
@@ -71,6 +72,7 @@ define (require) ->
 
 		appendPanel: (p) ->
 			@$('.panel-container').append p.el
+			p.$el.css height: '200px'
 			@positionPanel p, @panels.length - 1
 			p.positionSelectionTab()
 

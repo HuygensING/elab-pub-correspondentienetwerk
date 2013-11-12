@@ -1,5 +1,7 @@
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 @media print{.text{width:auto}
 }.text sup[data-marker]{cursor:pointer;color:#ff42ff;}
 .text sup[data-marker] margin-right,.text sup[data-marker]:hover{color:#000;background-color:#ffe0ff}
@@ -7,11 +9,13 @@
 @media print{.annotations{width:auto}
 }.annotations li.highlight .number span{color:#fff;background-color:#ba5db6}
 .annotations li:hover{cursor:pointer}
-.annotations .number span{background-color:#e6e6e6;color:#8f8f8f;padding:0 2px;border-radius:2px}
+.annotations .number span{background-color:#e6e6e6;color:#8f8f8f;padding:0 2px;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px;border-radius:2px}
 .annotations li:hover .number span{background-color:#ba5db6;color:#fff}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 .entry{font-family:sans-serif;font-size:11pt;}
 .entry h3,.entry h5{font-weight:normal;font-family:sans-serif;color:#8f8f8f}
 .entry h3{font-size:11pt}
@@ -49,9 +53,11 @@
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 .faceted-search:before{width:0;height:0;content:"";display:block;border-bottom:20px solid #f1f1f1;border-left:0 solid transparent;border-right:0 solid transparent;margin-top:-20px}
 .faceted-search .row .cell{font-size:.8rem}
-.faceted-search form button{background:#8cd5d5;color:#fff;box-shadow:none;border-radius:2px;}
+.faceted-search form button{background:#8cd5d5;color:#fff;box-shadow:none;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px;border-radius:2px;}
 .faceted-search form button:hover{background:#98d9d9}
 .faceted-search form button:active{background:#72cccc}
 .faceted-search .controls .facet{background:#fff;border:none}
@@ -62,29 +68,42 @@
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 .wrapper{margin:0 auto}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 html{overflow-y:scroll}
 body{font-family:sans-serif;margin:0;padding:0}
-a{color:#6ca1e5;text-decoration:none;font-family:sans-serif;font-size:10pt}
-button,a.button{background-color:#e6e6e6;border-radius:4px;border:none;color:#646464;font-size:9pt;cursor:pointer;line-height:19px;padding:0 5px;}
+a{color:#6ca1e5;text-decoration:none;font-family:sans-serif}
+button,a.button{background-color:#e6e6e6;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;border-radius:4px;border:none;color:#646464;font-size:9pt;cursor:pointer;line-height:19px;padding:0 5px;}
 button:hover,a.button:hover{background-color:#cfcfcf}
 button.active,a.button.active{background-color:#8f8f8f;color:#fff;}
 button.active:hover,a.button.active:hover{background-color:#9a9a9a}
 button.green,a.button.green{background-color:#8cd5d5;color:#000;}
 button.green:hover,a.button.green:hover{background-color:#98d9d9}
-h1{font-family:Samba;font-weight:normal;color:#b325a0}
+h1,header h1 a{font-family:Samba;font-weight:normal;color:#b325a0;text-decoration:none}
 .page-header{padding-top:1em;}
 .page-header h1{float:left}
-.page-header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;background-image:url("../images/HuygensING.png");width:92px;height:66px}
+.page-header .huygens-logo{display:inline-block;float:right;margin-bottom:10px;-webkit-background-image:url("../images/HuygensING.png");-moz-background-image:url("../images/HuygensING.png");-ms-background-image:url("../images/HuygensING.png");-o-background-image:url("../images/HuygensING.png");background-image:url("../images/HuygensING.png");width:92px;height:66px}
 .page-header:after{content:"";clear:both;display:block;margin-bottom:2em}
 .page-footer{border-top:1px solid #8f8f8f;padding:20px 0;margin-top:50px;color:#e6e6e6;font-family:sans-serif;font-size:9pt}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
-.panel{position:absolute;display:inline-block;width:600px;background-color:#fff;transition:background-color .4s ease-in-out 0;-webkit-transition:all 600ms cubic-bezier(.23,1,.32,1);transition:all 600ms cubic-bezier(.23,1,.32,1);overflow-y:auto;box-sizing:border-box;border:1px solid #e6e6e6;border-left:none;padding:40px;}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
+.panel-frame{position:absolute;display:inline-block;width:600px;-webkit-transition:left .05s ease .15s;-moz-transition:left .05s ease .15s;-ms-transition:left .05s ease .15s;-o-transition:left .05s ease .15s;transition:left .05s ease .15s;}
+.panel-frame .selection{position:absolute;display:inline-block;top:0;left:0;margin:0 auto;padding:0 5px;background:#e6e6e6;font-family:sans-serif;font-size:13px;cursor:pointer;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;border-radius:4px;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:0 solid transparent;border:1px solid #b8b8b8;}
+.panel-frame .selection .current span{margin:0 5px}
+.panel-frame .selection:hover{background:#ebebeb;}
+.panel-frame .selection:hover ul{display:inline-block}
+.panel-frame .selection ul{padding:0 0;margin:0;width:100%;list-style:none;display:none;}
+.panel-frame .selection ul li{margin:5px 0}
+.panel{position:absolute;display:inline-block;width:600px;background-color:#fff;-webkit-transition:background-color .4s ease-in-out 0;-moz-transition:background-color .4s ease-in-out 0;-ms-transition:background-color .4s ease-in-out 0;-o-transition:background-color .4s ease-in-out 0;transition:background-color .4s ease-in-out 0;-webkit-transition:all 600ms cubic-bezier(.23,1,.32,1);transition:all 600ms cubic-bezier(.23,1,.32,1);overflow-y:auto;box-sizing:border-box;border:1px solid #e6e6e6;border-left:none;padding:40px;}
 .panel.new{background-color:#fffeed;transition:background-color .4s ease-in-out 0}
 .panel.large{width:600px;height:700px;}
 .panel.large iframe.facsimile-zoom{width:504px;height:600px}
@@ -94,37 +113,37 @@ h1{font-family:Samba;font-weight:normal;color:#b325a0}
 .panel.small iframe.facsimile-zoom{width:304px;height:400px}
 .panel:first-child{border-left:1px solid #e6e6e6}
 .panel.ui-draggable-dragging{-webkit-transform:rotate(5deg)}
-.panel .close{background-image:url("/images/close-button.png");width:12px;height:12px;cursor:pointer;opacity:.5;margin-top:-32px;margin-right:-32px;}
+.panel .close{-webkit-background-image:url("/images/close-button.png");-moz-background-image:url("/images/close-button.png");-ms-background-image:url("/images/close-button.png");-o-background-image:url("/images/close-button.png");background-image:url("/images/close-button.png");width:12px;height:12px;cursor:pointer;opacity:.5;position:absolute;top:48px;right:48px;}
 .panel .close:hover{opacity:1}
 .panel:only-child .close{display:none}
-.panel .selection{position:absolute;display:inline-block;top:0;left:0;margin:0 auto;padding:0 5px;background:#e6e6e6;font-family:sans-serif;font-size:13px;cursor:pointer;border-radius:4px;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:0 solid transparent;border:1px solid #b8b8b8;}
-.panel .selection .current span{margin:0 5px}
-.panel .selection:hover{background:#ebebeb;}
-.panel .selection:hover ul{display:inline-block}
-.panel .selection ul{padding:0 0;margin:0;width:100%;list-style:none;display:none;}
-.panel .selection ul li{margin:5px 0}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 .parallel-overlay{position:fixed;left:0;top:0;width:100%;height:100%;background:#fff;overflow-x:scroll;overflow-y:hidden}
 .parallel-controls{position:fixed;width:100%;top:0;padding:20px;}
 .parallel-controls button{padding:10px 15px;box-shadow:1px 1px 1px #ccc}
 .parallel-view{z-index:1000;position:relative;top:100px;background-color:#fff;}
 .parallel-view .add span,.parallel-view .close span{margin-right:1em}
-.parallel-view .close{float:right;margin-right:40px}
+.parallel-view .parallel-controls .close{float:right;margin-right:40px}
 .parallel-view .panel-container{position:relative;margin-top:100px}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 @media print{.entry .row > .text,.entry .row > .annotations{width:auto}
 }
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 .controls h3{float:left}
 .controls .sort{float:right;margin-top:1em}
 .controls:after{content:"";display:block;clear:both}
 .cursor{display:none;position:relative;margin-bottom:1em;padding-top:1em;height:2em;}
-.cursor .previous,.cursor .next{position:absolute;display:inline-block;padding:1em;top:0;cursor:pointer;background-color:#8cd5d5;color:#fff;font-size:12px;box-shadow:none;border-radius:3px;width:auto;padding:5px 5px;margin:10px 0;}
+.cursor .previous,.cursor .next{position:absolute;display:inline-block;padding:1em;top:0;cursor:pointer;background-color:#8cd5d5;color:#fff;font-size:12px;box-shadow:none;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;-o-border-radius:3px;border-radius:3px;width:auto;padding:5px 5px;margin:10px 0;}
 .cursor .previous:hover,.cursor .next:hover{background-color:#92d7d7}
 .cursor .previous:active,.cursor .next:active{background-color:#7fd0d0}
 .cursor .previous{left:0}
@@ -138,7 +157,11 @@ h1{font-family:Samba;font-weight:normal;color:#b325a0}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
-.text-view .text,.panel .text{position:relative;display:inline-block;padding-left:30px;font-family:"Junicode","Arial unicode MS","times new roman","serif";line-height:22px;}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
+.text-view .text,.panel .text{position:relative;display:inline-block;font-family:"Junicode","Arial unicode MS","times new roman","serif";line-height:22px;padding-left:30px;}
+.text-view .text .line,.panel .text .line{position:relative;padding-left:10px;}
+.text-view .text .line .number,.panel .text .line .number{position:absolute;top:0;width:30px;left:-30px;min-height:22px;text-align:right;line-height:22px;font-size:80%;font-family:sans-serif;color:#565656}
 .text-view .text .line-numbers,.panel .text .line-numbers{position:absolute;top:0;left:0;text-align:right;line-height:22px;font-size:10px;color:#8f8f8f;overflow:hidden}
 .text-view .annotations,.panel .annotations{font-size:12px;font-family:sans-serif;color:#8f8f8f;}
 .text-view .annotations ol,.panel .annotations ol{list-style:none;padding-left:0;}

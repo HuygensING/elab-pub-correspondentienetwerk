@@ -16,7 +16,7 @@
         return _ref;
       }
 
-      PanelView.prototype.className = 'panel';
+      PanelView.prototype.className = 'panel-frame';
 
       PanelView.prototype.template = require('text!html/panel.html');
 

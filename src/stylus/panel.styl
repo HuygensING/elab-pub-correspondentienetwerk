@@ -1,8 +1,13 @@
 internalPadding = 40px
 
 .panel-frame
-	/*** Selection tab ***/
+	position absolute
+	display inline-block
+	width 600px
 
+	vendor('transition', left 0.05s ease .15s)
+
+	/*** Selection tab ***/
 	.selection
 		position absolute
 		display inline-block
@@ -47,7 +52,7 @@ internalPadding = 40px
 	width 600px
 
 	background-color white
-	transition background-color .4s ease-in-out 0s
+	vendor('transition', background-color .4s ease-in-out 0s)
 
 	easeOutQuint()
 
@@ -100,8 +105,11 @@ internalPadding = 40px
 		height 12px
 		cursor pointer
 		opacity 0.5
-		margin-top 8 + (-1 * internalPadding)
-		margin-right 8 + (-1 * internalPadding)
+		
+		position absolute
+		top 8 + internalPadding
+		right 8 + internalPadding
+		
 		&:hover
 			opacity 1
 	&:only-child .close

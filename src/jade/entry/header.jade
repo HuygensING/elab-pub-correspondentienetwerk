@@ -1,3 +1,4 @@
+br
 .grid-container
 	.grid-50.back
 		a(href="/")
@@ -13,13 +14,27 @@
 //- 			a.next-result(href!="<%= entry.nextURL %>")
 //- 				| Next result&nbsp;
 //- 				span &#9656;
+br
+br
 
-.grid-container.navigate-entries
-		.grid-20.left
-			a.prev-entry(href!="<%= entries.prevURL(entry.id)%>")
-				span &#9666;
-				| &nbsp;Previous  <%= config.itemLabel %>
-		.grid-20.prefix-60.right
-			a.next-entry(href!="<%= entries.nextURL(entry.id) %>")
-				| Next <%= config.itemLabel %>&nbsp;
-				span &#9656;
+.grid-100.navigate-entries
+	.grid-20.left
+		a.prev-entry(href!="<%= entries.prevURL(entry.id)%>")
+			span &#9666;
+			| &nbsp;Previous  <%= config.itemLabel %>
+	.grid-20.prefix-60.right
+		a.next-entry(href!="<%= entries.nextURL(entry.id) %>")
+			| Next <%= config.itemLabel %>&nbsp;
+			span &#9656;
+
+hr
+
+.grid-100.navigate-results
+	.grid-20.left
+		a.prev-entry(href!="<%= 'prevResultURL' %>")
+			span &#9666;
+			| &nbsp;Previous result
+	.grid-20.prefix-60.right
+		a.next-entry(href!="<%= 'nextResultURL' %>")
+			| Next result&nbsp;
+			span &#9656;
