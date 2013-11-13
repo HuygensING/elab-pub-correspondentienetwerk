@@ -23,9 +23,10 @@
 	button-padding = pTop 0 (pTop + 10) 0
 
 	.header
-		border-bottom 2px solid medium-grey
-		margin-bottom 25px
-		min-height 45px
+		.bordered
+			border-bottom 2px solid medium-grey
+			margin-bottom 25px
+			min-height 45px
 
 		@media print
 			display none
@@ -37,13 +38,33 @@
 				visibility hidden
 			span
 				color medium-grey
-		.navigate-entries
-			margin 1em 0
-			// .left, .right
-			// 	padding-left 0
-			// 	padding-right 0
-		.right
-			text-align right
+	.navigate-entries, .navigate-results
+		margin 1em 0
+		position relative
+
+	.left, .right
+		display inline-block
+	.left
+		position absolute
+		left 0
+		top 0
+	.right
+		position absolute
+		right 0
+		top 0
+		text-align right
+
+	.navigate-results
+		lineHeight = 33px
+		min-height lineHeight
+		line-height lineHeight
+		background-color light-grey
+		a
+			padding 0 1em
+		.position
+			width 50%
+			margin 0 auto
+			text-align center
 
 	.thumbnails
 		min-height 100px // so text isn't pushed left
