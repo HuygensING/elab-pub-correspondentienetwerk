@@ -5,7 +5,7 @@
 	h3, h5
 		font-weight normal
 		font-family sans-serif
-		color medium-grey
+		color mediumGrey
 		
 	h3
 		font-size 11pt
@@ -14,7 +14,7 @@
 
 	.padder
 		margin-left pTop
-		border-top 1px solid light-grey
+		border-top 1px solid lightGrey
 		padding-top pTop
 
 		&.no-border
@@ -24,8 +24,9 @@
 
 	.header
 		.bordered
-			border-bottom 2px solid medium-grey
-			margin-bottom 25px
+			position relative
+			border-bottom 2px solid mediumGrey
+			margin-bottom 0px
 			min-height 45px
 
 		@media print
@@ -37,17 +38,15 @@
 			&.hide
 				visibility hidden
 			span
-				color medium-grey
+				color mediumGrey
 	.navigate-entries, .navigate-results
 		margin 1em 0
 		position relative
+		clear-fix()
 
 	.left, .right
 		display inline-block
-	.left
-		position absolute
-		left 0
-		top 0
+
 	.right
 		position absolute
 		right 0
@@ -55,16 +54,22 @@
 		text-align right
 
 	.navigate-results
+		position relative
 		lineHeight = 33px
 		min-height lineHeight
 		line-height lineHeight
-		background-color light-grey
+		background-color lightGrey
 		a
 			padding 0 1em
 		.position
 			width 50%
+			left 25%
 			margin 0 auto
+			top 0
+			position absolute
 			text-align center
+			h3
+				margin 0
 
 	.thumbnails
 		min-height 100px // so text isn't pushed left
@@ -79,7 +84,7 @@
 			li
 				float left
 				padding-bottom pTop
-				border-bottom 1px solid light-grey
+				border-bottom 1px solid lightGrey
 				width 50%
 
 				h5
@@ -131,7 +136,7 @@
 				li
 					display inline-block
 					&.active button
-						background-color medium-grey
+						background-color mediumGrey
 						color white
 					margin-right 5px
 					&:last-child
@@ -141,5 +146,5 @@
 			padding button-padding
 	
 	.annotations
-		color medium-grey
+		color mediumGrey
 		font-size 9pt

@@ -49,9 +49,13 @@
         return this.textView.setView(this.currentTextVersion);
       };
 
-      Home.prototype.toggleMoreMetadata = function(e) {
+      Home.prototype.toggleMoreMetadata = function() {
         this.$('.metadata').toggleClass('more');
-        return $(e.currentTarget).toggleClass('more');
+        this.$('.metadata button').toggleClass('more');
+        configData.set({
+          showMetaData: this.$('.metadata').hasClass('more')
+        });
+        return console.log(configData.attributes);
       };
 
       Home.prototype.showParallelView = function() {
@@ -147,6 +151,9 @@
         this.$('.metadata').html(this.metadataTemplate({
           metadata: metadata
         }));
+        if (configData.get('showMetaData')) {
+          this.toggleMoreMetadata();
+        }
         return this;
       };
 

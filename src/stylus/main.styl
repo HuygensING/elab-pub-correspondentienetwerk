@@ -7,29 +7,29 @@ body
 	padding 0
 
 a
-	color sky-blue
+	color skyBlue
 	text-decoration none
 	font-family sans-serif
 	// font-size 10pt
 
 button, a.button
-	background-color light-grey
+	background-color lightGrey
 	border-radius 4px
 	border none
-	color darken(medium-grey, 30%)
+	color darken(mediumGrey, 30%)
 	font-size 9pt
 	cursor pointer
 	line-height 19px
 	padding 0 5px
 
 	&:hover
-		background-color darken(light-grey, 10%)
+		background-color darken(lightGrey, 10%)
 
 	&.active
-		background-color medium-grey
+		background-color mediumGrey
 		color white
 		&:hover
-			background-color lighten(medium-grey, 10%)
+			background-color lighten(mediumGrey, 10%)
 
 	&.green
 		background-color turquoise
@@ -37,7 +37,7 @@ button, a.button
 		&:hover
 			background-color lighten(turquoise, 10%)
 
-h1, header h1 a
+h1, .page-header h1 a
 	font-family Samba
 	font-weight normal
 	color #B325A0
@@ -63,9 +63,16 @@ h1, header h1 a
 		margin-bottom 2em
 
 .page-footer
-	border-top 1px solid medium-grey
-	padding 20px 0
+	clear-fix()
+	border-top 1px solid mediumGrey
+	padding 10px 0
 	margin-top 50px
-	color light-grey
+	color lightGrey
 	font-family sans-serif
 	font-size 9pt
+
+	.powered-by, .huygens
+		display inline-block
+	.powered-by
+		float right
+		text-align right

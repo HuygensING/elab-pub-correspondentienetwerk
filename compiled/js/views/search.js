@@ -101,11 +101,15 @@
       };
 
       Home.prototype.renderResults = function() {
-        var _base, _base1;
+        var start, _base, _base1;
         this.$('.results .list').html(this.resultsTemplate({
           results: this.results,
           config: config
         }));
+        start = this.results.start + 1;
+        this.$('.results .list ol').css({
+          'counter-reset': "item " + start
+        });
         this.renderResultsCount();
         this.$('.position .current').text(typeof (_base = this.search).currentPosition === "function" ? _base.currentPosition() : void 0);
         this.$('.position .total').text(typeof (_base1 = this.search).numPages === "function" ? _base1.numPages() : void 0);

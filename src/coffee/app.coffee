@@ -12,7 +12,6 @@ define (require) ->
 	
 	# Backbone expects a path, not a full URI
 	rootURL = window.BASE_URL.replace /https?:\/\/[^\/]+/, ''
-
 	
 	configURL = "#{if window.BASE_URL is '/' then '' else window.BASE_URL}/data/config.json"
 	initialize: ->

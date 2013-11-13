@@ -19,7 +19,7 @@
           success: function() {
             var mainRouter, mainView;
             $('body').html(bootstrapTemplate());
-            $('.page-header h1').text(configData.get('title'));
+            $('.page-header h1 a').text(configData.get('title'));
             mainRouter = new MainRouter;
             mainView = new Views.Main({
               el: '#main'

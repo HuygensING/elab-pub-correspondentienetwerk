@@ -36,9 +36,11 @@ define (require) ->
 			@setActiveTextVersion @currentTextVersion
 			@textView.setView @currentTextVersion
 
-		toggleMoreMetadata: (e) ->
+		toggleMoreMetadata: ->
 			@$('.metadata').toggleClass 'more' # fields
-			$(e.currentTarget).toggleClass 'more' # button
+			@$('.metadata button').toggleClass 'more' # button
+			configData.set showMetaData: @$('.metadata').hasClass 'more'
+			console.log configData.attributes
 
 		showParallelView: ->
 			console.log "Showing PV", @pv
@@ -113,6 +115,8 @@ define (require) ->
 			metadata = @model.get('metadata') || []
 			@$('.metadata').html @metadataTemplate
 				metadata: metadata
+
+			@toggleMoreMetadata() if configData.get 'showMetaData'
 
 			@
 

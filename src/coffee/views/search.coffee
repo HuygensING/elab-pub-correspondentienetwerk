@@ -74,6 +74,10 @@ define (require) ->
 			@$('.results .list').html @resultsTemplate
 				results: @results
 				config: config
+
+			start = @results.start + 1
+			@$('.results .list ol').css 'counter-reset': "item #{start}"
+
 			@renderResultsCount()
 
 			@$('.position .current').text @search.currentPosition?()
