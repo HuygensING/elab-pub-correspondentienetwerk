@@ -1,0 +1,25 @@
+.grid-container
+	.grid-100
+		a(href="/") Back to search results
+		br
+		br
+	.grid-35.list
+		ul
+			| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
+			li: a(href!="#<%= slugify(k) %>", data-bypass="true") <%= k %>
+			| <% }); %>
+	.grid-65.contents
+		| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
+		div.section
+			a(name!="<%= slugify(k) %>"): h3 <%= k %>
+			ul
+				| <% _.each(annotations[k], function (ann) { %>
+				li(data-text-layer!="<%= ann.textLayer %>")
+					.annotated-text <%=  shorten(ann.annotatedText) %>
+					.text-layer <%= ann.textLayer %>
+					.annotation-text
+						| <%=  ann.annotationText %>
+					.link
+						a(href!="<%= config.entryURL(ann.entryId, slugify(ann.textLayer)) %>/<%= ann.n %>") &#8627; See in text
+				| <% }); %>
+		| <% }); %>	

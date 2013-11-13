@@ -1,5 +1,9 @@
 .text
+	| <% if (entry.paralleltexts[version].text) { %>
 	| <%= entry.paralleltexts[version].text %>
+	| <% } else { %>
+	h1.no-data This entry has no data for the '<%= version %>' text layer
+	| <% } %>
 .annotations
 	ol
 		| <% _.each(entry.paralleltexts[version].annotations, function (a) { %>

@@ -15,8 +15,10 @@ define (require) ->
 			ids[pos + 1]?.replace '.json', ''
 
 		nextURL: (id) ->
-			config.entryURL @findNext id
+			next = @findNext id
+			config.entryURL next if next
 		prevURL: (id) ->
-			config.entryURL @findPrev id
+			prev = @findPrev id
+			config.entryURL prev if prev
 
 	new ConfigData

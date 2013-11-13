@@ -59,16 +59,11 @@
       };
 
       Home.prototype.showParallelView = function() {
-        console.log("Showing PV", this.pv);
-        if (!this.pv) {
-          this.pv = new ParallelView({
-            model: this.model
-          });
-          this.$('.header').after(this.pv.el);
-          this.pv.show();
-        } else {
-          this.pv.show();
-        }
+        this.pv = new ParallelView({
+          model: this.model
+        });
+        this.$('.parallel-view-container').empty().html(this.pv.el);
+        this.pv.show();
         return this.pv;
       };
 
@@ -164,20 +159,21 @@
           entry: this.model.attributes,
           entries: configData
         }));
-        prev = configData.findPrev(this.options.id);
+        prev = configData.findPrev(this.model.id);
         if (prev) {
           this.$('.prev').attr({
             href: config.entryURL(prev)
           });
         }
-        next = configData.findNext(this.options.id);
+        next = configData.findNext(this.model.id);
         if (next) {
           this.$('.next').attr({
             href: config.entryURL(next)
           });
         }
-        this.$('.prev').toggleClass('hide', !prev);
-        return this.$('.next').toggleClass('hide', !next);
+        console.log("Next,pref", next, prev, configData.findPrev(this.model.id));
+        this.$('.prev-entry').toggleClass('hide', !prev);
+        return this.$('.next-entry').toggleClass('hide', !next);
       };
 
       Home.prototype.renderContents = function() {

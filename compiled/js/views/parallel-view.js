@@ -46,7 +46,7 @@
       };
 
       ParallelView.prototype.closeParallelView = function() {
-        return this.hide();
+        return this.remove();
       };
 
       ParallelView.prototype.show = function() {
@@ -78,7 +78,7 @@
         setTimeout(removeNew, 1500);
         po = this.$('.parallel-overlay');
         return po.animate({
-          scrollLeft: po[0].scrollWidth - po[0].clientWidth
+          scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
         });
       };
 

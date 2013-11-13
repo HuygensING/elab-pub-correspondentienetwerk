@@ -107,8 +107,8 @@
           config: config
         }));
         start = this.results.start + 1;
-        this.$('.results .list ol').css({
-          'counter-reset': "item " + start
+        this.$('.results .list ol').attr({
+          start: start
         });
         this.renderResultsCount();
         this.$('.position .current').text(typeof (_base = this.search).currentPosition === "function" ? _base.currentPosition() : void 0);
@@ -139,6 +139,7 @@
           return _this.renderResults();
         });
         this.$('.faceted-search').html(this.search.$el);
+        this.$('.faceted-search');
         return this;
       };
 

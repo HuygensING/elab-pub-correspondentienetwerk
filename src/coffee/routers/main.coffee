@@ -23,6 +23,7 @@ define (require) ->
 
 		'routes':
 			'': 'home'
+			'annotations/': 'annotationsIndex'
 			"entry/:id/parallel": 'entryParallelView'
 			"entry/:id/:version": 'entryVersionView'
 			"entry/:id": 'entry'
@@ -32,6 +33,9 @@ define (require) ->
 			# events.trigger 'change:view:home', arguments
 			# viewManager.main = $('#main')
 			# viewManager.show Views.Search
+
+		annotationsIndex: ->
+			events.trigger 'change:view:annotations'
 
 		entryParallelView: (id) ->
 			events.trigger 'change:view:entry',

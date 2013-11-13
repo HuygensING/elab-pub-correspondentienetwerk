@@ -26,7 +26,7 @@ define (require) ->
 			@addPanel()
 			@render()
 
-		closeParallelView: ->	@hide()
+		closeParallelView: ->	@remove()
 		show: -> @$el.show()
 		hide: -> @$el.hide()
 
@@ -49,7 +49,7 @@ define (require) ->
 
 			po = @$('.parallel-overlay')
 			po.animate
-				scrollLeft: po[0].scrollWidth - po[0].clientWidth
+				scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
 
 		addPanel: ->
 			panel = new PanelView model: @model

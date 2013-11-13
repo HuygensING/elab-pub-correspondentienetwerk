@@ -7,6 +7,7 @@
     }
     config = {
       basePath: basePath,
+      annotationsIndex: "" + basePath + "/data/annotation_index.json",
       configDataURL: "" + basePath + "/data/config.json",
       itemLabel: 'entry',
       itemLabelPlural: 'entries',

@@ -17,7 +17,7 @@
 
 .navigate-results
 	.left
-		a.prev-entry(href!="<%= 'prevResultURL' %>")
+		a.prev-result(href!="<%= 'prevResultURL' %>")
 			span &#9666;
 			| &nbsp;Previous result
 	.position
@@ -27,6 +27,6 @@
 			| &nbsp;of&nbsp;
 			span.total 1
 	.right
-		a.next-entry(href!="<%= 'nextResultURL' %>")
+		a.next-result(href!="<%= 'nextResultURL' %>")
 			| Next result&nbsp;
 			span &#9656;

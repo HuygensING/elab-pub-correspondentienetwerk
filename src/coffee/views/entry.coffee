@@ -43,13 +43,9 @@ define (require) ->
 			console.log configData.attributes
 
 		showParallelView: ->
-			console.log "Showing PV", @pv
-			if not @pv
-				@pv = new ParallelView model: @model
-				@$('.header').after @pv.el
-				@pv.show()
-			else
-				@pv.show()
+			@pv = new ParallelView model: @model
+			@$('.parallel-view-container').empty().html @pv.el
+			@pv.show()
 
 			@pv
 
@@ -126,15 +122,17 @@ define (require) ->
 				entry: @model.attributes
 				entries: configData
 
-			prev = configData.findPrev @options.id
+			prev = configData.findPrev @model.id
 			if prev
 				@$('.prev').attr href: config.entryURL prev
-			next = configData.findNext @options.id
+			next = configData.findNext @model.id
 			if next
 				@$('.next').attr href: config.entryURL next
 
-			@$('.prev').toggleClass 'hide', not prev
-			@$('.next').toggleClass 'hide', not next
+			console.log "Next,pref", next, prev,  configData.findPrev(@model.id)
+
+			@$('.prev-entry').toggleClass 'hide', not prev
+			@$('.next-entry').toggleClass 'hide', not next
 
 		renderContents: ->
 			@$('.contents').html @contentsTemplate

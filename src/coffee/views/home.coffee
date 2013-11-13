@@ -5,6 +5,7 @@ define (require) ->
 
 	SearchView = require 'views/search'
 	EntryView = require 'views/entry'
+	AnnotationsView = require 'views/annotations'
 
 	events = require 'events'
 
@@ -13,12 +14,19 @@ define (require) ->
 		initialize: ->
 			@searchView = new SearchView
 			@entryView = new EntryView
+			@annotationsView = new AnnotationsView
 
 			events.on 'change:view:entry', =>
 				@searchView.$el.hide()
+				@annotationsView.$el.hide()
 				@entryView.$el.show()
+			events.on 'change:view:annotations', =>
+				@searchView.$el.hide()
+				@entryView.$el.hide()
+				@annotationsView.$el.show()
 			events.on 'change:view:search', =>
 				@entryView.$el.hide()
+				@annotationsView.$el.hide()
 				@searchView.$el.show()
 			
 			@render()
@@ -30,5 +38,6 @@ define (require) ->
 
 			@$el.append @searchView.$el
 			@$el.append @entryView.$el
+			@$el.append @annotationsView.$el
 
 			@

@@ -33,11 +33,19 @@
       };
 
       ConfigData.prototype.nextURL = function(id) {
-        return config.entryURL(this.findNext(id));
+        var next;
+        next = this.findNext(id);
+        if (next) {
+          return config.entryURL(next);
+        }
       };
 
       ConfigData.prototype.prevURL = function(id) {
-        return config.entryURL(this.findPrev(id));
+        var prev;
+        prev = this.findPrev(id);
+        if (prev) {
+          return config.entryURL(prev);
+        }
       };
 
       return ConfigData;

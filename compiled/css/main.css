@@ -2144,6 +2144,24 @@ table {
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .not-visible{visibility:hidden;opacity:0}
 .hidden{display:none}
+.annotations-index{display:none;}
+.annotations-index .list{background-color:#e6e6e6;-webkit-border-radius:3px;-moz-border-radius:3px;-ms-border-radius:3px;-o-border-radius:3px;border-radius:3px;padding-top:10px}
+.annotations-index a h3{color:#444}
+.annotations-index ul{padding:0;margin:0;}
+.annotations-index ul li{font-size:13px;margin-left:0;list-style:none;margin-bottom:.5em;}
+.annotations-index ul li:hover a{color:#b325a0}
+.annotations-index ul li a{color:#444}
+.annotations-index .contents{padding-left:35px;}
+.annotations-index .contents ul li{position:relative;margin-bottom:1em;}
+.annotations-index .contents ul li a{color:#b325a0}
+.annotations-index .contents .text-layer{font-size:12px;color:#8f8f8f;display:inline-block;position:absolute;right:0;top:0}
+.annotations-index .contents .annotated-text{font-family:"Junicode","Arial unicode MS","times new roman","serif"}
+.annotations-index .contents .annotation-text{font-family:bodyFont}
+
+@font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
+@font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
+.not-visible{visibility:hidden;opacity:0}
+.hidden{display:none}
 @media print{.text{width:auto}
 }.text sup[data-marker]{cursor:pointer;color:#ff42ff;}
 .text sup[data-marker] margin-right,.text sup[data-marker]:hover{color:#000;background-color:#ffe0ff}
@@ -2162,12 +2180,13 @@ table {
 .entry h3,.entry h5{font-weight:normal;font-family:sans-serif;color:#8f8f8f}
 .entry h3{font-size:11pt}
 .entry h5{font-size:9pt}
+.entry p.no-data{color:#8f8f8f;font-family:sans-serif;font-size:24px;margin:2em 0 0 0;text-align:center;min-height:4em}
 .entry .padder{margin-left:15px;border-top:1px solid #e6e6e6;padding-top:15px;}
 .entry .padder.no-border{border:none}
 .entry .header .bordered{position:relative;border-bottom:2px solid #8f8f8f;margin-bottom:0;min-height:45px}
 @media print{.entry .header{display:none}
-}.entry .header .back a.hide,.entry .header .next.hide,.entry .header .prev.hide{visibility:hidden}
-.entry .header .back a span,.entry .header .next span,.entry .header .prev span{color:#8f8f8f}
+}.entry .header .back a.hide,.entry .header .next-entry.hide,.entry .header .prev-entry.hide{visibility:hidden}
+.entry .header .back a span,.entry .header .next-entry span,.entry .header .prev-entry span{color:#8f8f8f}
 .entry .navigate-entries,.entry .navigate-results{margin:1em 0;position:relative;}
 .entry .navigate-entries:before,.entry .navigate-results:before,.entry .navigate-entries:after,.entry .navigate-results:after{clear:both;content:"";display:block;visibility:hidden;line-height:0;height:0}
 .entry .left,.entry .right{display:inline-block}
@@ -2203,6 +2222,7 @@ table {
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}
 .not-visible{visibility:hidden;opacity:0}
 .hidden{display:none}
+a.annotations-index{display:block;width:300px;text-align:right;margin-bottom:-2.6em}
 .faceted-search:before{width:0;height:0;content:"";display:block;border-bottom:20px solid #f1f1f1;border-left:0 solid transparent;border-right:0 solid transparent;margin-top:-20px}
 .faceted-search .row .cell{font-size:.8rem}
 .faceted-search form button{background:#8cd5d5;color:#fff;box-shadow:none;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px;border-radius:2px;}
@@ -2304,6 +2324,7 @@ h1,.page-header h1 a{font-family:Samba;font-weight:normal;color:#b325a0;text-dec
 .results{box-sizing:border-box;padding-left:30px;font-size:10pt;font-family:sans-serif;}
 .results ol{margin:0;padding:0;}
 .results ol li{padding:10px;border-bottom:1px solid #e2ecee;}
+.results ol li span.counter{color:#000;display:inline-block;width:30px;margin-left:-50px;text-align:right}
 .results ol li:hover{background:#eee;cursor:pointer}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}

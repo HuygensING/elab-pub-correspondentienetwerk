@@ -36,6 +36,7 @@
 
       MainRouter.prototype['routes'] = {
         '': 'home',
+        'annotations/': 'annotationsIndex',
         "entry/:id/parallel": 'entryParallelView',
         "entry/:id/:version": 'entryVersionView',
         "entry/:id": 'entry'
@@ -43,6 +44,10 @@
 
       MainRouter.prototype.home = function() {
         return events.trigger('change:view:search');
+      };
+
+      MainRouter.prototype.annotationsIndex = function() {
+        return events.trigger('change:view:annotations');
       };
 
       MainRouter.prototype.entryParallelView = function(id) {

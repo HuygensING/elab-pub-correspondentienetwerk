@@ -76,7 +76,7 @@ define (require) ->
 				config: config
 
 			start = @results.start + 1
-			@$('.results .list ol').css 'counter-reset': "item #{start}"
+			@$('.results .list ol').attr start: start
 
 			@renderResultsCount()
 
@@ -104,5 +104,6 @@ define (require) ->
 				@renderResults()
 
 			@$('.faceted-search').html @search.$el
+			@$('.faceted-search')
 
 			@

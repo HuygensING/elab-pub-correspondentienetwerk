@@ -30,7 +30,10 @@
         this.template = _.template(this.template);
         this.annotationsTemplate = _.template(this.annotationsTemplate);
         this.currentTextVersion = this.options.version || config.defaultTextVersion;
-        this.highlighter = new Helpers.highlighter;
+        this.highlighter = new Helpers.highlighter({
+          className: 'highlight',
+          tagName: 'div'
+        });
         return this.render();
       };
 
@@ -118,26 +121,22 @@
       };
 
       TextView.prototype.renderLineNumbering = function() {
-        var lineNumbers, lines, n, _i;
-        lineNumbers = $('<div>').addClass('line-numbers');
-        lines = "";
-        for (n = _i = 1; _i <= 1000; n = ++_i) {
-          lines += "" + n + "<br>";
-        }
-        lineNumbers.html(lines);
-        this.$('.text .line-numbers').remove();
-        this.$('.text').append(lineNumbers);
-        return lineNumbers.css({
-          height: this.$('.text').outerHeight()
+        var _this = this;
+        return this.$('.line').each(function(n, line) {
+          return $(line).prepend($('<div class="number"/>').text(n + 1));
         });
       };
 
       TextView.prototype.renderContent = function() {
         var text;
         text = this.model.text(this.currentTextVersion);
-        this.$('.text').html(text);
-        this.renderAnnotations();
-        this.renderLineNumbering();
+        if (text) {
+          this.$('.text').html(text);
+          this.renderAnnotations();
+          this.renderLineNumbering();
+        } else {
+          this.$('.text').html("<p class=no-data>" + this.currentTextVersion + " text layer is empty</p>");
+        }
         return this;
       };
 

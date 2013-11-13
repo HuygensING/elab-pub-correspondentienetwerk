@@ -1,1 +1,3 @@
-<div class="text"><%= entry.paralleltexts[version].text %></div><div class="annotations"><ol><% _.each(entry.paralleltexts[version].annotations, function (a) { %><li><%= a.text %></li><% }); %></ol></div>
+<div class="text"><% if (entry.paralleltexts[version].text) { %>
+<%= entry.paralleltexts[version].text %>
+<% } else { %><h1 class="no-data">This entry has no data for the '<%= version %>' text layer</h1><% } %></div><div class="annotations"><ol><% _.each(entry.paralleltexts[version].annotations, function (a) { %><li><%= a.text %></li><% }); %></ol></div>

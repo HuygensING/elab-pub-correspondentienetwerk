@@ -1,0 +1,45 @@
+.annotations-index
+	display none
+	.list
+		background-color lightGrey
+		border-radius 3px
+		padding-top 10px
+
+	a h3
+		color #444
+
+	ul
+		padding 0
+		margin 0
+		li
+			font-size 13px
+			margin-left 0
+			list-style none
+			margin-bottom .5em
+			&:hover a
+				color defaultPurple
+			a
+				color #444
+
+	.contents
+		padding-left 35px
+		ul li
+			position relative
+			margin-bottom 1em
+			a
+				color defaultPurple
+
+		.text-layer
+			font-size 12px
+			// font-weight bold
+			color mediumGrey
+			display inline-block
+			position absolute
+			right 0
+			top 0
+		
+		.annotated-text
+			font-family textFont
+
+		.annotation-text
+			font-family bodyFont
