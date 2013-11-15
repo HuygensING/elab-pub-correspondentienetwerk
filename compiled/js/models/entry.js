@@ -19,18 +19,15 @@
       };
 
       Entry.prototype.parse = function(data) {
-        var i, version,
-          _this = this;
+        var i, text, version;
         if (data.paralleltexts != null) {
           for (version in data.paralleltexts) {
             i = 1;
-            data.paralleltexts[version].text = data.paralleltexts[version].text.replace(/<ab id="(.*?)"\/>/g, function(match, p1, offset, string) {
-              return '<span data-marker="begin" data-id="' + p1 + '"></span>';
-            });
-            data.paralleltexts[version].text = data.paralleltexts[version].text.replace(/<ae id="(.*?)"\/>/g, function(match, p1, offset, string) {
-              return '<sup data-marker="end" data-id="' + p1 + '">' + (i++) + '</sup> ';
-            });
-            data.paralleltexts[version].text = data.paralleltexts[version].text.replace(/\n/, '<br>');
+            text = data.paralleltexts[version].text;
+            text = '<div class="line">' + text.replace(/\n|<br>/g, '</div><div class="line">') + '</div>';
+            text = text.replace(/(<div class="line">)(\s*<span[^>]+><\/span>\s*)?\s*(<\/div>)/mg, "$1$2&nbsp;$3");
+            text = text.replace(/^<div class="line">&nbsp;<\/div>$/mg, '');
+            data.paralleltexts[version].text = text;
           }
         }
         return data;

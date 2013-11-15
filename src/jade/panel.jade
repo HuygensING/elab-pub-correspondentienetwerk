@@ -1,13 +1,11 @@
-.selection
-	.current
-		| &#9666; &#9656;
-		span <%= version %>
-		| &#9662;
-	ul
-		| <% _.each(versions, function (v) { %>
-		li(data-toggle!="<%= v %>") <%= v %>
-		| <% }) %>
 .panel
 	.close
 	.view
-		h2 View
+		| <% if (versions) { %>
+		.select-layer
+			h2 Select text layer
+			ul
+				| <% _.each(versions, function (v) { %>
+				li <%= v %>
+				| <% }); %>
+		| <% } %>

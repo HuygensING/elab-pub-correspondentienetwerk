@@ -29,7 +29,8 @@
           _this = this;
         this.options = options;
         this.template = _.template(this.template);
-        this.textVersion = ((_ref1 = this.options) != null ? _ref1.textVersion : void 0) || 'Translation';
+        this.textVersion = (_ref1 = this.options) != null ? _ref1.textVersion : void 0;
+        this.versions = this.options.versions;
         if ('id' in this.options && !this.model) {
           this.model = new Entry({
             id: this.options.id
@@ -69,17 +70,6 @@
         return this.textVersion;
       };
 
-      PanelView.prototype.positionSelectionTab = function() {
-        var ml, mt;
-        ml = this.$('.selection').outerWidth() / 2;
-        mt = this.$('.selection').outerHeight();
-        return this.$('.selection').css({
-          left: '50%',
-          'margin-left': "-" + ml + "px",
-          'margin-top': "-" + mt + "px"
-        });
-      };
-
       PanelView.prototype.renderCurrentSelection = function() {
         return this.$('.selection .current span').text(this.textVersion);
       };
@@ -92,11 +82,13 @@
           });
           return this.$('.view').html(this.subView.el);
         } else {
-          this.subView = new TextView({
-            model: this.model,
-            version: this.textVersion
-          });
-          return this.$('.view').html(this.subView.el);
+          if (this.textVersion) {
+            this.subView = new TextView({
+              model: this.model,
+              version: this.textVersion
+            });
+            return this.$('.view').html(this.subView.el);
+          }
         }
       };
 
@@ -104,13 +96,13 @@
         var _ref1;
         this.$el.html(this.template({
           entry: (_ref1 = this.model) != null ? _ref1.attributes : void 0,
-          versions: _.flatten(['Facsimile', this.model.textVersions()]),
+          versions: this.versions,
           version: this.textVersion
         }));
+        this.$el.toggleClass('select', this.textVersion == null);
         this.renderCurrentSelection();
         this.renderContent();
         this.$el.addClass(config.panelSize);
-        this.positionSelectionTab();
         return this;
       };
 

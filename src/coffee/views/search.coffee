@@ -91,18 +91,31 @@ define (require) ->
 			document.title = configData.get 'title'
 			@$el.html @template w: configData.get 'entryIds'
 
+			firstSearch = true
 			@search = new FacetedSearch
 				searchPath: config.searchPath
 				queryOptions:
 					resultRows: config.resultRows
 					term: '*'
 
+			@search.subscribe 'faceted-search:reset', =>
+				firstSearch = true
 			@search.subscribe 'faceted-search:results', (response) =>
 				@results = response
-				if 'sortableFields' of response
-					@sortableFields = response.sortableFields
-				@renderResults()
 
+				totalEntries = configData.get('entryIds').length
+				@results.allIds = if totalEntries is @search.model.get('allIds').length
+					[]
+				else
+					@search.model.get 'allIds'
+				firstSearch = false
+
+				configData.set allResultIds: @results.allIds
+
+				if @results.sortableFields?
+					@sortableFields = @results.sortableFields
+				@renderResults()
+				
 			@$('.faceted-search').html @search.$el
 			@$('.faceted-search')
 

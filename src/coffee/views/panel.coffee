@@ -16,7 +16,8 @@ define (require) ->
 		initialize: (@options) ->
 			@template = _.template @template
 
-			@textVersion = @options?.textVersion || 'Translation'
+			@textVersion = @options?.textVersion
+			@versions = @options.versions
 
 			if 'id' of @options and not @model
 				@model = new Entry id: @options.id
@@ -38,14 +39,6 @@ define (require) ->
 
 		selectedVersion: -> @textVersion
 
-		positionSelectionTab: ->
-			ml = @$('.selection').outerWidth() / 2
-			mt = @$('.selection').outerHeight()
-			@$('.selection').css
-				left: '50%'
-				'margin-left': "-#{ml}px"
-				'margin-top': "-#{mt}px"
-
 		renderCurrentSelection: ->
 			@$('.selection .current span').text @textVersion
 
@@ -55,19 +48,22 @@ define (require) ->
 					model: @model, page: @page
 				@$('.view').html @subView.el
 			else
-				@subView = new TextView
-					model: @model
-					version: @textVersion
-				@$('.view').html @subView.el
+				if @textVersion
+					@subView = new TextView
+						model: @model
+						version: @textVersion
+					@$('.view').html @subView.el
 
 		render: ->
 			@$el.html @template
 				entry: @model?.attributes
-				versions: _.flatten [ 'Facsimile', @model.textVersions() ]
+				versions: @versions
 				version: @textVersion
+
+			@$el.toggleClass 'select', not @textVersion?
+
 			@renderCurrentSelection()
 			@renderContent()
 			@$el.addClass config.panelSize
-			@positionSelectionTab()
 
 			@

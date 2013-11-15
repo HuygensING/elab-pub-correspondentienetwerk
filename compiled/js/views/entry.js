@@ -171,9 +171,30 @@
             href: config.entryURL(next)
           });
         }
-        console.log("Next,pref", next, prev, configData.findPrev(this.model.id));
         this.$('.prev-entry').toggleClass('hide', !prev);
-        return this.$('.next-entry').toggleClass('hide', !next);
+        this.$('.next-entry').toggleClass('hide', !next);
+        return this.renderResultsNavigation();
+      };
+
+      Home.prototype.renderResultsNavigation = function() {
+        var id, ids, nextId, prevId, showResultsNav, _ref1, _ref2;
+        ids = configData.get('allResultIds');
+        showResultsNav = (ids != null ? ids.length : void 0) > 0 && ids.indexOf(String(this.model.id)) !== -1;
+        this.$('.navigate-results').toggle(showResultsNav);
+        if (ids != null ? ids.length : void 0) {
+          id = this.model.id;
+          prevId = (_ref1 = ids[ids.indexOf(String(id)) - 1]) != null ? _ref1 : null;
+          nextId = (_ref2 = ids[ids.indexOf(String(id)) + 1]) != null ? _ref2 : null;
+          console.log(prevId, nextId);
+          this.$('.navigate-results .prev-result').toggle(prevId != null).attr({
+            href: config.entryURL(prevId)
+          });
+          this.$('.navigate-results .next-result').toggle(nextId != null).attr({
+            href: config.entryURL(nextId)
+          });
+          this.$('.navigate-results .idx').text(ids.indexOf(String(id)) + 1);
+          return this.$('.navigate-results .total').text(ids.length);
+        }
       };
 
       Home.prototype.renderContents = function() {

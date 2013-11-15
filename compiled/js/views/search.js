@@ -119,11 +119,13 @@
       };
 
       Home.prototype.render = function() {
-        var _this = this;
+        var firstSearch,
+          _this = this;
         document.title = configData.get('title');
         this.$el.html(this.template({
           w: configData.get('entryIds')
         }));
+        firstSearch = true;
         this.search = new FacetedSearch({
           searchPath: config.searchPath,
           queryOptions: {
@@ -131,10 +133,20 @@
             term: '*'
           }
         });
+        this.search.subscribe('faceted-search:reset', function() {
+          return firstSearch = true;
+        });
         this.search.subscribe('faceted-search:results', function(response) {
+          var totalEntries;
           _this.results = response;
-          if ('sortableFields' in response) {
-            _this.sortableFields = response.sortableFields;
+          totalEntries = configData.get('entryIds').length;
+          _this.results.allIds = totalEntries === _this.search.model.get('allIds').length ? [] : _this.search.model.get('allIds');
+          firstSearch = false;
+          configData.set({
+            allResultIds: _this.results.allIds
+          });
+          if (_this.results.sortableFields != null) {
+            _this.sortableFields = _this.results.sortableFields;
           }
           return _this.renderResults();
         });

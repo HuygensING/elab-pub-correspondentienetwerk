@@ -3,10 +3,11 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Entry, PanelView, ParallelView, Templates, _ref;
+    var BaseView, Entry, PanelView, ParallelView, Templates, configData, _ref;
     BaseView = require('views/base');
     PanelView = require('views/panel');
     Entry = require('models/entry');
+    configData = require('models/configdata');
     Templates = {
       ParallelView: require('text!html/parallel-view.html')
     };
@@ -30,6 +31,8 @@
         var _this = this;
         this.options = options;
         ParallelView.__super__.initialize.apply(this, arguments);
+        this.textLayers = _.flatten(['Facsimile', configData.get('textLayers')]);
+        console.log("text layers", configData.attr);
         this.panels = [];
         if ('id' in this.options) {
           this.model = new Entry({
@@ -41,12 +44,20 @@
             }
           });
         }
-        this.addPanel();
         return this.render();
       };
 
       ParallelView.prototype.closeParallelView = function() {
-        return this.remove();
+        var _this = this;
+        this.$('.parallel-controls').css({
+          position: 'relative'
+        });
+        return this.$('.parallel-overlay').animate({
+          left: '-100%',
+          opacity: 0
+        }, 250, function() {
+          return _this.remove();
+        });
       };
 
       ParallelView.prototype.show = function() {
@@ -82,13 +93,31 @@
         });
       };
 
-      ParallelView.prototype.addPanel = function() {
-        var panel;
-        panel = new PanelView({
-          model: this.model
-        });
+      ParallelView.prototype.addPanel = function(panel) {
+        if (panel == null) {
+          panel = new PanelView({
+            model: this.model
+          });
+        }
         this.panels.push(panel);
         return panel;
+      };
+
+      ParallelView.prototype.availableLayers = function() {
+        var availableLayers, usedLayers;
+        usedLayers = _.map(this.panels, function(p) {
+          return p.textLayer;
+        });
+        return availableLayers = _.difference(this.textLayers, usedLayers);
+      };
+
+      ParallelView.prototype.emptyPanel = function() {
+        var panel;
+        console.log("Called mpty panel");
+        return panel = new PanelView({
+          model: this.model,
+          versions: this.availableLayers()
+        });
       };
 
       ParallelView.prototype.positionPanel = function(p, pos) {
@@ -123,8 +152,7 @@
         p.$el.css({
           height: '200px'
         });
-        this.positionPanel(p, this.panels.length - 1);
-        return p.positionSelectionTab();
+        return this.positionPanel(p, this.panels.length - 1);
       };
 
       ParallelView.prototype.clearPanels = function() {
@@ -135,6 +163,9 @@
       ParallelView.prototype.renderPanels = function() {
         var p, pos, _i, _len, _ref1, _results;
         this.$('.panel-container').empty();
+        console.log("Panels", this.panels.length);
+        this.addPanel(this.emptyPanel());
+        console.log("Panels", this.panels.length);
         _ref1 = this.panels;
         _results = [];
         for (pos = _i = 0, _len = _ref1.length; _i < _len; pos = ++_i) {
@@ -151,6 +182,7 @@
         this.$el.html(tmpl({
           entry: (_ref1 = this.model) != null ? _ref1.attributes : void 0
         }));
+        this.$('.title').text(this.model.get('name'));
         this.renderPanels();
         return this;
       };

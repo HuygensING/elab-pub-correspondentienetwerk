@@ -130,13 +130,13 @@
       TextView.prototype.renderContent = function() {
         var text;
         text = this.model.text(this.currentTextVersion);
-        if (text) {
+        if (text != null ? text.length : void 0) {
           this.$('.text').html(text);
-          this.renderAnnotations();
           this.renderLineNumbering();
         } else {
           this.$('.text').html("<p class=no-data>" + this.currentTextVersion + " text layer is empty</p>");
         }
+        this.renderAnnotations();
         return this;
       };
 

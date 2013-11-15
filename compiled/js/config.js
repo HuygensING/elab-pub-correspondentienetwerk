@@ -23,7 +23,7 @@
       defaultTextVersion: 'Diplomatic',
       resultRows: 10,
       panelSize: 'large',
-      searchPath: "" + basePath + "/api/search"
+      searchPath: "http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/api/search"
     };
     return config;
   });

@@ -1,14 +1,15 @@
 .parallel-overlay
-	.parallel-controls.wrapper
-		button.add(href="#")
-			span +
-			| Add new view
+	.parallel-controls
+		.button-group
+			h2.title
 
-		span.title
-
-
-		button.close(href="#")
-			span X
-			| Close parallel view
+			.right
+				button.prev
+					| ◁&nbsp;&nbsp;Previous
+				button.next
+					| Next&nbsp;&nbsp;▷
+				button.close(href="#")
+					span X
+					| Close parallel view
 
 	.panel-container

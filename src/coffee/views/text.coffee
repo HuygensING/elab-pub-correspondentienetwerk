@@ -97,12 +97,12 @@ define (require) ->
 		renderContent: ->
 			text = @model.text @currentTextVersion
 
-			if text
+			if text?.length
 				@$('.text').html text
-				@renderAnnotations()
 				@renderLineNumbering()
 			else
 				@$('.text').html "<p class=no-data>#{@currentTextVersion} text layer is empty</p>"
+			@renderAnnotations()
 
 			@
 

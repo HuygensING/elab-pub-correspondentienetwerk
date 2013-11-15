@@ -28,6 +28,31 @@ no-padding-margin()
 	padding 0
 	margin 0
 
+button()
+	box-sizing border-box
+	background-color lightGrey
+	border-radius 4px
+	border none
+	color darken(mediumGrey, 30%)
+	font-size 9pt
+	cursor pointer
+	line-height 19px
+	padding 0 5px
+
+	&:hover
+		background-color darken(lightGrey, 10%)
+
+	&.active
+		background-color mediumGrey
+		color white
+		&:hover
+			background-color lighten(mediumGrey, 10%)
+
+big-button()
+	button()
+	padding 10px 15px
+	box-shadow 1px 1px 1px #ccc
+
 .not-visible
 	visibility hidden
 	opacity 0

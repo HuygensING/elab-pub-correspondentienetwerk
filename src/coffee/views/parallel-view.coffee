@@ -4,6 +4,8 @@ define (require) ->
 
 	Entry = require 'models/entry'
 
+	configData = require 'models/configdata'
+
 	Templates =
 		ParallelView: require 'text!html/parallel-view.html'
 
@@ -17,16 +19,23 @@ define (require) ->
 		initialize: (@options) ->
 			super
 
+			@textLayers = _.flatten [ 'Facsimile', configData.get 'textLayers' ]
+			console.log "text layers", configData.attr
+
 			@panels = []
 
 			if 'id' of @options
 				@model = new Entry id: @options.id
 				@model.fetch success: => @render()
 
-			@addPanel()
 			@render()
 
-		closeParallelView: ->	@remove()
+		closeParallelView: ->
+			@$('.parallel-controls').css position: 'relative'
+			@$('.parallel-overlay').animate {
+				left: '-100%', opacity: 0
+			}, 250, => @remove()
+
 		show: -> @$el.show()
 		hide: -> @$el.hide()
 
@@ -51,10 +60,20 @@ define (require) ->
 			po.animate
 				scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
 
-		addPanel: ->
-			panel = new PanelView model: @model
+		addPanel: (panel) ->
+			panel ?= new PanelView model: @model
 			@panels.push panel
 			panel
+
+		availableLayers: ->
+			usedLayers = _.map @panels, (p) -> p.textLayer
+			availableLayers = _.difference @textLayers, usedLayers
+
+		emptyPanel: ->
+			console.log "Called mpty panel"
+			panel = new PanelView
+				model: @model
+				versions: @availableLayers()
 
 		positionPanel: (p, pos=0) ->
 			p.$el.css
@@ -74,7 +93,6 @@ define (require) ->
 			@$('.panel-container').append p.el
 			p.$el.css height: '200px'
 			@positionPanel p, @panels.length - 1
-			p.positionSelectionTab()
 
 		clearPanels: ->
 			@panels = []
@@ -82,13 +100,18 @@ define (require) ->
 
 		renderPanels: ->
 			@$('.panel-container').empty()
+			console.log "Panels", @panels.length
+			@addPanel @emptyPanel()
+			console.log "Panels", @panels.length
 			for p, pos in @panels
 				@appendPanel p
 				@positionPanel p, pos
+			
 
 		render: ->
 			tmpl = _.template Templates.ParallelView
 			@$el.html tmpl entry: @model?.attributes
+			@$('.title').text @model.get 'name'
 
 			@renderPanels()
 

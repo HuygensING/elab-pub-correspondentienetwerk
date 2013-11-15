@@ -11,10 +11,10 @@ define (require) ->
 				for version of data.paralleltexts
 					i = 1
 					text = data.paralleltexts[version].text
-					text = text.replace /<ab id="(.*?)"\/>/g, (match, p1, offset, string) => '<span data-marker="begin" data-id="'+p1+'"></span>'
-					text = text.replace /<ae id="(.*?)"\/>/g, (match, p1, offset, string) => '<sup data-marker="end" data-id="'+p1+'">'+(i++)+'</sup> '
 					text = '<div class="line">' + text.replace(/\n|<br>/g, '</div><div class="line">') + '</div>'
-					text = text.replace /(<div class="line">)(\s*<span[^>]+><\/span>\s*)(<\/div>)/mg, "$1$2&nbsp;$3"
+					text = text.replace /(<div class="line">)(\s*<span[^>]+><\/span>\s*)?\s*(<\/div>)/mg, "$1$2&nbsp;$3"
+					text = text.replace /^<div class="line">&nbsp;<\/div>$/mg, ''
+
 					data.paralleltexts[version].text = text
 			data
 

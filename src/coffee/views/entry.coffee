@@ -129,10 +129,27 @@ define (require) ->
 			if next
 				@$('.next').attr href: config.entryURL next
 
-			console.log "Next,pref", next, prev,  configData.findPrev(@model.id)
-
 			@$('.prev-entry').toggleClass 'hide', not prev
 			@$('.next-entry').toggleClass 'hide', not next
+
+			@renderResultsNavigation()
+
+		renderResultsNavigation: ->
+			ids = configData.get 'allResultIds'
+			showResultsNav = ids?.length > 0 and ids.indexOf(String @model.id) isnt -1
+			@$('.navigate-results').toggle showResultsNav
+
+			if ids?.length
+				id = @model.id
+				prevId = ids[ids.indexOf(String id) - 1] ? null
+				nextId = ids[ids.indexOf(String id) + 1] ? null
+
+				console.log prevId, nextId
+				
+				@$('.navigate-results .prev-result').toggle(prevId?).attr href: config.entryURL prevId
+				@$('.navigate-results .next-result').toggle(nextId?).attr href: config.entryURL nextId
+				@$('.navigate-results .idx').text ids.indexOf(String id) + 1
+				@$('.navigate-results .total').text ids.length
 
 		renderContents: ->
 			@$('.contents').html @contentsTemplate
