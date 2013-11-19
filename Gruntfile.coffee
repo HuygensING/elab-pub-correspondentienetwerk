@@ -284,14 +284,24 @@ module.exports = (grunt) ->
 						'jquery-visible': '../lib/jquery.visible/jquery.visible.min'
 						'unsemantic-html5shim': '../lib/unsemantic/assets/javascripts/html5'
 						'underscore': '../lib/underscore-amd/underscore'
+						'underscore.string': '../lib/underscore.string/lib/underscore.string'
 						'backbone': '../lib/backbone-amd/backbone'
 						'text': '../lib/requirejs-text/text'
 						'domready': '../lib/requirejs-domready/domReady'
+						'rangy': '../lib/rangy'
 						# 'faceted-search': '../lib/faceted-search/dist/js/main'
 						# 'supertinyeditor': '../lib/supertinyeditor/main'
 						'managers': '../lib/managers/dev'
 						'helpers': '../lib/helpers/dev'
 						'html': '../html'
+					shim:
+						'rangy/rangy-core':
+							exports: 'rangy'
+						'rangy/rangy-cssclassapplier':
+							exports: 'rangy'
+							deps: ['rangy/rangy-core']
+						'underscore.string':
+							exports: 'underscore.string'
 					wrap: true
 
 		watch:

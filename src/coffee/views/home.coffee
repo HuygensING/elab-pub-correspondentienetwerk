@@ -57,7 +57,7 @@ define (require) ->
 			if newView isnt @currentView
 				@currentView.$el.fadeOut 75, ->
 					newView.$el.fadeIn 150
-				@currentView = newView
+			@currentView = newView
 
 		render: ->
 			@template = _.template @template

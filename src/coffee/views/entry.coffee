@@ -11,7 +11,9 @@ define (require) ->
 
 	Entry = require 'models/entry'
 
-	class Home extends BaseView
+	KEYCODE_ESCAPE = 27
+
+	class Entry extends BaseView
 		baseTemplate: require 'text!html/entry/base.html'
 		headerTemplate: require 'text!html/entry/header.html'
 		metadataTemplate: require 'text!html/entry/metadata.html'
@@ -41,7 +43,7 @@ define (require) ->
 			else
 				configData.get 'textLayer'
 
-			# $(document).bind 'keyup', 'ifEscapeClose'
+			$(document).keyup (e) => @ifEscapeClose e
 
 			@didScroll = false
 			@$el.click -> @didScroll = true
@@ -72,14 +74,25 @@ define (require) ->
 			@textView.setView @currentTextLayer
 			configData.set textLayer: @currentTextLayer
 
-		toggleMoreMetadata: ->
-			@$('.metadata').toggleClass 'more' # fields
-			@$('.metadata button').toggleClass 'more' # button
-			configData.set showMetaData: @$('.metadata').hasClass 'more'
+		toggleMoreMetadata: (e) ->
+			show = not $(e.currentTarget).hasClass 'more'
+			@showMoreMetaData show, yes # animate
+		
+		showMoreMetaData: (show, animate=no) ->
+			if show
+				@$('.metadata').addClass 'more' # fields
+				@$('.metadata button').addClass 'more' # button
+				@$('.metadata li').show()
+			else
+				@$('.metadata').removeClass 'more' # fields
+				@$('.metadata button').removeClass 'more' # button
+				@$('.metadata li').show().filter (idx) -> $(@).hide() if idx > 3
 
-		showParallelView: ->
-			@pv = new ParallelView
-				model: @model
+			configData.set showMetaData: show
+
+		showParallelView: (opts={}) ->
+			_.extend opts, model: @model
+			@pv = new ParallelView opts
 			@$('.parallel-view-container').empty().html @pv.el
 			@pv.show()
 
@@ -89,18 +102,22 @@ define (require) ->
 			target = $(e.currentTarget)
 			page = target.data 'page'
 
-			@pv = @showParallelView()
-			@pv.clearPanels()
-			@pv.addPanel().setLayer 'Facsimile', page	
-			@pv.addPanel().setLayer @currentTextLayer
-			@pv.renderPanels()
+			@pv = @showParallelView
+				panels: [
+					{ textLayer: 'Facsimile', page: page}
+					{ textLayer: @currentTextLayer }
+				]
+			@pv.repositionPanels()
 
 		printEntry: (e) ->
 			e.preventDefault()
 			window.print()
 
+		close: -> # TODO: no-op, but in future: fadeOut?
+
 		ifEscapeClose: (e) ->
-			console.log "DUNO"
+			if e.keyCode is KEYCODE_ESCAPE
+				@close()
 
 		positionTextView: ->
 			@$('.text-view').css 'background-color': 'yellow'
@@ -110,7 +127,10 @@ define (require) ->
 			@$('.metadata').html @metadataTemplate
 				metadata: metadata
 
-			@toggleMoreMetadata() if configData.get 'showMetaData'
+			if configData.get('showMetaData')?
+				@showMoreMetaData configData.get('showMetaData')
+			else
+				@showMoreMetaData false
 
 			@
 
@@ -142,7 +162,7 @@ define (require) ->
 				prevId = ids[ids.indexOf(String id) - 1] ? null
 				nextId = ids[ids.indexOf(String id) + 1] ? null
 
-				console.log prevId, nextId
+				# console.log prevId, nextId
 				
 				@$('.navigate-results .prev-result').toggle(prevId?).attr href: config.entryURL prevId
 				@$('.navigate-results .next-result').toggle(nextId?).attr href: config.entryURL nextId

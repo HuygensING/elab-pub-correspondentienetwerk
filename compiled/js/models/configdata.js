@@ -15,6 +15,10 @@
         return _ref;
       }
 
+      ConfigData.prototype.defaults = {
+        textLayer: 'Diplomatic'
+      };
+
       ConfigData.prototype.url = function() {
         return config.configDataURL;
       };

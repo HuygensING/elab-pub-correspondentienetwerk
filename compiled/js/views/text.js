@@ -3,12 +3,33 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Helpers, TextView, config, configData, jqv, _ref;
+    var BaseView, Highlighter, TextView, config, configData, highlighter, jqv, rangy, _ref;
     configData = require('models/configdata');
     config = require('config');
     BaseView = require('views/base');
-    Helpers = require('helpers/general');
+    rangy = require('rangy/rangy-cssclassapplier');
+    rangy.init();
     jqv = require('jquery-visible');
+    highlighter = rangy.createCssClassApplier('highlight');
+    Highlighter = (function() {
+      function Highlighter() {}
+
+      Highlighter.prototype.on = function(args) {
+        var endNode, startNode;
+        startNode = args.startNode, endNode = args.endNode;
+        this.r = rangy.createRange();
+        this.r.setStartAfter(startNode);
+        this.r.setEndBefore(endNode);
+        return highlighter.applyToRange(this.r);
+      };
+
+      Highlighter.prototype.off = function() {
+        return highlighter.undoToRange(this.r);
+      };
+
+      return Highlighter;
+
+    })();
     return TextView = (function(_super) {
       __extends(TextView, _super);
 
@@ -29,9 +50,9 @@
         this.options = options;
         this.template = _.template(this.template);
         this.annotationsTemplate = _.template(this.annotationsTemplate);
-        this.currentTextLayer = this.options.layer || config.defaultTextLayer;
+        this.currentTextLayer = this.options.layer || configData.get('textLayer' || config.defaultTextLayer);
         if (document.createRange) {
-          this.hl = Helpers.highlighter({
+          this.hl = new Highlighter({
             className: 'highlight',
             tagName: 'div'
           });
@@ -49,13 +70,7 @@
         return this.renderContent();
       };
 
-      TextView.prototype.highlightAnnotation = function(markerID) {
-        this.hl.on({
-          startNode: this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
-          endNode: this.$(".text sup[data-marker=end][data-id=" + markerID + "]")[0]
-        });
-        return console.log("Highliting", markerID);
-      };
+      TextView.prototype.highlightAnnotation = function(markerID) {};
 
       TextView.prototype.scrollToAnnotation = function(e) {
         var annID, annotation, target;
@@ -63,9 +78,9 @@
         annID = target.attr('data-id');
         annotation = this.$(".text span[data-marker=begin][data-id=" + annID + "]");
         if (annotation.visible()) {
-          return console.log("Annotation is visible", annID);
+
         } else {
-          return console.log("Not visible");
+
         }
       };
 

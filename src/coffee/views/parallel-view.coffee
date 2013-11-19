@@ -19,21 +19,24 @@ define (require) ->
 			'click button.close': 'closeParallelView'
 			'keydown *': 'ifEscapeClose'
 
-		initialize: (@options) ->
+		initialize: (@options={}) ->
 			super
 
+			$(document).keyup (e) => @ifEscapeClose(e)
+
 			@textLayers = _.flatten [ 'Facsimile', configData.get 'textLayers' ]
+
 			@panels = []
 
-			if configData.get 'parallelPanels'
-				@setupPanels configData.get 'parallelPanels'
-			else
-				[]
+			preLoad = @options.panels || configData.get 'parallelPanels'
+			if preLoad
+				for opts in preLoad
+					_.extend opts, model: @model
+					@addPanel new PanelView opts
 
 			@render()
 
 		ifEscapeClose: (e) ->
-			console.log "KEY CODE", e.keyCode
 			if e.keyCode is KEYCODE_ESCAPE
 				@closeParallelView()
 
@@ -75,12 +78,6 @@ define (require) ->
 
 		layerSelected: ->
 			@renderPanels()
-
-		setupPanels: (panelLayers) ->
-			for layer in panelLayers
-				@addPanel
-					model: @model
-					layer: layer
 
 		addPanel: (panel) ->
 			panel ?= new PanelView model: @model

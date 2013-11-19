@@ -48,6 +48,10 @@
 			span
 				color mediumGrey
 	.navigate-entries, .navigate-results
+		vendor('user-select', none)
+		@media print
+			display none
+
 		margin 1em 0
 		position relative
 		clear-fix()
@@ -63,6 +67,7 @@
 
 	.navigate-results
 		// display none
+		vendor('user-select', none)
 		position relative
 		lineHeight = 33px
 		min-height lineHeight
@@ -82,6 +87,8 @@
 
 	.thumbnails
 		min-height 100px // so text isn't pushed left
+		@media print
+			display none
 
 	.metadata
 		padding-top pTop
@@ -99,23 +106,10 @@
 				h5
 					margin .8em 0 0 0
 
-				&:nth-child(n+5)
-					display none
-					opacity 0
-					// -webkit-transition opacity 1s ease-out
-					transition opacity 1s ease-out
-
-		&.more
-			li:nth-child(n)
-				display block
-				transition opacity 1s ease-out
-				opacity 1
-
 		.more
 			position relative
 			// height 100%
 			button
-
 				@media print
 					display none
 
@@ -135,7 +129,10 @@
 		cursor pointer
 
 	.contents
-		.layers 
+		.layers
+			@media print
+				visibility hidden
+
 			margin-right 15px
 			ul
 				list-style none
@@ -152,8 +149,15 @@
 						margin-right 0
 
 		.parallel
+			@media print
+				display none
 			padding button-padding
 	
 	.annotations
 		color mediumGrey
 		font-size 9pt
+
+		@media print
+			color black
+			border-top 1px solid mediumGrey
+			margin-top 2em

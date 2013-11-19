@@ -86,8 +86,8 @@
           this.currentView.$el.fadeOut(75, function() {
             return newView.$el.fadeIn(150);
           });
-          return this.currentView = newView;
         }
+        return this.currentView = newView;
       };
 
       Home.prototype.render = function() {

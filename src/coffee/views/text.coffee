@@ -3,9 +3,24 @@ define (require) ->
 	config = require 'config'
 	BaseView = require 'views/base'
 
-	Helpers = require 'helpers/general'
+	rangy = require 'rangy/rangy-cssclassapplier'
+	rangy.init()
 
 	jqv = require 'jquery-visible'
+
+	highlighter = rangy.createCssClassApplier 'highlight'
+
+	class Highlighter
+		on: (args) ->
+			{startNode, endNode} = args
+			
+			@r = rangy.createRange()
+			@r.setStartAfter startNode
+			@r.setEndBefore endNode
+
+			highlighter.applyToRange @r
+		off: ->
+			highlighter.undoToRange @r
 
 	class TextView extends Backbone.View
 		template: require 'text!html/text.html'
@@ -17,10 +32,10 @@ define (require) ->
 		initialize: (@options) ->
 			@template = _.template @template
 			@annotationsTemplate = _.template @annotationsTemplate
-			@currentTextLayer = @options.layer || config.defaultTextLayer
+			@currentTextLayer = @options.layer || configData.get 'textLayer' || config.defaultTextLayer
 
 			if document.createRange
-				@hl = Helpers.highlighter
+				@hl = new Highlighter
 					className: 'highlight' # optional
 					tagName: 'div' # optional
 			else
@@ -35,10 +50,10 @@ define (require) ->
 			@renderContent()
 
 		highlightAnnotation: (markerID) ->
-			@hl.on
-				startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
-				endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
-			console.log "Highliting", markerID
+			#@hl.on
+			#	startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
+			#	endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			# console.log "Highliting", markerID
 
 		scrollToAnnotation: (e) ->
 			target = $(e.currentTarget)
@@ -46,9 +61,9 @@ define (require) ->
 			annotation = @$(".text span[data-marker=begin][data-id=#{annID}]")
 
 			if annotation.visible()
-				console.log "Annotation is visible", annID
+				# console.log "Annotation is visible", annID
 			else
-				console.log "Not visible"
+				# console.log "Not visible"
 
 		renderAnnotations: ->
 			annotations = {}

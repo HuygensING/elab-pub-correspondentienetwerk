@@ -7,27 +7,36 @@
 
 	a h3
 		color #444
+		span.count
+			color lightGrey
 
-	ul
-		padding 0
-		margin 0
-		li
-			font-size 13px
-			margin-left 0
-			list-style none
-			margin-bottom .5em
-			&:hover a
-				color defaultPurple
-			a
-				color #444
+	.list
+		ul
+			padding 0
+			margin 0
+			li
+				font-size 13px
+				margin-left 0
+				list-style none
+				margin-bottom .5em
+				&:hover a
+					color defaultPurple
+				a
+					color #444
+				span.count
+					color mediumGrey
 
 	.contents
-		padding-left 35px
-		ul li
-			position relative
-			margin-bottom 1em
-			a
-				color defaultPurple
+		padding-left 55px
+		font-size 13px
+		ol
+			margin 0
+			padding 0
+			li
+				position relative
+				margin 0 0 1em 0
+				a
+					color defaultPurple
 
 		.text-layer
 			font-size 12px

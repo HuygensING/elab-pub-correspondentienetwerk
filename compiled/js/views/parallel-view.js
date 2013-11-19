@@ -30,20 +30,29 @@
       };
 
       ParallelView.prototype.initialize = function(options) {
-        this.options = options;
+        var opts, preLoad, _i, _len,
+          _this = this;
+        this.options = options != null ? options : {};
         ParallelView.__super__.initialize.apply(this, arguments);
+        $(document).keyup(function(e) {
+          return _this.ifEscapeClose(e);
+        });
         this.textLayers = _.flatten(['Facsimile', configData.get('textLayers')]);
         this.panels = [];
-        if (configData.get('parallelPanels')) {
-          this.setupPanels(configData.get('parallelPanels'));
-        } else {
-          [];
+        preLoad = this.options.panels || configData.get('parallelPanels');
+        if (preLoad) {
+          for (_i = 0, _len = preLoad.length; _i < _len; _i++) {
+            opts = preLoad[_i];
+            _.extend(opts, {
+              model: this.model
+            });
+            this.addPanel(new PanelView(opts));
+          }
         }
         return this.render();
       };
 
       ParallelView.prototype.ifEscapeClose = function(e) {
-        console.log("KEY CODE", e.keyCode);
         if (e.keyCode === KEYCODE_ESCAPE) {
           return this.closeParallelView();
         }
@@ -112,19 +121,6 @@
 
       ParallelView.prototype.layerSelected = function() {
         return this.renderPanels();
-      };
-
-      ParallelView.prototype.setupPanels = function(panelLayers) {
-        var layer, _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = panelLayers.length; _i < _len; _i++) {
-          layer = panelLayers[_i];
-          _results.push(this.addPanel({
-            model: this.model,
-            layer: layer
-          }));
-        }
-        return _results;
       };
 
       ParallelView.prototype.addPanel = function(panel) {

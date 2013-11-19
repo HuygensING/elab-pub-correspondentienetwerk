@@ -1,6 +1,7 @@
 (function() {
   var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   define(function(require) {
     var Backbone, FacetedSearch, Home, Templates, config, configData, _ref;
@@ -70,16 +71,16 @@
       };
 
       Home.prototype.renderSortableFields = function() {
-        var f, option, select, _i, _len, _ref1, _ref2;
+        var field, name, option, select, _ref1;
         if (this.sortableFields) {
           select = $('<select>');
           _ref1 = this.sortableFields;
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            f = _ref1[_i];
+          for (field in _ref1) {
+            name = _ref1[field];
             option = $('<option>').attr({
-              value: f
-            }).text(((_ref2 = config.sortableFieldNames) != null ? _ref2[f] : void 0) || f);
-            if (this.sortField && this.sortField === f) {
+              value: field
+            }).text(name);
+            if (this.sortField && this.sortField === field) {
               option.attr('selected', 'selected');
             }
             select.append(option);
@@ -138,7 +139,7 @@
           return firstSearch = true;
         });
         this.search.subscribe('faceted-search:results', function(response) {
-          var totalEntries, _ref1;
+          var f, totalEntries, _i, _len, _ref1, _ref2, _ref3;
           _this.results = response;
           totalEntries = configData.get('entryIds').length;
           _this.results.allIds = totalEntries === ((_ref1 = _this.search.model.get('allIds')) != null ? _ref1.length : void 0) ? [] : _this.search.model.get('allIds');
@@ -147,7 +148,14 @@
             allResultIds: _this.results.allIds
           });
           if (_this.results.sortableFields != null) {
-            _this.sortableFields = _this.results.sortableFields;
+            _this.sortableFields = {};
+            _ref2 = _this.results.facets;
+            for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+              f = _ref2[_i];
+              if (_ref3 = f.name, __indexOf.call(_this.results.sortableFields, _ref3) >= 0) {
+                _this.sortableFields[f.name] = f.title;
+              }
+            }
           }
           return _this.renderResults();
         });

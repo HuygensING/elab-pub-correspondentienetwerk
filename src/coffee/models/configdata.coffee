@@ -5,6 +5,9 @@ define (require) ->
 	us = require 'underscore.string'
 
 	class ConfigData extends BaseModel
+		defaults:
+			textLayer: 'Diplomatic'
+
 		url: -> config.configDataURL
 
 		findPrev: (id) ->

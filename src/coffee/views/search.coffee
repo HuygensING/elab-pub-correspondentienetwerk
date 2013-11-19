@@ -45,16 +45,16 @@ define (require) ->
 
 		sortResults: (e) ->
 			@sortField = $(e.currentTarget).val()
-			@search.sortResultsBy(@sortField)
+			@search.sortResultsBy @sortField
 
 		renderSortableFields: ->
 			if @sortableFields
 				select = $('<select>')
-				for f in @sortableFields
+				for field, name of @sortableFields
 					option = $('<option>')
-						.attr(value: f)
-						.text(config.sortableFieldNames?[f] || f)
-					option.attr('selected','selected') if @sortField and @sortField is f
+						.attr(value: field)
+						.text(name)
+					option.attr('selected','selected') if @sortField and @sortField is field
 					select.append(option)
 
 				@$('.controls .sort').empty().append '<span>Order by&nbsp;</span>'
@@ -114,7 +114,9 @@ define (require) ->
 				configData.set allResultIds: @results.allIds
 
 				if @results.sortableFields?
-					@sortableFields = @results.sortableFields
+					@sortableFields = {}
+					for f in @results.facets when f.name in @results.sortableFields
+						@sortableFields[f.name] = f.title 
 				@renderResults()
 				
 			@$('.faceted-search').html @search.$el

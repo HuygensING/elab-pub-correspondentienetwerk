@@ -23,9 +23,9 @@
       MainRouter.prototype.routes = {
         '': 'showSearch',
         'annotations/': 'showAnnotationsIndex',
+        'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation',
         'entry/:id/parallel': 'showEntryParallelView',
         'entry/:id/:layer': 'showEntryLayer',
-        'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation',
         'entry/:id': 'showEntry'
       };
 
