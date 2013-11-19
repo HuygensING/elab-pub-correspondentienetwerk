@@ -7,16 +7,22 @@
       'jquery-ui': '../lib/jquery-ui/ui',
       'unsemantic-html5shim': '../lib/unsemantic/assets/javascripts/html5',
       'underscore': '../lib/underscore-amd/underscore',
+      'underscore.string': '../lib/underscore.string/lib/underscore.string',
       'backbone': '../lib/backbone-amd/backbone',
       'domready': '../lib/requirejs-domready/domReady',
       'text': '../lib/requirejs-text/text',
       'managers': '../lib/managers/dev',
       'helpers': '../lib/helpers/dev',
-      'html': '../html'
+      'html': '../html',
+      'rangy': '../lib/rangy'
     },
     shim: {
       'underscore': {
         exports: '_'
+      },
+      'underscore.string': {
+        exports: '_',
+        deps: ['underscore']
       },
       'backbone': {
         deps: ['underscore', 'jquery', 'json3'],
@@ -27,6 +33,13 @@
         deps: ['jquery']
       },
       'jquery-visible': ['jquery'],
+      'rangy/rangy-core': {
+        exports: 'rangy'
+      },
+      'rangy/rangy-cssclassapplier': {
+        exports: 'rangy',
+        deps: ['rangy/rangy-core']
+      },
       'unsemantic-html5shim': {
         exports: 'this'
       }

@@ -4,10 +4,9 @@ define (require) ->
 	configData = require 'models/configdata'
 	config = require 'config'
 
+	us = require 'underscore.string'
 
 	annTemplate = require 'text!html/annotations-index.html'
-
-	Helpers = require 'helpers/string'
 
 	# Turn long strings into "foo ... bar"
 	shorten = (txt, max=50) ->
@@ -27,6 +26,6 @@ define (require) ->
 		render: ->
 			@$el.html @template
 				annotations: @annotations
-				slugify: Helpers.slugify
 				shorten: shorten
+				slugify: us.slugify
 				config: config

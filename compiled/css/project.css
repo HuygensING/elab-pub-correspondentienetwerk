@@ -68,11 +68,11 @@
 .entry .metadata .more button.more span.more{display:none}
 .entry .metadata .more button.more span.less{display:inline}
 .entry .thumbnail{cursor:pointer}
-.entry .contents .versions{margin-right:15px;}
-.entry .contents .versions ul{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
-.entry .contents .versions ul li{display:inline-block;margin-right:5px;}
-.entry .contents .versions ul li.active button{background-color:#8f8f8f;color:#fff}
-.entry .contents .versions ul li:last-child{margin-right:0}
+.entry .contents .layers{margin-right:15px;}
+.entry .contents .layers ul{list-style:none;margin:0;padding:15px 0 25px 0;text-align:right;}
+.entry .contents .layers ul li{display:inline-block;margin-right:5px;}
+.entry .contents .layers ul li.active button{background-color:#8f8f8f;color:#fff}
+.entry .contents .layers ul li:last-child{margin-right:0}
 .entry .contents .parallel{padding:15px 0 25px 0}
 .entry .annotations{color:#8f8f8f;font-size:9pt}
 
@@ -132,15 +132,16 @@ h1,.page-header h1 a{font-family:Samba;font-weight:normal;color:#b325a0;text-dec
 .panel-frame .selection:hover ul{display:inline-block}
 .panel-frame .selection ul{padding:0 0;margin:0;width:100%;list-style:none;display:none;}
 .panel-frame .selection ul li{margin:5px 0}
+.layer{font-weight:bold;color:#e6e6e6;line-height:20px;min-height:20px;margin-left:10px}
 .panel{position:absolute;display:inline-block;z-index:1;width:600px;height:700px;-webkit-transition:background-color .4s ease-in-out 0;-moz-transition:background-color .4s ease-in-out 0;-ms-transition:background-color .4s ease-in-out 0;-o-transition:background-color .4s ease-in-out 0;transition:background-color .4s ease-in-out 0;-webkit-transition:all 600ms cubic-bezier(.23,1,.32,1);transition:all 600ms cubic-bezier(.23,1,.32,1);overflow-y:auto;box-sizing:border-box;border:1px solid #e6e6e6;border-left:none;padding:40px;}
 .panel .select-layer h2{color:#8f8f8f;text-align:center;font-weight:normal}
-.panel .select-layer ul{margin:0 auto;width:50%;list-style:none;}
-.panel .select-layer ul li{box-sizing:border-box;background-color:#e6e6e6;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;border-radius:4px;border:none;color:#646464;font-size:9pt;cursor:pointer;line-height:19px;padding:0 5px;padding:10px 15px;box-shadow:1px 1px 1px #ccc;width:100%;margin-bottom:1em}
+.panel .select-layer ul{margin:0 auto;padding:0;width:50%;list-style:none;}
+.panel .select-layer ul li{box-sizing:border-box;background-color:#e6e6e6;-webkit-border-radius:4px;-moz-border-radius:4px;-ms-border-radius:4px;-o-border-radius:4px;border-radius:4px;border:none;color:#646464;font-size:9pt;cursor:pointer;line-height:19px;padding:0 5px;padding:10px 15px;box-shadow:1px 1px 1px #ccc;width:100%;margin-bottom:1em;text-align:center}
 .panel .select-layer ul li:hover{background-color:#cfcfcf}
 .panel .select-layer ul li.active{background-color:#8f8f8f;color:#fff;}
 .panel .select-layer ul li.active:hover{background-color:#9a9a9a}
 .panel.new{background-color:#fffeed;transition:background-color .4s ease-in-out 0}
-.panel iframe.facsimile-zoom{width:504px;height:600px}
+.panel iframe.facsimile-zoom{width:504px;height:600px;border:0;overflow:hidden}
 .panel.large{width:600px;height:700px}
 .panel.medium{width:500px;height:650px;}
 .panel.medium iframe.facsimile-zoom{width:404px;height:500px}
@@ -168,7 +169,7 @@ h1,.page-header h1 a{font-family:Samba;font-weight:normal;color:#b325a0;text-dec
 .parallel-view{z-index:1000;position:relative;top:100px;background-color:#fff;}
 .parallel-view .add span,.parallel-view .close span{margin-right:1em}
 .parallel-view .parallel-controls .close{float:right;margin-right:40px}
-.parallel-view .panel-container{position:relative;margin-top:100px}
+.parallel-view .panel-container{position:relative;margin-top:80px}
 
 @font-face{font-family:"Junicode";src:url("../fonts/Junicode.eot");src:url("../fonts/Junicode.eot?#iefix") format("embedded-opentype"),url("../fonts/Junicode.ttf") format("truetype"),url("../fonts/Junicode.woff") format("woff");font-weight:normal;font-style:normal}
 @font-face{font-family:"Samba";src:url("../fonts/Samba-webfont.eot");src:url("../fonts/Samba-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/Samba-webfont.ttf") format("truetype"),url("../fonts/Samba-webfont.woff") format("woff");font-weight:normal;font-style:normal}

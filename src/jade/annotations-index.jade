@@ -20,6 +20,6 @@
 					.annotation-text
 						| <%=  ann.annotationText %>
 					.link
-						a(href!="<%= config.entryURL(ann.entryId, slugify(ann.textLayer)) %>/<%= ann.n %>") &#8627; See in text
+						a(href!="<%= config.entryURL(ann.entryId, ann.textLayer, ann.n) %>") &#8627; See in text
 				| <% }); %>
 		| <% }); %>	

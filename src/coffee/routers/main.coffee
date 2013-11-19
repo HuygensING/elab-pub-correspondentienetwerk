@@ -10,46 +10,27 @@ define (require) ->
 		# Use document.title to ensure IE compatibility
 		document.title = configData.get 'title'
 
-	Views =
-		Home: require 'views/home'
-		Search: require 'views/search'
-		Entry: require 'views/entry'
-		ParallelView: require 'views/parallel-view'
-
 	class MainRouter extends Backbone.Router
-		initialize: ->
-			@on 'route', @show, @
-			@on 'route', => events.trigger 'change:view', arguments
+		routes:
+			'': 'showSearch'
+			'annotations/': 'showAnnotationsIndex'
+			'entry/:id/parallel': 'showEntryParallelView'
+			'entry/:id/:layer': 'showEntryLayer'
+			'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation'
+			'entry/:id': 'showEntry'
 
-		'routes':
-			'': 'home'
-			'annotations/': 'annotationsIndex'
-			"entry/:id/parallel": 'entryParallelView'
-			"entry/:id/:version": 'entryVersionView'
-			"entry/:id": 'entry'
+		initialize: (options) ->
+			super
 
-		home: ->
-			events.trigger 'change:view:search'
-			# events.trigger 'change:view:home', arguments
-			# viewManager.main = $('#main')
-			# viewManager.show Views.Search
+			{@controller, @root} = options
+			@processRoutes()
 
-		annotationsIndex: ->
-			events.trigger 'change:view:annotations'
+		start: ->
+			Backbone.history.start
+				root: @root
+				pushState: true 
 
-		entryParallelView: (id) ->
-			events.trigger 'change:view:entry',
-				id: id
-				mode: 'parallel'
-			# viewManager.show Views.ParallelView,
-			# 	id: id
-			# 	mode: 'parallel'
-
-		entryVersionView: (id, version) ->
-			# viewManager.show Views.Entry,
-			events.trigger 'change:view:entry',
-				id: id
-				version: version
-
-		entry: (id) -> events.trigger 'change:view:entry', id: id
-			# viewManager.show Views.Entry, id: id
+		processRoutes: ->
+			for route, methodName of @routes when methodName of @controller
+				method = @controller[methodName].bind @controller
+				@route route, methodName, method

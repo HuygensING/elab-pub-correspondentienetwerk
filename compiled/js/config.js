@@ -1,6 +1,7 @@
 (function() {
   define(function(require) {
-    var basePath, config;
+    var basePath, config, us;
+    us = require('underscore.string');
     basePath = BASE_URL;
     if (basePath === '/') {
       basePath = '';
@@ -11,8 +12,16 @@
       configDataURL: "" + basePath + "/data/config.json",
       itemLabel: 'entry',
       itemLabelPlural: 'entries',
-      entryURL: function(id) {
-        return "/entry/" + id;
+      entryURL: function(id, textLayer, annotation) {
+        var base;
+        base = "/entry/" + id;
+        if ((annotation != null) && (textLayer != null)) {
+          return "" + base + "/" + (us.slugify(textLayer)) + "/" + annotation;
+        } else if (textLayer != null) {
+          return "" + base + "/" + (us.slugify(textLayer));
+        } else {
+          return base;
+        }
       },
       entryDataURL: function(id) {
         return "" + basePath + "/data/" + id + ".json";
@@ -20,10 +29,10 @@
       parallelURL: function(id) {
         return "/entry/" + id + "/parallel";
       },
-      defaultTextVersion: 'Diplomatic',
-      resultRows: 10,
+      defaultTextLayer: 'Diplomatic',
+      resultRows: 25,
       panelSize: 'large',
-      searchPath: "http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/api/search"
+      searchPath: "" + basePath + "/api/search"
     };
     return config;
   });

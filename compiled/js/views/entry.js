@@ -30,32 +30,61 @@
       Home.prototype.className = 'entry';
 
       Home.prototype.events = {
-        'click .versions li': 'changeTextVersion',
+        'click .layers li': 'changeTextLayer',
         'click .more button': 'toggleMoreMetadata',
         'click .parallel button': 'showParallelView',
         'click .thumbnail': 'showThumbnailParallelView',
         'click a.print': 'printEntry'
       };
 
-      Home.prototype.setActiveTextVersion = function(version) {
+      Home.prototype.initialize = function(options) {
+        var doCheck,
+          _this = this;
+        this.options = options != null ? options : {};
+        Home.__super__.initialize.apply(this, arguments);
+        this.baseTemplate = _.template(this.baseTemplate);
+        this.headerTemplate = _.template(this.headerTemplate);
+        this.metadataTemplate = _.template(this.metadataTemplate);
+        this.contentsTemplate = _.template(this.contentsTemplate);
+        this.currentTextLayer = this.options.layerSlug != null ? configData.slugToLayer(this.options.layerSlug) : this.options.layer != null ? this.options.layer : configData.get('textLayer');
+        this.didScroll = false;
+        this.$el.click(function() {
+          return this.didScroll = true;
+        });
+        doCheck = function() {
+          var didScroll;
+          if (_this.didScroll) {
+            didScroll = false;
+            return _this.positionTextView();
+          }
+        };
+        $('body, html').scroll(function(e) {
+          return _this.didScroll = true;
+        });
+        return this.render();
+      };
+
+      Home.prototype.setActiveTextLayer = function(layer) {
         var li;
-        li = this.$(".versions li[data-toggle=" + version + "]");
+        li = this.$(".layers li[data-toggle=" + layer + "]");
         return li.addClass('active').siblings().removeClass('active');
       };
 
-      Home.prototype.changeTextVersion = function(e) {
-        this.currentTextVersion = $(e.currentTarget).data('toggle');
-        this.setActiveTextVersion(this.currentTextVersion);
-        return this.textView.setView(this.currentTextVersion);
+      Home.prototype.changeTextLayer = function(e) {
+        this.currentTextLayer = $(e.currentTarget).data('toggle');
+        this.setActiveTextLayer(this.currentTextLayer);
+        this.textView.setView(this.currentTextLayer);
+        return configData.set({
+          textLayer: this.currentTextLayer
+        });
       };
 
       Home.prototype.toggleMoreMetadata = function() {
         this.$('.metadata').toggleClass('more');
         this.$('.metadata button').toggleClass('more');
-        configData.set({
+        return configData.set({
           showMetaData: this.$('.metadata').hasClass('more')
         });
-        return console.log(configData.attributes);
       };
 
       Home.prototype.showParallelView = function() {
@@ -73,8 +102,8 @@
         page = target.data('page');
         this.pv = this.showParallelView();
         this.pv.clearPanels();
-        this.pv.addPanel().setVersion('Facsimile', page);
-        this.pv.addPanel().setVersion(this.currentTextVersion);
+        this.pv.addPanel().setLayer('Facsimile', page);
+        this.pv.addPanel().setLayer(this.currentTextLayer);
         return this.pv.renderPanels();
       };
 
@@ -83,55 +112,8 @@
         return window.print();
       };
 
-      Home.prototype.initialize = function(options) {
-        var doCheck, _ref1,
-          _this = this;
-        this.options = options;
-        Home.__super__.initialize.apply(this, arguments);
-        this.baseTemplate = _.template(this.baseTemplate);
-        this.headerTemplate = _.template(this.headerTemplate);
-        this.metadataTemplate = _.template(this.metadataTemplate);
-        this.contentsTemplate = _.template(this.contentsTemplate);
-        if ('id' in this.options) {
-          this.model = new Entry({
-            id: this.options.id
-          });
-          this.model.fetch({
-            success: function() {
-              return _this.render();
-            }
-          });
-        }
-        events.on('change:view:entry', function(options) {
-          _this.model = new Entry({
-            id: options.id
-          });
-          return _this.model.fetch().done(function() {
-            return _this.render();
-          });
-        });
-        if (!this.options.mode) {
-          this.options.mode = 'normal';
-        }
-        this.currentTextVersion = this.options.version || config.defaultTextVersion;
-        this.numMetadataEntrys = this.options.numMetadataEntrys || 4;
-        this.didScroll = false;
-        this.$el.click(function() {
-          return this.didScroll = true;
-        });
-        doCheck = function() {
-          var didScroll;
-          if (_this.didScroll) {
-            didScroll = false;
-            return _this.positionTextView();
-          }
-        };
-        $('body, html').scroll(function(e) {
-          return _this.didScroll = true;
-        });
-        if ((_ref1 = this.model) != null ? _ref1.id : void 0) {
-          return this.render();
-        }
+      Home.prototype.ifEscapeClose = function(e) {
+        return console.log("DUNO");
       };
 
       Home.prototype.positionTextView = function() {
@@ -200,20 +182,24 @@
       Home.prototype.renderContents = function() {
         this.$('.contents').html(this.contentsTemplate({
           entry: this.model.attributes,
-          config: config
+          config: config,
+          configData: configData
         }));
-        return this.textView = new TextView({
+        this.textView = new TextView({
           model: this.model,
-          version: this.currentTextVersion,
+          layer: this.currentTextLayer,
           el: this.$('.contents .text-view')
         });
+        if (this.options.annotation != null) {
+          return this.textView.highlightAnnotation(this.options.annotation);
+        }
       };
 
       Home.prototype.renderEntry = function() {
         this.renderHeader();
         this.renderMetadata();
         this.renderContents();
-        return this.setActiveTextVersion(this.currentTextVersion);
+        return this.setActiveTextLayer(this.currentTextLayer);
       };
 
       Home.prototype.render = function() {

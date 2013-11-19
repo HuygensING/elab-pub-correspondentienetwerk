@@ -11,13 +11,13 @@ define (require) ->
 		className: 'panel-frame'
 		template: require 'text!html/panel.html'
 		events:
-			'click .selection li': 'selectText'
+			'click .select-layer li': 'selectLayer'
 
 		initialize: (@options) ->
 			@template = _.template @template
 
-			@textVersion = @options?.textVersion
-			@versions = @options.versions
+			@textLayer = @options?.textLayer
+			@layers = @options.layers
 
 			if 'id' of @options and not @model
 				@model = new Entry id: @options.id
@@ -25,42 +25,45 @@ define (require) ->
 			else if @model
 				@render()
 
-		selectText: (e) ->
+		selectLayer: (e) ->
 			target = $(e.currentTarget)
-			@setVersion target.data 'toggle'
+			layer  = target.data 'toggle'
 
-		versionIsFacsimile: -> @textVersion is 'Facsimile'
+			@setLayer layer
+			@trigger 'layer-selected', layer
 
-		# Page is only relevant if version is 'Facsimile'
-		setVersion: (version, page=null) ->
-			@textVersion = version
-			@page = page if @versionIsFacsimile()
+		layerIsFacsimile: -> @textLayer is 'Facsimile'
+
+		# Page is only relevant if layer is 'Facsimile'
+		setLayer: (layer, page=null) ->
+			@textLayer = layer
+			@page = page if @layerIsFacsimile()
 			@renderContent()
 
-		selectedVersion: -> @textVersion
+		selectedLayer: -> @textLayer
 
 		renderCurrentSelection: ->
-			@$('.selection .current span').text @textVersion
+			@$('.selection .current span').text @textLayer
 
 		renderContent: ->
-			if @versionIsFacsimile()
+			if @layerIsFacsimile()
 				@subView = new FacsimileView
 					model: @model, page: @page
-				@$('.view').html @subView.el
-			else
-				if @textVersion
-					@subView = new TextView
-						model: @model
-						version: @textVersion
-					@$('.view').html @subView.el
+			else if @textLayer
+				@subView = new TextView
+					model: @model
+					layer: @textLayer
+			@$('.view').html @subView?.el
+			@$('.layer').text @textLayer
+
 
 		render: ->
 			@$el.html @template
 				entry: @model?.attributes
-				versions: @versions
-				version: @textVersion
+				layers: @layers
+				layer: @textLayer
 
-			@$el.toggleClass 'select', not @textVersion?
+			@$el.toggleClass 'select', not @textLayer?
 
 			@renderCurrentSelection()
 			@renderContent()

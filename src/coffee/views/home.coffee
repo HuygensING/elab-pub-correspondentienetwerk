@@ -9,35 +9,62 @@ define (require) ->
 
 	events = require 'events'
 
+	EntryCollection = require 'collections/entries'
+	Entry = require 'models/entry'
+
 	class Home extends Backbone.View
 		template: require 'text!html/home.html'
 		initialize: ->
+			# Cache entries
+			@entries = new EntryCollection
 			@searchView = new SearchView
-			@entryView = new EntryView
+
+			# only instantiate once entry model is loaded
+			@entryView = {}
+
 			@annotationsView = new AnnotationsView
 
-			events.on 'change:view:entry', =>
-				@searchView.$el.hide()
-				@annotationsView.$el.hide()
-				@entryView.$el.show()
-			events.on 'change:view:annotations', =>
-				@searchView.$el.hide()
-				@entryView.$el.hide()
-				@annotationsView.$el.show()
-			events.on 'change:view:search', =>
-				@entryView.$el.hide()
-				@annotationsView.$el.hide()
-				@searchView.$el.show()
-			
+			@currentView = @searchView
+
 			@render()
 
-		render: ->
-			# @template = _.template @template
-			# @$el.html @template()
-			# @$('h1').text configData.get 'title'
+		showEntryLayer: (id, layer) ->
+			@showEntry id: id, layer: layer
+		showEntryHighlightAnnotation: (id, layer, annotation) ->
+			@showEntry id: id, layerSlug: layer, annotation: annotation
+		showEntry: (options) ->
+			# In case just ID is passed in
+			options = id: options unless _.isObject options
 
-			@$el.append @searchView.$el
-			@$el.append @entryView.$el
-			@$el.append @annotationsView.$el
+			attachEntryView = =>
+				_.extend options, model: @entries.get options.id
+				@entryView = new EntryView options
+				@$('.entry-view').html @entryView.el
+				@switchView @entryView
+
+			if @entries.get options.id # it's already cached
+				attachEntryView()
+			else
+				@entries.add(id: options.id).fetch().done => attachEntryView()
+
+		showSearch: ->
+			@switchView @searchView
+
+		showAnnotationsIndex: ->
+			@switchView @annotationsView
+
+		switchView: (newView) ->
+			if newView isnt @currentView
+				@currentView.$el.fadeOut 75, ->
+					newView.$el.fadeIn 150
+				@currentView = newView
+
+		render: ->
+			@template = _.template @template
+			@$el.html @template()
+
+			@$('.search-view').html @searchView.$el
+			@$('.entry-view').html @entryView?.$el
+			@$('.annotations-view').html @annotationsView.$el
 
 			@

@@ -16,54 +16,17 @@ define (require) ->
 		headerTemplate: require 'text!html/entry/header.html'
 		metadataTemplate: require 'text!html/entry/metadata.html'
 		contentsTemplate: require 'text!html/entry/contents.html'
-		# annotationsTemplate: require 'text!html/entry/annotations.html'
 
 		className: 'entry'
 
 		events:
-			'click .versions li': 'changeTextVersion'
+			'click .layers li': 'changeTextLayer'
 			'click .more button': 'toggleMoreMetadata'
 			'click .parallel button': 'showParallelView'
 			'click .thumbnail': 'showThumbnailParallelView'
 			'click a.print': 'printEntry'
 
-		setActiveTextVersion: (version) ->
-			li = @$(".versions li[data-toggle=#{version}]")
-			li.addClass('active').siblings().removeClass('active')
-
-		changeTextVersion: (e) ->
-			@currentTextVersion = $(e.currentTarget).data 'toggle'
-			@setActiveTextVersion @currentTextVersion
-			@textView.setView @currentTextVersion
-
-		toggleMoreMetadata: ->
-			@$('.metadata').toggleClass 'more' # fields
-			@$('.metadata button').toggleClass 'more' # button
-			configData.set showMetaData: @$('.metadata').hasClass 'more'
-			console.log configData.attributes
-
-		showParallelView: ->
-			@pv = new ParallelView model: @model
-			@$('.parallel-view-container').empty().html @pv.el
-			@pv.show()
-
-			@pv
-
-		showThumbnailParallelView: (e) ->
-			target = $(e.currentTarget)
-			page = target.data 'page'
-
-			@pv = @showParallelView()
-			@pv.clearPanels()
-			@pv.addPanel().setVersion 'Facsimile', page	
-			@pv.addPanel().setVersion @currentTextVersion
-			@pv.renderPanels()
-
-		printEntry: (e) ->
-			e.preventDefault()
-			window.print()
-
-		initialize: (@options) ->
+		initialize: (@options={}) ->
 			super
 
 			@baseTemplate = _.template @baseTemplate
@@ -71,22 +34,17 @@ define (require) ->
 			@metadataTemplate = _.template @metadataTemplate
 			@contentsTemplate = _.template @contentsTemplate
 
-			if 'id' of @options
-				@model = new Entry id: @options.id
-				@model.fetch success: => @render()
+			@currentTextLayer = if @options.layerSlug?
+				configData.slugToLayer @options.layerSlug
+			else if @options.layer?
+				@options.layer
+			else
+				configData.get 'textLayer'
 
-			events.on 'change:view:entry', (options) =>
-				@model = new Entry id: options.id
-				@model.fetch().done => @render()
-
-			@options.mode = 'normal' unless @options.mode
-
-			@currentTextVersion = @options.version || config.defaultTextVersion
-			@numMetadataEntrys = @options.numMetadataEntrys || 4
+			# $(document).bind 'keyup', 'ifEscapeClose'
 
 			@didScroll = false
 			@$el.click -> @didScroll = true
-
 			doCheck = =>
 				if @didScroll
 					didScroll = false
@@ -102,7 +60,47 @@ define (require) ->
 			# 	else if not @$('.text-view').hasClass 'fixed'
 			# 		@fixTextView()
 
-			@render() if @model?.id
+			@render()
+
+		setActiveTextLayer: (layer) ->
+			li = @$(".layers li[data-toggle=#{layer}]")
+			li.addClass('active').siblings().removeClass('active')
+
+		changeTextLayer: (e) ->
+			@currentTextLayer = $(e.currentTarget).data 'toggle'
+			@setActiveTextLayer @currentTextLayer
+			@textView.setView @currentTextLayer
+			configData.set textLayer: @currentTextLayer
+
+		toggleMoreMetadata: ->
+			@$('.metadata').toggleClass 'more' # fields
+			@$('.metadata button').toggleClass 'more' # button
+			configData.set showMetaData: @$('.metadata').hasClass 'more'
+
+		showParallelView: ->
+			@pv = new ParallelView
+				model: @model
+			@$('.parallel-view-container').empty().html @pv.el
+			@pv.show()
+
+			@pv
+
+		showThumbnailParallelView: (e) ->
+			target = $(e.currentTarget)
+			page = target.data 'page'
+
+			@pv = @showParallelView()
+			@pv.clearPanels()
+			@pv.addPanel().setLayer 'Facsimile', page	
+			@pv.addPanel().setLayer @currentTextLayer
+			@pv.renderPanels()
+
+		printEntry: (e) ->
+			e.preventDefault()
+			window.print()
+
+		ifEscapeClose: (e) ->
+			console.log "DUNO"
 
 		positionTextView: ->
 			@$('.text-view').css 'background-color': 'yellow'
@@ -155,18 +153,22 @@ define (require) ->
 			@$('.contents').html @contentsTemplate
 				entry: @model.attributes
 				config: config
+				configData: configData
 
 			@textView = new TextView
 				model: @model
-				version: @currentTextVersion
+				layer: @currentTextLayer
 				el: @$('.contents .text-view')
+
+			if @options.annotation?
+				@textView.highlightAnnotation @options.annotation
 
 		renderEntry: ->
 			@renderHeader()
 			@renderMetadata()
 			@renderContents()
 
-			@setActiveTextVersion @currentTextVersion
+			@setActiveTextLayer @currentTextLayer
 
 		render: ->
 			@$el.html @baseTemplate()

@@ -7,9 +7,9 @@
 	|   <% }); %>
 	| <% } %>
 .grid-70
-	.grid-100.versions
+	.grid-100.layers
 		ul
-			| <% _.each(entry.paralleltexts, function (value, name) { %>
+			| <% _.each(configData.get('textLayers'), function (name) { %>
 			li(data-toggle!="<%= name %>"): button <%= name %>
 			| <% }); %>
 .grid-20.parallel

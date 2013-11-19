@@ -21,7 +21,7 @@
       PanelView.prototype.template = require('text!html/panel.html');
 
       PanelView.prototype.events = {
-        'click .selection li': 'selectText'
+        'click .select-layer li': 'selectLayer'
       };
 
       PanelView.prototype.initialize = function(options) {
@@ -29,8 +29,8 @@
           _this = this;
         this.options = options;
         this.template = _.template(this.template);
-        this.textVersion = (_ref1 = this.options) != null ? _ref1.textVersion : void 0;
-        this.versions = this.options.versions;
+        this.textLayer = (_ref1 = this.options) != null ? _ref1.textLayer : void 0;
+        this.layers = this.options.layers;
         if ('id' in this.options && !this.model) {
           this.model = new Entry({
             id: this.options.id
@@ -45,61 +45,62 @@
         }
       };
 
-      PanelView.prototype.selectText = function(e) {
-        var target;
+      PanelView.prototype.selectLayer = function(e) {
+        var layer, target;
         target = $(e.currentTarget);
-        return this.setVersion(target.data('toggle'));
+        layer = target.data('toggle');
+        this.setLayer(layer);
+        return this.trigger('layer-selected', layer);
       };
 
-      PanelView.prototype.versionIsFacsimile = function() {
-        return this.textVersion === 'Facsimile';
+      PanelView.prototype.layerIsFacsimile = function() {
+        return this.textLayer === 'Facsimile';
       };
 
-      PanelView.prototype.setVersion = function(version, page) {
+      PanelView.prototype.setLayer = function(layer, page) {
         if (page == null) {
           page = null;
         }
-        this.textVersion = version;
-        if (this.versionIsFacsimile()) {
+        this.textLayer = layer;
+        if (this.layerIsFacsimile()) {
           this.page = page;
         }
         return this.renderContent();
       };
 
-      PanelView.prototype.selectedVersion = function() {
-        return this.textVersion;
+      PanelView.prototype.selectedLayer = function() {
+        return this.textLayer;
       };
 
       PanelView.prototype.renderCurrentSelection = function() {
-        return this.$('.selection .current span').text(this.textVersion);
+        return this.$('.selection .current span').text(this.textLayer);
       };
 
       PanelView.prototype.renderContent = function() {
-        if (this.versionIsFacsimile()) {
+        var _ref1;
+        if (this.layerIsFacsimile()) {
           this.subView = new FacsimileView({
             model: this.model,
             page: this.page
           });
-          return this.$('.view').html(this.subView.el);
-        } else {
-          if (this.textVersion) {
-            this.subView = new TextView({
-              model: this.model,
-              version: this.textVersion
-            });
-            return this.$('.view').html(this.subView.el);
-          }
+        } else if (this.textLayer) {
+          this.subView = new TextView({
+            model: this.model,
+            layer: this.textLayer
+          });
         }
+        this.$('.view').html((_ref1 = this.subView) != null ? _ref1.el : void 0);
+        return this.$('.layer').text(this.textLayer);
       };
 
       PanelView.prototype.render = function() {
         var _ref1;
         this.$el.html(this.template({
           entry: (_ref1 = this.model) != null ? _ref1.attributes : void 0,
-          versions: this.versions,
-          version: this.textVersion
+          layers: this.layers,
+          layer: this.textLayer
         }));
-        this.$el.toggleClass('select', this.textVersion == null);
+        this.$el.toggleClass('select', this.textLayer == null);
         this.renderCurrentSelection();
         this.renderContent();
         this.$el.addClass(config.panelSize);

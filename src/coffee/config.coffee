@@ -1,4 +1,6 @@
 define (require) ->
+	us = require 'underscore.string'
+
 	basePath = BASE_URL
 	basePath = '' if basePath is '/'
 
@@ -8,13 +10,20 @@ define (require) ->
 		configDataURL: "#{basePath}/data/config.json"
 		itemLabel: 'entry'
 		itemLabelPlural: 'entries'
-		entryURL: (id) -> "/entry/#{id}"
+		entryURL: (id, textLayer, annotation) ->
+			base = "/entry/#{id}"
+			if annotation? and textLayer?
+				"#{base}/#{us.slugify textLayer}/#{annotation}"
+			else if textLayer?
+				"#{base}/#{us.slugify textLayer}"
+			else 
+				base
 		entryDataURL: (id) -> "#{basePath}/data/#{id}.json"
 		parallelURL: (id) -> "/entry/#{id}/parallel"
-		defaultTextVersion: 'Diplomatic'
-		resultRows: 10
+		defaultTextLayer: 'Diplomatic'
+		resultRows: 25
 		panelSize: 'large'
-		# searchPath: "#{basePath}/api/search"
-		searchPath: "http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/api/search"
+		searchPath: "#{basePath}/api/search"
+		# searchPath: "http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/api/search"
 
 	config

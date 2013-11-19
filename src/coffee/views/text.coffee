@@ -17,24 +17,34 @@ define (require) ->
 		initialize: (@options) ->
 			@template = _.template @template
 			@annotationsTemplate = _.template @annotationsTemplate
-			@currentTextVersion = @options.version || config.defaultTextVersion
+			@currentTextLayer = @options.layer || config.defaultTextLayer
 
-			@highlighter = new Helpers.highlighter
-				className: 'highlight'	# optional
-				tagName: 'div' 					# optional
+			if document.createRange
+				@hl = Helpers.highlighter
+					className: 'highlight' # optional
+					tagName: 'div' # optional
+			else
+				@hl = # Allow IE8 to fail gracefully
+					on: ->
+					off: ->
 
 			@render()
 
-		setView: (version) ->
-			@currentTextVersion = version
+		setView: (layer) ->
+			@currentTextLayer = layer
 			@renderContent()
+
+		highlightAnnotation: (markerID) ->
+			@hl.on
+				startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
+				endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			console.log "Highliting", markerID
 
 		scrollToAnnotation: (e) ->
 			target = $(e.currentTarget)
 			annID = target.attr 'data-id'
 			annotation = @$(".text span[data-marker=begin][data-id=#{annID}]")
 
-			console.log jqv
 			if annotation.visible()
 				console.log "Annotation is visible", annID
 			else
@@ -42,7 +52,7 @@ define (require) ->
 
 		renderAnnotations: ->
 			annotations = {}
-			for a in @model.annotations(@currentTextVersion) || []
+			for a in @model.annotations(@currentTextLayer) || []
 				annotations[a.n] = a
 
 			orderedAnnotations = (annotations[id] for id in @$('.text sup').map -> $(@).data 'id')	
@@ -50,30 +60,26 @@ define (require) ->
 				annotations: orderedAnnotations
 
 			if document.createRange	
-				hl = Helpers.highlighter
-					className: 'highlight' # optional
-					tagName: 'div' # optional
-
 				supEnter = (ev) =>
 					el = ev.currentTarget
 					markerID = $(el).data 'id'
 					@$(".annotations li[data-id=#{markerID}]").addClass 'highlight'
-					hl.on
+					@hl.on
 						startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
 						endNode: ev.currentTarget # required
 				supLeave = (ev) =>
 					markerID = $(ev.currentTarget).data 'id'
 					@$(".annotations li[data-id=#{markerID}]").removeClass 'highlight'
-					hl.off()
+					@hl.off()
 				@$('.text sup[data-marker]').hover supEnter, supLeave
 
 				liEnter = (ev) =>
 					el = ev.currentTarget
 					markerID = $(el).data 'id'
-					hl.on
+					@hl.on
 						startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
 						endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
-				liLeave = -> hl.off()
+				liLeave = => @hl.off()
 				@$('.annotations li').hover liEnter, liLeave
 			else # no document.createRange (IE8)
 				# TODO: alternative?
@@ -84,24 +90,14 @@ define (require) ->
 			@$('.line').each (n, line) =>
 				$(line).prepend $('<div class="number"/>').text(n+1)
 
-		# renderLineNumbering: ->
-		# 	lineNumbers = $('<div>').addClass 'line-numbers'
-		# 	lines = ""
-		# 	for n in [1..1000] # TODO: hard-coded, but maybe better to compute?
-		# 		lines += "#{n}<br>"
-		# 	lineNumbers.html lines
-		# 	@$('.text .line-numbers').remove()
-		# 	@$('.text').append lineNumbers
-		# 	lineNumbers.css height: @$('.text').outerHeight()
-
 		renderContent: ->
-			text = @model.text @currentTextVersion
+			text = @model.text @currentTextLayer
 
 			if text?.length
 				@$('.text').html text
 				@renderLineNumbering()
 			else
-				@$('.text').html "<p class=no-data>#{@currentTextVersion} text layer is empty</p>"
+				@$('.text').html "<p class=no-data>#{@currentTextLayer} text layer is empty</p>"
 			@renderAnnotations()
 
 			@

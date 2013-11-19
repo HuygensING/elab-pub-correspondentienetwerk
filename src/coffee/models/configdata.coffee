@@ -1,7 +1,9 @@
 define (require) ->
 	BaseModel = require 'models/base'
 	config = require 'config'
-	
+
+	us = require 'underscore.string'
+
 	class ConfigData extends BaseModel
 		url: -> config.configDataURL
 
@@ -20,5 +22,10 @@ define (require) ->
 		prevURL: (id) ->
 			prev = @findPrev id
 			config.entryURL prev if prev
+
+		slugToLayer: (slug) ->
+			for layer in @get('textLayers') || []
+				if slug is us.slugify layer
+					return layer
 
 	new ConfigData

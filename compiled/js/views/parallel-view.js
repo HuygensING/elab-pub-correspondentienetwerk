@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Entry, PanelView, ParallelView, Templates, configData, _ref;
+    var BaseView, Entry, KEYCODE_ESCAPE, PanelView, ParallelView, Templates, configData, _ref;
     BaseView = require('views/base');
     PanelView = require('views/panel');
     Entry = require('models/entry');
@@ -11,6 +11,7 @@
     Templates = {
       ParallelView: require('text!html/parallel-view.html')
     };
+    KEYCODE_ESCAPE = 27;
     return ParallelView = (function(_super) {
       __extends(ParallelView, _super);
 
@@ -24,27 +25,28 @@
       ParallelView.prototype.events = {
         'click .add': 'addPanelEvent',
         'click .panel .close': 'closePanel',
-        'click button.close': 'closeParallelView'
+        'click button.close': 'closeParallelView',
+        'keydown *': 'ifEscapeClose'
       };
 
       ParallelView.prototype.initialize = function(options) {
-        var _this = this;
         this.options = options;
         ParallelView.__super__.initialize.apply(this, arguments);
         this.textLayers = _.flatten(['Facsimile', configData.get('textLayers')]);
-        console.log("text layers", configData.attr);
         this.panels = [];
-        if ('id' in this.options) {
-          this.model = new Entry({
-            id: this.options.id
-          });
-          this.model.fetch({
-            success: function() {
-              return _this.render();
-            }
-          });
+        if (configData.get('parallelPanels')) {
+          this.setupPanels(configData.get('parallelPanels'));
+        } else {
+          [];
         }
         return this.render();
+      };
+
+      ParallelView.prototype.ifEscapeClose = function(e) {
+        console.log("KEY CODE", e.keyCode);
+        if (e.keyCode === KEYCODE_ESCAPE) {
+          return this.closeParallelView();
+        }
       };
 
       ParallelView.prototype.closeParallelView = function() {
@@ -61,7 +63,22 @@
       };
 
       ParallelView.prototype.show = function() {
-        return this.$el.show();
+        var _this = this;
+        this.$el.show();
+        this.$('.parallel-controls').css({
+          position: 'relative'
+        });
+        return this.$('.parallel-overlay').css({
+          left: '100%',
+          opacity: '0'
+        }).animate({
+          left: '0%',
+          opacity: '1'
+        }, 150, function() {
+          return _this.$('.parallel-controls').css({
+            position: 'fixed'
+          });
+        });
       };
 
       ParallelView.prototype.hide = function() {
@@ -93,6 +110,23 @@
         });
       };
 
+      ParallelView.prototype.layerSelected = function() {
+        return this.renderPanels();
+      };
+
+      ParallelView.prototype.setupPanels = function(panelLayers) {
+        var layer, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = panelLayers.length; _i < _len; _i++) {
+          layer = panelLayers[_i];
+          _results.push(this.addPanel({
+            model: this.model,
+            layer: layer
+          }));
+        }
+        return _results;
+      };
+
       ParallelView.prototype.addPanel = function(panel) {
         if (panel == null) {
           panel = new PanelView({
@@ -100,24 +134,25 @@
           });
         }
         this.panels.push(panel);
+        this.listenTo(panel, 'layer-selected', this.layerSelected);
         return panel;
       };
 
       ParallelView.prototype.availableLayers = function() {
         var availableLayers, usedLayers;
         usedLayers = _.map(this.panels, function(p) {
-          return p.textLayer;
+          return p.selectedLayer();
         });
         return availableLayers = _.difference(this.textLayers, usedLayers);
       };
 
       ParallelView.prototype.emptyPanel = function() {
         var panel;
-        console.log("Called mpty panel");
-        return panel = new PanelView({
+        panel = new PanelView({
           model: this.model,
-          versions: this.availableLayers()
+          layers: this.availableLayers()
         });
+        return panel;
       };
 
       ParallelView.prototype.positionPanel = function(p, pos) {
@@ -163,9 +198,9 @@
       ParallelView.prototype.renderPanels = function() {
         var p, pos, _i, _len, _ref1, _results;
         this.$('.panel-container').empty();
-        console.log("Panels", this.panels.length);
-        this.addPanel(this.emptyPanel());
-        console.log("Panels", this.panels.length);
+        if (this.availableLayers().length) {
+          this.addPanel(this.emptyPanel());
+        }
         _ref1 = this.panels;
         _results = [];
         for (pos = _i = 0, _len = _ref1.length; _i < _len; pos = ++_i) {

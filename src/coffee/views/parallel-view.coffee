@@ -9,26 +9,33 @@ define (require) ->
 	Templates =
 		ParallelView: require 'text!html/parallel-view.html'
 
+	KEYCODE_ESCAPE = 27
+
 	class ParallelView extends BaseView
 		className: 'parallel-view'
 		events:
 			'click .add': 'addPanelEvent'
 			'click .panel .close': 'closePanel'
 			'click button.close': 'closeParallelView'
+			'keydown *': 'ifEscapeClose'
 
 		initialize: (@options) ->
 			super
 
 			@textLayers = _.flatten [ 'Facsimile', configData.get 'textLayers' ]
-			console.log "text layers", configData.attr
-
 			@panels = []
 
-			if 'id' of @options
-				@model = new Entry id: @options.id
-				@model.fetch success: => @render()
+			if configData.get 'parallelPanels'
+				@setupPanels configData.get 'parallelPanels'
+			else
+				[]
 
 			@render()
+
+		ifEscapeClose: (e) ->
+			console.log "KEY CODE", e.keyCode
+			if e.keyCode is KEYCODE_ESCAPE
+				@closeParallelView()
 
 		closeParallelView: ->
 			@$('.parallel-controls').css position: 'relative'
@@ -36,8 +43,14 @@ define (require) ->
 				left: '-100%', opacity: 0
 			}, 250, => @remove()
 
-		show: -> @$el.show()
-		hide: -> @$el.hide()
+		show: ->
+			@$el.show()
+			@$('.parallel-controls').css position: 'relative'
+			@$('.parallel-overlay').css(left: '100%', opacity: '0').animate {
+				left: '0%', opacity: '1' }, 150, => @$('.parallel-controls').css position: 'fixed'
+		
+		hide: ->
+			@$el.hide()
 
 		closePanel: (e) ->
 			pNumber = $(e.currentTarget).closest('.panel-frame').index()
@@ -60,20 +73,32 @@ define (require) ->
 			po.animate
 				scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
 
+		layerSelected: ->
+			@renderPanels()
+
+		setupPanels: (panelLayers) ->
+			for layer in panelLayers
+				@addPanel
+					model: @model
+					layer: layer
+
 		addPanel: (panel) ->
 			panel ?= new PanelView model: @model
 			@panels.push panel
+			@listenTo panel, 'layer-selected', @layerSelected
+
 			panel
 
 		availableLayers: ->
-			usedLayers = _.map @panels, (p) -> p.textLayer
+			usedLayers = _.map @panels, (p) -> p.selectedLayer()
 			availableLayers = _.difference @textLayers, usedLayers
 
 		emptyPanel: ->
-			console.log "Called mpty panel"
 			panel = new PanelView
 				model: @model
-				versions: @availableLayers()
+				layers: @availableLayers()
+
+			panel
 
 		positionPanel: (p, pos=0) ->
 			p.$el.css
@@ -100,9 +125,7 @@ define (require) ->
 
 		renderPanels: ->
 			@$('.panel-container').empty()
-			console.log "Panels", @panels.length
-			@addPanel @emptyPanel()
-			console.log "Panels", @panels.length
+			@addPanel @emptyPanel() if @availableLayers().length
 			for p, pos in @panels
 				@appendPanel p
 				@positionPanel p, pos

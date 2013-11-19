@@ -19,7 +19,7 @@
       };
 
       Entry.prototype.parse = function(data) {
-        var i, text, version;
+        var i, page, text, version, _i, _len, _ref1;
         if (data.paralleltexts != null) {
           for (version in data.paralleltexts) {
             i = 1;
@@ -29,6 +29,11 @@
             text = text.replace(/^<div class="line">&nbsp;<\/div>$/mg, '');
             data.paralleltexts[version].text = text;
           }
+        }
+        _ref1 = data.facsimiles;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          page = _ref1[_i];
+          page.zoom = page.zoom.replace('adore-huygens-viewer-2.0', 'adore-huygens-viewer-2.1');
         }
         return data;
       };
@@ -43,13 +48,8 @@
         }
       };
 
-      Entry.prototype.textVersions = function() {
-        var key, _results;
-        _results = [];
-        for (key in this.get('paralleltexts')) {
-          _results.push(key);
-        }
-        return _results;
+      Entry.prototype.textLayers = function() {
+        return _.keys(this.get('paralleltexts'));
       };
 
       Entry.prototype.annotations = function(key) {

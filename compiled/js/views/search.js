@@ -111,6 +111,7 @@
           start: start
         });
         this.renderResultsCount();
+        this.$('.results .list').hide().fadeIn(125);
         this.$('.position .current').text(typeof (_base = this.search).currentPosition === "function" ? _base.currentPosition() : void 0);
         this.$('.position .total').text(typeof (_base1 = this.search).numPages === "function" ? _base1.numPages() : void 0);
         this.hideLoader();
@@ -137,10 +138,10 @@
           return firstSearch = true;
         });
         this.search.subscribe('faceted-search:results', function(response) {
-          var totalEntries;
+          var totalEntries, _ref1;
           _this.results = response;
           totalEntries = configData.get('entryIds').length;
-          _this.results.allIds = totalEntries === _this.search.model.get('allIds').length ? [] : _this.search.model.get('allIds');
+          _this.results.allIds = totalEntries === ((_ref1 = _this.search.model.get('allIds')) != null ? _ref1.length : void 0) ? [] : _this.search.model.get('allIds');
           firstSearch = false;
           configData.set({
             allResultIds: _this.results.allIds

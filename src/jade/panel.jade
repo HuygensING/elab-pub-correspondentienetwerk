@@ -1,11 +1,12 @@
+.layer
 .panel
 	.close
 	.view
-		| <% if (versions) { %>
+		| <% if (layers) { %>
 		.select-layer
 			h2 Select text layer
 			ul
-				| <% _.each(versions, function (v) { %>
-				li <%= v %>
+				| <% _.each(layers, function (v) { %>
+				li(data-toggle!="<%= v %>") <%= v %>
 				| <% }); %>
 		| <% } %>

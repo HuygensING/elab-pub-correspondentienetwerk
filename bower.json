@@ -11,6 +11,8 @@
 		"jquery-ui": "1.9.*",
 		"jquery.visible": "*",
 		"underscore-amd": "*",
+		"underscore.string": "*",
+		"rangy": "1.2.3",
 		"backbone-amd": "*",
 		"normalize-css": "*",
 		"unsemantic": "*",

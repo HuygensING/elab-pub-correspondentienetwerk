@@ -3,12 +3,12 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var AnnotationsView, Backbone, Helpers, annTemplate, config, configData, shorten, _ref;
+    var AnnotationsView, Backbone, annTemplate, config, configData, shorten, us, _ref;
     Backbone = require('backbone');
     configData = require('models/configdata');
     config = require('config');
+    us = require('underscore.string');
     annTemplate = require('text!html/annotations-index.html');
-    Helpers = require('helpers/string');
     shorten = function(txt, max) {
       var firstWords, lastWords, words;
       if (max == null) {
@@ -48,8 +48,8 @@
       AnnotationsView.prototype.render = function() {
         return this.$el.html(this.template({
           annotations: this.annotations,
-          slugify: Helpers.slugify,
           shorten: shorten,
+          slugify: us.slugify,
           config: config
         }));
       };

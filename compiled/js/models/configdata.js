@@ -3,9 +3,10 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseModel, ConfigData, config, _ref;
+    var BaseModel, ConfigData, config, us, _ref;
     BaseModel = require('models/base');
     config = require('config');
+    us = require('underscore.string');
     ConfigData = (function(_super) {
       __extends(ConfigData, _super);
 
@@ -45,6 +46,17 @@
         prev = this.findPrev(id);
         if (prev) {
           return config.entryURL(prev);
+        }
+      };
+
+      ConfigData.prototype.slugToLayer = function(slug) {
+        var layer, _i, _len, _ref1;
+        _ref1 = this.get('textLayers') || [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          layer = _ref1[_i];
+          if (slug === us.slugify(layer)) {
+            return layer;
+          }
         }
       };
 

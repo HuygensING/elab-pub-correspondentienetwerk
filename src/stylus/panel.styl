@@ -46,6 +46,13 @@ internalPadding = 40px
 			li
 				margin 5px 0
 
+.layer // label top left
+	font-weight bold
+	color lightGrey
+	line-height 20px
+	min-height 20px
+	margin-left 10px
+
 .panel
 	position absolute
 	display inline-block
@@ -67,6 +74,7 @@ internalPadding = 40px
 			font-weight normal
 		ul
 			margin 0 auto
+			padding 0
 			width 50%
 			list-style none
 
@@ -74,6 +82,7 @@ internalPadding = 40px
 				big-button()
 				width 100%
 				margin-bottom 1em
+				text-align center
 
 	&.new
 		background-color lightYellow
@@ -82,6 +91,8 @@ internalPadding = 40px
 	iframe.facsimile-zoom
 		width 504px
 		height 600px
+		border 0
+		overflow hidden
 
 	// sizes
 	&.large

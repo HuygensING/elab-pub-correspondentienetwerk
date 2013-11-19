@@ -5,8 +5,7 @@ define (require) ->
 	configData = require 'models/configdata'
 	config = require 'config'
 
-	Views =
-		Main: require 'views/home'
+	MainController = require 'views/home'
 
 	bootstrapTemplate = _.template require 'text!html/body.html'
 	
@@ -23,12 +22,11 @@ define (require) ->
 				$('body').html bootstrapTemplate()
 				$('.page-header h1 a').text configData.get 'title'
 
+				mainController = new MainController el: '#main'
 				mainRouter = new MainRouter
-				mainView = new Views.Main el: '#main'
-
-				Backbone.history.start
+					controller: mainController
 					root: rootURL
-					pushState: true   
+				mainRouter.start()  
 
 				$(document).on 'click', 'a:not([data-bypass])', (e) ->
 					href = $(@).attr 'href'
@@ -36,4 +34,8 @@ define (require) ->
 					if href?
 						e.preventDefault()
 						Backbone.history.navigate href, trigger: true
-			error: (m, o) => console.log "Could not fetch config data", JSON.stringify o
+
+			error: (m, o) =>
+				$('body').html 'An unknown error occurred while attempting to load the application.'
+
+				console.error "Could not fetch config data", JSON?.stringify o

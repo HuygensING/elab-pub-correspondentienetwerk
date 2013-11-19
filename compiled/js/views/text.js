@@ -29,17 +29,32 @@
         this.options = options;
         this.template = _.template(this.template);
         this.annotationsTemplate = _.template(this.annotationsTemplate);
-        this.currentTextVersion = this.options.version || config.defaultTextVersion;
-        this.highlighter = new Helpers.highlighter({
-          className: 'highlight',
-          tagName: 'div'
-        });
+        this.currentTextLayer = this.options.layer || config.defaultTextLayer;
+        if (document.createRange) {
+          this.hl = Helpers.highlighter({
+            className: 'highlight',
+            tagName: 'div'
+          });
+        } else {
+          this.hl = {
+            on: function() {},
+            off: function() {}
+          };
+        }
         return this.render();
       };
 
-      TextView.prototype.setView = function(version) {
-        this.currentTextVersion = version;
+      TextView.prototype.setView = function(layer) {
+        this.currentTextLayer = layer;
         return this.renderContent();
+      };
+
+      TextView.prototype.highlightAnnotation = function(markerID) {
+        this.hl.on({
+          startNode: this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
+          endNode: this.$(".text sup[data-marker=end][data-id=" + markerID + "]")[0]
+        });
+        return console.log("Highliting", markerID);
       };
 
       TextView.prototype.scrollToAnnotation = function(e) {
@@ -47,7 +62,6 @@
         target = $(e.currentTarget);
         annID = target.attr('data-id');
         annotation = this.$(".text span[data-marker=begin][data-id=" + annID + "]");
-        console.log(jqv);
         if (annotation.visible()) {
           return console.log("Annotation is visible", annID);
         } else {
@@ -56,10 +70,10 @@
       };
 
       TextView.prototype.renderAnnotations = function() {
-        var a, annotations, hl, id, liEnter, liLeave, orderedAnnotations, supEnter, supLeave, _i, _len, _ref1,
+        var a, annotations, id, liEnter, liLeave, orderedAnnotations, supEnter, supLeave, _i, _len, _ref1,
           _this = this;
         annotations = {};
-        _ref1 = this.model.annotations(this.currentTextVersion) || [];
+        _ref1 = this.model.annotations(this.currentTextLayer) || [];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           a = _ref1[_i];
           annotations[a.n] = a;
@@ -80,16 +94,12 @@
           annotations: orderedAnnotations
         }));
         if (document.createRange) {
-          hl = Helpers.highlighter({
-            className: 'highlight',
-            tagName: 'div'
-          });
           supEnter = function(ev) {
             var el, markerID;
             el = ev.currentTarget;
             markerID = $(el).data('id');
             _this.$(".annotations li[data-id=" + markerID + "]").addClass('highlight');
-            return hl.on({
+            return _this.hl.on({
               startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
               endNode: ev.currentTarget
             });
@@ -98,20 +108,20 @@
             var markerID;
             markerID = $(ev.currentTarget).data('id');
             _this.$(".annotations li[data-id=" + markerID + "]").removeClass('highlight');
-            return hl.off();
+            return _this.hl.off();
           };
           this.$('.text sup[data-marker]').hover(supEnter, supLeave);
           liEnter = function(ev) {
             var el, markerID;
             el = ev.currentTarget;
             markerID = $(el).data('id');
-            return hl.on({
+            return _this.hl.on({
               startNode: _this.$(".text span[data-marker=begin][data-id=" + markerID + "]")[0],
               endNode: _this.$(".text sup[data-marker=end][data-id=" + markerID + "]")[0]
             });
           };
           liLeave = function() {
-            return hl.off();
+            return _this.hl.off();
           };
           this.$('.annotations li').hover(liEnter, liLeave);
         } else {
@@ -129,12 +139,12 @@
 
       TextView.prototype.renderContent = function() {
         var text;
-        text = this.model.text(this.currentTextVersion);
+        text = this.model.text(this.currentTextLayer);
         if (text != null ? text.length : void 0) {
           this.$('.text').html(text);
           this.renderLineNumbering();
         } else {
-          this.$('.text').html("<p class=no-data>" + this.currentTextVersion + " text layer is empty</p>");
+          this.$('.text').html("<p class=no-data>" + this.currentTextLayer + " text layer is empty</p>");
         }
         this.renderAnnotations();
         return this;

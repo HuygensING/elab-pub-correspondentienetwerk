@@ -1,7 +1,7 @@
 define (require) ->
 	BaseModel = require 'models/base'
 	config = require 'config'
-	
+
 	class Entry extends BaseModel
 		url: -> config.entryDataURL(@id)
 
@@ -16,14 +16,19 @@ define (require) ->
 					text = text.replace /^<div class="line">&nbsp;<\/div>$/mg, ''
 
 					data.paralleltexts[version].text = text
+
+			# TODO: make permanent? (ask BramB)
+			for page in data.facsimiles
+				page.zoom = page.zoom.replace 'adore-huygens-viewer-2.0', 'adore-huygens-viewer-2.1'
 			data
 
 		text: (key) ->
 			texts = @get 'paralleltexts'
 			if texts and key of texts then texts[key].text else undefined
 
-		textVersions: ->
-			key for key of @get 'paralleltexts'
+		textLayers: ->
+			_.keys @get 'paralleltexts'
+
 
 		annotations: (key) ->
 			texts = @get 'paralleltexts'

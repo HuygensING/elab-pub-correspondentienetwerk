@@ -77,8 +77,9 @@ define (require) ->
 
 			start = @results.start + 1
 			@$('.results .list ol').attr start: start
-
 			@renderResultsCount()
+
+			@$('.results .list').hide().fadeIn 125
 
 			@$('.position .current').text @search.currentPosition?()
 			@$('.position .total').text @search.numPages?()
@@ -104,7 +105,7 @@ define (require) ->
 				@results = response
 
 				totalEntries = configData.get('entryIds').length
-				@results.allIds = if totalEntries is @search.model.get('allIds').length
+				@results.allIds = if totalEntries is @search.model.get('allIds')?.length
 					[]
 				else
 					@search.model.get 'allIds'
