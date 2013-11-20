@@ -1,7 +1,6 @@
 define (require) ->
 	BaseView = require 'views/base'
 	PanelView = require 'views/panel'
-
 	Entry = require 'models/entry'
 
 	configData = require 'models/configdata'
@@ -126,7 +125,6 @@ define (require) ->
 			for p, pos in @panels
 				@appendPanel p
 				@positionPanel p, pos
-			
 
 		render: ->
 			tmpl = _.template Templates.ParallelView

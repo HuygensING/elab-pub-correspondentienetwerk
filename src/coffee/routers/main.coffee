@@ -14,8 +14,8 @@ define (require) ->
 		routes:
 			'': 'showSearch'
 			'annotations/': 'showAnnotationsIndex'
-			'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation'
 			'entry/:id/parallel': 'showEntryParallelView'
+			'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation'
 			'entry/:id/:layer': 'showEntryLayer'
 			'entry/:id': 'showEntry'
 
@@ -32,5 +32,5 @@ define (require) ->
 
 		processRoutes: ->
 			for route, methodName of @routes when methodName of @controller
-				method = @controller[methodName].bind @controller
+				method = _.bind @controller[methodName], @controller
 				@route route, methodName, method

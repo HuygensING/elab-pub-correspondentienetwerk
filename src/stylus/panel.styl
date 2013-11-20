@@ -54,11 +54,14 @@ internalPadding = 40px
 	margin-left 10px
 
 .panel
+	background-color white
 	position absolute
 	display inline-block
 	z-index 1
 	width 600px
 	height 700px
+
+	vendor('box-sizing', border-box)
 
 	// background-color white
 	vendor('transition', background-color .4s ease-in-out 0s)
@@ -120,12 +123,6 @@ internalPadding = 40px
 
 	&:first-child
 		border-left 1px solid lightGrey
-
-	/*** Dragging ***/
-	&.ui-draggable-dragging
-		// transform rotate(45deg)
-		-webkit-transform rotate(5deg)
-
 
 	/*** Close button ***/
 	.close
