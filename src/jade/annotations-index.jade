@@ -1,8 +1,8 @@
 .grid-container
-	.grid-100
-		a(href="/") Back to search results
-		br
-		br
+	.grid-100.controls
+		a(href="/") ◂&nbsp;Back to search results
+
+		a.print(href="#", data-bypass="true") Print...
 	.grid-35.list
 		ul
 			| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
@@ -14,9 +14,9 @@
 		| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
 		div.section
 			a(name!="<%= slugify(k) %>")
-				h3
+				h2
 					| <%= k %>
-					span.count <%= annotations[k].length %> annotations
+					.count <%= annotations[k].length %> annotations
 			ol
 				| <% _.each(annotations[k], function (ann) { %>
 				li(data-text-layer!="<%= ann.textLayer %>")

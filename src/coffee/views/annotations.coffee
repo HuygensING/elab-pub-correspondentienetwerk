@@ -18,10 +18,17 @@ define (require) ->
 	class AnnotationsView extends Backbone.View
 		template: _.template annTemplate 
 		className: 'annotations-index'
+		events:
+			'click .print': 'printEntry'
+
 		initialize: ->
 			jqxhr = $.getJSON(config.annotationsIndex).done (@annotations) =>
 				@render()
 			jqxhr.fail => console.log config.annotationsIndex, arguments
+
+		printEntry: (e) ->
+			e.preventDefault()
+			window.print()
 
 		render: ->
 			@$el.html @template
