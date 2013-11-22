@@ -16,7 +16,7 @@
 			a(name!="<%= slugify(k) %>")
 				h3
 					| <%= k %>
-					span.count &nbsp;(<%= annotations[k].length %>)
+					span.count <%= annotations[k].length %> annotations
 			ol
 				| <% _.each(annotations[k], function (ann) { %>
 				li(data-text-layer!="<%= ann.textLayer %>")
