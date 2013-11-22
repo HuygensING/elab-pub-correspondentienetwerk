@@ -59,7 +59,12 @@ define (require) ->
 				@subView = new TextView
 					model: @model
 					layer: @textLayer
-			@$('.view').html @subView?.el
+			
+			if @subView?
+				@$('.view').html @subView.el
+				@$('.close').show()
+
+
 			@$('.layer').text @textLayer
 
 
@@ -68,6 +73,8 @@ define (require) ->
 				entry: @model?.attributes
 				layers: @layers
 				layer: @textLayer
+
+			@$('.close').hide()
 
 			@$el.toggleClass 'select', not @textLayer?
 

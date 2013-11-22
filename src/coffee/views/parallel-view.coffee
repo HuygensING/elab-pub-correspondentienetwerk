@@ -91,7 +91,6 @@ define (require) ->
 			availableLayers = _.difference @textLayers, usedLayers
 
 		emptyPanel: ->
-			console.log "EMPTY PANEL"
 			panel = new PanelView
 				model: @model
 				layers: @availableLayers()
