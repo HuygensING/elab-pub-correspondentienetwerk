@@ -13,7 +13,7 @@ define (require) ->
 	class ParallelView extends BaseView
 		className: 'parallel-view'
 		events:
-			'click .add': 'addPanelEvent'
+			'click .add': 'scrollToEnd'
 			'click .panel .close': 'closePanel'
 			'click button.close': 'closeParallelView'
 			'keydown *': 'ifEscapeClose'
@@ -60,29 +60,30 @@ define (require) ->
 			panel.remove()
 			@repositionPanels()
 
-		addPanelEvent: (e) ->
-			@addPanel()
+			# update available layer list
+			if _.last(@panels).selectedLayer()
+				@renderPanels()
+				@renderAddButton()
+				@scrollToEnd()
+			else
+				_.last(@panels).setAvailableLayers(@availableLayers()).render()
 
-			last = @panels.length - 1
-			lastPanel = @panels[last]
-			@appendPanel lastPanel
-			
-			lastPanel.$('.panel').addClass 'new'
-			removeNew = -> lastPanel.$('.panel').removeClass 'new'
-			setTimeout removeNew, 1500
+			@renderAddButton() # re-enable
 
+		scrollToEnd: ->
 			po = @$('.parallel-overlay')
 			po.animate
 				scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
 
 		layerSelected: ->
+			@renderAddButton()
 			@renderPanels()
+			@scrollToEnd()
 
 		addPanel: (panel) ->
 			panel ?= new PanelView model: @model
 			@panels.push panel
-			@listenTo panel, 'layer-selected', @layerSelected
-
+			@listenTo panel, 'layer-selected', @layerSelected	
 			panel
 
 		availableLayers: ->
@@ -90,6 +91,7 @@ define (require) ->
 			availableLayers = _.difference @textLayers, usedLayers
 
 		emptyPanel: ->
+			console.log "EMPTY PANEL"
 			panel = new PanelView
 				model: @model
 				layers: @availableLayers()
@@ -118,6 +120,14 @@ define (require) ->
 		clearPanels: ->
 			@panels = []
 			@renderPanels()
+
+		renderAddButton: ->
+			noLayers = @availableLayers().length is 0
+			addButton = @$('.parallel-controls button.add')
+			if noLayers
+				addButton.attr 'disabled', 'disabled'
+			else
+				addButton.removeAttr 'disabled'
 
 		renderPanels: ->
 			@$('.panel-container').empty()

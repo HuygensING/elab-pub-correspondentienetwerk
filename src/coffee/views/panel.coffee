@@ -32,6 +32,10 @@ define (require) ->
 			@setLayer layer
 			@trigger 'layer-selected', layer
 
+			@$('.panel').addClass 'new'
+			removeNew = -> @$('.panel').removeClass 'new'
+			setTimeout removeNew, 1000
+
 		layerIsFacsimile: -> @textLayer is 'Facsimile'
 
 		# Page is only relevant if layer is 'Facsimile'
@@ -39,6 +43,8 @@ define (require) ->
 			@textLayer = layer
 			@page = page if @layerIsFacsimile()
 			@renderContent()
+
+		setAvailableLayers: (@layers=[]) -> @ # no-op (but assign @layers)
 
 		selectedLayer: -> @textLayer
 

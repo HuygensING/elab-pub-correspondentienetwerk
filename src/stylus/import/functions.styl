@@ -28,19 +28,19 @@ no-padding-margin()
 	padding 0
 	margin 0
 
-button()
+button(textColor=darken(mediumGrey, 30%), bgColor=lightGrey)
 	box-sizing border-box
-	background-color lightGrey
+	background-color bgColor
 	border-radius 4px
 	border none
-	color darken(mediumGrey, 30%)
+	color textColor
 	font-size 9pt
 	cursor pointer
 	line-height 19px
 	padding 0 5px
 
 	&:hover
-		background-color darken(lightGrey, 10%)
+		background-color darken(bgColor, 10%)
 
 	&.active
 		background-color mediumGrey
@@ -48,10 +48,21 @@ button()
 		&:hover
 			background-color lighten(mediumGrey, 10%)
 
-big-button()
-	button()
+	&[disabled]
+		cursor default
+		disabledBg = lighten(bgColor, 70%)
+		background-color disabledBg
+		color lighten(textColor, 60%)
+		&:hover
+			background-color disabledBg
+
+big-button(textColor=darken(mediumGrey, 30%), bgColor=lightGrey)
+	button(textColor, bgColor)
 	padding 10px 15px
 	box-shadow 1px 1px 1px #ccc
+
+	&[disabled]
+		box-shadow 1px 1px 1px #f0f0f0
 
 .not-visible
 	visibility hidden
