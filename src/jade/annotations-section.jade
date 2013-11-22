@@ -1,0 +1,15 @@
+div.section
+	a(name!="<%= slugify(type) %>")
+		h2
+			| <%= type %>
+			.count <%= annotations.length %> annotations
+	ol
+		| <% _.each(annotations, function (a) { %>
+		li(data-text-layer!="<%= a.textLayer %>")
+			.annotated-text <%=  shorten(a.annotatedText) %>
+			.text-layer <%= a.textLayer %>
+			.annotation-text
+				| <%=  a.annotationText %>
+			.link
+				a(href!="<%= config.entryURL(a.entryId, a.textLayer, a.n) %>") &#8627; See in text
+		| <% }); %>

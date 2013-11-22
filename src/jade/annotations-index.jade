@@ -5,26 +5,11 @@
 		a.print(href="#", data-bypass="true") Print...
 	.grid-35.list
 		ul
-			| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
-			li: a(href!="#<%= slugify(k) %>", data-bypass="true")
-					| <%= k %>
-					span.count &nbsp;(<%= annotations[k].length %>)
+			li.all
+				a(href="#all", data-bypass="true", data-type=false) Show all annotations
+			| <% _.each(types, function (type) { %>
+			li: a(href!="#<%= slugify(type.name) %>", data-bypass="true", data-type!="<%= type.name %>")
+					| <%= type.name %>
+					span.count &nbsp;(<%= type.count %>)
 			| <% }); %>
 	.grid-65.contents
-		| <% _.each(_.sortBy(_.keys(annotations), function (x) { return x.toLowerCase(); }), function (k) { %>
-		div.section
-			a(name!="<%= slugify(k) %>")
-				h2
-					| <%= k %>
-					.count <%= annotations[k].length %> annotations
-			ol
-				| <% _.each(annotations[k], function (ann) { %>
-				li(data-text-layer!="<%= ann.textLayer %>")
-					.annotated-text <%=  shorten(ann.annotatedText) %>
-					.text-layer <%= ann.textLayer %>
-					.annotation-text
-						| <%=  ann.annotationText %>
-					.link
-						a(href!="<%= config.entryURL(ann.entryId, ann.textLayer, ann.n) %>") &#8627; See in text
-				| <% }); %>
-		| <% }); %>	
