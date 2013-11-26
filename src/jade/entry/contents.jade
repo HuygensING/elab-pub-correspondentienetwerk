@@ -9,7 +9,7 @@
 .grid-70
 	.grid-100.layers
 		ul
-			| <% _.each(configData.get('textLayers'), function (name) { %>
+			| <% _.each(config.get('textLayers'), function (name) { %>
 			li(data-toggle!="<%= name %>"): button <%= name %>
 			| <% }); %>
 .grid-20.parallel

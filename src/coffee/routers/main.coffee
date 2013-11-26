@@ -5,10 +5,10 @@ define (require) ->
 	events = require 'events'
 
 	# Set page title
-	configData = require 'models/configdata'
-	configData.on 'change', =>
+	config = require 'config'
+	config.on 'change', =>
 		# Use document.title to ensure IE compatibility
-		document.title = configData.get 'title'
+		document.title = config.get 'title'
 
 	class MainRouter extends Backbone.Router
 		routes:

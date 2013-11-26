@@ -8,8 +8,6 @@ define (require) ->
 		defaults:
 			textLayer: 'Diplomatic'
 
-		url: -> config.configDataURL
-
 		parse: (data) ->
 			data.entryIds = []
 			data.entryNames = {}

@@ -2,7 +2,6 @@ define (require) ->
 	Backbone = require 'backbone'
 
 	config = require 'config'
-	configData = require 'models/configdata'
 
 	FacetedSearch = require '../../lib/faceted-search/stage/js/main'
 
@@ -89,14 +88,14 @@ define (require) ->
 			@renderCursor()
 
 		render: ->
-			document.title = configData.get 'title'
-			@$el.html @template w: configData.get 'entryIds'
+			document.title = config.get 'title'
+			@$el.html @template w: config.get 'entryIds'
 
 			firstSearch = true
 			@search = new FacetedSearch
-				searchPath: config.searchPath
+				searchPath: config.get 'searchPath'
 				queryOptions:
-					resultRows: config.resultRows
+					resultRows: config.get 'resultRows'
 					term: '*'
 
 			@search.subscribe 'faceted-search:reset', =>
@@ -104,14 +103,14 @@ define (require) ->
 			@search.subscribe 'faceted-search:results', (response) =>
 				@results = response
 
-				totalEntries = configData.get('entryIds').length
+				totalEntries = config.get('entryIds').length
 				@results.allIds = if totalEntries is @search.model.get('allIds')?.length
 					[]
 				else
 					@search.model.get 'allIds'
 				firstSearch = false
 
-				configData.set allResultIds: @results.allIds
+				config.set allResultIds: @results.allIds
 
 				if @results.sortableFields?
 					@sortableFields = {}

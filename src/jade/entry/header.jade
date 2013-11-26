@@ -7,11 +7,11 @@
 		a.print(href="#", data-bypass="true") Print...
 	.navigate-entries
 		.left
-			a.prev-entry(href!="<%= entries.prevURL(entry.id)%>")
+			a.prev-entry(href!="<%= config.prevURL(entry.id)%>")
 				span &#9666;
 				| &nbsp;Previous  <%= config.itemLabel %>
 		.right
-			a.next-entry(href!="<%= entries.nextURL(entry.id) %>")
+			a.next-entry(href!="<%= config.nextURL(entry.id) %>")
 				| Next <%= config.itemLabel %>&nbsp;
 				span &#9656;
 

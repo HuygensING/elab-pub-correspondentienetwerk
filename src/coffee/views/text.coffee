@@ -1,7 +1,6 @@
 define (require) ->
-	configData = require 'models/configdata'
-	config = require 'config'
 	BaseView = require 'views/base'
+	config = require 'config'
 
 	rangy = require 'rangy/rangy-cssclassapplier'
 	rangy.init()
@@ -32,7 +31,7 @@ define (require) ->
 		initialize: (@options) ->
 			@template = _.template @template
 			@annotationsTemplate = _.template @annotationsTemplate
-			@currentTextLayer = @options.layer || configData.get 'textLayer' || config.defaultTextLayer
+			@currentTextLayer = @options.layer || config.get 'textLayer' || config.defaultTextLayer
 
 			if document.createRange
 				@hl = new Highlighter

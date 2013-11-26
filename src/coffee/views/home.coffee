@@ -1,7 +1,7 @@
 define (require) ->
 	Backbone = require 'backbone'
 	
-	configData = require 'models/configdata'
+	config = require 'config'
 
 	SearchView = require 'views/search'
 	EntryView = require 'views/entry'

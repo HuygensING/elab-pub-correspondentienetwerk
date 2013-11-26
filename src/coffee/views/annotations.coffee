@@ -1,7 +1,6 @@
 define (require) ->
 	Backbone = require 'backbone'
 
-	configData = require 'models/configdata'
 	config = require 'config'
 
 	us = require 'underscore.string'
@@ -23,10 +22,10 @@ define (require) ->
 			'click .list li a': 'selectType'
 
 		initialize: (@options={}) ->
-			jqxhr = $.getJSON(config.annotationsIndex).done (@annotations) =>
+			jqxhr = $.getJSON(config.get 'annotationsIndex').done (@annotations) =>
 				@types = _.sortBy(_.keys(@annotations), (t) -> t.toLowerCase())
 				@render()
-			jqxhr.fail => console.log config.annotationsIndex, arguments
+			jqxhr.fail => console.log config.get('annotationsIndex'), arguments
 
 		printEntry: (e) ->
 			e.preventDefault()
@@ -49,7 +48,6 @@ define (require) ->
 				shorten: shorten
 				slugify: us.slugify
 				config: config
-				configData: configData
 
 		renderType: (type) ->
 			@renderContents @typeHTML type

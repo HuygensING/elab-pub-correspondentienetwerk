@@ -3,7 +3,7 @@ define (require) ->
 	PanelView = require 'views/panel'
 	Entry = require 'models/entry'
 
-	configData = require 'models/configdata'
+	config = require 'config'
 
 	Templates =
 		ParallelView: require 'text!html/parallel-view.html'
@@ -23,11 +23,11 @@ define (require) ->
 
 			$(document).keyup (e) => @ifEscapeClose(e)
 
-			@textLayers = _.flatten [ 'Facsimile', configData.get 'textLayers' ]
+			@textLayers = _.flatten [ 'Facsimile', config.get 'textLayers' ]
 
 			@panels = []
 
-			preLoad = @options.panels || configData.get 'parallelPanels'
+			preLoad = @options.panels || config.get 'parallelPanels'
 			if preLoad
 				for opts in preLoad
 					_.extend opts, model: @model

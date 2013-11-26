@@ -2,7 +2,6 @@ define (require) ->
 	Backbone = require 'backbone'
 	MainRouter = require 'routers/main'
 
-	configData = require 'models/configdata'
 	config = require 'config'
 
 	MainController = require 'views/home'
@@ -14,13 +13,13 @@ define (require) ->
 	
 	configURL = "#{if window.BASE_URL is '/' then '' else window.BASE_URL}/data/config.json"
 	initialize: ->
-		configData.fetch
+		config.fetch
 			url: configURL,
 			success: =>
 				# Load first before any views,
 				# so views can attach to elements
 				$('body').html bootstrapTemplate()
-				$('.page-header h1 a').text configData.get 'title'
+				$('.page-header h1 a').text config.get 'title'
 
 				mainController = new MainController el: '#main'
 				mainRouter = new MainRouter

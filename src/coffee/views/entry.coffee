@@ -1,6 +1,5 @@
 define (require) ->
 
-	configData = require 'models/configdata'
 	config = require 'config'
 
 	events = require 'events'
@@ -37,11 +36,11 @@ define (require) ->
 			@contentsTemplate = _.template @contentsTemplate
 
 			@currentTextLayer = if @options.layerSlug?
-				configData.slugToLayer @options.layerSlug
+				config.slugToLayer @options.layerSlug
 			else if @options.layer?
 				@options.layer
 			else
-				configData.get 'textLayer'
+				config.get 'textLayer'
 
 			console.log "Show args", @options
 
@@ -74,11 +73,13 @@ define (require) ->
 			@currentTextLayer = $(e.currentTarget).data 'toggle'
 			@setActiveTextLayer @currentTextLayer
 			@textView.setView @currentTextLayer
-			configData.set textLayer: @currentTextLayer
+			config.set textLayer: @currentTextLayer
 
 		toggleMoreMetadata: (e) ->
 			show = not $(e.currentTarget).hasClass 'more'
 			@showMoreMetaData show, yes # animate
+
+			config.set showMetaData: show
 		
 		showMoreMetaData: (show, animate=no) ->
 			if show
@@ -90,7 +91,6 @@ define (require) ->
 				@$('.metadata button').removeClass 'more' # button
 				@$('.metadata li').show().filter (idx) -> $(@).hide() if idx > 3
 
-			configData.set showMetaData: show
 
 		showParallelView: (opts={}) ->
 			_.extend opts, model: @model
@@ -128,9 +128,9 @@ define (require) ->
 			metadata = @model.get('metadata') || []
 			@$('.metadata').html @metadataTemplate
 				metadata: metadata
-
-			if configData.get('showMetaData')?
-				@showMoreMetaData configData.get('showMetaData')
+			
+			if config.get('showMetaData')?
+				@showMoreMetaData config.get 'showMetaData'
 			else
 				@showMoreMetaData false
 
@@ -140,12 +140,12 @@ define (require) ->
 			@$('.header').html @headerTemplate
 				config: config
 				entry: @model.attributes
-				entries: configData
 
-			prev = configData.findPrev @model.id
+			prev = config.findPrev @model.id
 			if prev
 				@$('.prev').attr href: config.entryURL prev
-			next = configData.findNext @model.id
+
+			next = config.findNext @model.id
 			if next
 				@$('.next').attr href: config.entryURL next
 
@@ -155,7 +155,7 @@ define (require) ->
 			@renderResultsNavigation()
 
 		renderResultsNavigation: ->
-			ids = configData.get 'allResultIds'
+			ids = config.get 'allResultIds'
 			showResultsNav = ids?.length > 0 and ids.indexOf(String @model.id) isnt -1
 			@$('.navigate-results').toggle showResultsNav
 
@@ -175,7 +175,6 @@ define (require) ->
 			@$('.contents').html @contentsTemplate
 				entry: @model.attributes
 				config: config
-				configData: configData
 
 			@textView = new TextView
 				model: @model
