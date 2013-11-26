@@ -50,10 +50,13 @@ define (require) ->
 			@renderContent()
 
 		highlightAnnotation: (markerID) ->
-			#@hl.on
-			#	startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
-			#	endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
-			# console.log "Highliting", markerID
+			# Delay highlighting for a bit until page is fully rendered
+			# and everything's attached to DOM. Highlighter will error
+			# out otherwise.
+			highlight = => @hl.on
+				startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
+				endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			_.delay highlight, 300 
 
 		scrollToAnnotation: (e) ->
 			target = $(e.currentTarget)

@@ -10,6 +10,17 @@ define (require) ->
 
 		url: -> config.configDataURL
 
+		parse: (data) ->
+			data.entryIds = []
+			data.entryNames = {}
+			for e in data.entries
+				id = e['datafile']
+				data.entryIds.push id
+				data.entryNames[id] = e['name']
+			data
+
+		entryName: (id) -> @get('entryNames')[id]
+
 		findPrev: (id) ->
 			ids = @get 'entryIds'
 			pos = _.indexOf ids, "#{id}.json"

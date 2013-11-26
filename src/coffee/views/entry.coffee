@@ -43,6 +43,8 @@ define (require) ->
 			else
 				configData.get 'textLayer'
 
+			console.log "Show args", @options
+
 			$(document).keyup (e) => @ifEscapeClose e
 
 			@didScroll = false
@@ -181,6 +183,7 @@ define (require) ->
 				el: @$('.contents .text-view')
 
 			if @options.annotation?
+				console.log "Highlighting #{@options.annotation}!"
 				@textView.highlightAnnotation @options.annotation
 
 		renderEntry: ->

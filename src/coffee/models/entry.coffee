@@ -32,7 +32,7 @@ define (require) ->
 
 		annotations: (key) ->
 			texts = @get 'paralleltexts'
-			if texts and key of texts then texts[key].annotations else undefined
+			if texts and key of texts then texts[key].annotationData else undefined
 
 		facsimileZoomURL: (page) ->
 			@get('facsimiles')?[page]?.zoom

@@ -49,6 +49,7 @@ define (require) ->
 				shorten: shorten
 				slugify: us.slugify
 				config: config
+				configData: configData
 
 		renderType: (type) ->
 			@renderContents @typeHTML type

@@ -7,7 +7,11 @@ div.section
 		| <% _.each(annotations, function (a) { %>
 		li(data-text-layer!="<%= a.textLayer %>")
 			.annotated-text <%=  shorten(a.annotatedText) %>
-			.text-layer <%= a.textLayer %>
+			.text-layer
+			.position
+				span.entry-name <%= configData.entryName(a.entryId) %>
+				span.text-layer '<%= a.textLayer %>' layer
+				span.annotation-number annotation <%= a.annotationOrder %>
 			.annotation-text
 				| <%=  a.annotationText %>
 			.link
