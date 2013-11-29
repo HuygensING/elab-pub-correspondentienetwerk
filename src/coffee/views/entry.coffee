@@ -42,8 +42,6 @@ define (require) ->
 			else
 				config.get 'textLayer'
 
-			console.log "Show args", @options
-
 			$(document).keyup (e) => @ifEscapeClose e
 
 			@didScroll = false

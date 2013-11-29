@@ -19,8 +19,22 @@
         textLayer: 'Diplomatic'
       };
 
-      ConfigData.prototype.url = function() {
-        return config.configDataURL;
+      ConfigData.prototype.parse = function(data) {
+        var e, id, _i, _len, _ref1;
+        data.entryIds = [];
+        data.entryNames = {};
+        _ref1 = data.entries;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          e = _ref1[_i];
+          id = e['datafile'];
+          data.entryIds.push(id);
+          data.entryNames[id] = e['name'];
+        }
+        return data;
+      };
+
+      ConfigData.prototype.entryName = function(id) {
+        return this.get('entryNames')[id];
       };
 
       ConfigData.prototype.findPrev = function(id) {

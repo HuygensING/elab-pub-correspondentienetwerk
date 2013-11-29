@@ -3,11 +3,11 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Entry, KEYCODE_ESCAPE, PanelView, ParallelView, Templates, configData, _ref;
+    var BaseView, Entry, KEYCODE_ESCAPE, PanelView, ParallelView, Templates, config, _ref;
     BaseView = require('views/base');
     PanelView = require('views/panel');
     Entry = require('models/entry');
-    configData = require('models/configdata');
+    config = require('config');
     Templates = {
       ParallelView: require('text!html/parallel-view.html')
     };
@@ -23,7 +23,7 @@
       ParallelView.prototype.className = 'parallel-view';
 
       ParallelView.prototype.events = {
-        'click .add': 'addPanelEvent',
+        'click .add': 'scrollToEnd',
         'click .panel .close': 'closePanel',
         'click button.close': 'closeParallelView',
         'keydown *': 'ifEscapeClose'
@@ -37,9 +37,9 @@
         $(document).keyup(function(e) {
           return _this.ifEscapeClose(e);
         });
-        this.textLayers = _.flatten(['Facsimile', configData.get('textLayers')]);
+        this.textLayers = _.flatten(['Facsimile', config.get('textLayers')]);
         this.panels = [];
-        preLoad = this.options.panels || configData.get('parallelPanels');
+        preLoad = this.options.panels || config.get('parallelPanels');
         if (preLoad) {
           for (_i = 0, _len = preLoad.length; _i < _len; _i++) {
             opts = preLoad[_i];
@@ -99,20 +99,19 @@
         pNumber = $(e.currentTarget).closest('.panel-frame').index();
         panel = this.panels.splice(pNumber, 1)[0];
         panel.remove();
-        return this.repositionPanels();
+        this.repositionPanels();
+        if (_.last(this.panels).selectedLayer()) {
+          this.renderPanels();
+          this.renderAddButton();
+          this.scrollToEnd();
+        } else {
+          _.last(this.panels).setAvailableLayers(this.availableLayers()).render();
+        }
+        return this.renderAddButton();
       };
 
-      ParallelView.prototype.addPanelEvent = function(e) {
-        var last, lastPanel, po, removeNew;
-        this.addPanel();
-        last = this.panels.length - 1;
-        lastPanel = this.panels[last];
-        this.appendPanel(lastPanel);
-        lastPanel.$('.panel').addClass('new');
-        removeNew = function() {
-          return lastPanel.$('.panel').removeClass('new');
-        };
-        setTimeout(removeNew, 1500);
+      ParallelView.prototype.scrollToEnd = function() {
+        var po;
         po = this.$('.parallel-overlay');
         return po.animate({
           scrollLeft: (po[0].scrollWidth - po[0].clientWidth + 1200) + 'px'
@@ -120,7 +119,9 @@
       };
 
       ParallelView.prototype.layerSelected = function() {
-        return this.renderPanels();
+        this.renderAddButton();
+        this.renderPanels();
+        return this.scrollToEnd();
       };
 
       ParallelView.prototype.addPanel = function(panel) {
@@ -189,6 +190,17 @@
       ParallelView.prototype.clearPanels = function() {
         this.panels = [];
         return this.renderPanels();
+      };
+
+      ParallelView.prototype.renderAddButton = function() {
+        var addButton, noLayers;
+        noLayers = this.availableLayers().length === 0;
+        addButton = this.$('.parallel-controls button.add');
+        if (noLayers) {
+          return addButton.attr('disabled', 'disabled');
+        } else {
+          return addButton.removeAttr('disabled');
+        }
       };
 
       ParallelView.prototype.renderPanels = function() {

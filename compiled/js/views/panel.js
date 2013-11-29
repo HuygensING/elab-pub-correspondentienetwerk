@@ -46,11 +46,16 @@
       };
 
       PanelView.prototype.selectLayer = function(e) {
-        var layer, target;
+        var layer, removeNew, target;
         target = $(e.currentTarget);
         layer = target.data('toggle');
         this.setLayer(layer);
-        return this.trigger('layer-selected', layer);
+        this.trigger('layer-selected', layer);
+        this.$('.panel').addClass('new');
+        removeNew = function() {
+          return this.$('.panel').removeClass('new');
+        };
+        return setTimeout(removeNew, 1000);
       };
 
       PanelView.prototype.layerIsFacsimile = function() {
@@ -68,6 +73,11 @@
         return this.renderContent();
       };
 
+      PanelView.prototype.setAvailableLayers = function(layers) {
+        this.layers = layers != null ? layers : [];
+        return this;
+      };
+
       PanelView.prototype.selectedLayer = function() {
         return this.textLayer;
       };
@@ -77,7 +87,6 @@
       };
 
       PanelView.prototype.renderContent = function() {
-        var _ref1;
         if (this.layerIsFacsimile()) {
           this.subView = new FacsimileView({
             model: this.model,
@@ -89,7 +98,10 @@
             layer: this.textLayer
           });
         }
-        this.$('.view').html((_ref1 = this.subView) != null ? _ref1.el : void 0);
+        if (this.subView != null) {
+          this.$('.view').html(this.subView.el);
+          this.$('.close').show();
+        }
         return this.$('.layer').text(this.textLayer);
       };
 
@@ -100,6 +112,7 @@
           layers: this.layers,
           layer: this.textLayer
         }));
+        this.$('.close').hide();
         this.$el.toggleClass('select', this.textLayer == null);
         this.renderCurrentSelection();
         this.renderContent();

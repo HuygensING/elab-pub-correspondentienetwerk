@@ -56,7 +56,7 @@
         var texts;
         texts = this.get('paralleltexts');
         if (texts && key in texts) {
-          return texts[key].annotations;
+          return texts[key].annotationData;
         } else {
           return void 0;
         }

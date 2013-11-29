@@ -1,9 +1,8 @@
 (function() {
   define(function(require) {
-    var Backbone, MainController, MainRouter, bootstrapTemplate, config, configData, configURL, rootURL;
+    var Backbone, MainController, MainRouter, bootstrapTemplate, config, configURL, rootURL;
     Backbone = require('backbone');
     MainRouter = require('routers/main');
-    configData = require('models/configdata');
     config = require('config');
     MainController = require('views/home');
     bootstrapTemplate = _.template(require('text!html/body.html'));
@@ -12,12 +11,12 @@
     return {
       initialize: function() {
         var _this = this;
-        return configData.fetch({
+        return config.fetch({
           url: configURL,
           success: function() {
             var mainController, mainRouter;
             $('body').html(bootstrapTemplate());
-            $('.page-header h1 a').text(configData.get('title'));
+            $('.page-header h1 a').text(config.get('title'));
             mainController = new MainController({
               el: '#main'
             });

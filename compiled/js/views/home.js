@@ -3,9 +3,9 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var AnnotationsView, Backbone, Entry, EntryCollection, EntryView, Home, SearchView, configData, events, _ref;
+    var AnnotationsView, Backbone, Entry, EntryCollection, EntryView, Home, SearchView, config, events, _ref;
     Backbone = require('backbone');
-    configData = require('models/configdata');
+    config = require('config');
     SearchView = require('views/search');
     EntryView = require('views/entry');
     AnnotationsView = require('views/annotations');

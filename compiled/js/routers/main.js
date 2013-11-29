@@ -3,14 +3,14 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var Backbone, MainRouter, configData, events, viewManager, _ref,
+    var Backbone, MainRouter, config, events, viewManager, _ref,
       _this = this;
     Backbone = require('backbone');
     viewManager = require('managers/view');
     events = require('events');
-    configData = require('models/configdata');
-    configData.on('change', function() {
-      return document.title = configData.get('title');
+    config = require('config');
+    config.on('change', function() {
+      return document.title = config.get('title');
     });
     return MainRouter = (function(_super) {
       __extends(MainRouter, _super);
@@ -23,8 +23,8 @@
       MainRouter.prototype.routes = {
         '': 'showSearch',
         'annotations/': 'showAnnotationsIndex',
-        'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation',
         'entry/:id/parallel': 'showEntryParallelView',
+        'entry/:id/:layer/:annotation': 'showEntryHighlightAnnotation',
         'entry/:id/:layer': 'showEntryLayer',
         'entry/:id': 'showEntry'
       };
@@ -51,7 +51,7 @@
           if (!(methodName in this.controller)) {
             continue;
           }
-          method = this.controller[methodName].bind(this.controller);
+          method = _.bind(this.controller[methodName], this.controller);
           _results.push(this.route(route, methodName, method));
         }
         return _results;

@@ -3,8 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(function(require) {
-    var BaseView, Entry, KEYCODE_ESCAPE, ParallelView, TextView, config, configData, events, _ref;
-    configData = require('models/configdata');
+    var BaseView, Entry, KEYCODE_ESCAPE, ParallelView, TextView, config, events, _ref;
     config = require('config');
     events = require('events');
     BaseView = require('views/base');
@@ -47,7 +46,8 @@
         this.headerTemplate = _.template(this.headerTemplate);
         this.metadataTemplate = _.template(this.metadataTemplate);
         this.contentsTemplate = _.template(this.contentsTemplate);
-        this.currentTextLayer = this.options.layerSlug != null ? configData.slugToLayer(this.options.layerSlug) : this.options.layer != null ? this.options.layer : configData.get('textLayer');
+        this.currentTextLayer = this.options.layerSlug != null ? config.slugToLayer(this.options.layerSlug) : this.options.layer != null ? this.options.layer : config.get('textLayer');
+        console.log("Show args", this.options);
         $(document).keyup(function(e) {
           return _this.ifEscapeClose(e);
         });
@@ -78,7 +78,7 @@
         this.currentTextLayer = $(e.currentTarget).data('toggle');
         this.setActiveTextLayer(this.currentTextLayer);
         this.textView.setView(this.currentTextLayer);
-        return configData.set({
+        return config.set({
           textLayer: this.currentTextLayer
         });
       };
@@ -86,7 +86,10 @@
       Entry.prototype.toggleMoreMetadata = function(e) {
         var show;
         show = !$(e.currentTarget).hasClass('more');
-        return this.showMoreMetaData(show, true);
+        this.showMoreMetaData(show, true);
+        return config.set({
+          showMetaData: show
+        });
       };
 
       Entry.prototype.showMoreMetaData = function(show, animate) {
@@ -96,19 +99,16 @@
         if (show) {
           this.$('.metadata').addClass('more');
           this.$('.metadata button').addClass('more');
-          this.$('.metadata li').show();
+          return this.$('.metadata li').show();
         } else {
           this.$('.metadata').removeClass('more');
           this.$('.metadata button').removeClass('more');
-          this.$('.metadata li').show().filter(function(idx) {
+          return this.$('.metadata li').show().filter(function(idx) {
             if (idx > 3) {
               return $(this).hide();
             }
           });
         }
-        return configData.set({
-          showMetaData: show
-        });
       };
 
       Entry.prototype.showParallelView = function(opts) {
@@ -166,8 +166,8 @@
         this.$('.metadata').html(this.metadataTemplate({
           metadata: metadata
         }));
-        if (configData.get('showMetaData') != null) {
-          this.showMoreMetaData(configData.get('showMetaData'));
+        if (config.get('showMetaData') != null) {
+          this.showMoreMetaData(config.get('showMetaData'));
         } else {
           this.showMoreMetaData(false);
         }
@@ -178,16 +178,15 @@
         var next, prev;
         this.$('.header').html(this.headerTemplate({
           config: config,
-          entry: this.model.attributes,
-          entries: configData
+          entry: this.model.attributes
         }));
-        prev = configData.findPrev(this.model.id);
+        prev = config.findPrev(this.model.id);
         if (prev) {
           this.$('.prev').attr({
             href: config.entryURL(prev)
           });
         }
-        next = configData.findNext(this.model.id);
+        next = config.findNext(this.model.id);
         if (next) {
           this.$('.next').attr({
             href: config.entryURL(next)
@@ -200,7 +199,7 @@
 
       Entry.prototype.renderResultsNavigation = function() {
         var id, ids, nextId, prevId, showResultsNav, _ref1, _ref2;
-        ids = configData.get('allResultIds');
+        ids = config.get('allResultIds');
         showResultsNav = (ids != null ? ids.length : void 0) > 0 && ids.indexOf(String(this.model.id)) !== -1;
         this.$('.navigate-results').toggle(showResultsNav);
         if (ids != null ? ids.length : void 0) {
@@ -221,8 +220,7 @@
       Entry.prototype.renderContents = function() {
         this.$('.contents').html(this.contentsTemplate({
           entry: this.model.attributes,
-          config: config,
-          configData: configData
+          config: config
         }));
         this.textView = new TextView({
           model: this.model,
@@ -230,6 +228,7 @@
           el: this.$('.contents .text-view')
         });
         if (this.options.annotation != null) {
+          console.log("Highlighting " + this.options.annotation + "!");
           return this.textView.highlightAnnotation(this.options.annotation);
         }
       };

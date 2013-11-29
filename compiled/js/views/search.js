@@ -4,10 +4,9 @@
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   define(function(require) {
-    var Backbone, FacetedSearch, Home, Templates, config, configData, _ref;
+    var Backbone, FacetedSearch, Home, Templates, config, _ref;
     Backbone = require('backbone');
     config = require('config');
-    configData = require('models/configdata');
     FacetedSearch = require('../../lib/faceted-search/stage/js/main');
     Templates = {
       Search: require('text!html/search.html'),
@@ -123,15 +122,15 @@
       Home.prototype.render = function() {
         var firstSearch,
           _this = this;
-        document.title = configData.get('title');
+        document.title = config.get('title');
         this.$el.html(this.template({
-          w: configData.get('entryIds')
+          w: config.get('entryIds')
         }));
         firstSearch = true;
         this.search = new FacetedSearch({
-          searchPath: config.searchPath,
+          searchPath: config.get('searchPath'),
           queryOptions: {
-            resultRows: config.resultRows,
+            resultRows: config.get('resultRows'),
             term: '*'
           }
         });
@@ -141,10 +140,10 @@
         this.search.subscribe('faceted-search:results', function(response) {
           var f, totalEntries, _i, _len, _ref1, _ref2, _ref3;
           _this.results = response;
-          totalEntries = configData.get('entryIds').length;
+          totalEntries = config.get('entryIds').length;
           _this.results.allIds = totalEntries === ((_ref1 = _this.search.model.get('allIds')) != null ? _ref1.length : void 0) ? [] : _this.search.model.get('allIds');
           firstSearch = false;
-          configData.set({
+          config.set({
             allResultIds: _this.results.allIds
           });
           if (_this.results.sortableFields != null) {
