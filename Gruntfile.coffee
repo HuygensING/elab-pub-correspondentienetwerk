@@ -234,7 +234,7 @@ module.exports = (grunt) ->
 				src: [
 					'compiled/lib/unsemantic/assets/stylesheets/unsemantic-grid-responsive.css'
 					'compiled/lib/normalize-css/normalize.css'
-					'compiled/lib/faceted-search/dev/css/main.css'
+					'compiled/lib/faceted-search/compiled/css/main.css'
 					'compiled/css/project.css'
 				]
 				dest:
@@ -281,7 +281,7 @@ module.exports = (grunt) ->
 					paths:
 						'json3': '../lib/json3/lib/json3.min'
 						'jquery': '../lib/jquery/jquery.min'
-						'jquery-visible': '../lib/jquery.visible/jquery.visible.min'
+						'jquery.scrollTo': '../lib/jquery.scrollTo/jquery.scrollTo.min'
 						'unsemantic-html5shim': '../lib/unsemantic/assets/javascripts/html5'
 						'underscore': '../lib/underscore-amd/underscore'
 						'underscore.string': '../lib/underscore.string/lib/underscore.string'
@@ -289,7 +289,7 @@ module.exports = (grunt) ->
 						'text': '../lib/requirejs-text/text'
 						'domready': '../lib/requirejs-domready/domReady'
 						'rangy': '../lib/rangy'
-						# 'faceted-search': '../lib/faceted-search/dist/js/main'
+						'faceted-search': '../lib/faceted-search'
 						# 'supertinyeditor': '../lib/supertinyeditor/main'
 						'managers': '../lib/managers/dev'
 						'helpers': '../lib/helpers/dev'
@@ -302,6 +302,9 @@ module.exports = (grunt) ->
 							deps: ['rangy/rangy-core']
 						'underscore.string':
 							exports: 'underscore.string'
+						'jquery.scrollTo':
+							exports: '$'
+							deps: ['jquery']
 					wrap: true
 
 		watch:
