@@ -34,7 +34,7 @@ define (require) ->
 			@showEntry id: id, layerSlug: layer, annotation: annotation
 		showEntry: (options) ->
 			# In case just ID is passed in
-			options = id: options unless _.isObject options
+			options = id: options if _.isString options
 
 			attachEntryView = =>
 				_.extend options, model: @entries.get options.id
@@ -45,6 +45,7 @@ define (require) ->
 			if @entries.get options.id # it's already cached
 				attachEntryView()
 			else
+				console.log options, _.isString options
 				@entries.add(id: options.id).fetch().done => attachEntryView()
 
 		showSearch: ->

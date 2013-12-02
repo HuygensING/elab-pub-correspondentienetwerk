@@ -3,7 +3,7 @@ define (require) ->
 
 	config = require 'config'
 
-	FacetedSearch = require '../../lib/faceted-search/stage/js/main'
+	FacetedSearch = require 'faceted-search/stage/js/main'
 
 	Templates =
 		Search: require 'text!html/search.html'
@@ -34,6 +34,14 @@ define (require) ->
 			@displayLoader = false
 			@$('.position').fadeIn 'fast'
 			@$('.loader').fadeOut 'fast'
+
+		numPages: ->
+			@results = @search.model.searchResults.current
+			Math.ceil @results.get('numFound') / config.get 'resultRows'
+
+		currentPosition: ->
+			@results = @search.model.searchResults.current
+			1 + (@results.get('start') / config.get 'resultRows')
 
 		nextResults: ->
 			@showLoader()
@@ -80,8 +88,8 @@ define (require) ->
 
 			@$('.results .list').hide().fadeIn 125
 
-			@$('.position .current').text @search.currentPosition?()
-			@$('.position .total').text @search.numPages?()
+			@$('.position .current').text @currentPosition()
+			@$('.position .total').text @numPages()
 			@hideLoader()
 
 			@renderSortableFields()
@@ -94,14 +102,18 @@ define (require) ->
 			firstSearch = true
 			@search = new FacetedSearch
 				searchPath: config.get 'searchPath'
+				textSearchOptions:
+					textLayers: config.get 'textLayers'
+					searchInAnnotations: true
+					searchInTranscriptions: true
 				queryOptions:
 					resultRows: config.get 'resultRows'
 					term: '*'
 
-			@search.subscribe 'faceted-search:reset', =>
+			@listenTo @search, 'reset', =>
 				firstSearch = true
-			@search.subscribe 'faceted-search:results', (response) =>
-				@results = response
+			@listenTo @search, 'results:change', (responseModel) =>
+				@results = responseModel.attributes
 
 				totalEntries = config.get('entryIds').length
 				@results.allIds = if totalEntries is @search.model.get('allIds')?.length

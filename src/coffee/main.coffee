@@ -10,6 +10,7 @@ require.config
 		'backbone': '../lib/backbone-amd/backbone'
 		'domready': '../lib/requirejs-domready/domReady'
 		'text': '../lib/requirejs-text/text'
+		'faceted-search': '../lib/faceted-search'
 		'managers': '../lib/managers/dev'
 		'helpers': '../lib/helpers/dev'
 		'html': '../html'
