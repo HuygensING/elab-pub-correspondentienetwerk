@@ -38,6 +38,8 @@ button(textColor=darken(mediumGrey, 30%), bgColor=lightGrey)
 	cursor pointer
 	line-height 19px
 	padding 0 5px
+	vendor('outline', 0)
+	vendor('user-select', none)
 
 	&:hover
 		background-color darken(bgColor, 10%)
@@ -63,6 +65,29 @@ big-button(textColor=darken(mediumGrey, 30%), bgColor=lightGrey)
 
 	&[disabled]
 		box-shadow 1px 1px 1px #f0f0f0
+
+control-button()
+	vendor('user-select', none)
+	vendor('outline', 0)
+	display inline-block
+	padding 1em
+	cursor pointer
+	background-color controlsButtonColor
+	color white
+	font-size 12px
+	box-shadow none
+	border-radius 3px
+	width auto
+	padding 5px 5px
+	margin 10px 0
+
+	&:hover
+		background-color lighten(controlsButtonColor, 5%)
+
+	&:active
+		background-color darken(controlsButtonColor, 5%)
+
+
 
 .not-visible
 	visibility hidden

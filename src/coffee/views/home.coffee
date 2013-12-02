@@ -45,8 +45,10 @@ define (require) ->
 			if @entries.get options.id # it's already cached
 				attachEntryView()
 			else
-				console.log options, _.isString options
-				@entries.add(id: options.id).fetch().done => attachEntryView()
+				entry = new Entry id: options.id
+				entry.fetch().done =>
+					@entries.add entry
+					attachEntryView()
 
 		showSearch: ->
 			@switchView @searchView

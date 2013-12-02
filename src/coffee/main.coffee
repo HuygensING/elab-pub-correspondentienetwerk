@@ -2,7 +2,7 @@ require.config
 	paths:
 		'json3': '../lib/json3/lib/json3.min'
 		'jquery': '../lib/jquery/jquery'
-		'jquery-visible': '../lib/jquery.visible/jquery.visible.min'
+		'jquery.scrollTo': '../lib/jquery.scrollTo/jquery.scrollTo.min'
 		'jquery-ui': '../lib/jquery-ui/ui'
 		'unsemantic-html5shim': '../lib/unsemantic/assets/javascripts/html5'
 		'underscore': '../lib/underscore-amd/underscore'

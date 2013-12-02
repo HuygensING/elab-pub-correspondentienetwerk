@@ -1,5 +1,5 @@
 define (require) ->
-	BaseModel = require 'models/base'
+	Backbone = require 'backbone'
 
 	class CurrentUser extends BaseModel
 

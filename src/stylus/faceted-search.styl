@@ -1,8 +1,22 @@
-a.annotations-index
-	display block
-	width  100%
-	text-align right
-	margin-bottom -2.6em
+.controls
+	position relative
+	min-height 40px
+	a.annotations-index
+		position absolute
+		right 0
+		top 0
+		display inline-block
+		width  100%
+		text-align right
+		line-height 30px
+
+	button.reset
+		control-button()
+		color white
+		position absolute
+		margin-top 0
+		left 0
+		top 0
 
 .faceted-search
 	&:before // the huygens slant

@@ -1,9 +1,9 @@
 define (require) ->
-	BaseModel = require 'models/base'
+	Backbone = require 'backbone'
 	config = require 'config'
 
-	class Entry extends BaseModel
-		url: -> config.entryDataURL(@id)
+	class Entry extends Backbone.Model
+		url: (id) -> config.entryDataURL(@id || id)
 
 		parse: (data) ->
 			# Replace <ab />s (annotation begin) and <ae />s (annotation end) with <span />s and <sup />s

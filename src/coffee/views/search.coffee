@@ -12,6 +12,7 @@ define (require) ->
 	class Home extends Backbone.View
 		className: 'wrapper'
 		events:
+			'click button.reset': 'resetSearch'
 			'click .results .body li': 'resultClicked'
 			'click .results .next': 'nextResults'
 			'click .results .previous': 'previousResults'
@@ -21,6 +22,9 @@ define (require) ->
 			@template = _.template Templates.Search
 			@resultsTemplate = _.template Templates.ResultsList
 			@render()
+
+		resetSearch: ->
+			@search.reset()
 
 		showLoader: ->
 			@displayLoader = true
@@ -116,10 +120,6 @@ define (require) ->
 				@results = responseModel.attributes
 
 				totalEntries = config.get('entryIds').length
-				@results.allIds = if totalEntries is @search.model.get('allIds')?.length
-					[]
-				else
-					@search.model.get 'allIds'
 				firstSearch = false
 
 				config.set allResultIds: @results.allIds

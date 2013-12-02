@@ -1,10 +1,10 @@
 define (require) ->
-	BaseModel = require 'models/base'
+	Backbone = require 'backbone'
 	config = require 'config'
 
 	us = require 'underscore.string'
 
-	class ConfigData extends BaseModel
+	class ConfigData extends Backbone.Model
 		defaults:
 			textLayer: 'Diplomatic'
 

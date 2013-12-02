@@ -1,10 +1,9 @@
 define (require) ->
-
+	Backbone = require 'backbone'
 	config = require 'config'
 
 	events = require 'events'
 
-	BaseView = require 'views/base'
 	TextView = require 'views/text'
 	ParallelView = require 'views/parallel-view'
 
@@ -12,7 +11,7 @@ define (require) ->
 
 	KEYCODE_ESCAPE = 27
 
-	class Entry extends BaseView
+	class Entry extends Backbone.View
 		baseTemplate: require 'text!html/entry/base.html'
 		headerTemplate: require 'text!html/entry/header.html'
 		metadataTemplate: require 'text!html/entry/metadata.html'

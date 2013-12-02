@@ -1,5 +1,5 @@
 define (require) ->
-	BaseView = require 'views/base'
+	Backbone = require 'backbone'
 	PanelView = require 'views/panel'
 	Entry = require 'models/entry'
 
@@ -10,7 +10,7 @@ define (require) ->
 
 	KEYCODE_ESCAPE = 27
 
-	class ParallelView extends BaseView
+	class ParallelView extends Backbone.View
 		className: 'parallel-view'
 		events:
 			'click .add': 'scrollToEnd'

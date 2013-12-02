@@ -1,11 +1,11 @@
 define (require) ->
-	BaseView = require 'views/base'
+	Backbone = require 'backbone'
 	config = require 'config'
 
 	rangy = require 'rangy/rangy-cssclassapplier'
 	rangy.init()
 
-	jqv = require 'jquery-visible'
+	require 'jquery.scrollTo'
 
 	highlighter = rangy.createCssClassApplier 'highlight'
 
@@ -26,7 +26,7 @@ define (require) ->
 		annotationsTemplate: require 'text!html/annotations.html'
 
 		events:
-			'click .annotations li': 'scrollToAnnotation'
+			'click .annotations li': 'clickAnnotation'
 
 		initialize: (@options) ->
 			@template = _.template @template
@@ -52,20 +52,27 @@ define (require) ->
 			# Delay highlighting for a bit until page is fully rendered
 			# and everything's attached to DOM. Highlighter will error
 			# out otherwise.
-			highlight = => @hl.on
-				startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
-				endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			startNode = @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
+			endNode = @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			highlight = =>
+				@hl.on
+					startNode: startNode
+					endNode: endNode
+				@scrollToAnnotation startNode
 			_.delay highlight, 300 
+			
 
-		scrollToAnnotation: (e) ->
+		clickAnnotation: (e) ->
 			target = $(e.currentTarget)
 			annID = target.attr 'data-id'
-			annotation = @$(".text span[data-marker=begin][data-id=#{annID}]")
+			@scrollToAnnotation annID
 
-			if annotation.visible()
-				# console.log "Annotation is visible", annID
-			else
-				# console.log "Not visible"
+		scrollToAnnotation: (annotation) ->
+			$('body').scrollTo annotation,
+				duration: 1000
+				axis: 'y'
+				offset:
+					top: -100
 
 		renderAnnotations: ->
 			annotations = {}

@@ -22,26 +22,9 @@
 	// border-top 1px solid grey
 
 	.previous, .next
-		vendor('user-select', none)
 		position absolute
-		display inline-block
-		padding 1em
 		top 0
-		cursor pointer
-		background-color controlsButtonColor
-		color white
-		font-size 12px
-		box-shadow none
-		border-radius 3px
-		width auto
-		padding 5px 5px
-		margin 10px 0
-
-		&:hover
-			background-color lighten(controlsButtonColor, 5%)
-
-		&:active
-			background-color darken(controlsButtonColor, 5%)
+		control-button()
 
 	.previous
 		// padding-left 0
