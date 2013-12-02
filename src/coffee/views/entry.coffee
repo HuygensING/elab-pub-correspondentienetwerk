@@ -179,7 +179,6 @@ define (require) ->
 				el: @$('.contents .text-view')
 
 			if @options.annotation?
-				console.log "Highlighting #{@options.annotation}!"
 				@textView.highlightAnnotation @options.annotation
 
 		renderEntry: ->

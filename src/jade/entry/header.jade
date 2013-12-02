@@ -10,6 +10,8 @@
 			a.prev-entry(href!="<%= config.prevURL(entry.id)%>")
 				span &#9666;
 				| &nbsp;Previous  <%= config.itemLabel %>
+		.middle
+			h2 <%= entry.name %>
 		.right
 			a.next-entry(href!="<%= config.nextURL(entry.id) %>")
 				| Next <%= config.itemLabel %>&nbsp;

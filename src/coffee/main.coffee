@@ -36,6 +36,9 @@ require.config
 			deps: ['rangy/rangy-core']
 		'unsemantic-html5shim':
 			exports: 'this'
+		'jquery.scrollTo':
+			deps: ['jquery']
+			exports: '$'
 
 require ['util/html5shiv', 'json3', 'domready', 'config', 'app', 'unsemantic-html5shim'], (html5shiv, json3, domready, config, app) ->
 	domready ->

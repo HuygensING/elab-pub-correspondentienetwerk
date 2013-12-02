@@ -9,7 +9,7 @@ div.section
 			.annotated-text <%=  shorten(a.annotatedText) %>
 			.text-layer
 			.position
-				span.entry-name <%= config.entryName(a.entryId) %>
+				span.entry-name <%= a.entryName %>
 				span.text-layer '<%= a.textLayer %>' layer
 				span.annotation-number annotation <%= a.annotationOrder %>
 			.annotation-text

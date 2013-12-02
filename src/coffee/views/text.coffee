@@ -48,24 +48,27 @@ define (require) ->
 			@currentTextLayer = layer
 			@renderContent()
 
+		annotationNodes: (markerID) ->
+			startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
+			endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+
 		highlightAnnotation: (markerID) ->
 			# Delay highlighting for a bit until page is fully rendered
 			# and everything's attached to DOM. Highlighter will error
 			# out otherwise.
-			startNode = @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
-			endNode = @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+			{startNode, endNode} = @annotationNodes markerID
 			highlight = =>
 				@hl.on
 					startNode: startNode
 					endNode: endNode
 				@scrollToAnnotation startNode
-			_.delay highlight, 300 
-			
+			_.delay highlight, 300
 
 		clickAnnotation: (e) ->
 			target = $(e.currentTarget)
 			annID = target.attr 'data-id'
-			@scrollToAnnotation annID
+			{startNode} = @annotationNodes annID
+			@scrollToAnnotation startNode
 
 		scrollToAnnotation: (annotation) ->
 			$('body').scrollTo annotation,
@@ -100,9 +103,10 @@ define (require) ->
 				liEnter = (ev) =>
 					el = ev.currentTarget
 					markerID = $(el).data 'id'
+					{startNode, endNode} = @annotationNodes markerID
 					@hl.on
-						startNode: @$(".text span[data-marker=begin][data-id=#{markerID}]")[0]
-						endNode: @$(".text sup[data-marker=end][data-id=#{markerID}]")[0]
+						startNode: startNode
+						endNode: endNode
 				liLeave = => @hl.off()
 				@$('.annotations li').hover liEnter, liLeave
 			else # no document.createRange (IE8)
