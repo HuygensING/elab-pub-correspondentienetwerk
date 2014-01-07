@@ -1,7 +1,10 @@
 ol
 	| <% _.each(annotations, function (a, i) { %>
 	li(data-id!="<%= a.n %>")
-		.number
-			span <%= i+1 %>
+		.head
+			.number
+				span <%= i+1 %>
+			.type
+				span <%= a.type.description %>
 		| <%= a.text %>
 	| <% }) %>
