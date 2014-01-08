@@ -56,6 +56,7 @@ define (require) ->
 
 		sortResults: (e) ->
 			@sortField = $(e.currentTarget).val()
+			console.log "Sorting on ", @sortField
 			@search.sortResultsBy @sortField
 
 		renderSortableFields: ->
@@ -122,7 +123,7 @@ define (require) ->
 				totalEntries = config.get('entryIds').length
 				firstSearch = false
 
-				config.set allResultIds: @results.allIds
+				config.set allResultIds: @results.ids
 
 				if @results.sortableFields?
 					@sortableFields = {}
