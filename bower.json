@@ -16,6 +16,7 @@
 		"backbone-amd": "*",
 		"normalize-css": "*",
 		"unsemantic": "*",
+		"faceted-search": "https://github.com/HuygensING/faceted-search.git#elaborate",
 		"helpers": "git@github.com:Gijsjan/helpers.git",
 		"managers": "git@github.com:Gijsjan/managers.git"
 	},
