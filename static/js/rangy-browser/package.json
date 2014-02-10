@@ -1,0 +1,37 @@
+{
+  "author": {
+    "name": "Tim Down"
+  },
+  "name": "rangy-browser",
+  "description": "A cross-browser DOM range and selection library",
+  "keywords": [
+    "range",
+    "selection",
+    "caret",
+    "DOM"
+  ],
+  "version": "1.2.3-1",
+  "homepage": "http://code.google.com/p/rangy/",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kapouer/rangy-browser.git"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "readme": "This is the npm package for \"rangy\", a javascript browser library.\n\nRangy scripts are provided uncompressed and unmodified.\n\nhttp://code.google.com/p/rangy/\n",
+  "readmeFilename": "README",
+  "bugs": {
+    "url": "https://github.com/kapouer/rangy-browser/issues"
+  },
+  "_id": "rangy-browser@1.2.3-1",
+  "_from": "rangy-browser@"
+}

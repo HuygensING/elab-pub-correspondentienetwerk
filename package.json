@@ -1,5 +1,5 @@
 {
-  "name": "elaborate-publication",
+  "name": "elaborate-publication-collection",
   "version": "0.0.0",
   "author": {
     "name": "",
@@ -8,7 +8,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Gijsjan/generator-backbone-amd.git"
+    "url": ""
   },
   "scripts": {
     "test": "node ./.test/bin/server.js",
@@ -18,24 +18,44 @@
     "coffee-script": "*",
     "stylus": "*",
     "jade": "*",
+    "backbone": "~1.0.0",
     "underscore": "*",
-    "express": "*",
-    "grunt": "*",
-    "grunt-shell": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-jade": "*",
-    "grunt-contrib-stylus": "*",
-    "grunt-contrib-requirejs": "*",
-    "grunt-contrib-copy": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-cssmin": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-text-replace": "*",
-    "grunt-contrib-connect": "*",
-    "shelljs": "~0.2.6",
-    "grunt-rsync": "~0.2.1",
-    "grunt-groc": "~0.4.0",
-    "colors": "~0.6.2"
+    "jquery": "~2.1.0",
+    "gulp-connect": "~0.3.1",
+    "gulp-util": "~2.2.14",
+    "gulp": "~3.5.2",
+    "gulp-jade": "~0.4.1",
+    "gulp-concat": "~2.1.7",
+    "gulp-coffee": "~1.4.1",
+    "gulp-clean": "~0.2.4",
+    "gulp-stylus": "0.0.12",
+    "gulp-browserify": "~0.4.4",
+    "gulp-wrap-amd": "~0.3.0",
+    "gulp-rename": "~1.0.0",
+    "browserify": "~3.28.0",
+    "browserify-shim": "~3.2.2",
+    "coffeeify": "~0.6.0",
+    "jadeify": "~2.1.1",
+    "underscore.string": "~2.3.3",
+    "rangy-browser": "~1.2.3-1",
+    "json3": "~3.3.0",
+    "gulp-plumber": "^0.5.6",
+    "gulp-cached": "0.0.2",
+    "gulp-uglify": "^0.2.1",
+    "vinyl-source-stream": "^0.1.1",
+    "gulp-minify-css": "^0.3.0",
+    "watchify": "^0.6.1"
+  },
+  "browser": {
+    "rangy": "./node_modules/rangy-browser/lib/rangy-core.js",
+    "rangycssclassapplier": "./node_modules/rangy-browser/lib/rangy-core.js"
+  },
+  "browserify-shim": {
+    "rangy": "global:rangy",
+    "rangycssclassapplier": {
+      "depends": [
+        "rangy"
+      ]
+    }
   }
 }

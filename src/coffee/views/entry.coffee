@@ -1,195 +1,162 @@
-define (require) ->
-	Backbone = require 'backbone'
-	config = require 'config'
+Backbone = require 'backbone'
+$ = require 'jquery'
 
-	events = require 'events'
+config = require 'elaborate-modules/modules/models/config'
 
-	TextView = require 'views/text'
-	ParallelView = require 'views/parallel-view'
+entries = require 'elaborate-modules/modules/collections/entries'
 
-	Entry = require 'models/entry'
+dom = require 'hilib/src/utils/dom'
 
-	KEYCODE_ESCAPE = 27
+Views =
+	Panels: require 'elaborate-modules/modules/views/panels'
 
-	class Entry extends Backbone.View
-		baseTemplate: require 'text!html/entry/base.html'
-		headerTemplate: require 'text!html/entry/header.html'
-		metadataTemplate: require 'text!html/entry/metadata.html'
-		contentsTemplate: require 'text!html/entry/contents.html'
+preloader = require './preloader'
 
-		className: 'entry'
+headerTpl = require '../../jade/entry/header.jade'
+thumbnailTpl = require '../../jade/entry/thumbnail.jade'
 
-		events:
-			'click .layers li': 'changeTextLayer'
-			'click .more button': 'toggleMoreMetadata'
-			'click .parallel button': 'showParallelView'
-			'click .thumbnail': 'showThumbnailParallelView'
-			'click a.print': 'printEntry'
 
-		initialize: (@options={}) ->
-			super
+class Entry extends Backbone.View
 
-			@baseTemplate = _.template @baseTemplate
-			@headerTemplate = _.template @headerTemplate
-			@metadataTemplate = _.template @metadataTemplate
-			@contentsTemplate = _.template @contentsTemplate
+	className: 'entry'
 
-			@currentTextLayer = if @options.layerSlug?
-				config.slugToLayer @options.layerSlug
-			else if @options.layer?
-				@options.layer
-			else
-				config.get 'textLayer'
+	# ### Initialize
+	initialize: (@options={}) ->
+		super
 
-			$(document).keyup (e) => @ifEscapeClose e
+		@subviews = []
 
-			@didScroll = false
-			@$el.click -> @didScroll = true
-			doCheck = =>
-				if @didScroll
-					didScroll = false
-					@positionTextView()
-			# setInterval doCheck, 1000
-
-			$('body, html').scroll (e) =>
-				@didScroll = true
-
-			# @$('body').scroll (e) =>
-			# 	if 
-			# 		@$('.text-view').addClass 'fixed'
-			# 	else if not @$('.text-view').hasClass 'fixed'
-			# 		@fixTextView()
-
+		modelLoaded = =>		
+			entries.setCurrent @model.id
+			@el.setAttribute 'id', 'entry-'+@model.id
 			@render()
 
-		setActiveTextLayer: (layer) ->
-			li = @$(".layers li[data-toggle=#{layer}]")
-			li.addClass('active').siblings().removeClass('active')
+		if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
+			part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
+			$('a[name="entry"]').html "Edition <small>(#{part})</small>"
+		else
+			$('a[name="entry"]').html "Edition"
 
-		changeTextLayer: (e) ->
-			@currentTextLayer = $(e.currentTarget).data 'toggle'
-			@setActiveTextLayer @currentTextLayer
-			@textView.setView @currentTextLayer
-			config.set textLayer: @currentTextLayer
+		# The IDs of the entries are passed to the collection on startup, so we can not check
+		# isNew() if we need to fetch the full model or it already has been fetched.
+		if @model = entries.get @options.entryId
+			modelLoaded()
+		else
+			@model = if @options.entryId? then entries.findWhere datafile: @options.entryId+'.json' else entries.current
 
-		toggleMoreMetadata: (e) ->
-			show = not $(e.currentTarget).hasClass 'more'
-			@showMoreMetaData show, yes # animate
+			@model.fetch().done => modelLoaded()
 
-			config.set showMetaData: show
-		
-		showMoreMetaData: (show, animate=no) ->
-			if show
-				@$('.metadata').addClass 'more' # fields
-				@$('.metadata button').addClass 'more' # button
-				@$('.metadata li').show()
-			else
-				@$('.metadata').removeClass 'more' # fields
-				@$('.metadata button').removeClass 'more' # button
-				@$('.metadata li').show().filter (idx) -> $(@).hide() if idx > 3
+	# ### Render
+	render: ->
+		@$el.html @renderHeader()
+
+		@renderPanels @options
+
+		@renderEntries()
+
+		@
+
+	renderHeader: ->
+		header = document.createElement 'header'
+
+		header.innerHTML = headerTpl
+			entryTermSingular: config.get('entryTermSingular')
+			entry: @model
+			resultIds: config.get('facetedSearchResponse')?.get('ids') ? []
+			entries: entries
+
+		header
 
 
-		showParallelView: (opts={}) ->
-			_.extend opts, model: @model
-			@pv = new ParallelView opts
-			@$('.parallel-view-container').empty().html @pv.el
-			@pv.show()
+	renderEntries: ->
+		loadedImages = $.Deferred()
+		loadedImages
+			.then( =>
+				@$('.loader').hide()
+				@$('ul.entries').fadeIn 150
+			).then( =>
+				@activateThumb()
+			)
 
-			@pv
+		# start loading the images
+		thumbsLoaded = 0
+		imageLoaded = =>
+			thumbsLoaded++
+			loadedImages.resolve() if thumbsLoaded >= (thumbCount / 2) or thumbsLoaded > 30
+			loadedImages.resolve() if thumbsLoaded >= thumbCount
 
-		showThumbnailParallelView: (e) ->
-			target = $(e.currentTarget)
-			page = target.data 'page'
+		frag = document.createDocumentFragment()
 
-			@pv = @showParallelView
-				panels: [
-					{ textLayer: 'Facsimile', page: page}
-					{ textLayer: @currentTextLayer }
-				]
-			@pv.repositionPanels()
+		renderThumbnail = (id, name) =>
+			thumbUrl = config.get('thumbnails')[id]?[0]
+			preloader.loadImage thumbUrl, imageLoaded
 
-		printEntry: (e) ->
-			e.preventDefault()
-			window.print()
+			re = /nota\s?\w+/
+			# console.log entry.get('name')
+			thumb = $ thumbnailTpl
+				id: id
+				thumbnail: thumbUrl ? "http://placehold.it/70x100/000000/000000&text=X"
+				# href: entry.createUrl()
+				index: re.exec(name)[0].substr(4)
 
-		close: -> # TODO: no-op, but in future: fadeOut?
+			thumb.find('img').load imageLoaded
+			frag.appendChild thumb[0]
 
-		ifEscapeClose: (e) ->
-			if e.keyCode is KEYCODE_ESCAPE
-				@close()
+		if config.get('facetedSearchResponse')?
+			thumbCount = config.get('facetedSearchResponse').get('results').length
+			renderThumbnail result.id, result.name for result in config.get('facetedSearchResponse').get('results')
+		else
+			thumbCount = entries.length
+			renderThumbnail result.get('_id'), result.get('name') for result in entries.models
 
-		positionTextView: ->
-			@$('.text-view').css 'background-color': 'yellow'
+		@$('ul.entries').html frag
 
-		renderMetadata: ->
-			metadata = @model.get('metadata') || []
-			@$('.metadata').html @metadataTemplate
-				metadata: metadata
-			
-			if config.get('showMetaData')?
-				@showMoreMetaData config.get 'showMetaData'
-			else
-				@showMoreMetaData false
 
-			@
+	renderPanels: do -> 
+		panels = null
 
-		renderHeader: ->
-			@$('.header').html @headerTemplate
-				config: config
-				entry: @model.attributes
+		(options) ->
+			panels.destroy() if panels?
+			panels = new Views.Panels options
+			@$el.append panels.$el
 
-			prev = config.findPrev @model.id
-			if prev
-				@$('.prev').attr href: config.entryURL prev
+	# ### Events
+	events: ->
+		'click ul.entries li': 'navigateEntry'
 
-			next = config.findNext @model.id
-			if next
-				@$('.next').attr href: config.entryURL next
+	# ### Methods
+	destroy: ->
+		view.destroy() for view in @subviews
+		@remove()
 
-			@$('.prev-entry').toggleClass 'hide', not prev
-			@$('.next-entry').toggleClass 'hide', not next
+	activateThumb: (entryId) ->
+		$entries = @$ 'ul.entries'
 
-			@renderResultsNavigation()
+		# If no entryId is given, use the current entry id.
+		entryId = entryId ? entries.current.get('_id')
 
-		renderResultsNavigation: ->
-			ids = config.get 'allResultIds'
-			showResultsNav = ids?.length > 0 and ids.indexOf(String @model.id) isnt -1
-			@$('.navigate-results').toggle showResultsNav
+		# Unactivate current active entry.
+		$entries.find('li.active').removeClass 'active'
 
-			if ids?.length
-				id = @model.id
-				prevId = ids[ids.indexOf(String id) - 1] ? null
-				nextId = ids[ids.indexOf(String id) + 1] ? null
+		# Add active to activated entry.
+		$active = $entries.find 'li[data-entry-id="'+entryId+'"]'
+		$active.addClass 'active'
 
-				# console.log prevId, nextId
-				
-				@$('.navigate-results .prev-result').toggle(prevId?).attr href: config.entryURL prevId
-				@$('.navigate-results .next-result').toggle(nextId?).attr href: config.entryURL nextId
-				@$('.navigate-results .idx').text ids.indexOf(String id) + 1
-				@$('.navigate-results .total').text ids.length
+		# Using jQuery with .position().left does not give the correct left, because I guess it does not use
+		# $entries as the parent to calculate relative left.
+		leftPos = dom($active[0]).position($entries[0]).left
+		offset = ($(window).width()/2) - ($active.width()/2)
 
-		renderContents: ->
-			@$('.contents').html @contentsTemplate
-				entry: @model.attributes
-				config: config
+		# Animate entry to center.
+		@$('.entries').animate
+			scrollLeft: leftPos - offset
+		, 150
 
-			@textView = new TextView
-				model: @model
-				layer: @currentTextLayer
-				el: @$('.contents .text-view')
+	navigateEntry: (ev) ->
+		entryId = ev.currentTarget.getAttribute 'data-entry-id'
 
-			if @options.annotation?
-				@textView.highlightAnnotation @options.annotation
+		@activateThumb entryId
+		@renderPanels entryId: entryId
+		Backbone.history.navigate "/entry/#{entryId}"
 
-		renderEntry: ->
-			@renderHeader()
-			@renderMetadata()
-			@renderContents()
-
-			@setActiveTextLayer @currentTextLayer
-
-		render: ->
-			@$el.html @baseTemplate()
-			@renderEntry()
-
-			@
+module.exports = Entry

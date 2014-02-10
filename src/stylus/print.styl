@@ -1,4 +1,22 @@
+@import './import/*'
+
 @media print
 	.entry
 		.row > .text, .row > .annotations
 			width auto
+
+	body > header > ul
+		display none
+		
+
+	.annotations-index
+		ul.annotation-types
+			display none
+
+		.contents
+			height auto !important
+			overflow visible
+
+		ol
+			a
+				display none

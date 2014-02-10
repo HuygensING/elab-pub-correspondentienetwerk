@@ -1,40 +1,51 @@
-define (require) ->
-	Backbone = require 'backbone'
-	MainRouter = require 'routers/main'
+Backbone = require 'backbone'
+$ = require 'jquery'
+Backbone.$ = $
 
-	config = require 'config'
+MainRouter = require './routers/main'
 
-	MainController = require 'views/home'
+config = require 'elaborate-modules/modules/models/config'
 
-	bootstrapTemplate = _.template require 'text!html/body.html'
-	
-	# Backbone expects a path, not a full URI
-	rootURL = window.BASE_URL.replace /https?:\/\/[^\/]+/, ''
-	
-	configURL = "#{if window.BASE_URL is '/' then '' else window.BASE_URL}/data/config.json"
-	initialize: ->
-		config.fetch
-			url: configURL,
-			success: =>
-				# Load first before any views,
-				# so views can attach to elements
-				$('body').html bootstrapTemplate()
-				$('.page-header h1 a').text config.get 'title'
+entries = require 'elaborate-modules/modules/collections/entries'
+textlayers = require 'elaborate-modules/modules/collections/textlayers'
 
-				mainController = new MainController el: '#main'
-				mainRouter = new MainRouter
-					controller: mainController
-					root: rootURL
-				mainRouter.start()  
+# MainController = require './views/home'
 
-				$(document).on 'click', 'a:not([data-bypass])', (e) ->
-					href = $(@).attr 'href'
-					
-					if href?
-						e.preventDefault()
-						Backbone.history.navigate href, trigger: true
+# bootstrapTemplate = _.template require 'text!html/body.html'
+bootstrapTemplate = require '../jade/body.jade'
 
-			error: (m, o) =>
-				$('body').html 'An unknown error occurred while attempting to load the application.'
+# Backbone expects a path, not a full URI
+rootURL = window.BASE_URL.replace /https?:\/\/[^\/]+/, ''
 
-				console.error "Could not fetch config data", JSON?.stringify o
+module.exports = ->
+	jqXHR = config.fetch()
+	jqXHR.done =>
+		entries.add config.get('entries')
+		entries.setCurrent entries.at(0)
+
+		textlayers.add config.get('textlayers')
+		textlayers.setCurrent textlayers.at(0)
+
+		# Load first before any views,
+		# so views can attach to elements
+		$('body').html bootstrapTemplate()
+		$('header h1 a').text config.get 'title'
+
+		# mainController = new MainController el: '#main'
+		
+		mainRouter = new MainRouter()
+		Backbone.history.start
+			root: rootURL
+			pushState: true
+
+		$(document).on 'click', 'a:not([data-bypass])', (e) ->
+			href = $(@).attr 'href'
+			
+			if href?
+				e.preventDefault()
+				Backbone.history.navigate href, trigger: true
+
+	jqXHR.fail (m, o) =>
+		$('body').html 'An unknown error occurred while attempting to load the application.'
+
+		console.error "Could not fetch config data", JSON?.stringify o

@@ -5,10 +5,10 @@ html(lang="en")
 		meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
 		title Huygens ING
 		link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
-		link(rel="stylesheet", type="text/css", href="#{__DEPLOYMENT__}/css/main.css")
+		//- link(rel="stylesheet", type="text/css", href="/css/unsemantic-grid-responsive.css")
+		link(rel="stylesheet", type="text/css", href="/css/main.css")
 		script.
-			var BASE_URL = '${BASE_URL}';
-		script(data-main="#{__DEPLOYMENT__}/js/main", src="#{__DEPLOYMENT__}/lib/requirejs/require.js")
+			var BASE_URL = '/';
+		script(src="/js/main.js")
 	body
-		| Loading, please wait. 
-		
+		| Loading, please wait.

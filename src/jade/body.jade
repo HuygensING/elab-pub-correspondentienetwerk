@@ -1,9 +1,15 @@
-.grid-container
-	.page-header
-		h1: a(href="/")
-		.huygens-logo
-	#main
-	.clear
-	.page-footer
-		.huygens: a(href="http://www.huygens.knaw.nl/", data-bypass=true) Huygens ING &copy; 2013
-		.powered-by: a(href="http://elaborate.knaw.nl/", data-bypass=true) Powered by eLaborate
+header
+	h1: a(href="/")
+	ul
+		li
+			a(href="/", name="entry") Edition
+		li
+			a(href="/search", name="showSearch") Search
+		li
+			a(href="/annotations", name="annotationsIndex") Annotation Overview
+
+	img(src="http://www.huygens.knaw.nl/wp-content/themes/huygens-ing/images/logo.png", width="92px", height="66px")
+#main
+	.search-view
+	.annotations-view
+	.entries

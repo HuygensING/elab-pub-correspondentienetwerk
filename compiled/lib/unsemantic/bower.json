@@ -1,9 +1,0 @@
-{
-  "name": "unsemantic",
-  "version": "0.0.0",
-  "commit": "4a505f3f56a9ca00fb85adad6a50912482433b83",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nathansmith/unsemantic.git"
-  }
-}

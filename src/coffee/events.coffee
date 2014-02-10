@@ -1,6 +1,7 @@
-define (require) ->
-	Backbone = require 'backbone'
-	events = {}
-	_.extend events, Backbone.Events
+Backbone = require 'backbone'
+_ = require 'underscore'
+events = {}
 
-	events
+_.extend events, Backbone.Events
+
+module.exports = events

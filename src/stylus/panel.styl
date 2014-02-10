@@ -1,142 +1,144 @@
-internalPadding = 40px
+// @import './import/*'
 
-.panel-frame
-	position absolute
-	display inline-block
-	width 600px
+// internalPadding = 40px
 
-	vendor('transition', left 0.05s ease .15s)
+// .panel-frame
+// 	position absolute
+// 	display inline-block
+// 	width 600px
 
-	/*** Selection tab ***/
-	.selection
-		position absolute
-		display inline-block
-		top 0px
-		left 0px
-		margin 0 auto
-		padding 0 5px
+// 	vendor('transition', left 0.05s ease .15s)
 
-		background lightGrey
-		font-family sans-serif
-		font-size 13px
+// 	/*** Selection tab ***/
+// 	.selection
+// 		position absolute
+// 		display inline-block
+// 		top 0px
+// 		left 0px
+// 		margin 0 auto
+// 		padding 0 5px
 
-		cursor pointer
+// 		background lightGrey
+// 		font-family sans-serif
+// 		font-size 13px
 
-		border-radius 4px
-		border-bottom-left-radius 0
-		border-bottom-right-radius 0
-		border-bottom 0px solid transparent
-		border 1px solid darken(lightGrey, 20%)
+// 		cursor pointer
 
-		.current
-			span
-				margin 0 5px
+// 		border-radius 4px
+// 		border-bottom-left-radius 0
+// 		border-bottom-right-radius 0
+// 		border-bottom 0px solid transparent
+// 		border 1px solid darken(lightGrey, 20%)
 
-		&:hover
-			background lighten(lightGrey, 20%)
-			ul
-				display inline-block
+// 		.current
+// 			span
+// 				margin 0 5px
 
-		ul
-			padding 0 0
-			margin 0
-			width 100%
-			list-style none
-			display none
-			li
-				margin 5px 0
+// 		&:hover
+// 			background lighten(lightGrey, 20%)
+// 			ul
+// 				display inline-block
 
-.layer // label top left
-	font-weight bold
-	color mediumGrey
-	line-height 20px
-	min-height 20px
-	margin-left 10px
+// 		ul
+// 			padding 0 0
+// 			margin 0
+// 			width 100%
+// 			list-style none
+// 			// display none
+// 			li
+// 				margin 5px 0
 
-.panel
-	background-color white
-	position absolute
-	display inline-block
-	z-index 1
-	width 600px
-	height 700px
+// .layer // label top left
+// 	font-weight bold
+// 	color mediumGrey
+// 	line-height 20px
+// 	min-height 20px
+// 	margin-left 10px
 
-	vendor('box-sizing', border-box)
+// .panel
+// 	background-color white
+// 	position absolute
+// 	display inline-block
+// 	z-index 1
+// 	width 600px
+// 	height 700px
 
-	// background-color white
-	vendor('transition', background-color .4s ease-in-out 0s)
+// 	vendor('box-sizing', border-box)
 
-	easeOutQuint()
+// 	// background-color white
+// 	vendor('transition', background-color .4s ease-in-out 0s)
 
-	overflow-y auto
+// 	easeOutQuint()
 
-	.select-layer
-		h2
-			color mediumGrey
-			text-align center
-			font-weight normal
-		ul
-			margin 0 auto
-			padding 0
-			width 50%
-			list-style none
+// 	overflow-y auto
 
-			li
-				big-button()
-				width 100%
-				margin-bottom 1em
-				text-align center
+// 	.select-layer
+// 		h2
+// 			color mediumGrey
+// 			text-align center
+// 			font-weight normal
+// 		ul
+// 			margin 0 auto
+// 			padding 0
+// 			width 50%
+// 			list-style none
 
-	&.new
-		background-color lightYellow
-		transition background-color .4s ease-in-out 0s
+// 			li
+// 				big-button()
+// 				width 100%
+// 				margin-bottom 1em
+// 				text-align center
 
-	iframe.facsimile-zoom
-		width 504px
-		height 600px
-		border 0
-		overflow hidden
+// 	&.new
+// 		background-color lightYellow
+// 		transition background-color .4s ease-in-out 0s
 
-	// sizes
-	&.large
-		width 600px
-		height 700px
+// 	iframe.facsimile-zoom
+// 		width 504px
+// 		height 600px
+// 		border 0
+// 		overflow hidden
 
-	&.medium
-		width 500px
-		height 650px
-		iframe.facsimile-zoom
-			width 404px
-			height 500px
+// 	// sizes
+// 	&.large
+// 		width 600px
+// 		height 700px
 
-	&.small
-		width 400px
-		height 500px
-		iframe.facsimile-zoom
-			width 304px
-			height 400px
+// 	&.medium
+// 		width 500px
+// 		height 650px
+// 		iframe.facsimile-zoom
+// 			width 404px
+// 			height 500px
 
-	box-sizing border-box
-	border 1px solid lightGrey
-	border-left none
-	padding internalPadding
+// 	&.small
+// 		width 400px
+// 		height 500px
+// 		iframe.facsimile-zoom
+// 			width 304px
+// 			height 400px
 
-	&:first-child
-		border-left 1px solid lightGrey
+// 	box-sizing border-box
+// 	border 1px solid lightGrey
+// 	border-left none
+// 	padding internalPadding
 
-	/*** Close button ***/
-	.close
-		background-image url('../images/close-button.png')
-		width 12px
-		height 12px
-		cursor pointer
-		opacity 0.5
+// 	&:first-child
+// 		border-left 1px solid lightGrey
+
+// 	/*** Close button ***/
+// 	.close
+// 		background-image url('../images/close-button.png')
+// 		width 12px
+// 		height 12px
+// 		cursor pointer
+// 		opacity 0.5
 		
-		position absolute
-		top 16px
-		right 16px
+// 		position absolute
+// 		top 16px
+// 		right 16px
 		
-		&:hover
-			opacity 1
-	&:only-child .close
-		display none
+// 		&:hover
+// 			opacity 1
+// 	&:only-child .close
+// 		display none
