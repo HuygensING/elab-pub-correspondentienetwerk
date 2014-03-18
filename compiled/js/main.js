@@ -1571,7 +1571,7 @@
 
 }).call(this);
 
-},{"underscore":95}],2:[function(require,module,exports){
+},{"underscore":94}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
 var Backbone, Entries, Entry,
@@ -1705,6 +1705,7 @@ Config = (function(_super) {
 
   Config.prototype.defaults = function() {
     return {
+      restUrl: 'http://rest.elaborate.huygens.knaw.nl/',
       basePath: basePath,
       appRootElement: '#app',
       entryTermSingular: 'entry',
@@ -1759,7 +1760,7 @@ Config = (function(_super) {
 module.exports = new Config;
 
 
-},{"backbone":31,"underscore.string":94}],6:[function(require,module,exports){
+},{"backbone":31,"underscore.string":93}],6:[function(require,module,exports){
 var Backbone, Entry, config, us,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -1899,7 +1900,7 @@ Entry = (function(_super) {
 module.exports = Entry;
 
 
-},{"./config":5,"backbone":31,"underscore.string":94}],7:[function(require,module,exports){
+},{"./config":5,"backbone":31,"underscore.string":93}],7:[function(require,module,exports){
 var $, AnnotatedText, Backbone, Views, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -2022,7 +2023,7 @@ AnnotatedText = (function(_super) {
 module.exports = AnnotatedText;
 
 
-},{"./views/annotations":12,"./views/text":13,"backbone":31,"jquery":33,"underscore":95}],8:[function(require,module,exports){
+},{"./views/annotations":12,"./views/text":13,"backbone":31,"jquery":33,"underscore":94}],8:[function(require,module,exports){
 var Annotation, Annotations, Backbone,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -2129,7 +2130,7 @@ buf.push("<span>" + (null == (jade.interp = text) ? "" : jade.interp) + "</span>
 
 buf.push("</ol>");;return buf.join("");
 };
-},{"jade/runtime":91}],11:[function(require,module,exports){
+},{"jade/runtime":90}],11:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -2138,7 +2139,7 @@ var jade_mixins = {};
 var locals_ = (locals || {}),textLayer = locals_.textLayer;
 buf.push("<header><h3>" + (jade.escape(null == (jade.interp = textLayer) ? "" : jade.interp)) + "</h3><i title=\"Hide annotations\" class=\"toggle-annotations fa fa-comments-o\"></i></header>");;return buf.join("");
 };
-},{"jade/runtime":91}],12:[function(require,module,exports){
+},{"jade/runtime":90}],12:[function(require,module,exports){
 var $, Annotations, AnnotationsView, Backbone, dom, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -2306,7 +2307,7 @@ AnnotationsView = (function(_super) {
 module.exports = AnnotationsView;
 
 
-},{"../collections/annotations":8,"../templates/annotations.jade":10,"backbone":31,"hilib/src/utils/dom":85,"jquery":33,"underscore":95}],13:[function(require,module,exports){
+},{"../collections/annotations":8,"../templates/annotations.jade":10,"backbone":31,"hilib/src/utils/dom":84,"jquery":33,"underscore":94}],13:[function(require,module,exports){
 var $, Backbone, EntryTextView, config, dom, hl, textlayers, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -2424,6 +2425,7 @@ EntryTextView = (function(_super) {
     for (_i = 0, _len = terms.length; _i < _len; _i++) {
       term = terms[_i];
       $divs = this.$("div.line:contains(" + term + ")");
+      term = term.split('').join('(</?\\w+>)*');
       _results.push((function() {
         var _j, _len1, _results1;
         _results1 = [];
@@ -2496,8 +2498,8 @@ EntryTextView = (function(_super) {
 module.exports = EntryTextView;
 
 
-},{"../../../collections/textlayers":4,"../../../models/config":5,"../templates/text.jade":11,"backbone":31,"hilib/src/utils/dom":85,"hilib/src/utils/jquery.mixin":87,"jquery":33,"underscore":95}],14:[function(require,module,exports){
-var $, Entry, FacetedSearchResults, Fn, Views, config, dom, token, tpl,
+},{"../../../collections/textlayers":4,"../../../models/config":5,"../templates/text.jade":11,"backbone":31,"hilib/src/utils/dom":84,"hilib/src/utils/jquery.mixin":86,"jquery":33,"underscore":94}],14:[function(require,module,exports){
+var $, Entry, FacetedSearchResults, Fn, Views, config, dom, editMultipleMetadataActive, token, tpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -2521,6 +2523,8 @@ Views = {
 };
 
 tpl = require('./templates/main.jade');
+
+editMultipleMetadataActive = false;
 
 FacetedSearchResults = (function(_super) {
   __extends(FacetedSearchResults, _super);
@@ -2549,6 +2553,7 @@ FacetedSearchResults = (function(_super) {
 
   FacetedSearchResults.prototype.renderFacetedSearch = function() {
     this.subviews.facetedSearch = new Views.FacetedSearch({
+      textSearch: 'simple',
       searchPath: this.options.searchUrl,
       token: token.get(),
       textSearchOptions: {
@@ -2571,8 +2576,11 @@ FacetedSearchResults = (function(_super) {
     })(this));
     return this.listenTo(this.subviews.facetedSearch, 'results:change', (function(_this) {
       return function(responseModel) {
-        _this.trigger('change:results', responseModel);
-        return _this.renderResult(responseModel);
+        _this.renderResult(responseModel);
+        if (editMultipleMetadataActive) {
+          console.log("TODO");
+        }
+        return _this.trigger('change:results', responseModel);
       };
     })(this));
   };
@@ -2651,7 +2659,8 @@ FacetedSearchResults = (function(_super) {
     var entries;
     entries = $('ul.entries');
     this.$('.resultview').toggleClass('edit-multiple-entry-metadata');
-    if (this.$('.resultview').hasClass('edit-multiple-entry-metadata')) {
+    editMultipleMetadataActive = this.$('.resultview').hasClass('edit-multiple-entry-metadata');
+    if (editMultipleMetadataActive) {
       this.subviews.editMultipleEntryMetadata = new Views.EditMultipleMetadata({
         entryMetadataFields: this.options.entryMetadataFields,
         editMultipleMetadataUrl: this.options.editMultipleMetadataUrl
@@ -2683,7 +2692,7 @@ FacetedSearchResults = (function(_super) {
 module.exports = FacetedSearchResults;
 
 
-},{"../../models/config":5,"../../models/entry":6,"../search-result":25,"./templates/main.jade":16,"./views/edit-multiple-metadata":17,"faceted-search":51,"hilib/src/managers/token":83,"hilib/src/utils/dom":85,"hilib/src/utils/general":86,"hilib/src/views/base":88,"jquery":33}],15:[function(require,module,exports){
+},{"../../models/config":5,"../../models/entry":6,"../search-result":25,"./templates/main.jade":16,"./views/edit-multiple-metadata":17,"faceted-search":51,"hilib/src/managers/token":82,"hilib/src/utils/dom":84,"hilib/src/utils/general":85,"hilib/src/views/base":87,"jquery":33}],15:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -2750,7 +2759,7 @@ buf.push("<li><label>" + (jade.escape(null == (jade.interp = field) ? "" : jade.
 
 buf.push("<li><label>Publishable</label><i data-name=\"Publishable\" class=\"fa fa-square-o\"></i><input style=\"margin-right: 137px\" type=\"checkbox\" name=\"Publishable\"" + (jade.attr("tabindex", entrymetadatafields.length * 2 + 4, true, false)) + "/></li></ul></form></div></div><footer><button name=\"cancel\"" + (jade.attr("tabindex", entrymetadatafields.length * 2 + 5, true, false)) + ">Cancel</button><span>or</span><button name=\"savemetadata\"" + (jade.attr("tabindex", entrymetadatafields.length * 2 + 6, true, false)) + " class=\"simple inactive\">Save metadata</button></footer>");;return buf.join("");
 };
-},{"jade/runtime":91}],16:[function(require,module,exports){
+},{"jade/runtime":90}],16:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -2759,7 +2768,7 @@ var jade_mixins = {};
 
 buf.push("<div class=\"faceted-search-placeholder\"></div><div class=\"resultview\"></div>");;return buf.join("");
 };
-},{"jade/runtime":91}],17:[function(require,module,exports){
+},{"jade/runtime":90}],17:[function(require,module,exports){
 var $, EditMultipleMetadata, Views, ajax, config, token, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -2955,7 +2964,7 @@ EditMultipleMetadata = (function(_super) {
 module.exports = EditMultipleMetadata;
 
 
-},{"../../../models/config":5,"../templates/edit-multiple-metadata.jade":15,"hilib/src/managers/ajax":82,"hilib/src/managers/token":83,"hilib/src/views/base":88,"jquery":33,"underscore":95}],18:[function(require,module,exports){
+},{"../../../models/config":5,"../templates/edit-multiple-metadata.jade":15,"hilib/src/managers/ajax":81,"hilib/src/managers/token":82,"hilib/src/views/base":87,"jquery":33,"underscore":94}],18:[function(require,module,exports){
 var Backbone, SelectedPanel, SelectedPanels, textlayers,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -3102,7 +3111,7 @@ Panels = (function(_super) {
             }
           };
         })(this));
-      } else {
+      } else if (this.options.annotation != null) {
         activePanel.get('view').highlightAnnotation(this.options.annotation);
       }
       if (this.options.terms != null) {
@@ -3214,7 +3223,7 @@ Panels = (function(_super) {
 module.exports = Panels;
 
 
-},{"../../collections/entries":3,"../../collections/textlayers":4,"../../models/config":5,"../annotated-text/annotated-text":7,"./templates/main.jade":21,"./views/facsimile-panel":23,"./views/panels-menu":24,"backbone":31,"hilib/src/utils/dom":85,"jquery":33,"underscore":95,"underscore.string":94}],20:[function(require,module,exports){
+},{"../../collections/entries":3,"../../collections/textlayers":4,"../../models/config":5,"../annotated-text/annotated-text":7,"./templates/main.jade":21,"./views/facsimile-panel":23,"./views/panels-menu":24,"backbone":31,"hilib/src/utils/dom":84,"jquery":33,"underscore":94,"underscore.string":93}],20:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -3255,7 +3264,7 @@ buf.push("<h3>" + (jade.escape(null == (jade.interp = 'Facsimile ' + (n+1) + ' o
 buf.push("</header><iframe" + (jade.attr("src", entry.facsimiles[0].zoom, true, false)) + " border=\"0\" width=\"100%\"></iframe>");
 };return buf.join("");
 };
-},{"jade/runtime":91}],21:[function(require,module,exports){
+},{"jade/runtime":90}],21:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -3287,7 +3296,7 @@ buf.push("<li><label>" + (jade.escape(null == (jade.interp = m.field) ? "" : jad
 
 buf.push("</ul></div><div class=\"panels\"></div>");;return buf.join("");
 };
-},{"jade/runtime":91}],22:[function(require,module,exports){
+},{"jade/runtime":90}],22:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -3356,7 +3365,7 @@ jade_mixins["listItem"](layer.id);
 
 buf.push("</ul>");;return buf.join("");
 };
-},{"jade/runtime":91}],23:[function(require,module,exports){
+},{"jade/runtime":90}],23:[function(require,module,exports){
 var Backbone, FacsimilePanel, tpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -3594,7 +3603,7 @@ PanelsMenu = (function(_super) {
 module.exports = PanelsMenu;
 
 
-},{"../collections/selected-panels":18,"../templates/panels-menu.jade":22,"backbone":31,"elaborate-modules/modules/collections/textlayers":4,"elaborate-modules/modules/models/config":5,"jquery":33,"underscore":95,"underscore.string":94}],25:[function(require,module,exports){
+},{"../collections/selected-panels":18,"../templates/panels-menu.jade":22,"backbone":31,"elaborate-modules/modules/collections/textlayers":4,"elaborate-modules/modules/models/config":5,"jquery":33,"underscore":94,"underscore.string":93}],25:[function(require,module,exports){
 var $, SearchResult, Views, config, dom, tpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -3710,7 +3719,7 @@ SearchResult = (function(_super) {
 module.exports = SearchResult;
 
 
-},{"../../models/config":5,"../sort-levels":29,"./templates/main.jade":27,"./views/entry-list-item":28,"hilib/src/utils/dom":85,"hilib/src/views/base":88,"hilib/src/views/pagination/main":89,"jquery":33}],26:[function(require,module,exports){
+},{"../../models/config":5,"../sort-levels":29,"./templates/main.jade":27,"./views/entry-list-item":28,"hilib/src/utils/dom":84,"hilib/src/views/base":87,"hilib/src/views/pagination/main":88,"jquery":33}],26:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -3819,7 +3828,7 @@ buf.push("</ul></li>");
 buf.push("</ul></div>");
 };return buf.join("");
 };
-},{"jade/runtime":91}],27:[function(require,module,exports){
+},{"jade/runtime":90}],27:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -3828,7 +3837,7 @@ var jade_mixins = {};
 
 buf.push("<header><div class=\"editselection-placeholder\"></div><h3 class=\"numfound\"></h3><nav><ul><li class=\"levels\"></li><li class=\"display-keywords\"><input id=\"a9f7fg6\" type=\"checkbox\"/><label for=\"a9f7fg6\">Display keywords</label></li><li class=\"select-all\"><input id=\"i9d8sdf\" type=\"checkbox\"/><label for=\"i9d8sdf\">Select all</label></li><li class=\"show-metadata\"><input id=\"o45hes3\" type=\"checkbox\" checked=\"checked\"/><label for=\"o45hes3\">Show metadata</label></li></ul></nav><div class=\"pagination\"></div></header><ul class=\"entries\"></ul>");;return buf.join("");
 };
-},{"jade/runtime":91}],28:[function(require,module,exports){
+},{"jade/runtime":90}],28:[function(require,module,exports){
 var Base, EntryListItem, Fn, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -3909,7 +3918,7 @@ EntryListItem = (function(_super) {
 module.exports = EntryListItem;
 
 
-},{"../templates/entry-list-item.jade":26,"hilib/src/utils/general":86,"hilib/src/views/base":88,"underscore":95}],29:[function(require,module,exports){
+},{"../templates/entry-list-item.jade":26,"hilib/src/utils/general":85,"hilib/src/views/base":87,"underscore":94}],29:[function(require,module,exports){
 var $, SortLevels, Views, tpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -4014,7 +4023,7 @@ SortLevels = (function(_super) {
 module.exports = SortLevels;
 
 
-},{"./templates/main.jade":30,"hilib/src/views/base":88,"jquery":33}],30:[function(require,module,exports){
+},{"./templates/main.jade":30,"hilib/src/views/base":87,"jquery":33}],30:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -4092,7 +4101,7 @@ buf.push("</select><i class=\"fa fa-sort-alpha-asc\"></i></li>");
 
 buf.push("<li class=\"search\">&nbsp;<button>Search</button></li></ul></div>");;return buf.join("");
 };
-},{"jade/runtime":91}],31:[function(require,module,exports){
+},{"jade/runtime":90}],31:[function(require,module,exports){
 module.exports=require(1)
 },{"underscore":32}],32:[function(require,module,exports){
 //     Underscore.js 1.6.0
@@ -14694,7 +14703,7 @@ var DOM, _;
 
 _ = require('underscore');
 
-module.exports = DOM = function(el) {
+DOM = function(el) {
   if (_.isString(el)) {
     el = document.querySelector(el);
   }
@@ -14760,9 +14769,9 @@ module.exports = DOM = function(el) {
     },
 
     /*
-    		Native alternative to jQuery's $.offset()
+    	Native alternative to jQuery's $.offset()
     
-    		http://www.quirksmode.org/js/findpos.html
+    	http://www.quirksmode.org/js/findpos.html
      */
     position: function(parent) {
       var left, loopEl, top;
@@ -14787,9 +14796,9 @@ module.exports = DOM = function(el) {
     },
 
     /*
-    		Is child el a descendant of parent el?
+    	Is child el a descendant of parent el?
     
-    		http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
+    	http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
      */
     hasDescendant: function(child) {
       var node;
@@ -14896,6 +14905,8 @@ module.exports = DOM = function(el) {
     }
   };
 };
+
+module.exports = DOM;
 
 
 },{"underscore":37}],42:[function(require,module,exports){
@@ -16945,7 +16956,7 @@ module.exports = SearchResults;
 module.exports = {
   baseUrl: '',
   searchPath: '',
-  search: true,
+  textSearch: 'advanced',
   token: null,
   queryOptions: {},
   facetNameMap: {}
@@ -17014,8 +17025,92 @@ MainView = (function(_super) {
     delete options.facetNameMap;
     _.extend(config, options);
     queryOptions = _.extend(config.queryOptions, config.textSearchOptions);
-    this.render();
+    if (['none', 'simple', 'advanced'].indexOf(config.textSearch) === -1) {
+      config.textSearch = 'advanced';
+    }
     this.model = new MainModel(queryOptions);
+    this.render();
+    return this.addListeners();
+  };
+
+  MainView.prototype.render = function() {
+    this.$el.html(tpl());
+    this.$('.faceted-search').addClass("search-type-" + config.textSearch);
+    if (config.textSearch !== 'none') {
+      this.renderTextSearch();
+    } else {
+      this.$('.loader').fadeIn('slow');
+    }
+    return this;
+  };
+
+  MainView.prototype.renderTextSearch = function() {
+    var textSearch;
+    textSearch = new Views.TextSearch();
+    this.$('.faceted-search form').prepend(textSearch.el);
+    this.listenTo(textSearch, 'change', (function(_this) {
+      return function(queryOptions) {
+        return _this.model.set(queryOptions);
+      };
+    })(this));
+    return this.facetViews['textSearch'] = textSearch;
+  };
+
+  MainView.prototype.renderFacets = function() {
+    var View, facetData, fragment, index, _ref;
+    if (config.textSearch === 'simple') {
+      return;
+    }
+    this.$('.loader').hide();
+    this.$('.faceted-search > i.fa').css('visibility', 'visible');
+    if (this.model.searchResults.length === 1) {
+      fragment = document.createDocumentFragment();
+      _ref = this.model.searchResults.current.get('facets');
+      for (index in _ref) {
+        if (!__hasProp.call(_ref, index)) continue;
+        facetData = _ref[index];
+        if (facetData.type in facetViewMap) {
+          View = facetViewMap[facetData.type];
+          this.facetViews[facetData.name] = new View({
+            attrs: facetData
+          });
+          this.listenTo(this.facetViews[facetData.name], 'change', (function(_this) {
+            return function(queryOptions) {
+              return _this.model.set(queryOptions);
+            };
+          })(this));
+          fragment.appendChild(this.facetViews[facetData.name].el);
+          fragment.appendChild(document.createElement('hr'));
+        } else {
+          console.error('Unknown facetView', facetData.type);
+        }
+      }
+      return this.el.querySelector('.facets').appendChild(fragment);
+    } else {
+      return this.update();
+    }
+  };
+
+  MainView.prototype.events = function() {
+    return {
+      'click ul.menu li.collapse-expand': 'toggleFacets',
+      'click ul.menu li.reset': function() {
+        return this.reset();
+      },
+      'click span.advanced': function() {
+        config.textSearch = config.textSearch === 'advanced' ? 'simple' : 'advanced';
+        this.$('.faceted-search').toggleClass('search-type-simple');
+        this.$('.faceted-search').toggleClass('search-type-advanced');
+        if (this.model.searchResults.length === 0) {
+          return this.model.trigger('change');
+        } else {
+          return this.renderFacets();
+        }
+      }
+    };
+  };
+
+  MainView.prototype.addListeners = function() {
     this.listenTo(this.model.searchResults, 'change:results', (function(_this) {
       return function(responseModel) {
         _this.renderFacets();
@@ -17032,21 +17127,7 @@ MainView = (function(_super) {
         return _this.trigger('results:change', responseModel, database);
       };
     })(this));
-    this.listenTo(this.model.searchResults, 'request', (function(_this) {
-      return function() {
-        var bb, div, el, loader, top;
-        el = _this.el.querySelector('.faceted-search');
-        div = _this.el.querySelector('.overlay');
-        div.style.width = el.clientWidth + 'px';
-        div.style.height = el.clientHeight + 'px';
-        div.style.display = 'block';
-        loader = _this.el.querySelector('.overlay div');
-        bb = dom(el).boundingBox();
-        loader.style.left = bb.left + bb.width / 2 + 'px';
-        top = bb.height > document.documentElement.clientHeight ? '50vh' : bb.height / 2 + 'px';
-        return loader.style.top = top;
-      };
-    })(this));
+    this.listenTo(this.model.searchResults, 'request', this.showLoader);
     this.listenTo(this.model.searchResults, 'sync', (function(_this) {
       return function() {
         var el;
@@ -17061,71 +17142,32 @@ MainView = (function(_super) {
     })(this));
   };
 
-  MainView.prototype.render = function() {
-    var rtpl;
-    rtpl = tpl();
-    this.$el.html(rtpl);
-    this.$('.loader').fadeIn('slow');
-    return this;
-  };
-
-  MainView.prototype.renderFacets = function(data) {
-    var View, facetData, fragment, index, textSearch, _ref;
-    this.$('.loader').hide();
-    this.$('.faceted-search > i.fa').css('visibility', 'visible');
-    if (this.model.searchResults.length === 1) {
-      fragment = document.createDocumentFragment();
-      if (config.search) {
-        textSearch = new Views.TextSearch();
-        this.$('.search-placeholder').html(textSearch.el);
-        this.listenTo(textSearch, 'change', (function(_this) {
-          return function(queryOptions) {
-            return _this.model.set(queryOptions);
-          };
-        })(this));
-        this.facetViews['textSearch'] = textSearch;
-      }
-      _ref = this.model.searchResults.current.get('facets');
-      for (index in _ref) {
-        if (!__hasProp.call(_ref, index)) continue;
-        facetData = _ref[index];
-        if (facetData.type in facetViewMap) {
-          View = facetViewMap[facetData.type];
-          this.facetViews[facetData.name] = new View({
-            attrs: facetData
-          });
-          this.listenTo(this.facetViews[facetData.name], 'change', (function(_this) {
-            return function(queryOptions) {
-              return _this.model.set(queryOptions);
-            };
-          })(this));
-          fragment.appendChild(this.facetViews[facetData.name].el);
-        } else {
-          console.error('Unknown facetView', facetData.type);
-        }
-      }
-      return this.el.querySelector('.facets').appendChild(fragment);
-    } else {
-      return this.update();
+  MainView.prototype.showLoader = function() {
+    var facetedSearch, left, loader, overlay, top;
+    facetedSearch = this.$('.faceted-search');
+    overlay = this.$('.overlay');
+    loader = overlay.find('div');
+    overlay.width(facetedSearch.width());
+    overlay.height(facetedSearch.height());
+    overlay.css('display', 'block');
+    left = facetedSearch.offset().left + facetedSearch.width() / 2 - 12;
+    loader.css('left', left);
+    top = facetedSearch.offset().top + facetedSearch.height() / 2 - 12;
+    if (facetedSearch.height() > $(window).height()) {
+      top = '50vh';
     }
-  };
-
-  MainView.prototype.events = function() {
-    return {
-      'click i.fa-compress': 'toggleFacets',
-      'click i.fa-expand': 'toggleFacets',
-      'click i.fa-refresh': function() {
-        return this.refresh();
-      }
-    };
+    return loader.css('top', top);
   };
 
   MainView.prototype.toggleFacets = function(ev) {
-    var $button, facetNames, index, open, slideFacet;
-    $button = $(ev.currentTarget);
-    open = $button.hasClass('fa-expand');
-    $button.toggleClass('fa-compress');
-    $button.toggleClass('fa-expand');
+    var facetNames, icon, index, open, slideFacet, span, text;
+    icon = $(ev.currentTarget).find('i.fa');
+    span = $(ev.currentTarget).find('span');
+    open = icon.hasClass('fa-expand');
+    icon.toggleClass('fa-compress');
+    icon.toggleClass('fa-expand');
+    text = open ? 'Collapse' : 'Expand';
+    span.text("" + text + " facets");
     facetNames = _.keys(this.facetViews);
     index = 0;
     slideFacet = (function(_this) {
@@ -17180,7 +17222,7 @@ MainView = (function(_super) {
   };
 
   MainView.prototype.update = function() {
-    var data, index, _ref, _results;
+    var data, index, _ref, _ref1, _results;
     if (this.facetViews.hasOwnProperty('textSearch')) {
       this.facetViews.textSearch.update();
     }
@@ -17189,7 +17231,7 @@ MainView = (function(_super) {
     for (index in _ref) {
       if (!__hasProp.call(_ref, index)) continue;
       data = _ref[index];
-      _results.push(this.facetViews[data.name].update(data.options));
+      _results.push((_ref1 = this.facetViews[data.name]) != null ? _ref1.update(data.options) : void 0);
     }
     return _results;
   };
@@ -17221,7 +17263,7 @@ MainView = (function(_super) {
 module.exports = MainView;
 
 
-},{"../jade/main.jade":77,"./config":49,"./facetviewmap":50,"./models/main":57,"./views/facets/boolean":61,"./views/facets/date":62,"./views/facets/list":63,"./views/search":67,"backbone":34,"hilib/src/mixins/pubsub":40,"hilib/src/utils/dom":41,"hilib/src/utils/general":42,"jquery":45,"underscore":46}],52:[function(require,module,exports){
+},{"../jade/main.jade":76,"./config":49,"./facetviewmap":50,"./models/main":57,"./views/facets/boolean":61,"./views/facets/date":62,"./views/facets/list":63,"./views/search":67,"backbone":34,"hilib/src/mixins/pubsub":40,"hilib/src/utils/dom":41,"hilib/src/utils/general":42,"jquery":45,"underscore":46}],52:[function(require,module,exports){
 var BooleanFacet, Models,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -17392,7 +17434,7 @@ module.exports = ListOption;
 
 
 },{"backbone":34}],57:[function(require,module,exports){
-var Backbone, MainModel, SearchResults, _,
+var Backbone, MainModel, SearchResults, config, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -17401,6 +17443,8 @@ Backbone = require('backbone');
 _ = require('underscore');
 
 SearchResults = require('../collections/searchresults');
+
+config = require('../config');
 
 MainModel = (function(_super) {
   __extends(MainModel, _super);
@@ -17424,7 +17468,9 @@ MainModel = (function(_super) {
         return _this.searchResults.runQuery(_.clone(_this.attributes));
       };
     })(this));
-    return this.trigger('change');
+    if (config.textSearch !== 'simple') {
+      return this.trigger('change');
+    }
   };
 
   MainModel.prototype.set = function(attrs, options) {
@@ -17476,7 +17522,7 @@ MainModel = (function(_super) {
 module.exports = MainModel;
 
 
-},{"../collections/searchresults":48,"backbone":34,"underscore":46}],58:[function(require,module,exports){
+},{"../collections/searchresults":48,"../config":49,"backbone":34,"underscore":46}],58:[function(require,module,exports){
 var FacetModel, RangeFacet,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -17548,11 +17594,13 @@ module.exports = Search;
 
 
 },{"backbone":34,"underscore":46}],60:[function(require,module,exports){
-var Backbone, SearchResult, ajax, config, token,
+var Backbone, SearchResult, ajax, config, token, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 Backbone = require('backbone');
+
+_ = require('underscore');
 
 ajax = require('hilib/src/managers/ajax');
 
@@ -17589,16 +17637,20 @@ SearchResult = (function(_super) {
   };
 
   SearchResult.prototype.sync = function(method, model, options) {
-    var jqXHR;
+    var ajaxOptions, jqXHR;
     if (method === 'read') {
       if (this.options.url != null) {
         return this.getResults(this.options.url, options.success);
       } else {
-        jqXHR = ajax.post({
+        ajaxOptions = {
           url: config.baseUrl + config.searchPath,
           data: JSON.stringify(this.options.queryOptions),
           dataType: 'text'
-        });
+        };
+        if (config.hasOwnProperty('requestOptions')) {
+          _.extend(ajaxOptions, config.requestOptions);
+        }
+        jqXHR = ajax.post(ajaxOptions);
         jqXHR.done((function(_this) {
           return function(data, textStatus, jqXHR) {
             var url;
@@ -17666,7 +17718,7 @@ SearchResult = (function(_super) {
 module.exports = SearchResult;
 
 
-},{"../config":49,"backbone":34,"hilib/src/managers/ajax":38,"hilib/src/managers/token":39}],61:[function(require,module,exports){
+},{"../config":49,"backbone":34,"hilib/src/managers/ajax":38,"hilib/src/managers/token":39,"underscore":46}],61:[function(require,module,exports){
 var BooleanFacet, Models, StringFn, Views, bodyTpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -17913,8 +17965,20 @@ ListFacet = (function(_super) {
       'change header .options input[type="checkbox"][name="all"]': function(ev) {
         return this.optionsView.setCheckboxes(ev);
       },
-      'click .orderby i': 'changeOrder'
+      'click header .menu i.filter': 'toggleFilterMenu',
+      'click header .menu i.alpha': 'changeOrder',
+      'click header .menu i.amount': 'changeOrder'
     });
+  };
+
+  ListFacet.prototype.toggleFilterMenu = function() {
+    this.$('i.filter').toggleClass('active');
+    return this.$('header .options').slideToggle(150, (function(_this) {
+      return function() {
+        _this.$('header .options input[name="filter"]').focus();
+        return _this.renderFilteredOptionCount();
+      };
+    })(this));
   };
 
   ListFacet.prototype.changeOrder = function(ev) {
@@ -18123,13 +18187,15 @@ module.exports = ListFacetOptions;
 
 
 },{"../../../jade/facets/list.option.jade":72,"../../models/list":55,"backbone":34,"hilib/src/utils/general":42,"jquery":45,"underscore":46}],65:[function(require,module,exports){
-var $, Backbone, Facet, tpl,
+var $, Backbone, Facet, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 Backbone = require('backbone');
 
 $ = require('jquery');
+
+_ = require('underscore');
 
 tpl = require('../../../jade/facets/main.jade');
 
@@ -18149,23 +18215,13 @@ Facet = (function(_super) {
 
   Facet.prototype.events = function() {
     return {
-      'click h3': 'toggleBody',
-      'click header i.openclose': 'toggleMenu'
+      'click h3': 'toggleBody'
     };
-  };
-
-  Facet.prototype.toggleMenu = function(ev) {
-    var $button;
-    $button = $(ev.currentTarget);
-    $button.toggleClass('fa-plus-square-o');
-    $button.toggleClass('fa-minus-square-o');
-    this.$('header .options').slideToggle(150);
-    return this.$('header .options input[name="filter"]').focus();
   };
 
   Facet.prototype.hideMenu = function() {
     var $button;
-    $button = this.$('header i.fa');
+    $button = this.$('header i.openclose');
     $button.addClass('fa-plus-square-o');
     $button.removeClass('fa-minus-square-o');
     return this.$('header .options').slideUp(150);
@@ -18213,7 +18269,7 @@ Facet = (function(_super) {
 module.exports = Facet;
 
 
-},{"../../../jade/facets/main.jade":73,"backbone":34,"jquery":45}],66:[function(require,module,exports){
+},{"../../../jade/facets/main.jade":73,"backbone":34,"jquery":45,"underscore":46}],66:[function(require,module,exports){
 var Models, RangeFacet, Views, bodyTpl, handleSize,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -18406,11 +18462,15 @@ module.exports = RangeFacet;
 
 
 },{"../../../jade/facets/range.body.jade":74,"../../models/range":58,"./main":65}],67:[function(require,module,exports){
-var Models, SearchView, Views, bodyTpl, config, menuTpl, _,
+var Backbone, Models, SearchView, Views, config, dom, tpl, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+Backbone = require('backbone');
+
 _ = require('underscore');
+
+dom = require('hilib/src/utils/dom');
 
 config = require('../config');
 
@@ -18422,9 +18482,7 @@ Views = {
   Facet: require('./facets/main')
 };
 
-menuTpl = require('../../jade/facets/search.menu.jade');
-
-bodyTpl = require('../../jade/facets/search.body.jade');
+tpl = require('../../jade/facets/search.jade');
 
 SearchView = (function(_super) {
   __extends(SearchView, _super);
@@ -18433,10 +18491,9 @@ SearchView = (function(_super) {
     return SearchView.__super__.constructor.apply(this, arguments);
   }
 
-  SearchView.prototype.className = 'facet search';
+  SearchView.prototype.className = 'text-search';
 
   SearchView.prototype.initialize = function(options) {
-    SearchView.__super__.initialize.apply(this, arguments);
     this.model = new Models.Search(config.textSearchOptions);
     this.listenTo(this.model, 'change', (function(_this) {
       return function() {
@@ -18447,29 +18504,30 @@ SearchView = (function(_super) {
   };
 
   SearchView.prototype.render = function() {
-    var body, menu;
-    SearchView.__super__.render.apply(this, arguments);
-    menu = menuTpl({
+    this.$el.html(tpl({
       model: this.model
-    });
-    body = bodyTpl({
-      model: this.model
-    });
-    this.$('.options').html(menu);
-    this.$('.body').html(body);
+    }));
     return this;
   };
 
   SearchView.prototype.events = function() {
-    return _.extend({}, SearchView.__super__.events.apply(this, arguments), {
+    return {
       'click button': function(ev) {
         return ev.preventDefault();
       },
       'click button.active': 'search',
       'keyup input': 'activateSearchButton',
+      'focus input': function() {
+        return this.$('.body .menu').slideDown(150);
+      },
+      'click .menu .fa-times': function() {
+        return this.$('.body .menu').slideUp(150);
+      },
       'change input[type="checkbox"]': 'checkboxChanged'
-    });
+    };
   };
+
+  SearchView.prototype.toggleMenu = function(ev) {};
 
   SearchView.prototype.checkboxChanged = function(ev) {
     var attr, cb, checkedArray, _i, _len, _ref;
@@ -18528,12 +18586,12 @@ SearchView = (function(_super) {
 
   return SearchView;
 
-})(Views.Facet);
+})(Backbone.View);
 
 module.exports = SearchView;
 
 
-},{"../../jade/facets/search.body.jade":75,"../../jade/facets/search.menu.jade":76,"../config":49,"../models/search":59,"./facets/main":65,"underscore":46}],68:[function(require,module,exports){
+},{"../../jade/facets/search.jade":75,"../config":49,"../models/search":59,"./facets/main":65,"backbone":34,"hilib/src/utils/dom":41,"underscore":46}],68:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -18636,7 +18694,7 @@ module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var locals_ = (locals || {}),selectAll = locals_.selectAll;
-buf.push("<input type=\"checkbox\" name=\"all\"" + (jade.attr("style", selectAll?'visibility:visible':'visibility:hidden', true, false)) + "/><input type=\"text\" name=\"filter\"/><small class=\"optioncount\"></small><div class=\"orderby\"><i class=\"alpha fa fa-sort-alpha-asc\"></i><i class=\"amount active fa fa-sort-amount-desc\"></i></div>");;return buf.join("");
+buf.push("<input type=\"checkbox\" name=\"all\"" + (jade.attr("style", selectAll?'visibility:visible':'visibility:hidden', true, false)) + "/><input type=\"text\" name=\"filter\"/><small class=\"optioncount\"></small>");;return buf.join("");
 };
 },{"jade/runtime":44}],72:[function(require,module,exports){
 var jade = require("jade/runtime");
@@ -18654,7 +18712,7 @@ module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var locals_ = (locals || {}),name = locals_.name,title = locals_.title;
-buf.push("<div class=\"placeholder pad3\"><header><h3" + (jade.attr("data-name", name, true, false)) + ">" + (jade.escape(null == (jade.interp = title) ? "" : jade.interp)) + "</h3><i class=\"openclose fa fa-plus-square-o\"></i><div class=\"options\"></div></header><div class=\"body\"></div></div>");;return buf.join("");
+buf.push("<div class=\"placeholder pad3\"><header><h3" + (jade.attr("data-name", name, true, false)) + ">" + (jade.escape(null == (jade.interp = title) ? "" : jade.interp)) + "</h3><div class=\"menu\"><i title=\"Filter options\" class=\"filter fa fa-filter\"></i><i title=\"Sort alphabetically\" class=\"alpha fa fa-sort-alpha-asc\"></i><i title=\"Sort numerically\" class=\"amount active fa fa-sort-amount-desc\"></i></div><div class=\"options\"></div></header><div class=\"body\"></div></div>");;return buf.join("");
 };
 },{"jade/runtime":44}],74:[function(require,module,exports){
 var jade = require("jade/runtime");
@@ -18671,26 +18729,24 @@ var jade = require("jade/runtime");
 module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
-
-buf.push("<div class=\"row span4 align middle\"><div class=\"cell span3\"><div class=\"padr4\"><input type=\"text\" name=\"search\"/></div></div><div class=\"cell span1\"><button class=\"search\">Search</button></div></div>");;return buf.join("");
-};
-},{"jade/runtime":44}],76:[function(require,module,exports){
-var jade = require("jade/runtime");
-
-module.exports = function template(locals) {
-var buf = [];
-var jade_mixins = {};
 var locals_ = (locals || {}),model = locals_.model;
-buf.push("<div class=\"row span2 align middle\"><div class=\"cell span1 casesensitive\"><input id=\"cb_casesensitive\" type=\"checkbox\" name=\"cb_casesensitive\" data-attr=\"caseSensitive\"/><label for=\"cb_casesensitive\">Match case</label></div><div class=\"cell span1 fuzzy\"><input id=\"cb_fuzzy\" type=\"checkbox\" name=\"cb_fuzzy\" data-attr=\"fuzzy\"/><label for=\"cb_fuzzy\">Fuzzy</label></div></div>");
+buf.push("<div class=\"placeholder pad3\"><div class=\"body\"><div class=\"row span4 align middle\"><div class=\"cell span3\"><div class=\"padr4\"><input type=\"text\" name=\"search\"/></div></div><div class=\"cell span1\"><button class=\"search\">Search</button></div></div><div class=\"menu\"><i class=\"fa fa-times\"></i><div class=\"row-1\"><div class=\"cell-1\"><input id=\"cb_casesensitive\" type=\"checkbox\" name=\"cb_casesensitive\" data-attr=\"caseSensitive\"/><label for=\"cb_casesensitive\">Match case</label></div><div class=\"cell-2\"><input id=\"cb_fuzzy\" type=\"checkbox\" name=\"cb_fuzzy\" data-attr=\"fuzzy\"/><label for=\"cb_fuzzy\">Fuzzy</label></div></div><div class=\"row-2\">");
 if ( model.has('searchInAnnotations') || model.has('searchInTranscriptions'))
 {
-buf.push("<h4>Search</h4><ul class=\"searchins\">");
+buf.push("<div class=\"cell-1\"><h4>Search in:</h4><ul class=\"searchins\">");
 if ( model.has('searchInTranscriptions'))
 {
-buf.push("<li class=\"searchin\"><input id=\"cb_searchin_transcriptions\" type=\"checkbox\" data-attr=\"searchInTranscriptions\"" + (jade.attr("checked", model.get('searchInTranscriptions'), true, false)) + "/><label for=\"cb_searchin_transcriptions\">Transcriptions</label>");
+buf.push("<li class=\"searchin\"><input id=\"cb_searchin_transcriptions\" type=\"checkbox\" data-attr=\"searchInTranscriptions\"" + (jade.attr("checked", model.get('searchInTranscriptions'), true, false)) + "/><label for=\"cb_searchin_transcriptions\">Transcriptions</label></li>");
+}
+if ( model.has('searchInAnnotations'))
+{
+buf.push("<li class=\"searchin\"><input id=\"cb_searchin_annotations\" type=\"checkbox\" data-attr=\"searchInAnnotations\"" + (jade.attr("checked", model.get('searchInAnnotations'), true, false)) + "/><label for=\"cb_searchin_annotations\">Annotations</label></li>");
+}
+buf.push("</ul></div>");
+}
 if ( model.has('textLayers'))
 {
-buf.push("<ul class=\"textlayers\">");
+buf.push("<div class=\"cell-1\"><h4>Textlayers:</h4><ul class=\"textlayers\">");
 // iterate model.get('textLayers')
 ;(function(){
   var $$obj = model.get('textLayers');
@@ -18713,35 +18769,28 @@ buf.push("<li class=\"textlayer\"><input" + (jade.attr("id", 'cb_textlayer'+text
   }
 }).call(this);
 
-buf.push("</ul>");
+buf.push("</ul></div>");
 }
-buf.push("</li>");
-}
-if ( model.has('searchInAnnotations'))
-{
-buf.push("<li class=\"searchin\"><input id=\"cb_searchin_annotations\" type=\"checkbox\" data-attr=\"searchInAnnotations\"" + (jade.attr("checked", model.get('searchInAnnotations'), true, false)) + "/><label for=\"cb_searchin_annotations\">Annotations</label></li>");
-}
-buf.push("</ul>");
-};return buf.join("");
+buf.push("</div></div></div></div>");;return buf.join("");
 };
-},{"jade/runtime":44}],77:[function(require,module,exports){
+},{"jade/runtime":44}],76:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 
-buf.push("<div class=\"overlay\"><div><i class=\"fa fa-spinner fa-spin fa-2x\"></i></div></div><div class=\"faceted-search\"><i class=\"fa fa-compress\"></i><i class=\"fa fa-refresh\"></i><form><div class=\"search-placeholder\"></div><div class=\"facets\"><div class=\"loader\"><h4>Loading facets...</h4><br/><i class=\"fa fa-spinner fa-spin fa-2x\"></i></div></div></form></div>");;return buf.join("");
+buf.push("<div class=\"overlay\"><div><i class=\"fa fa-spinner fa-spin fa-2x\"></i></div></div><div class=\"faceted-search\"><form><div class=\"search-placeholder\"></div><ul class=\"menu\"><li class=\"switch\"><i class=\"fa fa-angle-double-down\"></i><span class=\"advanced\">Switch to</span></li><li class=\"collapse-expand\"><i class=\"fa fa-compress\"></i><span>Collapse facets</span></li><li class=\"reset\"><i class=\"fa fa-refresh\"></i><span>Reset search</span></li></ul><div class=\"facets\"><div class=\"loader\"><h4>Loading search...</h4><br/><i class=\"fa fa-spinner fa-spin fa-2x\"></i></div></div></form></div>");;return buf.join("");
 };
-},{"jade/runtime":44}],78:[function(require,module,exports){
+},{"jade/runtime":44}],77:[function(require,module,exports){
 module.exports=require(1)
-},{"underscore":81}],79:[function(require,module,exports){
+},{"underscore":80}],78:[function(require,module,exports){
 module.exports=require(44)
-},{"fs":2}],80:[function(require,module,exports){
+},{"fs":2}],79:[function(require,module,exports){
 module.exports=require(33)
-},{}],81:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 module.exports=require(32)
-},{}],82:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 var $, defaultOptions, token;
 
 $ = require('jquery');
@@ -18815,7 +18864,7 @@ module.exports = {
 };
 
 
-},{"./token":83,"jquery":80}],83:[function(require,module,exports){
+},{"./token":82,"jquery":79}],82:[function(require,module,exports){
 var Token;
 
 Token = (function() {
@@ -18855,7 +18904,7 @@ Token = (function() {
 module.exports = new Token();
 
 
-},{}],84:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 var Backbone;
 
 Backbone = require('backbone');
@@ -18870,12 +18919,12 @@ module.exports = {
 };
 
 
-},{"backbone":78}],85:[function(require,module,exports){
+},{"backbone":77}],84:[function(require,module,exports){
 var DOM, _;
 
 _ = require('underscore');
 
-module.exports = DOM = function(el) {
+DOM = function(el) {
   if (_.isString(el)) {
     el = document.querySelector(el);
   }
@@ -18941,9 +18990,9 @@ module.exports = DOM = function(el) {
     },
 
     /*
-    		Native alternative to jQuery's $.offset()
+    	Native alternative to jQuery's $.offset()
     
-    		http://www.quirksmode.org/js/findpos.html
+    	http://www.quirksmode.org/js/findpos.html
      */
     position: function(parent) {
       var left, loopEl, top;
@@ -18968,9 +19017,9 @@ module.exports = DOM = function(el) {
     },
 
     /*
-    		Is child el a descendant of parent el?
+    	Is child el a descendant of parent el?
     
-    		http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
+    	http://stackoverflow.com/questions/2234979/how-to-check-in-javascript-if-one-element-is-a-child-of-another
      */
     hasDescendant: function(child) {
       var node;
@@ -19078,8 +19127,10 @@ module.exports = DOM = function(el) {
   };
 };
 
+module.exports = DOM;
 
-},{"underscore":81}],86:[function(require,module,exports){
+
+},{"underscore":80}],85:[function(require,module,exports){
 var $, _,
   __hasProp = {}.hasOwnProperty;
 
@@ -19414,7 +19465,7 @@ module.exports = {
 };
 
 
-},{"jquery":80,"underscore":81}],87:[function(require,module,exports){
+},{"jquery":79,"underscore":80}],86:[function(require,module,exports){
 var $;
 
 $ = require('jquery');
@@ -19501,7 +19552,7 @@ $ = require('jquery');
 })($);
 
 
-},{"jquery":80}],88:[function(require,module,exports){
+},{"jquery":79}],87:[function(require,module,exports){
 var Backbone, BaseView, Pubsub, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -19541,7 +19592,7 @@ BaseView = (function(_super) {
 module.exports = BaseView;
 
 
-},{"../mixins/pubsub":84,"backbone":78,"underscore":81}],89:[function(require,module,exports){
+},{"../mixins/pubsub":83,"backbone":77,"underscore":80}],88:[function(require,module,exports){
 var Fn, Pagination, Views, tpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -19637,7 +19688,7 @@ Pagination = (function(_super) {
 module.exports = Pagination;
 
 
-},{"../../utils/general":86,"../base":88,"./main.jade":90}],90:[function(require,module,exports){
+},{"../../utils/general":85,"../base":87,"./main.jade":89}],89:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -19656,11 +19707,11 @@ buf.push("<li" + (jade.cls(['next10',currentPage<=pageCount-10?'active':''], [nu
 }
 buf.push("</ul>");;return buf.join("");
 };
-},{"jade/runtime":79}],91:[function(require,module,exports){
+},{"jade/runtime":78}],90:[function(require,module,exports){
 module.exports=require(44)
-},{"fs":2}],92:[function(require,module,exports){
+},{"fs":2}],91:[function(require,module,exports){
 module.exports=require(33)
-},{}],93:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 (function (global){
 /*! JSON v3.3.0 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 ;(function (root) {
@@ -20561,7 +20612,7 @@ module.exports=require(33)
 }(this));
 
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 //  Underscore.string
 //  (c) 2010 Esa-Matti Suuronen <esa-matti aet suuronen dot org>
 //  Underscore.string is freely distributable under the terms of the MIT license.
@@ -21236,9 +21287,9 @@ module.exports=require(33)
   root._.string = root._.str = _s;
 }(this, String);
 
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 module.exports=require(32)
-},{}],96:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 var $, Backbone, MainRouter, bootstrapTemplate, config, entries, rootURL, textlayers;
 
 Backbone = require('backbone');
@@ -21297,7 +21348,7 @@ module.exports = function() {
 };
 
 
-},{"../jade/body.jade":105,"./routers/main":99,"backbone":1,"elaborate-modules/modules/collections/entries":3,"elaborate-modules/modules/collections/textlayers":4,"elaborate-modules/modules/models/config":5,"jquery":92}],97:[function(require,module,exports){
+},{"../jade/body.jade":104,"./routers/main":98,"backbone":1,"elaborate-modules/modules/collections/entries":3,"elaborate-modules/modules/collections/textlayers":4,"elaborate-modules/modules/models/config":5,"jquery":91}],96:[function(require,module,exports){
 var Backbone, events, _;
 
 Backbone = require('backbone');
@@ -21311,7 +21362,7 @@ _.extend(events, Backbone.Events);
 module.exports = events;
 
 
-},{"backbone":1,"underscore":95}],98:[function(require,module,exports){
+},{"backbone":1,"underscore":94}],97:[function(require,module,exports){
 var $, app, json3;
 
 $ = require('jquery');
@@ -21326,7 +21377,7 @@ $(function() {
 });
 
 
-},{"./app":96,"jquery":92,"json3":93}],99:[function(require,module,exports){
+},{"./app":95,"jquery":91,"json3":92}],98:[function(require,module,exports){
 var $, Backbone, MainRouter, Views, config, events, switchView, us, _,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -21497,7 +21548,7 @@ MainRouter = (function(_super) {
 module.exports = MainRouter;
 
 
-},{"../events":97,"../views/annotations":100,"../views/entry":101,"backbone":1,"elaborate-modules/modules/models/config":5,"elaborate-modules/modules/views/faceted-search-results":14,"jquery":92,"underscore":95,"underscore.string":94}],100:[function(require,module,exports){
+},{"../events":96,"../views/annotations":99,"../views/entry":100,"backbone":1,"elaborate-modules/modules/models/config":5,"elaborate-modules/modules/views/faceted-search-results":14,"jquery":91,"underscore":94,"underscore.string":93}],99:[function(require,module,exports){
 var $, AnnotationsView, Backbone, config, shorten, tpl, typeTpl, us, _,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
@@ -21643,7 +21694,7 @@ AnnotationsView = (function(_super) {
 module.exports = AnnotationsView;
 
 
-},{"../../jade/annotation-overview/index.jade":103,"../../jade/annotation-overview/section.jade":104,"backbone":1,"elaborate-modules/modules/models/config":5,"jquery":92,"underscore":95,"underscore.string":94}],101:[function(require,module,exports){
+},{"../../jade/annotation-overview/index.jade":102,"../../jade/annotation-overview/section.jade":103,"backbone":1,"elaborate-modules/modules/models/config":5,"jquery":91,"underscore":94,"underscore.string":93}],100:[function(require,module,exports){
 var $, Backbone, Entry, Views, config, dom, entries, headerTpl, preloader, thumbnailTpl,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -21846,7 +21897,7 @@ Entry = (function(_super) {
 module.exports = Entry;
 
 
-},{"../../jade/entry/header.jade":106,"../../jade/entry/thumbnail.jade":107,"./preloader":102,"backbone":1,"elaborate-modules/modules/collections/entries":3,"elaborate-modules/modules/models/config":5,"elaborate-modules/modules/views/panels":19,"hilib/src/utils/dom":85,"jquery":92}],102:[function(require,module,exports){
+},{"../../jade/entry/header.jade":105,"../../jade/entry/thumbnail.jade":106,"./preloader":101,"backbone":1,"elaborate-modules/modules/collections/entries":3,"elaborate-modules/modules/models/config":5,"elaborate-modules/modules/views/panels":19,"hilib/src/utils/dom":84,"jquery":91}],101:[function(require,module,exports){
 var $, Backbone, Preloader,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -21890,7 +21941,7 @@ Preloader = (function(_super) {
 module.exports = new Preloader();
 
 
-},{"backbone":1,"jquery":92}],103:[function(require,module,exports){
+},{"backbone":1,"jquery":91}],102:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -21922,7 +21973,7 @@ buf.push("<li><a" + (jade.attr("href", '#'+slugify(type.name), false, false)) + 
 
 buf.push("</ul><div class=\"contents\"></div>");;return buf.join("");
 };
-},{"jade/runtime":91}],104:[function(require,module,exports){
+},{"jade/runtime":90}],103:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -21954,7 +22005,7 @@ buf.push("<li" + (jade.attr("data-text-layer", a.textLayer, true, false)) + "><d
 
 buf.push("</ol></section>");;return buf.join("");
 };
-},{"jade/runtime":91}],105:[function(require,module,exports){
+},{"jade/runtime":90}],104:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -21963,7 +22014,7 @@ var jade_mixins = {};
 
 buf.push("<header><h1><a href=\"/\"></a></h1><ul><li><a href=\"/\" name=\"entry\">Edition</a></li><li><a href=\"/search\" name=\"showSearch\">Search</a></li><li><a href=\"/annotations\" name=\"annotationsIndex\">Annotation Overview</a></li></ul><img src=\"http://www.huygens.knaw.nl/wp-content/themes/huygens-ing/images/logo.png\" width=\"92px\" height=\"66px\"/></header><div id=\"main\"><div class=\"search-view\"></div><div class=\"annotations-view\"></div><div class=\"entries\"></div></div>");;return buf.join("");
 };
-},{"jade/runtime":91}],106:[function(require,module,exports){
+},{"jade/runtime":90}],105:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -21972,7 +22023,7 @@ var jade_mixins = {};
 
 buf.push("<nav><ul class=\"entries\"></ul></nav>");;return buf.join("");
 };
-},{"jade/runtime":91}],107:[function(require,module,exports){
+},{"jade/runtime":90}],106:[function(require,module,exports){
 var jade = require("jade/runtime");
 
 module.exports = function template(locals) {
@@ -21981,4 +22032,4 @@ var jade_mixins = {};
 var locals_ = (locals || {}),id = locals_.id,href = locals_.href,thumbnail = locals_.thumbnail,index = locals_.index;
 buf.push("<li" + (jade.attr("data-entry-id", id, true, false)) + "><a" + (jade.attr("href", href, true, false)) + "><img" + (jade.attr("src", thumbnail, true, false)) + "/><div class=\"index\">" + (jade.escape(null == (jade.interp = index) ? "" : jade.interp)) + "</div></a></li>");;return buf.join("");
 };
-},{"jade/runtime":91}]},{},[98])
+},{"jade/runtime":90}]},{},[97])

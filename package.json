@@ -11,8 +11,9 @@
     "url": ""
   },
   "scripts": {
-    "test": "node ./.test/bin/server.js",
-    "start": "coffee ./server.coffee"
+    "start": "gulp",
+    "compile": "gulp compile",
+    "build": "gulp build"
   },
   "devDependencies": {
     "coffee-script": "*",
