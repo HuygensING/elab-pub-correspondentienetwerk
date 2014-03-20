@@ -34,7 +34,7 @@ module.exports = ->
 		# Load the menu from WordPress
 		# $.get 'http://demo4.huygens.knaw.nl/?page_id=17', => console.log arguments
 		
-		mainRouter = new MainRouter()
+		# mainRouter = new MainRouter()
 		Backbone.history.start
 			root: rootURL
 			pushState: true

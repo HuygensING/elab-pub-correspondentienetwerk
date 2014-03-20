@@ -58,7 +58,6 @@ class MainRouter extends Backbone.Router
 			a.addClass 'active' if a.length > 0
 
 	entry: ->
-		
 		if _.isObject arguments[0]
 			options = arguments[0]
 		else if _.isString arguments[0]
@@ -73,7 +72,7 @@ class MainRouter extends Backbone.Router
 		entry.cache = false
 		$('#main > .entries').append entry.$el
 
-		switchView entry, false
+		switchView entry
 
 	showSearch: do ->
 		searchView = null
@@ -109,20 +108,23 @@ class MainRouter extends Backbone.Router
 	# Because we want to sent the terms straight to the entry view (and not via the url),
 	# we have to manually change the url, trigger the route and call @entry.
 	navigateEntry: (id, terms, textLayer) ->
+		url = "entry/#{id}"
+
 		options =
 			entryId: id
 			terms: terms
 
-		splitLayer = textLayer.split(' ')
-		if splitLayer[splitLayer.length - 1] is 'annotations'
-			splitLayer.pop()
-			textLayer = splitLayer.join(' ')
-			options.highlightAnnotations = true
+		if textLayer
+			splitLayer = textLayer.split(' ')
+			if splitLayer[splitLayer.length - 1] is 'annotations'
+				splitLayer.pop()
+				textLayer = splitLayer.join(' ')
+				options.highlightAnnotations = true
 
-		options.layerSlug = us.slugify(textLayer)
+			options.layerSlug = us.slugify(textLayer)
 		
-		url = "entry/#{id}"
-		url = "#{url}/#{options.layerSlug}" if textLayer?
+			url = "#{url}/#{options.layerSlug}"
+
 		@navigate url
 
 		# We have to manually trigger route, because we navigate without {trigger: true} and call @entry manually.
@@ -131,4 +133,4 @@ class MainRouter extends Backbone.Router
 		
 		@entry options
 
-module.exports = MainRouter
+module.exports = new MainRouter()
