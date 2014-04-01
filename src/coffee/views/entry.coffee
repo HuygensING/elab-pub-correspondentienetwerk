@@ -89,15 +89,17 @@ class Entry extends Backbone.View
 
 		renderThumbnail = (id, name) =>
 			thumbUrl = config.get('thumbnails')[id]?[0]
-			preloader.loadImage thumbUrl, imageLoaded
+			if thumbUrl?
+				preloader.loadImage thumbUrl, imageLoaded
 
-			re = /nota\s?\w+/
+			index = @model.get('short-name') ? id
+			# re = /nota\s?\w+/
 			# console.log entry.get('name')
 			thumb = $ thumbnailTpl
 				id: id
 				thumbnail: thumbUrl ? "http://placehold.it/70x100/000000/000000&text=X"
 				# href: entry.createUrl()
-				index: re.exec(name)[0].substr(4)
+				index: index
 
 			thumb.find('img').load imageLoaded
 			frag.appendChild thumb[0]
