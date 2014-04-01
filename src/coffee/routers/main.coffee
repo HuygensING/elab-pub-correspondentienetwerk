@@ -42,12 +42,12 @@ switchView = do ->
 class MainRouter extends Backbone.Router
 
 	routes:
+		'': 'entry'
 		'search': 'showSearch'
 		'annotations': 'annotationsIndex'
 		'entry/:id/:layer/:annotation': 'entry'
 		'entry/:id/:layer': 'entry'
 		'entry/:id': 'entry'
-		'': 'entry'
 
 	initialize: ->
 		@currentView = null
