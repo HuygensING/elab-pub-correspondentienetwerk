@@ -32,7 +32,21 @@ module.exports = ->
 		$('header h1 a').text config.get 'title'
 
 		# Load the menu from WordPress
-		# $.get 'http://demo4.huygens.knaw.nl/?page_id=17', => console.log arguments
+		jqXHR = $.get '../external/'
+		jqXHR.done (menuDiv) => 
+			menuDiv = $(menuDiv)
+			if menuDiv.hasClass 'menu-mainmenu-container'
+				a.setAttribute 'data-bypass', true for a in menuDiv.find 'a'
+				$('header > ul').after menuDiv
+			# DEV ONLY
+			# else
+			# 	menuDiv = $ '<div class="menu-mainmenu-container"><ul id="menu-mainmenu" class="menu"><li id="menu-item-13" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13"><a href="/">Home</a></li>
+			# 		<li id="menu-item-14" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14"><a href="/edition">Online edition</a></li>
+			# 		<li id="menu-item-12" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12"><a href="http://deystroom.huygens.knaw.nl/introduction/">Introduction</a></li>
+			# 		<li id="menu-item-11" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11"><a href="http://deystroom.huygens.knaw.nl/about-this-edition/">About this edition</a></li>
+			# 		</ul></div>'
+			# 	a.setAttribute 'data-bypass', true for a in menuDiv.find 'a'
+			# 	$('header > ul').after menuDiv
 		
 		Backbone.history.start
 			root: rootURL
