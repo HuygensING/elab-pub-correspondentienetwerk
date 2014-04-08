@@ -11,9 +11,7 @@ module.exports = {
       .assert.containsText('span.highlight-term', 'troest')
       .getLocation('span.highlight-term', function(result) {
         this.getLocation('article .panels', function(panelsResult) {
-          this.assert.equal(result.value.x, 200)
           this.assert.equal(result.value.y, 200)
-          this.assert.equal(panelsResult.value.y, 200)
           this.assert.equal(panelsResult.value.y, 200)
           
         })
