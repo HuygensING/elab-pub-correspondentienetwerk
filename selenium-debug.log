@@ -1,0 +1,110 @@
+Apr 08, 2014 12:56:06 PM org.openqa.grid.selenium.GridLauncher main
+INFO: Launching a standalone server
+12:56:06.761 INFO - Java: Oracle Corporation 24.45-b08
+12:56:06.762 INFO - OS: Linux 3.11.0-12-generic amd64
+12:56:06.770 INFO - v2.41.0, with Core v2.41.0. Built from revision 3192d8a
+12:56:06.826 INFO - Default driver org.openqa.selenium.ie.InternetExplorerDriver registration is skipped: registration capabilities Capabilities [{platform=WINDOWS, ensureCleanSession=true, browserName=internet explorer, version=}] does not match with current platform: LINUX
+12:56:06.862 INFO - RemoteWebDriver instances should connect to: http://127.0.0.1:4444/wd/hub
+12:56:06.863 INFO - Version Jetty/5.1.x
+12:56:06.864 INFO - Started HttpContext[/selenium-server/driver,/selenium-server/driver]
+12:56:06.864 INFO - Started HttpContext[/selenium-server,/selenium-server]
+12:56:06.864 INFO - Started HttpContext[/,/]
+12:56:06.889 INFO - Started org.openqa.jetty.jetty.servlet.ServletHandler@364e2899
+12:56:06.890 INFO - Started HttpContext[/wd,/wd]
+12:56:06.893 INFO - Started SocketListener on 0.0.0.0:4444
+12:56:06.893 INFO - Started org.openqa.jetty.jetty.Server@4da7e04f
+12:56:07.076 INFO - Executing: [new session: Capabilities [{platform=ANY, javascriptEnabled=true, acceptSslCerts=true, browserName=firefox}]] at URL: /session)
+12:56:07.084 INFO - Creating a new session for Capabilities [{platform=ANY, javascriptEnabled=true, acceptSslCerts=true, browserName=firefox}]
+12:56:11.348 INFO - Done: /session
+12:56:11.356 INFO - Executing: [get: http://localhost:9000/search] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/url)
+12:56:11.937 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/url
+12:56:11.945 INFO - Executing: [find element: By.selector: .resultview .entries ul.page] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:12.954 WARN - Exception thrown
+org.openqa.selenium.NoSuchElementException: Unable to locate element: {"method":"css selector","selector":".resultview .entries ul.page"}
+Command duration or timeout: 61 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '2.41.0', revision: '3192d8a', time: '2014-03-27 17:17:32'
+System info: host: 'PC0570', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '3.11.0-12-generic', java.version: '1.7.0_51'
+Session ID: 4ff989b5-740f-4102-8699-6c832835bb4e
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{platform=LINUX, acceptSslCerts=true, javascriptEnabled=true, cssSelectorsEnabled=true, databaseEnabled=true, browserName=firefox, handlesAlerts=true, browserConnectionEnabled=true, webStorageEnabled=true, nativeEvents=false, rotatable=false, locationContextEnabled=true, applicationCacheEnabled=true, takesScreenshot=true, version=28.0}]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:193)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:145)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:595)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:348)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:437)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:426)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:340)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:101)
+	at com.sun.proxy.$Proxy2.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:184)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:47)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:1)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:170)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: org.openqa.selenium.remote.ErrorHandler$UnknownServerException: Unable to locate element: {"method":"css selector","selector":".resultview .entries ul.page"}
+Build info: version: '2.41.0', revision: '3192d8a', time: '2014-03-27 17:17:32'
+System info: host: 'PC0570', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '3.11.0-12-generic', java.version: '1.7.0_51'
+Driver info: driver.version: unknown
+	at <anonymous class>.FirefoxDriver.prototype.findElementInternal_(file:///tmp/anonymous1415384007775199618webdriver-profile/extensions/fxdriver@googlecode.com/components/driver_component.js:8905)
+	at <anonymous class>.FirefoxDriver.prototype.findElement(file:///tmp/anonymous1415384007775199618webdriver-profile/extensions/fxdriver@googlecode.com/components/driver_component.js:8914)
+	at <anonymous class>.DelayedCommand.prototype.executeInternal_/h(file:///tmp/anonymous1415384007775199618webdriver-profile/extensions/fxdriver@googlecode.com/components/command_processor.js:10884)
+	at <anonymous class>.DelayedCommand.prototype.executeInternal_(file:///tmp/anonymous1415384007775199618webdriver-profile/extensions/fxdriver@googlecode.com/components/command_processor.js:10889)
+	at <anonymous class>.DelayedCommand.prototype.execute/<(file:///tmp/anonymous1415384007775199618webdriver-profile/extensions/fxdriver@googlecode.com/components/command_processor.js:10831)
+12:56:12.959 WARN - Exception: Unable to locate element: {"method":"css selector","selector":".resultview .entries ul.page"}
+Command duration or timeout: 61 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '2.41.0', revision: '3192d8a', time: '2014-03-27 17:17:32'
+System info: host: 'PC0570', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '3.11.0-12-generic', java.version: '1.7.0_51'
+Session ID: 4ff989b5-740f-4102-8699-6c832835bb4e
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Capabilities [{platform=LINUX, acceptSslCerts=true, javascriptEnabled=true, cssSelectorsEnabled=true, databaseEnabled=true, browserName=firefox, handlesAlerts=true, browserConnectionEnabled=true, webStorageEnabled=true, nativeEvents=false, rotatable=false, locationContextEnabled=true, applicationCacheEnabled=true, takesScreenshot=true, version=28.0}]
+12:56:13.577 INFO - Executing: [find element: By.selector: .resultview .entries ul.page] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:13.630 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:13.635 INFO - Executing: [is displayed: 0 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: .resultview .entries ul.page]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/0/displayed)
+12:56:13.649 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/0/displayed
+12:56:13.654 INFO - Executing: [find element: By.selector: .search-input input[name="search"]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:13.666 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:13.671 INFO - Executing: [send keys: 1 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: .search-input input[name="search"]], [t, *, s, t]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/1/value)
+12:56:13.722 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/1/value
+12:56:13.725 INFO - Executing: [find element: By.selector: .search-input i.fa-search] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:13.751 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:13.754 INFO - Executing: [click: 2 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: .search-input i.fa-search]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/2/click)
+12:56:14.465 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/2/click
+12:56:16.470 INFO - Executing: [find element: By.selector: .resultview .entries > ul.page > li:nth-child(5) .keywords > ul > li:first-child] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:16.483 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:16.487 INFO - Executing: [click: 3 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: .resultview .entries > ul.page > li:nth-child(5) .keywords > ul > li:first-child]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/3/click)
+12:56:16.693 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/3/click
+12:56:18.700 INFO - Executing: [find element: By.selector: span.highlight-term] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:18.710 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:18.714 INFO - Executing: [get text: 4 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: span.highlight-term]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/4/text)
+12:56:18.729 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/4/text
+12:56:18.733 INFO - Executing: [find element: By.selector: span.highlight-term] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:18.741 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:18.744 INFO - Executing: [get location: 4 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: span.highlight-term]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/4/location)
+12:56:18.750 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/4/location
+12:56:18.753 INFO - Executing: [find element: By.selector: article .panels] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element)
+12:56:18.764 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element
+12:56:18.766 INFO - Executing: [get location: 5 [[FirefoxDriver: firefox on LINUX (4ff989b5-740f-4102-8699-6c832835bb4e)] -> css selector: article .panels]] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/5/location)
+12:56:18.777 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c/element/5/location
+12:56:18.789 INFO - Executing: [delete session: 1bddb0f3-1fb7-4b0b-90a5-7f29594c425c] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c)
+12:56:18.790 INFO - Executing: [delete session: 1bddb0f3-1fb7-4b0b-90a5-7f29594c425c] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c)
+12:56:18.790 INFO - Executing: [delete session: 1bddb0f3-1fb7-4b0b-90a5-7f29594c425c] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c)
+12:56:18.791 INFO - Executing: [delete session: 1bddb0f3-1fb7-4b0b-90a5-7f29594c425c] at URL: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c)
+12:56:18.857 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c
+12:56:18.857 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c
+12:56:18.857 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c
+12:56:18.858 INFO - Done: /session/1bddb0f3-1fb7-4b0b-90a5-7f29594c425c
+12:56:18.867 INFO - Shutting down...
+12:56:18.868 INFO - Stopping Acceptor ServerSocket[addr=0.0.0.0/0.0.0.0,localport=4444]

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="googleTest"
+             errors="0"
+             failures="4"
+             tests="6">
+  
+  <testsuite errors="0" failures="4" hostname="" id=""
+    name="Demo test Google" package="googleTest" skipped="0"
+    tests="6" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;.resultview .entries ul.page&gt; was visible after 1712 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;span.highlight-term&gt; contains text: &quot;troest&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion failed: 526 == 200">
+        
+          <failure message="Expected &quot;200&quot; but got: &quot;526&quot;"></failure>
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion failed: 40 == 200">
+        
+          <failure message="Expected &quot;200&quot; but got: &quot;40&quot;"></failure>
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion failed: 318 == 200">
+        
+          <failure message="Expected &quot;200&quot; but got: &quot;318&quot;"></failure>
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion failed: 318 == 200">
+        
+          <failure message="Expected &quot;200&quot; but got: &quot;318&quot;"></failure>
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>
