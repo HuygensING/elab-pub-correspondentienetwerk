@@ -11,11 +11,11 @@ module.exports = {
       .assert.containsText('span.highlight-term', 'troest')
       .getLocation('span.highlight-term', function(result) {
         this.getLocation('article .panels', function(panelsResult) {
-          this.assert.equal(result.value.y, 200)
-          this.assert.equal(panelsResult.value.y, 200)
-          
-        })
+          this.assert.greaterThan(result.value.y, panelsResult.value.y);
+          // TODO assert.lessThan(result.value.y, panelsResult.value.y + panelHeight)
+        });
       })
       .end();
+      
   }
 };

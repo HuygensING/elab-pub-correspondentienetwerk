@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="reset-faceted-search"
+             errors="0"
+             failures="0"
+             tests="8">
+  
+  <testsuite errors="0" failures="0" hostname="" id=""
+    name="Reset Faceted Search" package="reset-faceted-search" skipped="0"
+    tests="8" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;.resultview .entries ul.page&gt; was visible after 1714 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 13 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 64 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 43 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 64 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 13 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 64 entries&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.results-placeholder &gt; header &gt; h3&gt; contains text: &quot;Found 13 entries&quot;.">
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>
