@@ -92,7 +92,7 @@ class Entry extends Backbone.View
 			if thumbUrl?
 				preloader.loadImage thumbUrl, imageLoaded
 
-			index = @model.get('short-name') ? id
+			index = @model.get('shortName') ? id
 			# re = /nota\s?\w+/
 			# console.log entry.get('name')
 			thumb = $ thumbnailTpl
