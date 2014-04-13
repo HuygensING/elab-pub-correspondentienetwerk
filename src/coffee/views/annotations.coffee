@@ -29,7 +29,7 @@ class AnnotationsView extends Backbone.View
 			@render()
 		jqxhr.fail => console.log config.get('annotationsIndexPath'), arguments
 
-		$(window).resize @adjustContentHeight
+		$(window).resize @setHeights
 
 	# ### Render
 	render: ->
@@ -43,7 +43,7 @@ class AnnotationsView extends Backbone.View
 
 		@renderType _.first @types
 
-		setTimeout @adjustContentHeight, 100
+		setTimeout @setHeights, 100
 		
 
 	renderType: (type) -> @renderContents @typeHTML type
@@ -75,7 +75,15 @@ class AnnotationsView extends Backbone.View
 
 	# ### Methods
 
-	adjustContentHeight: => @$('.contents').height $(window).height() - @$('.contents').offset().top
+	setHeights: =>
+		contents = @$('.contents')
+
+		if contents.is(':visible')
+			contentsHeight = $(window).height() - contents.offset().top
+
+			contents.height contentsHeight
+
+			@$('ul.annotation-types').height contentsHeight * 0.8
 
 	typeHTML: (type) ->
 		return unless type?

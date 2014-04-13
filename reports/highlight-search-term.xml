@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="highlight-search-term"
+             errors="0"
+             failures="0"
+             tests="3">
+  
+  <testsuite errors="0" failures="0" hostname="" id=""
+    name="Highlight search term" package="highlight-search-term" skipped="0"
+    tests="3" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;.resultview .entries ul.page&gt; was visible after 1503 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;span.highlight-term&gt; contains text: &quot;troest&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion passed: 372">
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>

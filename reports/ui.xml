@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="ui"
+             errors="0"
+             failures="1"
+             tests="3">
+  
+  <testsuite errors="0" failures="1" hostname="" id=""
+    name="jQuery UI sortable" package="ui" skipped="1"
+    tests="3" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;#sortable &gt; li:first-child&gt; was visible after 73 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;#sortable &gt; li:nth-child(2)&gt; contains text: &quot;Item 1&quot;.">
+        
+          <failure message="Expected &quot;Item 1&quot; but got: &quot;Item 2&quot;"></failure>
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>

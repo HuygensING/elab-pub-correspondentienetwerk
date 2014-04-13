@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="highlight-annotation"
+             errors="0"
+             failures="0"
+             tests="4">
+  
+  <testsuite errors="0" failures="0" hostname="" id=""
+    name="Highlight annotation" package="highlight-annotation" skipped="0"
+    tests="4" time="" timestamp="">
+    
+    
+      <testcase name="Element &lt;.contents section ol li:nth-child(2) .link a&gt; was visible after 1437 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Element &lt;.annotations ol li[data-id=&quot;9063676&quot;]&gt; was visible after 1518 milliseconds.">
+        
+        
+      </testcase>
+    
+      <testcase name="Testing if element &lt;.annotations ol li[data-id=&quot;9063676&quot;]&gt; has css class: &quot;show&quot;.">
+        
+        
+      </testcase>
+    
+      <testcase name="Assertion passed: 372">
+        
+        
+      </testcase>
+    
+    
+    </testsuite>
+  
+</testsuites>

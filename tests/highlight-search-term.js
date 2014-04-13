@@ -1,5 +1,5 @@
 module.exports = {
-  "Demo test Google" : function (browser) {
+  "Highlight search term" : function (browser) {
     browser
       .url("http://localhost:9000/search")
       .waitForElementVisible('.resultview .entries ul.page', 10000)
@@ -9,10 +9,9 @@ module.exports = {
       .click('.resultview .entries > ul.page > li:nth-child(5) .keywords > ul > li:first-child')
       .pause(2000)
       .assert.containsText('span.highlight-term', 'troest')
-      .getLocation('span.highlight-term', function(result) {
+      .getLocation('span.highlight-term', function(termResult) {
         this.getLocation('article .panels', function(panelsResult) {
-          this.assert.greaterThan(result.value.y, panelsResult.value.y);
-          // TODO assert.lessThan(result.value.y, panelsResult.value.y + panelHeight)
+          this.assert.equal(termResult.value.y, panelsResult.value.y + 52);
         });
       })
       .end();
