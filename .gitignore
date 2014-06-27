@@ -5,3 +5,4 @@ dist2
 .test
 .deliver
 npm-debug.log
+.idea

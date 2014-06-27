@@ -1,6 +1,6 @@
 {
   "name": "elaborate-publication-collection",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": {
     "name": "",
     "email": ""
@@ -45,7 +45,10 @@
     "gulp-uglify": "^0.2.1",
     "vinyl-source-stream": "^0.1.1",
     "gulp-minify-css": "^0.3.0",
-    "watchify": "^0.6.1"
+    "watchify": "^0.6.1",
+    "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.3",
+    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v1.0.2",
+    "hilib": "git+https://github.com/HuygensING/hilib.git#v0.0.4"
   },
   "browser": {
     "rangy": "./node_modules/rangy-browser/lib/rangy-core.js",

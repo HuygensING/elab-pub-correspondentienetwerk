@@ -23,14 +23,14 @@ paths =
 		'./src/coffee/**/*.coffee'
 		'./node_modules/elaborate-modules/modules/**/*.coffee'
 		'./node_modules/hilib/src/**/*.coffee'
-		'./node_modules/faceted-search/src/coffee/**/*.coffee'
+		'./node_modules/huygens-faceted-search/src/coffee/**/*.coffee'
 	]
 	jade: [
 		'./src/index.jade'
 	]
 	stylus: [
 		'./node_modules/hilib/src/views/**/*.styl'
-		'./node_modules/faceted-search/src/stylus/**/*.styl'
+		'./node_modules/huygens-faceted-search/src/stylus/**/*.styl'
 		'./node_modules/elaborate-modules/modules/**/*.styl'
 		'./src/stylus/**/*.styl'
 	]
@@ -145,4 +145,4 @@ gulp.task 'watchify', ->
 
 	rebundle()
 
-gulp.task 'default', ['connect', 'watch', 'watchify']
+gulp.task 'default', ['stylus', 'connect', 'watch', 'watchify']
