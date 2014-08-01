@@ -47,7 +47,7 @@
     "gulp-minify-css": "^0.3.0",
     "watchify": "^0.6.1",
     "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.3",
-    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v1.0.2",
+    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v1.0.2.1",
     "hilib": "git+https://github.com/HuygensING/hilib.git#v0.0.4"
   },
   "browser": {
