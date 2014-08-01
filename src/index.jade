@@ -5,9 +5,17 @@ html(lang="en")
 		meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
 		title Huygens ING
 		link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", rel="stylesheet")
-		link(rel="stylesheet", type="text/css", href="/css/main.css")
+		link(rel="stylesheet", type="text/css", href!="/css/main-<!-- @echo VERSION -->.css")
 		script(src="http://code.jquery.com/jquery-git2.js")
 		script.
 			var BASE_URL = '/';
-		script(src="/js/main.js")
+
+		| <!-- @if ENV='development' -->
+		script(src!="/js/libs-<!-- @echo VERSION -->.js")
+		script(src!="/js/src-<!-- @echo VERSION -->.js")
+		| <!-- @endif -->
+
+		| <!-- @if ENV='production' -->
+		script(src!="/js/main-<!-- @echo VERSION -->.js")
+		| <!-- @endif -->
 	body

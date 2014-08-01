@@ -1,33 +1,36 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
-connect = require 'gulp-connect'
 jade = require 'gulp-jade'
 concat = require 'gulp-concat'
 clean = require 'gulp-clean'
 stylus = require 'gulp-stylus'
-browserify = require 'gulp-browserify'
 rename = require 'gulp-rename'
-connectRewrite = require './connect-rewrite'
-cache = require 'gulp-cached'
-plumber = require 'gulp-plumber'
 uglify = require 'gulp-uglify'
 minifyCss = require 'gulp-minify-css'
-source = require 'vinyl-source-stream'
-watchify = require 'watchify'
-rsync = require("rsyncwrapper").rsync
+preprocess = require 'gulp-preprocess'
 
-compiledDir = './compiled'
-distDir = './dist'
+browserSync = require 'browser-sync'
+modRewrite = require 'connect-modrewrite'
+
+browserify = require 'browserify'
+watchify = require 'watchify'
+source = require 'vinyl-source-stream'
+rsync = require("rsyncwrapper").rsync
+nib = require 'nib'
+pkg = require './package.json'
+
+devDir = './compiled'
+prodDir = './dist'
+
+baseDir = if process.env.NODE_ENV is 'prod' then prodDir else devDir
+env = if process.env.NODE_ENV is 'prod' then 'production' else 'development'
+
+context =
+  VERSION: pkg.version
+  ENV: env
+  BASEDIR: baseDir
+
 paths =
-	coffee: [
-		'./src/coffee/**/*.coffee'
-		'./node_modules/elaborate-modules/modules/**/*.coffee'
-		'./node_modules/hilib/src/**/*.coffee'
-		'./node_modules/huygens-faceted-search/src/coffee/**/*.coffee'
-	]
-	jade: [
-		'./src/index.jade'
-	]
 	stylus: [
 		'./node_modules/hilib/src/views/**/*.styl'
 		'./node_modules/huygens-faceted-search/src/stylus/**/*.styl'
@@ -35,87 +38,59 @@ paths =
 		'./src/stylus/**/*.styl'
 	]
 
-gulp.task 'connect', connect.server
-	root: compiledDir,
-	port: 9000,
-	livereload: true
-	middleware: connectRewrite
+gulp.task 'server', ->
+	baseDir = process.env.NODE_ENV ? 'compiled'
 
-gulp.task 'connect-dist', connect.server
-	root: distDir,
-	port: 9002,
-	middleware: connectRewrite
+	browserSync.init null,
+		server:
+			baseDir: "./#{baseDir}"
+			middleware: [
+				modRewrite([
+					'^[^\\.]*$ /index.html [L]'
+				])
+			]
+		notify: false
 
 gulp.task 'jade', ->
-	gulp.src(paths.jade)
-		.pipe(plumber())
+	gulp.src('./src/index.jade')
 		.pipe(jade())
-		.pipe(gulp.dest(compiledDir))
-		.pipe(connect.reload())
-
-gulp.task 'browserify', ->
-	gulp.src('./src/coffee/main.coffee', read: false)
-		.pipe(plumber())
-		.pipe(cache('browserify'))
-		.pipe(browserify(
-			transform: ['coffeeify', 'jadeify']
-			extensions: ['.coffee', '.jade']
-		))
-		.pipe(rename(extname:'.js'))
-		.pipe(gulp.dest(compiledDir+'/js'))
-		.pipe(connect.reload())
+		.pipe(preprocess(context: context))
+		.pipe(gulp.dest(devDir))
+		.pipe(browserSync.reload(stream: true))
 
 gulp.task 'stylus', ->
 	gulp.src(paths.stylus)
-		.pipe(plumber())
 		.pipe(stylus(
-			use: ['nib']
+			use: [nib()]
+			errors: true
 		))
-		.pipe(concat('main.css'))
-		.pipe(gulp.dest(compiledDir+'/css'))
-		.pipe(connect.reload())
+		.pipe(concat("main-#{context.VERSION}.css"))
+		.pipe(gulp.dest(devDir+'/css'))
+		.pipe(browserSync.reload(stream: true))
 
 gulp.task 'uglify', ->
-	gulp.src(compiledDir+'/js/main.js')
+	gulp.src(devDir+'/js/main.js')
 		.pipe(uglify())
-		.pipe(gulp.dest(distDir+'/js'))
+		.pipe(gulp.dest(prodDir+'/js'))
 
 gulp.task 'minify-css', ->
-	gulp.src(compiledDir+'/css/main.css')
+	gulp.src(devDir+'/css/main.css')
 		.pipe(minifyCss())
-		.pipe(gulp.dest(distDir+'/css'))
+		.pipe(gulp.dest(prodDir+'/css'))
 
-# gulp.task 'deploy', (done) ->
-# 	rsync
-# 		src: './dist'
-# 		dest: 'gijsjb@hi7.huygens.knaw.nl:/data/htdocs/cdn/elaborate/publication/collection/development'
-# 		recursive: true
-# 		syncDest: true
-# 		exclude: ['data', 'index.html']
-# 		compareMode: "checksum"
-# 	,
-# 		(error,stdout,stderr,cmd) -> 
-# 			gutil.log error
-# 			gutil.log stdout
-# 			gutil.log stderr
-# 			done()
+gulp.task 'clean-compiled', -> gulp.src(devDir+'/*').pipe(clean())
+gulp.task 'clean-dist', -> gulp.src(prodDir+'/*').pipe(clean())
 
-gulp.task 'clean-compiled', -> gulp.src(compiledDir+'/*').pipe(clean())
-gulp.task 'clean-dist', -> gulp.src(distDir+'/*').pipe(clean())
+gulp.task 'copy-static-compiled', -> gulp.src('./static/**/*').pipe(gulp.dest(devDir))
+gulp.task 'copy-static-dist', -> gulp.src('./static/**/*').pipe(gulp.dest(prodDir))
 
-gulp.task 'copy-static-compiled', -> gulp.src('./static/**/*').pipe(gulp.dest(compiledDir))
-gulp.task 'copy-static-dist', -> gulp.src('./static/**/*').pipe(gulp.dest(distDir))
+gulp.task 'copy-images-compiled', ['copy-static-compiled'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(devDir+'/images/hilib'))
+gulp.task 'copy-images-dist', ['copy-static-dist'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(prodDir+'/images/hilib'))
 
-gulp.task 'copy-images-compiled', ['copy-static-compiled'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(compiledDir+'/images/hilib'))
-gulp.task 'copy-images-dist', ['copy-static-dist'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(distDir+'/images/hilib'))
-
-gulp.task 'copy-index', -> gulp.src(compiledDir+'/index.html').pipe(gulp.dest(distDir))
+gulp.task 'copy-index', -> gulp.src(devDir+'/index.html').pipe(gulp.dest(prodDir))
 
 gulp.task 'compile', ['clean-compiled'], ->
-	gulp.start 'copy-images-compiled'
-	gulp.start 'browserify'
-	gulp.start 'jade'
-	gulp.start 'stylus'
+	gulp.start 'copy-images-compiled', 'browserify-libs', 'browserify', 'jade', 'stylus'
 
 gulp.task 'build', ['clean-dist'], ->
 	gulp.start 'copy-images-dist'
@@ -124,25 +99,55 @@ gulp.task 'build', ['clean-dist'], ->
 	gulp.start 'minify-css'
 	
 gulp.task 'watch', ->
-	gulp.watch [paths.jade], ['jade']
+	gulp.watch ['./src/index.jade'], ['jade']
 	gulp.watch [paths.stylus], ['stylus']
 
-gulp.task 'watchify', ->
-	bundler = watchify
+createBundle = (watch=false) ->
+	args =
 		entries: './src/coffee/main.coffee'
 		extensions: ['.coffee', '.jade']
 
+	bundler = if watch then watchify(args) else browserify(args)
+
 	bundler.transform('coffeeify')
 	bundler.transform('jadeify')
+	bundler.transform('envify')
+
+	bundler.exclude 'jquery'
+	bundler.exclude 'underscore'
+	bundler.exclude 'backbone'
 
 	rebundle = ->
+		gutil.log('Watchify: start rebundling') if watch
 		bundler.bundle()
-			.pipe(source('main.js'))
-			.pipe(gulp.dest(compiledDir+'/js'))
-			.pipe(connect.reload())
+			.pipe(source("src-#{context.VERSION}.js"))
+			.pipe(gulp.dest(devDir+'/js'))
+			.pipe(browserSync.reload(stream: true, once: true))
 
-	bundler.on('update', rebundle)
+	bundler.on 'update', rebundle
 
 	rebundle()
 
-gulp.task 'default', ['stylus', 'connect', 'watch', 'watchify']
+gulp.task 'browserify', -> createBundle false
+gulp.task 'watchify', -> createBundle true
+
+gulp.task 'browserify-libs', ->
+	libs =
+		underscore: './node_modules/underscore/underscore'
+		jquery: './node_modules/jquery/dist/jquery'
+		backbone: './node_modules/backbone/backbone'
+
+	libPaths = Object.keys(libs).map (key) ->
+		libs[key]
+
+	bundler = browserify libPaths
+
+	for own id, path of libs
+		bundler.require path, expose: id
+
+	gutil.log('Browserify: bundling libs')
+	bundler.bundle()
+		.pipe(source("libs-#{context.VERSION}.js"))
+		.pipe(gulp.dest(devDir+'/js'))
+
+gulp.task 'default', ['stylus', 'server', 'watch', 'watchify']
