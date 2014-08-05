@@ -84,7 +84,7 @@ class MainRouter extends Backbone.Router
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
-					entryMetadataFields: config.get('levels')
+					entryMetadataFields: config.get('entryMetadataFields')
 					levels: config.get('levels')
 				$('.search-view').html searchView.$el
 

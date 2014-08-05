@@ -26,9 +26,9 @@ baseDir = if process.env.NODE_ENV is 'prod' then prodDir else devDir
 env = if process.env.NODE_ENV is 'prod' then 'production' else 'development'
 
 context =
-  VERSION: pkg.version
-  ENV: env
-  BASEDIR: baseDir
+	VERSION: pkg.version
+	ENV: env
+	BASEDIR: baseDir
 
 paths =
 	stylus: [
