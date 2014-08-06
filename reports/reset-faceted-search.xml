@@ -9,7 +9,7 @@
     tests="8" time="" timestamp="">
     
     
-      <testcase name="Element &lt;.resultview .entries ul.page&gt; was visible after 1544 milliseconds.">
+      <testcase name="Element &lt;.resultview .entries ul.page&gt; was visible after 1428 milliseconds.">
         
         
       </testcase>
@@ -49,6 +49,10 @@
         
       </testcase>
     
+    
+      <system-err>
+        Unable to locate element: &quot;button.toggle-metadata + ul&quot; using: css selector
+      </system-err>
     
     </testsuite>
   

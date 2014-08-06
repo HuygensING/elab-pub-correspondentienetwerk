@@ -1,7 +1,9 @@
+var config = require('./config.js');
+
 module.exports = {
   "Visible panels equals checked panels" : function (browser) {
     browser
-      .url("http://localhost:9000/entry/13553")
+      .url(config.baseUrl+"/entry/13553")
       .waitForElementVisible('article .panels', 1000)
       .elements('css selector', 'article .panels .visible', function(panelResponse) {
         this.elements('css selector', 'article .panels-menu .fa-check-square-o', function(checkboxResponse) {
@@ -15,10 +17,10 @@ module.exports = {
       .waitForElementVisible('button.toggle-metadata', 1000)
       .click('button.toggle-metadata')
       .pause(500)
-      .assert.visible('button.toggle-metadata + ul')
+      .assert.visible('button.toggle-metadata + .table-container')
       .click('button.toggle-metadata')
       .pause(500)
-      .assert.hidden('button.toggle-metadata + ul')
+      .assert.hidden('button.toggle-metadata + .table-container')
   },
 
 

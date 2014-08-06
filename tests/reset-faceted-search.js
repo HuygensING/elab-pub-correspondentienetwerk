@@ -1,3 +1,5 @@
+var config = require('./config.js');
+
 module.exports = {
   "Reset Faceted Search" : function (browser) {
     browser.myReset = function () {
@@ -19,7 +21,7 @@ module.exports = {
     }
 
     browser
-      .url("http://localhost:9000/search")
+      .url(config.baseUrl+"/search")
       .waitForElementVisible('.resultview .entries ul.page', 10000)
       .mySearch('t*st', 13)
       .myReset()

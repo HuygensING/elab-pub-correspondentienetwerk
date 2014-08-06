@@ -1,7 +1,9 @@
+var config = require('./config.js');
+
 module.exports = {
   "Highlight search term" : function (browser) {
     browser
-      .url("http://localhost:9000/search")
+      .url(config.baseUrl+"/search")
       .waitForElementVisible('.resultview .entries ul.page', 10000)
       .setValue('.search-input input[name="search"]', 't*st')
       .click('.search-input i.fa-search')
@@ -11,7 +13,7 @@ module.exports = {
       .assert.containsText('span.highlight-term', 'troest')
       .getLocation('span.highlight-term', function(termResult) {
         this.getLocation('article .panels', function(panelsResult) {
-          this.assert.equal(termResult.value.y, panelsResult.value.y + 52);
+          this.assert.equal(termResult.value.y, panelsResult.value.y + 40);
         });
       })
       .end();

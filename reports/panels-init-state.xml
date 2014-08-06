@@ -9,7 +9,7 @@
     tests="2" time="" timestamp="">
     
     
-      <testcase name="Element &lt;article .panels&gt; was visible after 603 milliseconds.">
+      <testcase name="Element &lt;article .panels&gt; was visible after 780 milliseconds.">
         
         
       </testcase>
@@ -27,17 +27,17 @@
     tests="3" time="" timestamp="">
     
     
-      <testcase name="Element &lt;button.toggle-metadata&gt; was visible after 29 milliseconds.">
+      <testcase name="Element &lt;button.toggle-metadata&gt; was visible after 69 milliseconds.">
         
         
       </testcase>
     
-      <testcase name="Testing if element &lt;button.toggle-metadata + ul&gt; is visible.">
+      <testcase name="Testing if element &lt;button.toggle-metadata + .table-container&gt; is visible.">
         
         
       </testcase>
     
-      <testcase name="Testing if element &lt;button.toggle-metadata + ul&gt; is hidden.">
+      <testcase name="Testing if element &lt;button.toggle-metadata + .table-container&gt; is hidden.">
         
         
       </testcase>
