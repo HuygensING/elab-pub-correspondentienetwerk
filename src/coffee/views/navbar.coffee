@@ -73,43 +73,39 @@ class NavBar extends Backbone.View
 				li = _.find @unloadedThumbnails, (li) -> fEl(li).inViewport()
 				return unless li?
 
+				# Get the index of the li and remove.
+				index = @unloadedThumbnails.indexOf li
+				@unloadedThumbnails.splice index, 1
+
 				loading = true
-				@loadThumbnail li, =>
-					loading = false
-					# Run loadThumbnails again, because when the scroll ends,
-					# the next li could be in the viewport.
-					@loadThumbnails()
+
+				load = (li) =>
+					@loadThumbnail li, =>
+						loading = false
+
+						if @unloadedThumbnails.length is 0
+							@el.querySelector('ul').removeEventListener 'scroll', @throttledOnScroll
+
+						if @unloadedThumbnails[0]? and fEl(@unloadedThumbnails[0]).inViewport()
+							load @unloadedThumbnails.shift()
+
+
+						# Run loadThumbnails again, because when the scroll ends,
+						# the next li could be in the viewport.
+						@onNavScroll()
+
+				load(li)
 
 	loadThumbnail: (li, done) ->
-		inViewport = fEl(li).inViewport()
 		# The img tag is already present in the <li>, because
 		# otherwise the CSS fade in (opacity transition) wouldn't work.
 		img = li.querySelector('img')
-
-		# Get the index of the li to be removed.
-		index = @unloadedThumbnails.indexOf li
-		if index > -1
-			# Remove li from unloadedThumbnails
-			@unloadedThumbnails.splice index, 1
 
 		img.addEventListener 'load', =>
 			# Fade in the thumbnail, using CSS.
 			img.style.opacity = 1
 
-			# Only load the next thumbnail if the current thumbnail
-			# is still in the viewport.
-			if inViewport
-				newLi = @unloadedThumbnails.shift()
-
-				if @unloadedThumbnails.length is 0
-					@el.querySelector('ul').removeEventListener 'scroll', @throttledOnScroll
-
-				if newLi?
-					@loadThumbnail newLi, done
-				else
-					done()
-			else
-				done()
+			done()
 
 		img.src = li.getAttribute('data-src')
 
