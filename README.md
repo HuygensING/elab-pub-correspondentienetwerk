@@ -8,4 +8,8 @@ $ rsync --exclude=data --exclude=index.html --compress --archive --verbose --che
 
 #### v1.1.0
 
-- Change thumbnail loading logic so it only loads the visible thumbnails.
+- [perf] Change thumbnail loading logic so it only loads the visible thumbnails.
+- [bug] Hide site menu when printing.
+- [feat] Update to latest faceted search.
+
+
