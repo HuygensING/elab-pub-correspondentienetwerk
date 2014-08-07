@@ -1,0 +1,68 @@
+@import '../import/*'
+
+div.entry
+	nav
+		height 140px
+
+		ul.thumbnails
+			height 118px
+			background black
+			color white
+			margin 0
+			padding 10px 10px 8px 10px
+			list-style none
+			white-space nowrap
+			max-width 100%
+			overflow-x scroll
+			text-align center
+
+			li
+				min-width 50px
+				display inline-block
+				/*padding 0 1px*/
+				position relative
+				vendor('transition-duration', .15s)
+				vendor('transform', scale(1,1))
+				cursor pointer
+
+				&.active
+					.index
+						background-color defaultPurple
+						color white
+						text-shadow 1px 1px 1px #444
+						box-shadow 1px 1px 1px #444
+
+				&:hover
+					position relative
+					z-index 9
+
+					img
+						transition-duration 150ms
+						transform scale(1.15,1.15)
+						box-shadow 0 0 10px rgba(0,0,0,0.05)
+
+				img
+					display inline-block
+					border 0
+					height 100px
+					width auto
+					opacity 0
+					transition-property opacity, transform
+					transition-duration 300ms, 150ms
+
+				.short-name
+					color white
+					height 20px
+					width 30px
+					position absolute
+					top 50%
+					margin-top -10px
+					left 50%
+					margin-left -15px
+					background-color rgb(0,0,0)
+					transition background-color 300ms
+					border-radius 10px
+					line-height 20px
+					text-align center
+					font-size 10px
+					z-index 10

@@ -17,9 +17,11 @@
   },
   "dependencies": {
     "backbone": "~1.0.0",
-    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v1.0.2.1",
+    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.0.7",
     "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.3",
     "hilib": "git+https://github.com/HuygensING/hilib.git#v0.0.4",
+    "funcky.str": "git+https://github.com/Gijsjan/funcky.str.git#v0.1.0",
+    "funcky.el": "git+https://github.com/Gijsjan/funcky.el.git#v0.1.0",
     "jquery": "~2.1.0",
     "underscore": "^1.6.0",
     "underscore.string": "~2.3.3",

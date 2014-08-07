@@ -1,11 +1,4 @@
-Backbone = require 'backbone'
-$ = require 'jquery'
-
-class Preloader extends Backbone.View
-	id: 'js-image-preloader'
-
-	start: -> $('body').append @$el
-
+class Preloader
 	loadImage: (src, onLoaded) ->
 		img = new Image
 		if img.addEventListener
