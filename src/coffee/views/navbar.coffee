@@ -57,6 +57,8 @@ class NavBar extends Backbone.View
 
 		@el.appendChild ul
 
+		@activateThumb()
+
 		# Setting to the end of the event stack (setTimeout fun, 0) doesn't
 		# work when navigating from annotation overview to entry. With 100ms
 		# extra, it does work.
@@ -91,7 +93,6 @@ class NavBar extends Backbone.View
 
 						if @unloadedThumbnails[0]? and fEl(@unloadedThumbnails[0]).inViewport()
 							load @unloadedThumbnails.shift()
-
 
 						# Run loadThumbnails again, because when the scroll ends,
 						# the next li could be in the viewport.
