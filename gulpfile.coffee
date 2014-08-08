@@ -68,15 +68,18 @@ gulp.task 'stylus', ->
 		.pipe(gulp.dest(devDir+'/css'))
 		.pipe(browserSync.reload(stream: true))
 
+
 gulp.task 'uglify', ->
-	gulp.src(devDir+'/js/main.js')
-		.pipe(uglify())
-		.pipe(gulp.dest(prodDir+'/js'))
+	gulp.src("#{devDir}/js/*")
+	.pipe(concat("main.js", newLine: '\r\n;'))
+	.pipe(uglify())
+	.pipe(gulp.dest(prodDir+'/js/'))
 
 gulp.task 'minify-css', ->
-	gulp.src(devDir+'/css/main.css')
-		.pipe(minifyCss())
-		.pipe(gulp.dest(prodDir+'/css'))
+	gulp.src("#{devDir}/css/main-#{context.VERSION}.css")
+	.pipe(rename(basename: 'main'))
+	.pipe(minifyCss())
+	.pipe(gulp.dest(prodDir+'/css'))
 
 gulp.task 'clean-compiled', -> gulp.src(devDir+'/*').pipe(clean())
 gulp.task 'clean-dist', -> gulp.src(prodDir+'/*').pipe(clean())
