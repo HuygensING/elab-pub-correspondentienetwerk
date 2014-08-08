@@ -4,6 +4,7 @@
     "baseURL": "http://demo7.huygens.knaw.nl/elab4-gemeentearchief_kampen/",
     "textLayers": ["Diplomatic", "Critical", "Translation", "Comments"],
     "levels": ["Title of text", "Name of author", "Folio side"],
+    "entryMetadataFields": ["Title of text", "Name of author", "Folio side", "en", "nog", "wat"],
     "entries": [{
         "datafile": "13748.json",
         "name": "De Annalibus quaedam nota 248r"
