@@ -9,6 +9,12 @@ $ rsync --exclude=data --exclude=index.html --compress --archive --verbose --che
 
 ## Changelog
 
+#### v1.1.1
+
+- [bug] Fix entry navbar navigation (the thumbnails bar).
+- [bug] Activate current entry in navbar on pageload.
+- [bug] Show short names in navbar.
+
 #### v1.1.0
 
 - [perf] Change thumbnail loading logic so it only loads the visible thumbnails.
