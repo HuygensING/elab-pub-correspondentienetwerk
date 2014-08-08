@@ -11,7 +11,6 @@ dom = require 'hilib/src/utils/dom'
 fStr = require('funcky.str').str
 fEl = require('funcky.el').el
 
-
 Views =
 	Panels: require 'elaborate-modules/modules/views/panels'
 	NavBar: require './navbar'
@@ -49,12 +48,17 @@ class Entry extends Backbone.View
 		else
 			@model = if @options.entryId? then entries.findWhere datafile: @options.entryId+'.json' else entries.current
 
+			# If a model isn't found (user has typed or pasted something wrong), go Home.
+			Backbone.history.navigate '/', trigger:true unless @model?
+
 			@model.fetch().done => modelLoaded()
 
 	# ### Render
 	render: ->
 		navBar = new Views.NavBar()
 		@el.appendChild navBar.el
+
+		@listenTo navBar, 'change:entry', @renderPanels
 
 		@renderPanels @options
 
@@ -64,9 +68,18 @@ class Entry extends Backbone.View
 		panels = null
 
 		(options) ->
-			panels.destroy() if panels?
-			panels = new Views.Panels options
-			@$el.append panels.$el
+			fadeInNewPanel = =>
+				panels = new Views.Panels options
+				panels.$el.hide()
+				@$el.append panels.$el
+				panels.$el.fadeIn('fast')
+
+			if panels?
+				panels.$el.fadeOut 'fast', ->
+					panels.destroy()
+					fadeInNewPanel()
+			else
+				fadeInNewPanel()
 
 	# ### Methods
 	destroy: ->

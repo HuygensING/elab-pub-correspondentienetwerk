@@ -65,9 +65,7 @@ class MainRouter extends Backbone.Router
 				entryId: arguments[0]
 				layerSlug: arguments[1]
 				annotation: arguments[2]
-		# else 
-		# 	return console.error 'Router: incorrect options given for entry.'
-			
+
 		entry = new Views.Entry options
 		entry.cache = false
 		$('#main > .entries').append entry.$el

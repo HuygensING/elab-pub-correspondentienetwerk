@@ -45,7 +45,7 @@ class NavBar extends Backbone.View
 			tplStr = thumbnailTpl
 				src: entry.get('thumbnails')[0]
 				index: entries.indexOf(entry)
-				name: entry.get('shortname') ? id
+				name: entry.get('shortName') ? id
 			thumb = fStr(tplStr).toElement()
 
 			@unloadedThumbnails.push thumb
@@ -57,7 +57,10 @@ class NavBar extends Backbone.View
 
 		@el.appendChild ul
 
-		setTimeout @onNavScroll.bind(@), 0
+		# Setting to the end of the event stack (setTimeout fun, 0) doesn't
+		# work when navigating from annotation overview to entry. With 100ms
+		# extra, it does work.
+		setTimeout @onNavScroll.bind(@), 100
 
 		@
 
@@ -109,10 +112,6 @@ class NavBar extends Backbone.View
 
 		img.src = li.getAttribute('data-src')
 
-
-
-
-
 	# ### Events
 	events: ->
 		'click li': 'navigateEntry'
@@ -121,17 +120,17 @@ class NavBar extends Backbone.View
 	destroy: ->
 		@remove()
 
-	activateThumb: (entryId) ->
-		$entries = @$ 'ul.entries'
+	activateThumb: (entryIndex) ->
+		$entries = @$ 'ul.thumbnails'
 
 		# If no entryId is given, use the current entry id.
-		entryId = entryId ? entries.current.get('_id')
+		entryIndex = entryIndex ? entries.indexOf(entries.current)
 
 		# Unactivate current active entry.
 		$entries.find('li.active').removeClass 'active'
 
 		# Add active to activated entry.
-		$active = $entries.find 'li[data-entry-id="'+entryId+'"]'
+		$active = $entries.find 'li[data-index="'+entryIndex+'"]'
 		$active.addClass 'active'
 
 		# Using jQuery with .position().left does not give the correct left, because I guess it does not use
@@ -140,15 +139,18 @@ class NavBar extends Backbone.View
 		offset = ($(window).width()/2) - ($active.width()/2)
 
 		# Animate entry to center.
-		@$('.entries').animate
+		@$('.thumbnails').animate
 			scrollLeft: leftPos - offset
-		, 150
+		, 300
 
 	navigateEntry: (ev) ->
-		entryId = ev.currentTarget.getAttribute 'data-entry-id'
+		# Animate the NavBar.
+		index = ev.currentTarget.getAttribute 'data-index'
+		@activateThumb index
 
-		@activateThumb entryId
-#		@renderPanels entryId: entryId
-		Backbone.history.navigate "/entry/#{entryId}"
+		# Change the current entry.
+		entry = entries.at index
+		@trigger 'change:entry', entryId: entry.get('_id')
+		Backbone.history.navigate "/entry/#{entry.get('_id')}"
 
 module.exports = NavBar

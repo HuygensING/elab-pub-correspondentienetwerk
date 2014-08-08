@@ -7,10 +7,12 @@
     "entryMetadataFields": ["Title of text", "Name of author", "Folio side", "en", "nog", "wat"],
     "entries": [{
         "datafile": "13748.json",
-        "name": "De Annalibus quaedam nota 248r"
+        "name": "De Annalibus quaedam nota 248r",
+        "shortName": "test"
     }, {
         "datafile": "13749.json",
-        "name": "De Annalibus quaedam nota248v"
+        "name": "De Annalibus quaedam nota248v",
+        "shortName": "tast"
     }, {
         "datafile": "13553.json",
         "name": "De Annalibus quaedam nota249r"
@@ -25,7 +27,8 @@
         "name": "De Annalibus quaedam nota250v"
     }, {
         "datafile": "13581.json",
-        "name": "De Annalibus quaedam nota251r"
+        "name": "De Annalibus quaedam nota251r",
+        "shortName": "tost"
     }, {
         "datafile": "13582.json",
         "name": "De Annalibus quaedam nota251v"
