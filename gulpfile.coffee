@@ -15,9 +15,14 @@ modRewrite = require 'connect-modrewrite'
 browserify = require 'browserify'
 watchify = require 'watchify'
 source = require 'vinyl-source-stream'
+
+exec = require('child_process').exec
+async = require 'async'
+rimraf = require 'rimraf'
 rsync = require("rsyncwrapper").rsync
 nib = require 'nib'
 pkg = require './package.json'
+cfg = require './config.json'
 
 devDir = './compiled'
 prodDir = './dist'
@@ -37,6 +42,31 @@ paths =
 		'./node_modules/elaborate-modules/modules/**/*.styl'
 		'./src/stylus/**/*.styl'
 	]
+
+gulp.task 'link', (done) ->
+	removeModules = (cb) ->
+		modulePaths = cfg['local-modules'].map (module) -> "./node_modules/#{module}"
+		async.each modulePaths , rimraf, (err) -> cb()
+
+	linkModules = (cb) ->
+		moduleCommands = cfg['local-modules'].map (module) -> "npm link #{module}"
+		async.each moduleCommands, exec, (err) -> cb()
+
+	async.series [removeModules, linkModules], (err) ->
+		return gutil.log err if err?
+		done()
+
+gulp.task 'unlink', (done) ->
+	unlinkModules = (cb) ->
+		moduleCommands = cfg['local-modules'].map (module) -> "npm unlink #{module}"
+		async.each moduleCommands, exec, (err) -> cb()
+
+	installModules = (cb) ->
+		exec 'npm i', cb
+
+	async.series [unlinkModules, installModules], (err) ->
+		return gutil.log err if err?
+		done()
 
 gulp.task 'server', ->
 	baseDir = process.env.NODE_ENV ? 'compiled'

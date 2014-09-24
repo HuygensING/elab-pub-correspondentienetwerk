@@ -18,7 +18,7 @@
   "dependencies": {
     "backbone": "~1.0.0",
     "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.0.10",
-    "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.6",
+    "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.8",
     "hilib": "git+https://github.com/HuygensING/hilib.git#v0.0.4",
     "funcky.str": "git+https://github.com/Gijsjan/funcky.str.git#v0.1.0",
     "funcky.el": "git+https://github.com/Gijsjan/funcky.el.git#v0.1.0",
@@ -28,6 +28,7 @@
     "json3": "~3.3.0"
   },
   "devDependencies": {
+    "async": "^0.9.0",
     "browser-sync": "^1.3.2",
     "browserify": "^4.2.3",
     "coffee-script": "^1.7.1",
@@ -48,6 +49,7 @@
     "jade": "^1.5.0",
     "jadeify": "^2.5.0",
     "nib": "^1.0.3",
+    "rimraf": "^2.2.8",
     "rsyncwrapper": "^0.4.0",
     "stylus": "^0.47.3",
     "vinyl-source-stream": "^0.1.1",
