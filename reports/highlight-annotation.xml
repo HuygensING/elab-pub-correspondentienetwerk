@@ -9,12 +9,12 @@
     tests="4" time="" timestamp="">
     
     
-      <testcase name="Element &lt;.contents section ol li:nth-child(2) .link a&gt; was visible after 206 milliseconds.">
+      <testcase name="Element &lt;.contents section ol li:nth-child(2) .link a&gt; was visible after 114 milliseconds.">
         
         
       </testcase>
     
-      <testcase name="Element &lt;.annotations ol li[data-id=&quot;9063676&quot;]&gt; was visible after 364 milliseconds.">
+      <testcase name="Element &lt;.annotations ol li[data-id=&quot;9063676&quot;]&gt; was visible after 1309 milliseconds.">
         
         
       </testcase>

@@ -9,7 +9,7 @@
     tests="2" time="" timestamp="">
     
     
-      <testcase name="Element &lt;article .panels&gt; was visible after 780 milliseconds.">
+      <testcase name="Element &lt;article .panels&gt; was visible after 54 milliseconds.">
         
         
       </testcase>
@@ -27,7 +27,7 @@
     tests="3" time="" timestamp="">
     
     
-      <testcase name="Element &lt;button.toggle-metadata&gt; was visible after 69 milliseconds.">
+      <testcase name="Element &lt;button.toggle-metadata&gt; was visible after 24 milliseconds.">
         
         
       </testcase>
