@@ -8,6 +8,7 @@
 
 - :bug: Remove eventListener when Navbar is being destroyed.
 - :bug: Render placeholder when thumbnail is not found.
+- :lipstick: Replace elaborat-modules config with own config model.
 
 #### v1.1.1
 

@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 $ = require 'jquery'
 
-config = require 'elaborate-modules/modules/models/config'
+config = require '../models/config'
 
 entries = require 'elaborate-modules/modules/collections/entries'
 

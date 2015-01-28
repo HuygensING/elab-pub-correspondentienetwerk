@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 $ = require 'jquery'
 
-config = require 'elaborate-modules/modules/models/config'
+config = require '../models/config'
 
 entries = require 'elaborate-modules/modules/collections/entries'
 
@@ -107,7 +107,7 @@ class NavBar extends Backbone.View
 		img = li.querySelector('img')
 
 		img.addEventListener 'error', =>
-			img.src = "/images/not-found.svg"
+			img.src = "#{config.getCdnUrl()}/images/not-found.svg"
 			done()
 
 		img.addEventListener 'load', =>

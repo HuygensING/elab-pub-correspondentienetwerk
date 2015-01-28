@@ -4,7 +4,7 @@ Backbone.$ = $
 
 mainRouter = require './routers/main'
 
-config = require 'elaborate-modules/modules/models/config'
+config = require './models/config'
 
 entries = require 'elaborate-modules/modules/collections/entries'
 textlayers = require 'elaborate-modules/modules/collections/textlayers'

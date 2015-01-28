@@ -5,11 +5,7 @@ us = require 'underscore.string'
 
 events = require '../events'
 
-# Set page title
-config = require 'elaborate-modules/modules/models/config'
-config.on 'change', =>
-	# Use document.title to ensure IE compatibility
-	document.title = config.get 'title'
+config = require '../models/config'
 
 Views =
 	Search: require 'elaborate-modules/modules/views/faceted-search-results'
@@ -78,7 +74,7 @@ class MainRouter extends Backbone.Router
 		->
 			unless searchView?
 				searchView = new Views.Search
-					searchUrl: config.get('baseURL') + config.get('searchPath')
+					searchUrl: config.get('baseUrl') + config.get('searchPath')
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
