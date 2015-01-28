@@ -4,6 +4,11 @@
 
 ## Changelog
 
+#### v1.1.2
+
+- :bug: Remove eventListener when Navbar is being destroyed.
+- :bug: Render placeholder when thumbnail is not found.
+
 #### v1.1.1
 
 - [bug] Fix entry navbar navigation (the thumbnails bar).
