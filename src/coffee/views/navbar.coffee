@@ -53,6 +53,7 @@ class NavBar extends Backbone.View
 			ul.appendChild thumb
 
 		collection = if config.get('facetedSearchResponse') then config.get('facetedSearchResponse').get('results') else entries.models
+
 		collection.map renderThumbnail
 
 		@el.appendChild ul
@@ -104,6 +105,10 @@ class NavBar extends Backbone.View
 		# The img tag is already present in the <li>, because
 		# otherwise the CSS fade in (opacity transition) wouldn't work.
 		img = li.querySelector('img')
+
+		img.addEventListener 'error', =>
+			img.src = "/images/not-found.svg"
+			done()
 
 		img.addEventListener 'load', =>
 			# Fade in the thumbnail, using CSS.

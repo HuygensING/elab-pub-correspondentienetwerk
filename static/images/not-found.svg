@@ -1,0 +1,26 @@
+<svg
+	width="50"
+	height="100"
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<defs>
+		<rect
+			id="prototype-rect"
+			height="10"
+			width="100"
+			style="stroke:#AAA; fill: #CCC"
+			fill-opacity="0.2"
+			stroke-opacity="0.2"
+			transform="rotate(22 0 0)">
+		</rect>
+	</defs>
+
+	<use xlink:href="#prototype-rect" x="0" y="-20" />
+	<use xlink:href="#prototype-rect" x="0" y="0" />
+	<use xlink:href="#prototype-rect" x="0" y="20" />
+	<use xlink:href="#prototype-rect" x="0" y="40" />
+	<use xlink:href="#prototype-rect" x="0" y="60" />
+	<use xlink:href="#prototype-rect" x="0" y="80" />
+	<use xlink:href="#prototype-rect" x="0" y="100" />
+</svg>
