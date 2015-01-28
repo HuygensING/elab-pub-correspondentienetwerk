@@ -26,12 +26,12 @@ class NavBar extends Backbone.View
 
 	# ### Render
 	render: ->
-		ul = document.createElement('ul')
-		ul.className = 'thumbnails'
+		@thumbnailsUL = document.createElement('ul')
+		@thumbnailsUL.className = 'thumbnails'
 
 #		@throttledOnScroll = _.throttle(@loadThumbnails.bind(@), 1000, trailing: false)
 		@throttledOnScroll = (ev) => util.timeoutWithReset 100, @onNavScroll.bind(@)
-		ul.addEventListener 'scroll', @throttledOnScroll
+		@thumbnailsUL.addEventListener 'scroll', @throttledOnScroll
 
 		renderThumbnail = (entry) =>
 			unless entry instanceof entries.model
@@ -50,13 +50,13 @@ class NavBar extends Backbone.View
 
 			@unloadedThumbnails.push thumb
 			# Append the thumb element to the fragment.
-			ul.appendChild thumb
+			@thumbnailsUL.appendChild thumb
 
 		collection = if config.get('facetedSearchResponse') then config.get('facetedSearchResponse').get('results') else entries.models
 
 		collection.map renderThumbnail
 
-		@el.appendChild ul
+		@el.appendChild @thumbnailsUL
 
 		@activateThumb()
 
@@ -124,6 +124,8 @@ class NavBar extends Backbone.View
 
 	# ### Methods
 	destroy: ->
+		@thumbnailsUL.removeEventListener @throttledOnScroll
+		
 		@remove()
 
 	activateThumb: (entryIndex) ->
