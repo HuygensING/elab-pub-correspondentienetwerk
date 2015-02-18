@@ -8,7 +8,7 @@ events = require '../events'
 config = require '../models/config'
 
 Views =
-	Search: require '../views/search'
+	FS: require 'huygens-faceted-search'
 	# Search: require '../views/search'
 	Entry: require '../views/entry'
 	Annotations: require '../views/annotations'
@@ -73,17 +73,23 @@ class MainRouter extends Backbone.Router
 
 		->
 			unless searchView?
-				searchView = new Views.Search
-					searchUrl: config.get('baseUrl') + config.get('searchPath')
+				searchView = new Views.FS
+					baseUrl: config.get('baseURL')
+					searchPath: config.get('searchPath')
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('entryMetadataFields')
 					levels: config.get('levels')
-				$('.search-view').html searchView.$el
 
-				@listenTo searchView, 'change:results', (responseModel) -> config.set facetedSearchResponse: responseModel
-				@listenTo searchView, 'navigate:entry', @navigateEntry
+				searchView.search()
+					
+				$('.search-view').html searchView.$el
+		# 		searchView = new Views.Search
+		# 		$('.search-view').html searchView.$el
+
+		# 		@listenTo searchView, 'change:results', (responseModel) -> config.set facetedSearchResponse: responseModel
+		# 		@listenTo searchView, 'navigate:entry', @navigateEntry
 
 			switchView searchView
 
