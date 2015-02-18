@@ -13,8 +13,6 @@ Views =
 	Panels: require 'elaborate-modules/modules/views/panels'
 	NavBar: require './navbar'
 
-preloader = require './preloader'
-
 thumbnailTpl = require '../../jade/entry/thumbnail.jade'
 
 

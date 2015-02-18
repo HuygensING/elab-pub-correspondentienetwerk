@@ -8,7 +8,7 @@ events = require '../events'
 config = require '../models/config'
 
 Views =
-	Search: require 'elaborate-modules/modules/views/faceted-search-results'
+	Search: require '../views/search'
 	# Search: require '../views/search'
 	Entry: require '../views/entry'
 	Annotations: require '../views/annotations'
