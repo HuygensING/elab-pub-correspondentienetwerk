@@ -45,8 +45,6 @@ class Config extends Backbone.Model
 			# Set the page title. Use document.title to ensure IE compatibility.
 			document.title = @get 'title'
 
-		console.log @getCdnUrl()
-
 	parse: (data) ->
 		for entry in data.entries
 			entry._id = +entry.datafile.replace '.json', '' 
