@@ -6,8 +6,7 @@ config = require '../models/config'
 
 entries = require 'elaborate-modules/modules/collections/entries'
 
-dom = require 'hilib/src/utils/dom'
-util = require 'hilib/src/utils/general'
+util = require 'funcky.util'
 
 fStr = require('funcky.str').str
 fEl = require('funcky.el').el
@@ -30,7 +29,7 @@ class NavBar extends Backbone.View
 		@thumbnailsUL.className = 'thumbnails'
 
 #		@throttledOnScroll = _.throttle(@loadThumbnails.bind(@), 1000, trailing: false)
-		@throttledOnScroll = (ev) => util.timeoutWithReset 100, @onNavScroll.bind(@)
+		@throttledOnScroll = (ev) => util.setResetTimeout 100, @onNavScroll.bind(@)
 		@thumbnailsUL.addEventListener 'scroll', @throttledOnScroll
 
 		renderThumbnail = (entry) =>
@@ -143,7 +142,7 @@ class NavBar extends Backbone.View
 
 		# Using jQuery with .position().left does not give the correct left, because I guess it does not use
 		# $entries as the parent to calculate relative left.
-		leftPos = dom($active[0]).position($entries[0]).left
+		leftPos = fEl($active[0]).position($entries[0]).left
 		offset = ($(window).width()/2) - ($active.width()/2)
 
 		# Animate entry to center.

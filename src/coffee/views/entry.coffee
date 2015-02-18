@@ -6,8 +6,6 @@ config = require '../models/config'
 
 entries = require 'elaborate-modules/modules/collections/entries'
 
-dom = require 'hilib/src/utils/dom'
-
 fStr = require('funcky.str').str
 fEl = require('funcky.el').el
 

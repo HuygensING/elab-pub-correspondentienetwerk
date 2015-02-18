@@ -13,15 +13,17 @@
   "scripts": {
     "start": "gulp",
     "compile": "gulp compile",
-    "build": "gulp build"
+    "build": "gulp build",
+    "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search elaborate-modules",
+    "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search elaborate-modules && npm i"
   },
   "dependencies": {
     "backbone": "~1.0.0",
-    "faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.0.10",
+    "huygens-faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.3.1",
     "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.8",
-    "hilib": "git+https://github.com/HuygensING/hilib.git#v0.0.4",
     "funcky.str": "git+https://github.com/Gijsjan/funcky.str.git#v0.1.0",
     "funcky.el": "git+https://github.com/Gijsjan/funcky.el.git#v0.1.0",
+    "funcky.util": "git+https://github.com/Gijsjan/funcky.util.git",
     "jquery": "~2.1.0",
     "underscore": "^1.6.0",
     "underscore.string": "~2.3.3",
