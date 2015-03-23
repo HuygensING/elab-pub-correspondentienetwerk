@@ -4,17 +4,13 @@ $ = require 'jquery'
 
 config = require '../models/config'
 
-entries = require 'elaborate-modules/modules/collections/entries'
-
-fStr = require('funcky.str').str
-fEl = require('funcky.el').el
+entries = require '../collections/entries'
 
 Views =
-	Panels: require 'elaborate-modules/modules/views/panels'
+	Panels: require './panels'
 	NavBar: require './navbar'
 
 thumbnailTpl = require '../../jade/entry/thumbnail.jade'
-
 
 class Entry extends Backbone.View
 
@@ -33,9 +29,9 @@ class Entry extends Backbone.View
 
 		if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
 			part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
-			$('a[name="entry"]').html "Edition <small>(#{part})</small>"
+			$('a[name="entry"]').html "Editie <small>(#{part})</small>"
 		else
-			$('a[name="entry"]').html "Edition"
+			$('a[name="entry"]').html "Editie"
 
 		# The IDs of the entries are passed to the collection on startup, so we can not check
 		# isNew() if we need to fetch the full model or it already has been fetched.
@@ -51,10 +47,10 @@ class Entry extends Backbone.View
 
 	# ### Render
 	render: ->
-		navBar = new Views.NavBar()
-		@el.appendChild navBar.el
+		@navBar = new Views.NavBar()
+		@el.appendChild @navBar.el
 
-		@listenTo navBar, 'change:entry', @renderPanels
+		@listenTo @navBar, 'change:entry', @renderPanels
 
 		@renderPanels @options
 

@@ -1,0 +1,13 @@
+- birth = model.get('birthDate') != null ? model.get('birthDate') : '?'
+- death = model.get('deathDate') != null ? model.get('deathDate') : '?'
+
+.person
+	div
+		span.name= model.get('name')
+		span.dates= " (" + birth + " - " + death + ")"
+	
+		if model.get('characteristics').length > 0
+			span ,
+
+	if model.get('characteristics').length > 0
+		.characteristics= model.get('characteristics').join(", ")

@@ -1,24 +1,24 @@
-Backbone = require 'backbone'
-$ = require 'jquery'
-_ = require 'underscore'
+# Backbone = require 'backbone'
+# $ = require 'jquery'
+# _ = require 'underscore'
 
-config = require '../models/config'
+# config = require '../models/config'
 
-FS = require 'huygens-faceted-search'
+# FS = require 'huygens-faceted-search'
 
-class Search extends Backbone.View
+# class Search extends Backbone.View
 
-	className: 'search'
+# 	className: 'search'
 
-	initialize: (@options) ->
-		@render()
+# 	initialize: (@options) ->
+# 		@render()
 
-	render: ->
-		fs = new FS()
-		fs.search()
+# 	render: ->
+# 		fs = new FS()
+# 		fs.search()
 
-		@$el.html fs.el
+# 		@$el.html fs.el
 
-		@
+# 		@
 
-module.exports = Search
+# module.exports = Search

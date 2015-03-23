@@ -22,7 +22,6 @@ rimraf = require 'rimraf'
 rsync = require("rsyncwrapper").rsync
 nib = require 'nib'
 pkg = require './package.json'
-cfg = require './config.json'
 
 devDir = './compiled'
 prodDir = './dist'
@@ -37,36 +36,13 @@ context =
 
 paths =
 	stylus: [
-		'./node_modules/hilib/src/views/**/*.styl'
-		'./node_modules/huygens-faceted-search/src/stylus/**/*.styl'
-		'./node_modules/elaborate-modules/modules/**/*.styl'
 		'./src/stylus/**/*.styl'
 	]
 
-gulp.task 'link', (done) ->
-	removeModules = (cb) ->
-		modulePaths = cfg['local-modules'].map (module) -> "./node_modules/#{module}"
-		async.each modulePaths , rimraf, (err) -> cb()
-
-	linkModules = (cb) ->
-		moduleCommands = cfg['local-modules'].map (module) -> "npm link #{module}"
-		async.each moduleCommands, exec, (err) -> cb()
-
-	async.series [removeModules, linkModules], (err) ->
-		return gutil.log err if err?
-		done()
-
-gulp.task 'unlink', (done) ->
-	unlinkModules = (cb) ->
-		moduleCommands = cfg['local-modules'].map (module) -> "npm unlink #{module}"
-		async.each moduleCommands, exec, (err) -> cb()
-
-	installModules = (cb) ->
-		exec 'npm i', cb
-
-	async.series [unlinkModules, installModules], (err) ->
-		return gutil.log err if err?
-		done()
+cssFiles = [
+	"./compiled/css/src.css"
+	"./node_modules/huygens-faceted-search/dist/main.css"
+]
 
 gulp.task 'server', ->
 	baseDir = process.env.NODE_ENV ? 'compiled'
@@ -94,10 +70,14 @@ gulp.task 'stylus', ->
 			use: [nib()]
 			errors: true
 		))
-		.pipe(concat("main-#{context.VERSION}.css"))
+		.pipe(concat("src.css"))
 		.pipe(gulp.dest(devDir+'/css'))
-		.pipe(browserSync.reload(stream: true))
 
+gulp.task 'css', ['stylus'], ->
+	gulp.src(cssFiles)
+		.pipe(concat("main-#{context.VERSION}.css"))
+		.pipe(gulp.dest("#{devDir}/css"))
+		.pipe(browserSync.reload(stream: true))
 
 gulp.task 'uglify', ->
 	gulp.src("#{devDir}/js/*")
@@ -117,13 +97,13 @@ gulp.task 'clean-dist', -> gulp.src(prodDir+'/*').pipe(clean())
 gulp.task 'copy-static-compiled', -> gulp.src('./static/**/*').pipe(gulp.dest(devDir))
 gulp.task 'copy-static-dist', -> gulp.src('./static/**/*').pipe(gulp.dest(prodDir))
 
-gulp.task 'copy-images-compiled', ['copy-static-compiled'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(devDir+'/images/hilib'))
-gulp.task 'copy-images-dist', ['copy-static-dist'], -> gulp.src('./node_modules/hilib/images/**/*').pipe(gulp.dest(prodDir+'/images/hilib'))
+gulp.task 'copy-images-compiled', ['copy-static-compiled'], -> 
+gulp.task 'copy-images-dist', ['copy-static-dist'], ->
 
 gulp.task 'copy-index', -> gulp.src(devDir+'/index.html').pipe(gulp.dest(prodDir))
 
 gulp.task 'compile', ['clean-compiled'], ->
-	gulp.start 'copy-images-compiled', 'browserify-libs', 'browserify', 'jade', 'stylus'
+	gulp.start 'copy-images-compiled', 'browserify-libs', 'browserify', 'jade', 'css'
 
 gulp.task 'build', ['clean-dist'], ->
 	gulp.start 'copy-images-dist'
@@ -133,7 +113,7 @@ gulp.task 'build', ['clean-dist'], ->
 	
 gulp.task 'watch', ->
 	gulp.watch ['./src/index.jade'], ['jade']
-	gulp.watch [paths.stylus], ['stylus']
+	gulp.watch [paths.stylus], ['css']
 
 createBundle = (watch=false) ->
 	args =
@@ -183,4 +163,4 @@ gulp.task 'browserify-libs', ->
 		.pipe(source("libs-#{context.VERSION}.js"))
 		.pipe(gulp.dest(devDir+'/js'))
 
-gulp.task 'default', ['stylus', 'server', 'watch', 'watchify']
+gulp.task 'default', ['css', 'server', 'watch', 'watchify']

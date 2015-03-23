@@ -2,14 +2,18 @@ header
 	h1: a(href="/")
 	ul
 		li
-			a(href="/", name="entry") Edition
+			a(href="/", name="entry") Editie
 		li
-			a(href="/search", name="showSearch") Search
+			a(href="/search", name="showSearch") Zoek brieven
 		li
-			a(href="/annotations", name="annotationsIndex") Annotation Overview
+			a(href="/person-search", name="showPersonSearch") Zoek personen
+		//- li
+		//- 	a(href="/annotations", name="annotationsIndex") Annotation Overview
 
 	img(src="http://www.huygens.knaw.nl/wp-content/themes/BDboilerplate/images/logo.png", width="92px", height="66px")
 #main
-	.search-view
+	.faceted-search-placeholder.letter
+	.faceted-search-placeholder.person
 	.annotations-view
-	.entries
+	.entry-placeholder
+	.person-detail

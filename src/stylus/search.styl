@@ -1,3 +1,53 @@
+@import './import/*'
+
+.faceted-search-placeholder
+	// 103px is the height of the header
+	height calc(100% - 103px)
+	overflow-y auto
+	display none
+	
+	.faceted-search, .results
+		display inline-block
+		box-sizing border-box
+		vertical-align top
+		
+	.faceted-search
+		width 30%
+		
+		.facets
+			margin-top 20px
+			
+			.facet
+				margin-bottom 16px
+				
+				header
+					.menu
+						i.fa
+							font-size 1em
+				
+				.body
+					margin-top 4px
+	
+	.results
+		width 70%
+		
+		ul.page
+			font-size 1.3em
+			
+			li
+				margin-top 6px
+				
+				small
+					margin-left 6px
+					color #888
+				
+				i.fa
+					font-size 0.8em
+					color defaultPurple
+					margin-right 6px
+		
+		
+		
 // @import './import/*'
 
 // .controls

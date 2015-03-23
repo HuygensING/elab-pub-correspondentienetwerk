@@ -1,11 +1,11 @@
 {
-  "name": "elaborate-publication-collection",
-  "version": "1.1.2",
+  "name": "elab-pub-correspondentienetwerk",
+  "version": "1.0.0",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Gijsjan Brouwer",
+    "email": "gijsjan.brouwer@huygens.knaw.nl"
   },
-  "main": "app/index.js",
+  "main": "",
   "repository": {
     "type": "git",
     "url": ""
@@ -14,13 +14,12 @@
     "start": "gulp",
     "compile": "gulp compile",
     "build": "gulp build",
-    "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search elaborate-modules",
-    "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search elaborate-modules && npm i"
+    "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search",
+    "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search && npm i"
   },
   "dependencies": {
     "backbone": "~1.0.0",
     "huygens-faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.3.1",
-    "elaborate-modules": "git+https://github.com/HuygensING/elaborate-modules.git#v1.0.8",
     "funcky.str": "git+https://github.com/Gijsjan/funcky.str.git#v0.1.0",
     "funcky.el": "git+https://github.com/Gijsjan/funcky.el.git#v0.1.0",
     "funcky.util": "git+https://github.com/Gijsjan/funcky.util.git",
@@ -49,7 +48,7 @@
     "gulp-uglify": "^0.2.1",
     "gulp-util": "~2.2.14",
     "jade": "^1.5.0",
-    "jadeify": "^2.5.0",
+    "jadeify": "^4.1.0",
     "nib": "^1.0.3",
     "rimraf": "^2.2.8",
     "rsyncwrapper": "^0.4.0",
