@@ -1,1 +1,9 @@
 .title!= replace(data.name, createLink)
+if fulltext
+	//- .found= found
+	//- .keywords
+	if data._kwic != null
+		each kwic, layer in data._kwic
+			ol.kwic
+				each row in kwic
+					li!= row						

@@ -168,6 +168,9 @@ class MainRouter extends Backbone.Router
 					entryMetadataFields: config.get('entryMetadataFields')
 					levels: config.get('levels')
 					results: true
+					showMetadata: false
+					termSingular: "letter"
+					termPlural: "letters"
 					templates:
 						result: letterResultTpl
 					templateData:
@@ -175,8 +178,6 @@ class MainRouter extends Backbone.Router
 							replace: replaceNamesWithLinks
 							createLink: (name) ->
 								"#{name} <i class=\"fa fa-external-link\" data-name=\"#{name}\" />"
-					queryOptions:
-						resultFields: config.get('levels')
 
 				@listenToOnce searchView, "change:results", ->
 					config.set "isLetterFacetedSearchLoaded", true
@@ -218,9 +219,16 @@ class MainRouter extends Backbone.Router
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
-					entryMetadataFields: config.get('personLevels')
+					entryMetadataFields: config.get('personMetadataFields')
 					levels: config.get('personLevels')
+					levelDisplayNames:
+						dynamic_k_birthDate: "Geboortejaar"
+						dynamic_k_deathDate: "Sterfjaar"
+						dynamic_sort_name: "Achternaam"
 					results: true
+					showMetadata: false
+					termSingular: "person"
+					termPlural: "persons"
 					templates:
 						result: personResultTpl
 					requestOptions:
