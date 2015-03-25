@@ -45,11 +45,9 @@ cssFiles = [
 ]
 
 gulp.task 'server', ->
-	baseDir = process.env.NODE_ENV ? 'compiled'
-
 	browserSync.init null,
 		server:
-			baseDir: "./#{baseDir}"
+			baseDir: baseDir
 			middleware: [
 				modRewrite([
 					'^[^\\.]*$ /index.html [L]'

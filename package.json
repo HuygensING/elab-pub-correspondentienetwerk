@@ -14,6 +14,7 @@
     "start": "gulp",
     "compile": "gulp compile",
     "build": "gulp build",
+    "server": "gulp server",
     "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search",
     "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search && npm i"
   },
