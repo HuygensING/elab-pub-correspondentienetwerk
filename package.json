@@ -13,7 +13,7 @@
   "scripts": {
     "start": "gulp",
     "compile": "gulp compile",
-    "build": "gulp build",
+    "build": "NODE_ENV=prod gulp compile && gulp build",
     "server": "gulp server",
     "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search",
     "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search && npm i"
