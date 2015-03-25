@@ -1,6 +1,22 @@
 _createLink = (name) ->
-	"<span class=\"link\">#{name}</span>"
+	postfix = ""
 
+	if name.indexOf('#') > -1
+		[name, postfix] = name.split("#")
+		postfix = "##{postfix}"
+
+	"<span class=\"link\">#{name}</span>#{postfix}"
+
+_split = (data, splitter, createLink) ->
+	if data.indexOf(splitter) isnt -1
+		data = data.split(splitter)
+		for d, i in data
+			data[i] = createLink(d)
+
+		data = data.join(splitter)
+	
+	data
+	
 module.exports = (title, createLink) ->
 	unless createLink?
 		createLink = _createLink
@@ -9,18 +25,16 @@ module.exports = (title, createLink) ->
 	[ontvangers, datum] = ontvangers.split(" | ")
 
 	originalOntvangers = ontvangers
+	originalZenders = zenders
 
-	splitters = ["/", "-->"]
-
-	for splitter in splitters
-		if ontvangers.indexOf(splitter) isnt -1
-			ontvangers = ontvangers.split(splitter)
-			for ontvanger, i in ontvangers
-				ontvangers[i] = createLink(ontvanger)
-
-			ontvangers = ontvangers.join(splitter)
+	for splitter in ["/", "-->"]
+		zenders = _split zenders, splitter, createLink
+		ontvangers = _split ontvangers, splitter, createLink
 
 	if ontvangers is originalOntvangers
 		ontvangers = createLink ontvangers
 
-	createLink(zenders) + " aan " + ontvangers + " | " + datum
+	if zenders is originalZenders
+		zenders = createLink zenders
+
+	zenders + " aan " + ontvangers + " | " + datum
