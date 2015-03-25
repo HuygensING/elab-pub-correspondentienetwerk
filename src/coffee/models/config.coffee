@@ -48,8 +48,8 @@ class Config extends Backbone.Model
 		@on 'change:isLetterFacetedSearchLoaded', =>
 			Backbone.trigger "letter-faceted-search-loaded"
 			
+		# Set the page title. Use document.title to ensure IE compatibility.
 		@on 'change:title', =>
-			# Set the page title. Use document.title to ensure IE compatibility.
 			document.title = @get 'title'
 
 	parse: (data) ->

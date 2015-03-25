@@ -13,12 +13,15 @@ fEl = require('funcky.el').el
 
 thumbnailTpl = require '../../jade/entry/thumbnail.jade'
 
+async = require 'async'
+
 class NavBar extends Backbone.View
 
 	tagName: 'nav'
 
 	# ### Initialize
 	initialize: (@options={}) ->
+		@loading = false
 		@loadedThumbnails = []
 		@unloadedThumbnails = []
 		@render()
@@ -27,10 +30,6 @@ class NavBar extends Backbone.View
 	render: ->
 		@thumbnailsUL = document.createElement('ul')
 		@thumbnailsUL.className = 'thumbnails'
-
-#		@throttledOnScroll = _.throttle(@loadThumbnails.bind(@), 1000, trailing: false)
-		@throttledOnScroll = (ev) => util.setResetTimeout 100, @onNavScroll.bind(@)
-		@thumbnailsUL.addEventListener 'scroll', @throttledOnScroll
 
 		renderThumbnail = (entry) =>
 			unless entry instanceof entries.model
@@ -57,86 +56,71 @@ class NavBar extends Backbone.View
 
 		@el.appendChild @thumbnailsUL
 
-		for i in [0...40]
-			@loadThumbnail @thumbnailsUL.children[i], i
-
 		@activateThumb()
-
-		# Setting to the end of the event stack (setTimeout fun, 0) doesn't
-		# work when navigating from annotation overview to entry. With 100ms
-		# extra, it does work.
-		# console.log 'calling'
-		# setTimeout @onNavScroll.bind(@), 100
 
 		@
 
-	# Method called when the <ul> is scrolled horizontally.
-	# Loads a thumbnail when no thumbnails are being loaded and
-	# a thumbnail is visible in the viewport.
-	# onNavScroll: do ->
-	# 	loading = false
+	_listenToScroll: ->
+		@thumbnailsUL = @el.querySelector 'ul'
 
-	# 	->
-	# 		unless loading
-	# 			# Find the first unloaded thumbnail that is visible in the viewport.
-	# 			li = _.find @unloadedThumbnails, (l) -> 
-	# 				fEl(l).inViewport()
-
-	# 			unless li?
-	# 				return console.log('done')
-
-	# 			loading = true
-
-	# 			onLoad = =>
-	# 				loading = false
-
-	# 				if @unloadedThumbnails.length is 0
-	# 					@el.querySelector('ul').removeEventListener 'scroll', @throttledOnScroll
-
-	# 				if @unloadedThumbnails[0]? and fEl(@unloadedThumbnails[0]).inViewport()
-	# 					@loadThumbnail @unloadedThumbnails.shift(), onLoad
-
-	# 				# Run loadThumbnails again, because when the scroll ends,
-	# 				# the next li could be in the viewport.
-	# 				# console.log 'call onnavscroll'
-	# 				@onNavScroll()
-
-	# 			@loadThumbnail li, onLoad
+		@throttledOnScroll = (ev) => util.setResetTimeout 100, @onNavScroll.bind(@)
+		@thumbnailsUL.addEventListener 'scroll', @throttledOnScroll
 
 	onNavScroll: ->
+		return if @loading
+
+		@loading = true
+		
 		li = _.find @unloadedThumbnails, (l) -> 
 			fEl(l).inViewport()
 
 		index = @unloadedThumbnails.indexOf li
 
-		load = (index) =>
-			if @unloadedThumbnails[index]? and not @unloadedThumbnails[index].loaded
-				@loadThumbnail @unloadedThumbnails[index], i
-				@unloadedThumbnails[index].loaded = true
+		@loadThumbnailsAtIndex index, =>
+			@loading = false
 
-		load(i) for i in [index..(index - 4)]
-		load(i) for i in [(index + 1)..(index + 40)]
+	loadThumbnailsAtIndex: do ->
+		firstCall = true
 
-	loadThumbnail: (li, index) ->
+		(index, done) ->
+			async.each [(index - 30)..(index + 30)], @loadThumbnailAtIndex, =>
+				console.log "DON"
+				done() if done?
+
+				setTimeout (=>	
+					if firstCall
+						firstCall = false
+						@_listenToScroll()
+				), 1000
+
+	loadThumbnailAtIndex: (index, done) =>
+		if @unloadedThumbnails[index]? and not @unloadedThumbnails[index].loaded
+			@loadThumbnail @unloadedThumbnails[index], done
+			@unloadedThumbnails[index].loaded = true
+		else
+			done()
+
+	loadThumbnail: (li, done) ->
 		# The img tag is already present in the <li>, because
 		# otherwise the CSS fade in (opacity transition) wouldn't work.
 		img = li.querySelector('img')
 		
+		# Handle succesful loading.
 		onLoad = ->
 			img.style.opacity = 1
 			imgDone()
 
+		# Handle loading errors.
 		onError = ->
 			img.src = notFoundUrl
 			imgDone()
 
+		# Remove event listeners and call the callback.
 		imgDone = =>
-			# Get the index of the li and remove.
-			# index = @unloadedThumbnails.indexOf li
-			# @unloadedThumbnails.splice index, 1
-
 			img.removeEventListener 'load', onLoad
 			img.removeEventListener 'error', onError
+
+			done()
 
 		# Listen to load and error events.
 		img.addEventListener 'load', onLoad
@@ -156,29 +140,38 @@ class NavBar extends Backbone.View
 		
 		@remove()
 
-	activateThumb: (entryId) ->
-		$entries = @$ 'ul.thumbnails'
+	activateThumb: (entryId, scroll = false) ->
 
 		# If no entryId is given, use the current entry id.
 		entryId ?= entries.current.get("_id")
 
-		# Unactivate current active entry.
-		$entries.find('li.active').removeClass 'active'
+		index = entries.indexOf entries.get(entryId)
 
-		# Add active to activated entry.
-		$active = $entries.find "li#entry-#{entryId}"
-		$active.addClass 'active'
+		@loading = true
+		@loadThumbnailsAtIndex index, =>
+			# Unactivate current active entry.
+			$entries = @$ 'ul.thumbnails'
+			$entries.find('li.active').removeClass 'active'
 
-		# Using jQuery with .position().left does not give the correct left, because I guess it does not use
-		# $entries as the parent to calculate relative left.
-		leftPos = fEl($active[0]).position($entries[0]).left
-		offset = ($(window).width()/2) - ($active.width()/2)
+			# Add active to activated entry.
+			$active = $entries.find "li#entry-#{entryId}"
+			$active.addClass 'active'
 
-		leftPos = $active[0].offsetLeft
-		# Animate entry to center.
-		@$('.thumbnails').animate
-			scrollLeft: leftPos - offset
-		, 300
+			# Using jQuery with .position().left does not give the correct left, because I guess it does not use
+			# $entries as the parent to calculate relative left.
+			leftPos = fEl($active[0]).position($entries[0]).left
+			offset = ($(window).width()/2) - ($active.width()/2)
+
+			leftPos = $active[0].offsetLeft
+
+			if scroll
+				@$('.thumbnails').animate
+						scrollLeft: leftPos - offset
+					, 300
+			else
+				@$('.thumbnails')[0].scrollLeft = leftPos - offset
+			
+			@loading = false
 
 	navigateEntry: (ev) ->
 		if ev.hasOwnProperty 'currentTarget'
@@ -187,7 +180,7 @@ class NavBar extends Backbone.View
 			entryId = ev
 
 		# Animate the NavBar.
-		@activateThumb entryId
+		@activateThumb entryId, true
 
 		# Change the current entry.
 		@trigger 'change:entry', entryId: entryId

@@ -130,7 +130,7 @@ class PanelsMenu extends Backbone.View
 					id: textLayer.id
 					type: 'textlayer'
 					show: textLayer.id is textlayers.current.id
-					
+
 		for facsimile, i in @options.facsimiles
 			models.push
 				id: facsimile.zoom 

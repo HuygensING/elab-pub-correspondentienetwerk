@@ -39,8 +39,29 @@
 		ul.page
 			font-size 1.3em
 			
-			li
+			& > li
 				margin-top 6px
+				
+				&.fulltext
+					margin-top 20px
+					
+					ul.kwic
+						list-style none
+						padding-left 20px
+						
+					.kwic
+						font-size 0.9em
+						color #888
+						
+						& > li
+							margin-top 2px
+							
+							em
+								background defaultPurple
+								color white
+								padding 0 3px
+								border-radius 3px
+								font-style normal
 				
 				small
 					margin-left 6px
