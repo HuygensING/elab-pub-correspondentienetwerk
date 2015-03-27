@@ -3,11 +3,9 @@ us = require 'underscore.string'
 
 pck = require "../../../package.json"
 
-baseUrl = if window.BASE_URL is "/" then "" else window.BASE_URL
-
 class Config extends Backbone.Model
 
-	url: -> "#{baseUrl}/data/config.json"
+	url: -> "#{window.BASE_URL}data/config.json"
 
 	getCdnUrl: ->
 		majorVersion = pck.version.split(".")[0]
@@ -15,8 +13,8 @@ class Config extends Backbone.Model
 	
 	defaults: ->
 		templateName: "collection"
-		annotationsIndexPath: "#{baseUrl}/data/annotation_index.json"
-		baseUrl: baseUrl
+		annotationsIndexPath: "#{window.BASE_URL}data/annotation_index.json"
+		baseUrl: window.BASE_URL
 		appRootElement: '#app'
 		entryTermSingular: 'entry'
 		entryTermPlural: 'entries'
