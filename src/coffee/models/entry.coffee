@@ -7,7 +7,8 @@ class Entry extends Backbone.Model
 
 	annotationsIndex: {}
 	
-	url: -> "/data/#{@get('datafile')}"
+	url: ->
+		"#{config.get('baseUrl')}data/#{@get('datafile')}"
 
 	# _id is added in the config's parse, so we can access the id. The id is added when we fetch the {id}.json. In order to
 	# keep using methods like isNew() to check if the model is already fetched, we don't want to set 'id' in the config's parse.

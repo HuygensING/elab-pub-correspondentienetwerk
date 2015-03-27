@@ -47,7 +47,7 @@ cssFiles = [
 gulp.task 'server', ->
 	browserSync.init null,
 		server:
-			baseDir: "./#{baseDir}"
+			baseDir: baseDir
 			middleware: [
 				modRewrite([
 					'^[^\\.]*$ /index.html [L]'
@@ -79,13 +79,13 @@ gulp.task 'css', ['stylus'], ->
 
 gulp.task 'uglify', ->
 	gulp.src("#{devDir}/js/*")
-	.pipe(concat("main-#{context.VERSION}.js", newLine: '\r\n;'))
+	.pipe(concat("main.js", newLine: '\r\n;'))
 	.pipe(uglify())
 	.pipe(gulp.dest(prodDir+'/js/'))
 
 gulp.task 'minify-css', ->
 	gulp.src("#{devDir}/css/main-#{context.VERSION}.css")
-	.pipe(rename(basename: "main-#{context.VERSION}"))
+	.pipe(rename(basename: "main"))
 	.pipe(minifyCss())
 	.pipe(gulp.dest(prodDir+'/css'))
 
