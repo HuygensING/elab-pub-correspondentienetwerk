@@ -51,15 +51,17 @@ ul
 	div.lees-meer
 		button Lees meer
 		ul
-			li
-				a(href=model.get('biodesurl')) Bioport URL
-				i.fa.fa-external-link
-			li
-				a(href=model.get('dbnlUrl')) DBNL URL
-				i.fa.fa-external-link
+			if model.get('biodesurl').length > 0
+				li
+					a(href=model.get('biodesurl'), data-bypass, target="_blank") Bioport URL
+					i.fa.fa-external-link
+			if model.get('dbnlUrl').length > 0
+				li
+					a(href=model.get('dbnlUrl'), data-bypass, target="_blank") DBNL URL
+					i.fa.fa-external-link
 			li
 				h3 Overige bronvermeldingen
-				span!= model.get('notities')
+				span.notities!= model.get('notities')
 			li
 				h3 Opmerkingen
 				span!= model.get('opmerkingen')
