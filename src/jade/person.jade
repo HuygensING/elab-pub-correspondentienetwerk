@@ -15,12 +15,12 @@ ul
 					li= altName.displayName
 						small= "(" + altName.nametype + ")"
 	li
-		h3 Geslacht
-		span= geslacht[model.get('gender')]
-	li
 		h3 Geboortejaar - Sterfjaar
 		- console.log(model)
 		span= (model.get('birthDate') || model.get('birthdateQualifier')) + " - " + (model.get('deathDate') || model.get('deathdateQualifier'))
+	li
+		h3 Geslacht
+		span= geslacht[model.get('gender')]
 	li
 		h3 Netwerk(en)
 		ul

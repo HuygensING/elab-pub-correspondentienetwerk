@@ -168,7 +168,9 @@ class MainRouter extends Backbone.Router
 					entryMetadataFields: config.get('entryMetadataFields')
 					levels: config.get('levels')
 					results: true
-					showMetadata: false
+					queryOptions:
+						resultFields: ['metadata_datum']
+					showMetadata: true
 					termSingular: "letter"
 					termPlural: "letters"
 					templates:
