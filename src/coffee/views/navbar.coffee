@@ -84,7 +84,6 @@ class NavBar extends Backbone.View
 
 		(index, done) ->
 			async.each [(index - 30)..(index + 30)], @loadThumbnailAtIndex, =>
-				console.log "DON"
 				done() if done?
 
 				setTimeout (=>	

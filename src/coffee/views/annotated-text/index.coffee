@@ -52,15 +52,20 @@ class AnnotatedText extends Backbone.View
 		
 		$sups = @$('.text sup')
 
-		@annotationsView.remove() if @annotationsView?
-		@annotationsView = new Views.Annotations
-			paralleltexts: @options.paralleltexts
-			annotationTypes: @options.annotationTypes
-			textLayer: @options.textLayer
-			$sups: $sups
-			eventBus: eventBus
-			scrollEl: @options.scrollEl
-		@$el.append @annotationsView.$el
+		bs = []
+		for b in @textView.el.querySelectorAll('b')
+			if b.innerHTML is "¶"
+				bs.push(b)
+
+		# @annotationsView.remove() if @annotationsView?
+		# @annotationsView = new Views.Annotations
+		# 	paralleltexts: @options.paralleltexts
+		# 	annotationTypes: @options.annotationTypes
+		# 	textLayer: @options.textLayer
+		# 	$sups: $sups
+		# 	eventBus: eventBus
+		# 	scrollEl: @options.scrollEl
+		# @$el.append @annotationsView.$el
 
 		annotationsVisible = $sups.length > 0 and @options.annotationsVisible
 		@toggleAnnotations annotationsVisible
