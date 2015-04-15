@@ -1,5 +1,5 @@
 - console.log(model)
-- var geslacht = {"MALE": "Man", "FEMALE": "Vrouw", "UNKOWN": "Onbekend"}
+- var geslacht = {"MALE": "Man", "FEMALE": "Vrouw", "UNKNOWN": "Onbekend"}
 
 header
 	h2= model.get('name')
@@ -19,7 +19,8 @@ ul
 		span= geslacht[model.get('gender')]
 	li
 		h3 Geboortejaar - Sterfjaar
-		span= model.get('birthDate') + " - " + model.get('deathDate')
+		- console.log(model)
+		span= (model.get('birthDate') || model.get('birthdateQualifier')) + " - " + (model.get('deathDate') || model.get('deathdateQualifier'))
 	li
 		h3 Netwerk(en)
 		ul
