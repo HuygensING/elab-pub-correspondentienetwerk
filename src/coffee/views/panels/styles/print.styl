@@ -8,65 +8,64 @@
 		padding 0
 
 	#main
-		.entry-placeholder
-			.entry
-				& > header, & > nav
+		.entry
+			& > header, & > nav
+				display none
+
+			article
+				h2, h3, h4
+					margin 0
+					padding 0
+
+				.panels-menu, .metadata
 					display none
 
-				article
-					h2, h3, h4
-						margin 0
-						padding 0
+				.panels
+					height auto !important
 
-					.panels-menu, .metadata
-						display none
+					.facsimile
+						display none !important
 
-					.panels
-						height auto !important
+					.elaborate-annotated-text
+						width 100%
+						margin-bottom 100px
 
-						.facsimile
-							display none !important
+						&.visible
+							display block !important
 
-						.elaborate-annotated-text
+						.text, .annotations
 							width 100%
-							margin-bottom 100px
+							display block
 
-							&.visible
-								display block !important
+						.text
+							h3
+								font-size 1.2em
+								color black
 
-							.text, .annotations
-								width 100%
-								display block
+						.annotations
+							ol
+								list-style decimal !important
 
-							.text
-								h3
-									font-size 1.2em
-									color black
+								li
+									overflow-x visible
 
-							.annotations
-								ol
-									list-style decimal !important
+									&:before
+										background none
+										content none !important
 
-									li
-										overflow-x visible
-
-										&:before
-											background none
-											content none !important
-
-										div.type
-											display block
-
-											span
-												background none
-												padding 0
-												margin 0
+									div.type
+										display block
 
 										span
-											white-space normal
+											background none
+											padding 0
+											margin 0
 
+									span
+										white-space normal
+
+						
 							
-								
 
-					i.fa, select
-						display none
+				i.fa, select
+					display none

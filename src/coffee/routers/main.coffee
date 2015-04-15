@@ -84,13 +84,14 @@ class MainRouter extends Backbone.Router
 			
 			unless entryView?
 				entryView = new Views.Entry options
-				$('#main > .entry-placeholder').html entryView.$el
+				$('#main').append entryView.$el
 
 			switchView entryView
 
 	person: (id) ->
 		personView = new Views.Person id: id
 		personView.cache = false
+		personView.el.style.display = "block"
 
 		$('#main > .person-detail').html personView.$el
 
