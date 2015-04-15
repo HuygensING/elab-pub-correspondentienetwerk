@@ -24,18 +24,26 @@ class PersonView extends Backbone.View
 	_showButton: ->
 		@$('i.fa-search').css 'opacity', 1
 
+	render: ->
+		@$el.html tpl model: @model
+
+		@_alterExternalUrls()
+
+		@_checkLetterFacetedSearch()
+
+		@
+
+	_alterExternalUrls: ->
+		for a in @el.querySelectorAll(".lees-meer span.notities a")
+			a.setAttribute "data-bypass", true
+			a.setAttribute "target", "_blank"
+
 	_checkLetterFacetedSearch: ->
 		if config.get('isLetterFacetedSearchLoaded')
 			@_showButton()
 		else
 			@listenToOnce Backbone, "letter-faceted-search-loaded", =>
 				@_showButton()
-	render: ->
-		@$el.html tpl model: @model
-
-		@_checkLetterFacetedSearch()
-
-		@
 
 	events: ->
 		"click span.link": "handlePersonClick"
