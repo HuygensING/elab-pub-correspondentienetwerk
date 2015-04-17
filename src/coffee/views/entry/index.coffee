@@ -14,6 +14,7 @@ Views =
 	NavBar: require '../navbar'
 
 tpl = require './index.jade'
+thumbnailsIconTpl = require './thumbnails-icon.jade'
 
 class Entry extends Backbone.View
 
@@ -83,11 +84,23 @@ class Entry extends Backbone.View
 					bs.push(b)
 
 			for b, i in bs
-				img = document.createElement 'img'
-				img.src = @model.get('facsimiles')[i].thumbnail
+				figure = document.createElement "figure"
+				figure.title = @model.get("facsimiles")[i].title
+
+				img = document.createElement "img"
+				img.src = @model.get("facsimiles")[i].thumbnail
 				img.className = "thumbnail"
 				img.setAttribute "data-index", i
-				b.parentNode.replaceChild img, b
+
+				figcaption = document.createElement "figcaption"
+				figcaption.innerHTML = @model.get("facsimiles")[i].title
+
+
+				figure.appendChild img
+				figure.appendChild figcaption
+
+				b.parentNode.insertBefore figure, b.nextSibling
+				b.innerHTML = thumbnailsIconTpl()
 
 		@
 
