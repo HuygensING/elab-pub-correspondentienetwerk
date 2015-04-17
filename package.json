@@ -15,10 +15,10 @@
     "dev": "gulp",
     "compile": "gulp compile",
     "build": "NODE_ENV=prod gulp compile && gulp build",
-    "deploy-dev": "rsync --exclude=data --exclude=index.html --compress --archive --verbose --checksum --delete --chmod=a+r dist/ gijsjb@hi7.huygens.knaw.nl:/data/htdocs/cdn/elaborate/publication/correspondentienetwerk/development",
+    "deploy": "rsync --exclude=data --exclude=index.html --compress --archive --verbose --checksum --delete --chmod=a+r dist/ gijsjb@hi7.huygens.knaw.nl:/data/htdocs/cdn/elaborate/publication/correspondentienetwerk/development",
     "server": "gulp server",
-    "link": "npm link funcky.el funcky.str funcky.util huygens-faceted-search",
-    "unlink": "npm unlink funcky.el funcky.str funcky.util huygens-faceted-search && npm i"
+    "link": "npm link funcky.el funcky.str funcky.util hibb-faceted-search hi-svg-icons",
+    "unlink": "npm unlink funcky.el funcky.str funcky.util hibb-faceted-search hi-svg-icons && npm i"
   },
   "dependencies": {
     "async": "^0.9.0",
@@ -26,7 +26,8 @@
     "funcky.el": "git+https://github.com/Gijsjan/funcky.el.git#v0.1.0",
     "funcky.str": "git+https://github.com/Gijsjan/funcky.str.git#v0.1.0",
     "funcky.util": "git+https://github.com/Gijsjan/funcky.util.git",
-    "huygens-faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.4.0",
+    "hibb-faceted-search": "git+https://github.com/HuygensING/faceted-search.git#v2.4.0",
+    "hi-svg-icons": "git+https://github.com/HuygensING/hi-svg-icons",
     "jquery": "~2.1.0",
     "json3": "~3.3.0",
     "underscore": "^1.6.0",

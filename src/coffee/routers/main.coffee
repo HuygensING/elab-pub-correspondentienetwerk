@@ -10,7 +10,7 @@ config = require '../models/config'
 persons = require '../collections/persons'
 
 Views =
-	FS: require 'huygens-faceted-search'
+	FS: require 'hibb-faceted-search'
 	# Search: require '../views/search'
 	Entry: require '../views/entry'
 	Annotations: require '../views/annotations'
