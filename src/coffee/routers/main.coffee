@@ -129,7 +129,10 @@ class MainRouter extends Backbone.Router
 
 							label = target.find('label').html()
 
-							splitters = ['/', '-->']
+							if label.indexOf('#') > -1
+								label = label.substr(0, label.indexOf('#'))
+
+							splitters = ['/', '--&gt;']
 							for splitter in splitters
 								if label.indexOf(splitter) isnt -1
 									labels = label.split(splitter)
@@ -170,7 +173,7 @@ class MainRouter extends Backbone.Router
 					levels: config.get('levels')
 					results: true
 					queryOptions:
-						resultFields: ['metadata_datum']
+						resultFields: config.get('levels')
 					showMetadata: true
 					termSingular: "letter"
 					termPlural: "letters"
@@ -228,6 +231,8 @@ class MainRouter extends Backbone.Router
 						dynamic_k_birthDate: "Geboortejaar"
 						dynamic_k_deathDate: "Sterfjaar"
 						dynamic_sort_name: "Achternaam"
+						dynamic_sort_networkdomain: "Netwerk(en)"
+						dynamic_sort_gender: "Geslacht"
 					results: true
 					showMetadata: false
 					termSingular: "person"
@@ -238,6 +243,8 @@ class MainRouter extends Backbone.Router
 						headers:
 							VRE_ID: "CNW"
 					facetOrder: [
+						"dynamic_i_birthyear"
+						"dynamic_i_deathyear"
 						"dynamic_s_koppelnaam"
 						"dynamic_s_altname"
 						"dynamic_s_gender"
@@ -245,6 +252,8 @@ class MainRouter extends Backbone.Router
 						"dynamic_s_characteristic"
 						"dynamic_s_subdomain"
 						"dynamic_s_domain"
+						"dynamic_s_periodical"
+						"dynamic_s_membership"
 					]
 					parsers:
 						dynamic_s_gender: (facetData) ->

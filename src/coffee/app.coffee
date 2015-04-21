@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 $ = require 'jquery'
+$.support.cors = true;
 Backbone.$ = $
 
 mainRouter = require './routers/main'
@@ -19,8 +20,13 @@ bootstrapTemplate = require '../jade/body.jade'
 rootURL = window.BASE_URL.replace /https?:\/\/[^\/]+/, ''
 
 module.exports = ->
-	persons.fetch().done =>
+	jqXHR = persons.fetch()
+	jqXHR.done =>
 		fetched()
+
+	jqXHR.fail =>
+		for arg in arguments
+			console.log arg
 
 	config.fetch().done =>
 		fetched()
