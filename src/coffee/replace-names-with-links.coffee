@@ -18,6 +18,7 @@ _split = (data, splitter, createLink) ->
 	data
 	
 module.exports = (title, createLink) ->
+	console.log title
 	unless createLink?
 		createLink = _createLink
 

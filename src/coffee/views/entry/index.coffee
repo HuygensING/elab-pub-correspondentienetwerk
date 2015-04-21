@@ -110,7 +110,7 @@ class Entry extends Backbone.View
 		"click h2 span.link": "_handleSearchPerson"
 
 	_handleSearchPerson: (ev) ->
-		person = persons.findWhere koppelnaam: ev.currentTarget.innerHTML
+		person = persons.findWhere koppelnaam: $.trim(ev.currentTarget.innerHTML)
 		Backbone.history.navigate "person/#{person.id}", trigger: true
 
 	_handleChangeFacsimile: (ev) ->
