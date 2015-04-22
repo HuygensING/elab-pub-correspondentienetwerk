@@ -41,7 +41,7 @@ paths =
 
 cssFiles = [
 	"./compiled/css/src.css"
-	"./node_modules/huygens-faceted-search/dist/main.css"
+	"./node_modules/hibb-faceted-search/dist/main.css"
 ]
 
 gulp.task 'server', ->
