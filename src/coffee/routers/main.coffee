@@ -43,6 +43,8 @@ switchView = do ->
 		else
 			showNewView()
 
+
+
 class MainRouter extends Backbone.Router
 
 	routes:
@@ -195,6 +197,19 @@ class MainRouter extends Backbone.Router
 						addHover facetName
 
 				@listenTo searchView, "results:render:finished", ->
+					for facetName, facetView of searchView.facets.views
+						do (facetName) =>
+							@stopListening facetView.optionsView, "filter:finished"
+							@stopListening facetView.optionsView.collection, "sort"
+
+							@listenTo facetView.optionsView, "filter:finished", =>
+								addHover facetName
+
+							@listenTo facetView.optionsView.collection, "sort", (collection, opts) =>
+								if(opts.silent == false)
+									addHover facetName
+						
+
 					searchView.$(".results ul.page li i.fa").on 'click', (ev) =>
 						ev.stopPropagation()
 						person = persons.findWhere koppelnaam: ev.currentTarget.getAttribute('data-name')
@@ -206,6 +221,7 @@ class MainRouter extends Backbone.Router
 				@listenTo Backbone, "search-person", (koppelnaam) ->
 					Backbone.history.navigate "search", trigger: true
 					searchView.searchValue "mv_metadata_correspondents", koppelnaam
+
 
 				# searchView.$el.hide()
 				searchView.search()

@@ -160,8 +160,6 @@ class NavBar extends Backbone.View
 		if config.get('facetedSearchResponse') 
 			index = config.get('facetedSearchResponse').attributes.ids.indexOf("" + entryId)
 
-		console.log("activateThumb index", index);
-
 		@loading = true
 		@loadThumbnailsAtIndex index, =>
 			# Unactivate current active entry.
