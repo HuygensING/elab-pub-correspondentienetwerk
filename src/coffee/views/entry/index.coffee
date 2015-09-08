@@ -26,12 +26,12 @@ class Entry extends Backbone.View
 
 		@subviews = []
 
-
-		if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
-			part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
-			$('a[name="entry"]').html "Editie <small>(#{part})</small>"
-		else
-			$('a[name="entry"]').html "Editie"
+		@listenTo config, "change:facetedSearchResponse", ->
+			if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
+				part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
+				$('a[name="entry"]').html "Editie <small>(#{part})</small>"
+			else
+				$('a[name="entry"]').html "Editie"
 
 		@render @options.entryId
 

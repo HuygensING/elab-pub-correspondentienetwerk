@@ -77,7 +77,7 @@ class Config extends Backbone.Model
 			options = sanitizeTextLayer options
 		else if attrs.hasOwnProperty 'activeTextLayerId' and attrs.activeTextLayerId?
 			attrs.activeTextLayerId = sanitizeTextLayer attrs[activeTextLayerId]
-
+		console.log("config.set", attrs, options)
 		super
 
 	slugToLayer: (slug) ->

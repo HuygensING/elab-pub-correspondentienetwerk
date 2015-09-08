@@ -9,7 +9,7 @@ config= require '../models/config'
 
 tpl = require '../../jade/person.jade'
 
-funcky = require 'funcky.req'
+funcky = require '../funcky/req'
 
 class PersonView extends Backbone.View
 

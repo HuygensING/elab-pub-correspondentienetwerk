@@ -188,7 +188,8 @@ class MainRouter extends Backbone.Router
 				@listenToOnce searchView, "change:results", ->
 					config.set "isLetterFacetedSearchLoaded", true
 	
-				@listenTo searchView, "change:results", ->
+				@listenTo searchView, "change:results", (data) ->
+					config.set "facetedSearchResponse", data
 					for facetName in facetNames
 						searchView.facets.views[facetName].optionsView.renderAll()
 						addHover facetName
