@@ -16,8 +16,15 @@ ul
 						small= "(" + altName.nametype + ")"
 	li
 		h3 Geboortejaar - Sterfjaar
-		- console.log(model)
-		span= (model.get('birthDate') || model.get('birthdateQualifier')) + " - " + (model.get('deathDate') || model.get('deathdateQualifier'))
+		ul
+			li
+				span= model.get('birthDate')
+				if model.get('birthdateQualifier') != ""
+					small= "(" + model.get('birthdateQualifier') + ")"
+				span= " - "
+				span= model.get('deathDate')
+				if model.get('deathdateQualifier') != ""
+					small= "(" + model.get('deathdateQualifier') + ")"
 	li
 		h3 Geslacht
 		span= geslacht[model.get('gender')]
@@ -48,6 +55,20 @@ ul
 		ul
 			for domain in model.get('domains')
 				li= domain
+
+	li
+		h3 Periodiek(en)
+		ul
+			for periodical in model.get('periodicals')
+				li= periodical
+
+	li
+		h3 Lidmaatschap(pen)
+		ul
+			for membership in model.get('memberships')
+				li= membership
+
+
 	div.lees-meer
 		button Lees meer
 		ul
