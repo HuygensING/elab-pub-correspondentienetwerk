@@ -179,6 +179,9 @@ class MainRouter extends Backbone.Router
 					showMetadata: true
 					labels:
 						numFound: "Gevonden"
+						filterOptions: "Vind..."
+						sortAlphabetically: "Sorteer alfabetisch"
+						sortNumerically: "Sorteer op aantal"
 					termSingular: "brief"
 					termPlural: "brieven"
 					templates:
@@ -199,6 +202,15 @@ class MainRouter extends Backbone.Router
 						addHover facetName
 
 				@listenTo searchView, "results:render:finished", ->
+					$(".hibb-pagination .text").html("van")
+					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
+					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
+					$(".sort-levels .search button").html("Toepassen")
+					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
+					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")))
+
+					$(".facet.list[data-name='metadata_transcriptie']").hide()
+
 					for facetName, facetView of searchView.facets.views
 						do (facetName) =>
 							@stopListening facetView.optionsView, "filter:finished"
@@ -220,14 +232,24 @@ class MainRouter extends Backbone.Router
 				@listenTo searchView, 'result:click', (data) ->
 					Backbone.history.navigate "entry/#{data.id}", trigger: true
 
+
 				@listenTo Backbone, "search-person", (koppelnaam) ->
-					Backbone.history.navigate "search", trigger: true
 					searchView.searchValue "mv_metadata_correspondents", koppelnaam
+					Backbone.history.navigate "search", trigger: true
 
 
 				# searchView.$el.hide()
 				searchView.search()
 
+			searchView.$el.find(".text-search input[name='search']").attr("placeholder", "Zoeken in de tekst")
+			searchView.$el.find(".facets-menu .reset button").html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+			searchView.$el.find(".facets-menu .collapse-expand button")
+				.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
+				.on "click", ->
+					if $(this).find("i").attr('class') == 'fa fa-compress'
+						$(this).html("<i class='fa fa-compress'></i> Filters uitklappen")
+					else
+						$(this).html("<i class='fa fa-expand'></i> Filters inklappen")
 			if show
 				searchView.$el.show()
 				switchView searchView
@@ -247,8 +269,11 @@ class MainRouter extends Backbone.Router
 					entryMetadataFields: config.get('personMetadataFields')
 					labels:
 						numFound: "Gevonden"
-					termSingular: "persoon"
-					termPlural: "personen"
+						filterOptions: "Vind..."
+						sortAlphabetically: "Sorteer alfabetisch"
+						sortNumerically: "Sorteer op aantal"
+					termSingular: "correspondent"
+					termPlural: "correspondenten"
 					levels: config.get('personLevels')	
 					levelDisplayNames:
 						dynamic_k_birthDate: "Geboortejaar"
@@ -266,10 +291,10 @@ class MainRouter extends Backbone.Router
 					textSearchOptions:
 						caseSensitive: null
 					facetOrder: [
-						"dynamic_i_birthyear"
-						"dynamic_i_deathyear"
 						"dynamic_s_koppelnaam"
 						"dynamic_s_altname"
+						"dynamic_i_birthyear"
+						"dynamic_i_deathyear"
 						"dynamic_s_gender"
 						"dynamic_s_networkdomain"
 						"dynamic_s_characteristic"
@@ -293,6 +318,27 @@ class MainRouter extends Backbone.Router
 
 				@listenTo personSearchView, 'result:click', (data) ->
 					Backbone.history.navigate "person/#{data._id}", trigger: true
+
+				@listenTo personSearchView, "results:render:finished", ->
+					$(".hibb-pagination .text").html("van")
+					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
+					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
+					$(".sort-levels .search button").html("Toepassen")
+					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
+					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")))
+
+					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam")
+					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek")
+
+
+				personSearchView.$el.find(".facets-menu .reset button").html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+				personSearchView.$el.find(".facets-menu .collapse-expand button")
+					.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
+					.on "click", ->
+						if $(this).find("i").attr('class') == 'fa fa-compress'
+							$(this).html("<i class='fa fa-compress'></i> Filters uitklappen")
+						else
+							$(this).html("<i class='fa fa-expand'></i> Filters inklappen")
 
 				personSearchView.$el.show()
 				personSearchView.search()
