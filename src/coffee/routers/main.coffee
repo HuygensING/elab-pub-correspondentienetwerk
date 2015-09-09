@@ -177,8 +177,10 @@ class MainRouter extends Backbone.Router
 					queryOptions:
 						resultFields: config.get('levels')
 					showMetadata: true
-					termSingular: "letter"
-					termPlural: "letters"
+					labels:
+						numFound: "Gevonden"
+					termSingular: "brief"
+					termPlural: "brieven"
 					templates:
 						result: letterResultTpl
 					templateData:
@@ -243,6 +245,10 @@ class MainRouter extends Backbone.Router
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('personMetadataFields')
+					labels:
+						numFound: "Gevonden"
+					termSingular: "persoon"
+					termPlural: "personen"
 					levels: config.get('personLevels')	
 					levelDisplayNames:
 						dynamic_k_birthDate: "Geboortejaar"
@@ -252,8 +258,6 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_gender: "Geslacht"
 					results: true
 					showMetadata: false
-					termSingular: "person"
-					termPlural: "persons"
 					templates:
 						result: personResultTpl
 					requestOptions:
