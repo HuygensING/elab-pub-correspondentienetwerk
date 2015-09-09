@@ -1,97 +1,98 @@
 @import './import/*'
 
-.faceted-search-placeholder
-	// 103px is the height of the header
-	height calc(100% - 103px)
-	overflow-y auto
-	display none
-	
-	.faceted-search, .results
-		display inline-block
-		box-sizing border-box
-		vertical-align top
+@media screen
+	.faceted-search-placeholder
+		// 103px is the height of the header
+		height calc(100% - 103px)
+		overflow-y auto
+		display none
 		
-	.faceted-search
-		width 30%
-		
-		.text-search
-			.search-input
-				.search-icon
-					line-height 40px
-					
-					svg
-						width 12px
-						fill white
-		
-		.facets
-			margin-top 20px
+		.faceted-search, .results
+			display inline-block
+			box-sizing border-box
+			vertical-align top
 			
-			.facet
-				margin-bottom 16px
-				
-				header
-					.menu
+		.faceted-search
+			width 30%
+			
+			.text-search
+				.search-input
+					.search-icon
+						line-height 40px
+						
 						svg
 							width 12px
-							height 12px
-							margin-left 4px
-				
-				.body
-					margin-top 4px
-	
-	.results
-		width 70%
-		
-		header
-			li.sort-levels
-				button.toggle
-					line-height initial
-		
-		ul.page
-			font-size 1.3em
+							fill white
 			
-			& > li
-				margin-top 6px
+			.facets
+				margin-top 20px
 				
-				.metadata
-					ul
-						margin 0
-						padding 0
-						list-style none
-						font-size 0.8em
-
-						span.key
-							color #999
-				
-				&.fulltext
-					margin-top 20px
+				.facet
+					margin-bottom 16px
 					
-					ul.kwic
-						list-style none
-						padding-left 20px
+					header
+						.menu
+							svg
+								width 12px
+								height 12px
+								margin-left 4px
+					
+					.body
+						margin-top 4px
+		
+		.results
+			width 70%
+			
+			header
+				li.sort-levels
+					button.toggle
+						line-height initial
+			
+			ul.page
+				font-size 1.3em
+				
+				& > li
+					margin-top 6px
+					
+					.metadata
+						ul
+							margin 0
+							padding 0
+							list-style none
+							font-size 0.8em
+
+							span.key
+								color #999
+					
+					&.fulltext
+						margin-top 20px
 						
-					.kwic
-						font-size 0.9em
-						color #888
-						
-						& > li
-							margin-top 2px
+						ul.kwic
+							list-style none
+							padding-left 20px
 							
-							em
-								background defaultPurple
-								color white
-								padding 0 3px
-								border-radius 3px
-								font-style normal
-				
-				small
-					margin-left 6px
-					color #888
-				
-				i.fa
-					font-size 0.8em
-					color defaultPurple
-					margin-right 6px
+						.kwic
+							font-size 0.9em
+							color #888
+							
+							& > li
+								margin-top 2px
+								
+								em
+									background defaultPurple
+									color white
+									padding 0 3px
+									border-radius 3px
+									font-style normal
+					
+					small
+						margin-left 6px
+						color #888
+					
+					i.fa
+						font-size 0.8em
+						color defaultPurple
+						margin-right 6px
 		
 		
 		
