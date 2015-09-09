@@ -243,7 +243,7 @@ class MainRouter extends Backbone.Router
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('personMetadataFields')
-					levels: config.get('personLevels')
+					levels: config.get('personLevels')	
 					levelDisplayNames:
 						dynamic_k_birthDate: "Geboortejaar"
 						dynamic_k_deathDate: "Sterfjaar"
@@ -259,6 +259,8 @@ class MainRouter extends Backbone.Router
 					requestOptions:
 						headers:
 							VRE_ID: "CNW"
+					textSearchOptions:
+						caseSensitive: null
 					facetOrder: [
 						"dynamic_i_birthyear"
 						"dynamic_i_deathyear"
