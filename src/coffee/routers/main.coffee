@@ -208,7 +208,6 @@ class MainRouter extends Backbone.Router
 					$(".sort-levels .search button").html("Toepassen")
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
 					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")))
-
 					$(".facet.list[data-name='metadata_transcriptie']").hide()
 
 					for facetName, facetView of searchView.facets.views
@@ -241,6 +240,7 @@ class MainRouter extends Backbone.Router
 				# searchView.$el.hide()
 				searchView.search()
 
+			searchView.$el.find(".show-metadata label").html("Toon metadata")
 			searchView.$el.find(".text-search input[name='search']").attr("placeholder", "Zoeken in de tekst")
 			searchView.$el.find(".facets-menu .reset button").html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
 			searchView.$el.find(".facets-menu .collapse-expand button")
