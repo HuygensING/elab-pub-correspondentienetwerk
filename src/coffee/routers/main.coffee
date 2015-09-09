@@ -101,7 +101,6 @@ class MainRouter extends Backbone.Router
 
 	showSearch: do ->
 		searchView = null
-
 		(show=true) ->
 			unless searchView?
 				popup = null
@@ -233,8 +232,8 @@ class MainRouter extends Backbone.Router
 
 
 				@listenTo Backbone, "search-person", (koppelnaam) ->
-					searchView.searchValue "mv_metadata_correspondents", koppelnaam
 					Backbone.history.navigate "search", trigger: true
+					$(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
 
 
 				# searchView.$el.hide()
