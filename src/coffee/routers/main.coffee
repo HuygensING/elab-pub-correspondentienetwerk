@@ -232,8 +232,12 @@ class MainRouter extends Backbone.Router
 
 
 				@listenTo Backbone, "search-person", (koppelnaam) ->
-					Backbone.history.navigate "search", trigger: true
-					$(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
+					@listenToOnce searchView, "results:render:finished", ->
+						searchView.$el.find(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
+						@listenToOnce searchView, "results:render:finished", ->
+							Backbone.history.navigate "search", trigger: true
+					searchView.$el.find(".facets-menu .reset button").click()
+
 
 
 				# searchView.$el.hide()

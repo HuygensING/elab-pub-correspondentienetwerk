@@ -55,6 +55,7 @@ class PersonView extends Backbone.View
 		Backbone.history.navigate "person/#{person.id}", trigger: true
 
 	handleSearch: (ev) ->
+		$(ev.target).after("&nbsp; Bezig met zoeken")
 		Backbone.trigger "search-person", @model.get('koppelnaam')
 
 	###
