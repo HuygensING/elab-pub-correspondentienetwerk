@@ -16,7 +16,7 @@
     "compile": "gulp compile",
     "build": "export NODE_ENV=prod; node_modules/.bin/gulp compile && node_modules/.bin/gulp build",
     "deploy": "rsync --exclude=data --exclude=index.html --compress --archive --verbose --checksum --delete --chmod=a+r dist/ gijsjb@hi7.huygens.knaw.nl:/data/htdocs/cdn/elaborate/publication/correspondentienetwerk/development",
-    "deploy:local": "rsync --exclude=data --exclude=index.html --compress --archive --verbose --checksum --delete --chmod=a+r dist/ /data/htdocs/cdn/elaborate/publication/correspondentienetwerk/development",
+    "deploy:local": "rsync --exclude=data --exclude=index.html --recursive --no-group --verbose --checksum --delete --chmod=a+r dist/ /data/htdocs/cdn/elaborate/publication/correspondentienetwerk/development",
     "server": "gulp server"
   },
   "dependencies": {
