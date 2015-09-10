@@ -231,10 +231,18 @@ class MainRouter extends Backbone.Router
 					Backbone.history.navigate "entry/#{data.id}", trigger: true
 
 
-				@listenTo Backbone, "search-person", (koppelnaam) ->
+				@listenTo Backbone, "search-person", (koppelnaam, el) ->
+					r = 0
+					rotate = -> 
+						el.style.transform = "rotate(" + r + "deg)"
+						r++
+
+					interv = window.setInterval(rotate, 10)
+
 					@listenToOnce searchView, "results:render:finished", ->
 						searchView.$el.find(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
 						@listenToOnce searchView, "results:render:finished", ->
+							window.clearInterval(interv)
 							Backbone.history.navigate "search", trigger: true
 					searchView.$el.find(".facets-menu .reset button").click()
 

@@ -55,8 +55,7 @@ class PersonView extends Backbone.View
 		Backbone.history.navigate "person/#{person.id}", trigger: true
 
 	handleSearch: (ev) ->
-		$(ev.target).after("&nbsp; Bezig met zoeken")
-		Backbone.trigger "search-person", @model.get('koppelnaam')
+		Backbone.trigger "search-person", @model.get('koppelnaam'), ev.target
 
 	###
 	# When the lees-meer button is clicked, the button is hidden
