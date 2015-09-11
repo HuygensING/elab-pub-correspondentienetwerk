@@ -79,7 +79,10 @@ class Entry extends Backbone.View
 				title: replaceNamesWithLinks @model.get('name')
 
 			bs = []
-			for b in @el.querySelectorAll('b')
+			for b, i in @el.querySelectorAll('b')
+				b.title = @model.get("facsimiles")[i].title
+				b.className = "set-facsimile"
+				b.setAttribute "data-index", i
 				if b.innerHTML is "¶"
 					bs.push(b)
 
@@ -115,6 +118,7 @@ class Entry extends Backbone.View
 		@
 
 	events: ->
+		"click b.set-facsimile": "_handleChangeFacsimile"
 		"click img.thumbnail": "_handleChangeFacsimile"
 		"click button.toggle-metadata": -> @$(".metadata .table-container").slideToggle("fast")
 		"click h2 span.link": "_handleSearchPerson"
