@@ -292,6 +292,7 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_name: "Achternaam"
 						dynamic_sort_networkdomain: "Netwerk(en)"
 						dynamic_sort_gender: "Geslacht"
+#					rangeMonthMode: true
 					results: true
 					showMetadata: false
 					templates:

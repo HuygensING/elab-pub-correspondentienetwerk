@@ -87,7 +87,6 @@ class Entry extends Backbone.View
 					bs.push(b)
 
 			prevBottom = 0
-			prevFigure = null
 			for b, i in bs
 				figure = document.createElement "figure"
 				figure.title = @model.get("facsimiles")[i].title
@@ -109,11 +108,10 @@ class Entry extends Backbone.View
 				rect = figure.getBoundingClientRect()
 				delta = rect.top - prevBottom
 				if delta < 0
-					figure.style.top = -delta + 15 + "px"
-					prevFigure.style.top = (delta - 15) + "px"
+					figure.style.top = -delta + "px"
+					rect = figure.getBoundingClientRect()
 					
-				prevBottom = rect.top + rect.height
-				prevFigure = figure
+				prevBottom = rect.top + rect.height + 10
 
 		@
 
