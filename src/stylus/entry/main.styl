@@ -1,5 +1,8 @@
 @import '../import/*'
 
+annotationsBackground = #fcf
+highlightColor = lighten(annotationsBackground, 40%)
+
 @media screen
 	div.entry
 		font-family sans-serif
@@ -40,3 +43,6 @@
 					cursor pointer
 					font-style normal
 					margin 0 5px 0 2px
+			.highlight
+				background-color highlightColor
+

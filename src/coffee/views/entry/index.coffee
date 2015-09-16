@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 $ = require 'jquery'
+dom = require '../../funcky/dom'
 
 config = require '../../models/config'
 
@@ -25,7 +26,6 @@ class Entry extends Backbone.View
 		super
 
 		@subviews = []
-
 		@listenTo config, "change:facetedSearchResponse", ->
 			if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
 				part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
@@ -67,7 +67,6 @@ class Entry extends Backbone.View
 
 		@_loadModel id, =>
 			text = @model.get("paralleltexts")["Transcription"].text
-
 			# Doing this to ensure empty lines get correct height, so as not to mess with line numbering
 			if text?
 				text = String(text).replace /<div class="line">\s*<\/div>/mg, '<div class="line">&nbsp;</div>'
@@ -80,7 +79,7 @@ class Entry extends Backbone.View
 
 			bs = []
 			for b, i in @el.querySelectorAll('*')
-				if b.innerHTML is "¶" and b.children.length == 0
+				if b.innerHTML is "¶" and b.children.length == 0 and @model.get("facsimiles")[bs.length]?
 					b.title = @model.get("facsimiles")[bs.length].title
 					b.className = "set-facsimile"
 					b.setAttribute "data-index", bs.length
@@ -113,15 +112,17 @@ class Entry extends Backbone.View
 					
 				prevBottom = rect.top + rect.height + 10
 
+			hl = null
 			supOver = (ev) =>
 				annId = $(ev.target).attr("data-id")
-				cur = $(@el).find("[data-marker='begin'][data-id='" + annId + "']");
-				console.log(annId, cur)
+				begin = $(@el).find("[data-marker='begin'][data-id='" + annId + "']").get(0);
+				if begin
+					hl = dom(begin).highlightUntil(ev.target).on()
+				else
+					hl = null
 
 			supOut = (ev) =>
-				annId = $(ev.target).attr("data-id")
-				cur = $(@el).find("[data-marker='begin'][data-id='" + annId + "']");
-				console.log("OUT", annId, cur)
+				hl.off() if hl?
 			
 			$(@el).find("sup[data-marker='end']")
 				.on("mouseover", supOver)
