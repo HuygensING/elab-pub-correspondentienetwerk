@@ -1,5 +1,32 @@
 - var birth = data.birthDate != null ? data.birthDate : "?"
 - var death = data.deathDate != null ? data.deathDate : "?"
-
+- console.log(data)
+- var genderMap = {MALE: "Man", FEMALE: "Vrouw", UNKNOWN: "Onbekend"}
 .title= data.koppelnaam
 	small= "("+birth+" - "+death+")"
+
+.metadata
+	ul
+		li
+			span.key= 'Geslacht: '
+			span.value= genderMap[data.gender]
+		if data.domains.length > 0
+			li
+				span.key= 'Domeinen: '
+				span.value= data.domains.join(", ")
+		if data.subDomains.length > 0
+			li
+				span.key= 'Subdomeinen: '
+				span.value= data.subDomains.join(", ")
+		if data.characteristics.length > 0
+			li
+				span.key= 'Karakteristieken: '
+				span.value= data.characteristics.join(", ")
+		if data.memberships.length > 0
+			li
+				span.key= 'Lidmaatschappen: '
+				span.value= data.memberships.join(", ")
+		if data.periodicals.length > 0
+			li
+				span.key= 'Periodieken: '
+				span.value= data.periodicals.join(", ")
