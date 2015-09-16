@@ -7,8 +7,9 @@ header
 			a(href="/search", name="showSearch") Zoek brieven
 		li
 			a(href="/person-search", name="showPersonSearch") Zoek correspondenten
-		//- li
-		//- 	a(href="/annotations", name="annotationsIndex") Annotation Overview
+		if location.href.match(/\/draft/)
+			li
+				a(href="/annotations", name="annotationsIndex") Annotatieoverzicht
 
 	img(src="http://www.huygens.knaw.nl/wp-content/themes/BDboilerplate/images/logo.png", width="92px", height="66px")
 #main
