@@ -80,10 +80,10 @@ class Entry extends Backbone.View
 
 			bs = []
 			for b, i in @el.querySelectorAll('b')
-				b.title = @model.get("facsimiles")[i].title
-				b.className = "set-facsimile"
-				b.setAttribute "data-index", i
-				if b.innerHTML is "¶"
+				if b.innerHTML is "¶" and b.children.length == 0
+					b.title = @model.get("facsimiles")[bs.length].title
+					b.className = "set-facsimile"
+					b.setAttribute "data-index", i
 					bs.push(b)
 
 			prevBottom = 0
@@ -113,6 +113,23 @@ class Entry extends Backbone.View
 					
 				prevBottom = rect.top + rect.height + 10
 
+			supOver = (ev) =>
+				annId = $(ev.target).attr("data-id")
+				cur = $(@el).find("[data-marker='begin'][data-id='" + annId + "']");
+				while cur.get(0) != ev.target
+					console.log("rangepart", cur.get(0))
+					cur = cur.next()
+				console.log(annId, cur)
+
+			supOut = (ev) =>
+				annId = $(ev.target).attr("data-id")
+				cur = $(@el).find("[data-marker='begin'][data-id='" + annId + "']");
+				console.log("OUT", annId, cur)
+			
+			$(@el).find("sup[data-marker='end']")
+				.on("mouseover", supOver)
+				.on("mouseout", supOut)
+			
 		@
 
 	events: ->
