@@ -55,6 +55,8 @@ class Entry extends Backbone.View
 
 	# ### Render
 	render: (id) ->
+		@currentAnnotationDiv = $("<div>").addClass("current-annotation").html("GFOJ")
+		@el.appendChild(@currentAnnotationDiv.get(0))
 		unless @navBar?
 			@navBar = new Views.NavBar()
 			@el.appendChild @navBar.el
@@ -106,22 +108,26 @@ class Entry extends Backbone.View
 				b.innerHTML = thumbnailsIconTpl()
 				rect = figure.getBoundingClientRect()
 				delta = rect.top - prevBottom
-				if delta < 0
+				if delta < 0 && delta != -15
 					figure.style.top = -delta + "px"
 					rect = figure.getBoundingClientRect()
 					
-				prevBottom = rect.top + rect.height + 10
+				prevBottom = rect.top + rect.height + 15
 
 			hl = null
 			supOver = (ev) =>
+				rect = ev.target.getBoundingClientRect()
 				annId = $(ev.target).attr("data-id")
 				begin = $(@el).find("[data-marker='begin'][data-id='" + annId + "']").get(0);
+				if @model.annotationsIndex[annId]
+					@currentAnnotationDiv.css({top: rect.top + 15 + "px", right: $(window).width() - rect.left + "px"}).html(@model.annotationsIndex[annId].text).fadeIn()
 				if begin
 					hl = dom(begin).highlightUntil(ev.target).on()
 				else
 					hl = null
 
 			supOut = (ev) =>
+				@currentAnnotationDiv.hide()
 				hl.off() if hl?
 			
 			$(@el).find("sup[data-marker='end']")

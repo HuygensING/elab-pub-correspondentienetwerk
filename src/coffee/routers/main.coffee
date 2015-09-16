@@ -145,7 +145,8 @@ class MainRouter extends Backbone.Router
 							for label in labels
 								# console.log persons.filter((p) -> p.get('koppelnaam').toLowerCase().indexOf('maria') > -1).map((p) -> p.get('koppelnaam'))
 								person = persons.findWhere koppelnaam: label
-								ids.push person.id
+								if person.id?
+									ids.push person.id
 
 							popup = new Views.PersonPopup
 								ids: ids
