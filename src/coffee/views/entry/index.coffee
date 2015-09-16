@@ -116,9 +116,6 @@ class Entry extends Backbone.View
 			supOver = (ev) =>
 				annId = $(ev.target).attr("data-id")
 				cur = $(@el).find("[data-marker='begin'][data-id='" + annId + "']");
-				while cur.get(0) != ev.target
-					console.log("rangepart", cur.get(0))
-					cur = cur.next()
 				console.log(annId, cur)
 
 			supOut = (ev) =>
