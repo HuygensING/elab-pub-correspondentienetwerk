@@ -245,7 +245,7 @@ class MainRouter extends Backbone.Router
 						@listenToOnce searchView, "results:render:finished", ->
 							window.clearInterval(interv)
 							Backbone.history.navigate "search", trigger: true
-					searchView.$el.find(".facets-menu .reset button").click()
+					searchView.$el.find(".facets-menu .reset button").off("click").click()
 
 
 
@@ -349,7 +349,6 @@ class MainRouter extends Backbone.Router
 
 				personSearchView.$el.find(".facets-menu .reset button")
 					.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
-					.off("click")
 					.on "click", (ev) ->
 						ev.preventDefault()
 						document.location.reload()
