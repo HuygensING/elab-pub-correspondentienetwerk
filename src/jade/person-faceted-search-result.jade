@@ -9,6 +9,10 @@
 		li
 			span.key= 'Geslacht: '
 			span.value= genderMap[data.gender]
+		if data.networkDomains.length > 0
+			li
+				span.key= 'Netwerk: '
+				span.value= data.networkDomains.join(", ")
 		if data.domains.length > 0
 			li
 				span.key= 'Domeinen: '
