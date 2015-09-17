@@ -203,13 +203,19 @@ class MainRouter extends Backbone.Router
 
 				@listenTo searchView, "results:render:finished", ->
 					$(".hibb-pagination .text").html("van")
+					$(".hibb-pagination .prev").attr("title", "Vorige pagina")
+					$(".hibb-pagination .prev10").attr("title", "Spring 10 pagina's terug")
+					$(".hibb-pagination .next").attr("title", "Volgende pagina")
+					$(".hibb-pagination .next10").attr("title", "Spring 10 pagina's vooruit")
+					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
+
 					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
 					$(".sort-levels .search button").html("Toepassen")
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
-					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")))
+					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
 					$(".facet.list[data-name='metadata_transcriptie']").hide()
-
+					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					for facetName, facetView of searchView.facets.views
 						do (facetName) =>
 							@stopListening facetView.optionsView, "filter:finished"
@@ -337,14 +343,21 @@ class MainRouter extends Backbone.Router
 
 				@listenTo personSearchView, "results:render:finished", ->
 					$(".hibb-pagination .text").html("van")
+					$(".hibb-pagination .prev").attr("title", "Vorige pagina")
+					$(".hibb-pagination .prev10").attr("title", "Spring 10 pagina's terug")
+					$(".hibb-pagination .next").attr("title", "Volgende pagina")
+					$(".hibb-pagination .next10").attr("title", "Spring 10 pagina's vooruit")
+					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
 					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
 					$(".sort-levels .search button").html("Toepassen")
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
-					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")))
+					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
+					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
+					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 
-					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam")
-					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek")
+					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
+					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
 
 
 				personSearchView.$el.find(".facets-menu .reset button")

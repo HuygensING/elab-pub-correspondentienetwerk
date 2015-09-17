@@ -45,7 +45,7 @@ module.exports = ->
 			# Load first before any views,
 			# so views can attach to elements
 			$('body').html bootstrapTemplate()
-			$('header h1 a').text config.get 'title'
+			$('header h1 a').text "Brieven en Correspondenten rond 1900"
 
 			# Load the menu from WordPress
 			$.get('../external/').done (menuDiv) => 
