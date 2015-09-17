@@ -254,7 +254,10 @@ class MainRouter extends Backbone.Router
 
 			searchView.$el.find(".show-metadata label").html("Toon metadata")
 			searchView.$el.find(".text-search input[name='search']").attr("placeholder", "Zoeken in de tekst")
-			searchView.$el.find(".facets-menu .reset button").html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+			searchView.$el.find(".facets-menu .reset button")
+				.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+				.on "click", ->
+					document.location.reload()
 			searchView.$el.find(".facets-menu .collapse-expand button")
 				.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
 				.on "click", ->
@@ -344,7 +347,12 @@ class MainRouter extends Backbone.Router
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek")
 
 
-				personSearchView.$el.find(".facets-menu .reset button").html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+				personSearchView.$el.find(".facets-menu .reset button")
+					.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+					.off("click")
+					.on "click", (ev) ->
+						ev.preventDefault()
+						document.location.reload()
 				personSearchView.$el.find(".facets-menu .collapse-expand button")
 					.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
 					.on "click", ->
