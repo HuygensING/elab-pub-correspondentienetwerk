@@ -106,7 +106,30 @@ class MainRouter extends Backbone.Router
 				popup = null
 				timer = null
 				facetNames = ['metadata_afzender_s', 'metadata_ontvanger_s', 'mv_metadata_correspondents']
-
+				facetOrder = [
+					"metadata_datum_range",
+					"metadata_afzender_s",
+					"metadata_ontvanger_s",
+					"mv_metadata_correspondents",
+					"metadata_plaats",
+					"metadata_datum",
+					"metadata_annotatie",
+					"metadata_taal",
+					"metadata_bijlage_n",
+					"metadata_transcriptie",
+					"metadata_herkomst_transcriptie",
+					"metadata_bewaarplaats",
+					"metadata_collectie",
+					"metadata_signatuur",
+					"metadata_scan_s",
+					"metadata_naam_eindredacteur",
+					"metadata_datum_voltooiing_eindredactie",
+					"metadata_datum_voltooiing_transcriptie",
+					"metadata_datum_voltooiing_controle",
+					"metadata_naam_transcribent",
+					"metadata_naam_controleur",
+					"metadata_correspondenten"
+				]
 				getSelector = (facetName) ->
 					"div[data-name=\"#{facetName}\"] .body .container ul li"
 
@@ -167,12 +190,16 @@ class MainRouter extends Backbone.Router
 				searchView = new Views.FS
 					el: $('.faceted-search-placeholder.letter')
 					baseUrl: config.get('baseURL')
+					customQueryNames:
+						metadata_datum_range: 'metadata_datum'
 					searchPath: config.get('searchPath')
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('entryMetadataFields')
+					facetOrder: facetOrder
 					levels: config.get('levels')
+					rangeMonthMode: true
 					results: true
 					queryOptions:
 						resultFields: config.get('levels')
@@ -208,16 +235,18 @@ class MainRouter extends Backbone.Router
 					$(".hibb-pagination .next").attr("title", "Volgende pagina")
 					$(".hibb-pagination .next10").attr("title", "Spring 10 pagina's vooruit")
 					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
-
 					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
 					$(".sort-levels .search button").html("Toepassen")
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
 					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
 					$(".facet.list[data-name='metadata_transcriptie']").hide()
+					$(".facet.range[data-name='metadata_datum_range'] h3").html("Datum").attr("title", "Datum")
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					for facetName, facetView of searchView.facets.views
 						do (facetName) =>
+							if !facetView.optionsView? 
+								return
 							@stopListening facetView.optionsView, "filter:finished"
 							@stopListening facetView.optionsView.collection, "sort"
 
@@ -302,7 +331,6 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_name: "Achternaam"
 						dynamic_sort_networkdomain: "Netwerk(en)"
 						dynamic_sort_gender: "Geslacht"
-#					rangeMonthMode: true
 					results: true
 					showMetadata: false
 					templates:
