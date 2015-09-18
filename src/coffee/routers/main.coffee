@@ -295,6 +295,8 @@ class MainRouter extends Backbone.Router
 						$(this).html("<i class='fa fa-expand'></i> Filters inklappen")
 			if show
 				searchView.$el.show()
+				if searchView.facets.views.metadata_datum_range?
+					searchView.facets.views.metadata_datum_range.postRender()
 				switchView searchView
 
 	showPersonSearch: do ->
