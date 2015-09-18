@@ -105,30 +105,24 @@ class MainRouter extends Backbone.Router
 			unless searchView?
 				popup = null
 				timer = null
-				facetNames = ['metadata_afzender_s', 'metadata_ontvanger_s', 'mv_metadata_correspondents']
+				facetNames = [
+					'metadata_afzender', 
+					'metadata_ontvanger',
+#					'mv_metadata_correspondents'
+				]
 				facetOrder = [
 					"metadata_datum_range",
-					"metadata_afzender_s",
-					"metadata_ontvanger_s",
-					"mv_metadata_correspondents",
+					"metadata_afzender",
+					"metadata_ontvanger",
+#					"mv_metadata_correspondents",
 					"metadata_plaats",
-					"metadata_datum",
 					"metadata_annotatie",
 					"metadata_taal",
-					"metadata_bijlage_n",
-					"metadata_transcriptie",
+					"metadata_bijlage",
 					"metadata_herkomst_transcriptie",
 					"metadata_bewaarplaats",
 					"metadata_collectie",
-					"metadata_signatuur",
-					"metadata_scan_s",
-					"metadata_naam_eindredacteur",
-					"metadata_datum_voltooiing_eindredactie",
-					"metadata_datum_voltooiing_transcriptie",
-					"metadata_datum_voltooiing_controle",
-					"metadata_naam_transcribent",
-					"metadata_naam_controleur",
-					"metadata_correspondenten"
+					"metadata_signatuur"
 				]
 				getSelector = (facetName) ->
 					"div[data-name=\"#{facetName}\"] .body .container ul li"
@@ -166,7 +160,6 @@ class MainRouter extends Backbone.Router
 
 							ids = []
 							for label in labels
-								# console.log persons.filter((p) -> p.get('koppelnaam').toLowerCase().indexOf('maria') > -1).map((p) -> p.get('koppelnaam'))
 								person = persons.findWhere koppelnaam: label
 								if person.id?
 									ids.push person.id
@@ -239,8 +232,8 @@ class MainRouter extends Backbone.Router
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
 					$(".sort-levels .search button").html("Toepassen")
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
-					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
-					$(".facet.list[data-name='metadata_transcriptie']").hide()
+#					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
+#					$(".facet.list[data-name='metadata_transcriptie']").hide()
 					$(".facet.range[data-name='metadata_datum_range'] h3").html("Datum").attr("title", "Datum")
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					for facetName, facetView of searchView.facets.views
