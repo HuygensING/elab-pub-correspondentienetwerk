@@ -108,13 +108,13 @@ class MainRouter extends Backbone.Router
 				facetNames = [
 					'metadata_afzender', 
 					'metadata_ontvanger',
-#					'mv_metadata_correspondents'
+					'mv_metadata_correspondents'
 				]
 				facetOrder = [
 					"metadata_datum_range",
 					"metadata_afzender",
 					"metadata_ontvanger",
-#					"mv_metadata_correspondents",
+					"mv_metadata_correspondents",
 					"metadata_plaats",
 					"metadata_annotatie",
 					"metadata_taal",
