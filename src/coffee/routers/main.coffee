@@ -343,8 +343,7 @@ class MainRouter extends Backbone.Router
 						"dynamic_s_gender"
 						"dynamic_s_networkdomain"
 						"dynamic_s_characteristic"
-						"dynamic_s_subdomain"
-						"dynamic_s_domain"
+						"dynamic_s_combineddomain"
 						"dynamic_s_periodical"
 						"dynamic_s_membership"
 					]
@@ -381,7 +380,7 @@ class MainRouter extends Backbone.Router
 
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
-
+					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("Domein").attr("title", "Domein")
 
 				personSearchView.$el.find(".facets-menu .reset button")
 					.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
