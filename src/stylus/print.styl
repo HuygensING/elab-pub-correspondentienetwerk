@@ -1,27 +1,55 @@
 @import './import/*'
 
 @media print
-	.entry
-		.row > .text, .row > .annotations
-			width auto
-
+	@page
+		margin 1.6cm
+		size auto
+	body
+		margin 0
+		padding 0
+	body, html
+		width auto
+		height auto
+		border 0
+		overflow visible !important
 	body > header
-		& > ul
-			display none
-
-
-		.annotations-index
-			ul.annotation-types
-				display none
-
-			.contents
-				display block !important
-				height auto !important
-				overflow visible
-
-			ol
-				a
-					display none
-
-		.menu-mainmenu-container
-			display none
+		display none
+	#main
+		height auto !important
+	.faceted-search-placeholder
+		display none
+	.entry article .container .text .line b > svg
+		display none
+	.entry article .container .text .line figure
+		display none
+	.entry
+		height auto !important
+	.entry article
+		height auto !important
+	.entry > nav
+		display none
+	.entry article .container .facsimile
+		display none
+	.entry article .metadata
+		display none
+	.entry article h2
+		max-width 100%
+		margin 0
+	.entry article .container
+		position static
+		padding 0 
+		height auto 
+		overflow visible !important
+	.entry article .container .text		
+		position static !important
+		padding 0 
+		height auto 
+		width auto
+	.entry article .container .text .line
+		line-height 2em
+		position static
+		min-height 0
+	.entry article .container .text .line::before
+		position static !important
+	.line
+		line-height 1.5em

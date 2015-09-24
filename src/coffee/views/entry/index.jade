@@ -5,9 +5,10 @@
 	.table-container
 		table
 			each m, i in model.get("metadata")
-				tr
-					td= m.field
-					td= m.value
+				if m.field != "Transcriptie"
+					tr
+						td= m.field.replace(/\(.+\)/, "")
+						td= m.value
 
 h2!= title
 

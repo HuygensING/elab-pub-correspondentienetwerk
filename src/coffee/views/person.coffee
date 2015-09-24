@@ -9,7 +9,7 @@ config= require '../models/config'
 
 tpl = require '../../jade/person.jade'
 
-funcky = require 'funcky.req'
+funcky = require '../funcky/req'
 
 class PersonView extends Backbone.View
 
@@ -55,7 +55,7 @@ class PersonView extends Backbone.View
 		Backbone.history.navigate "person/#{person.id}", trigger: true
 
 	handleSearch: (ev) ->
-		Backbone.trigger "search-person", @model.get('koppelnaam')
+		Backbone.trigger "search-person", @model.get('koppelnaam'), ev.target
 
 	###
 	# When the lees-meer button is clicked, the button is hidden

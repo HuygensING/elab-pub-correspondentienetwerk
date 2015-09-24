@@ -1,48 +1,49 @@
 backgroundColor = #222
 
-div[data-name="metadata_afzender_s"] .body .container ul li.with-popup label,
-div[data-name="metadata_ontvanger_s"] .body .container ul li.with-popup label,
-div[data-name="mv_metadata_correspondents"] .body .container ul li.with-popup label
-	background #EEE
-	color black
+@media screen
+	div[data-name="metadata_afzender_s"] .body .container ul li.with-popup label,
+	div[data-name="metadata_ontvanger_s"] .body .container ul li.with-popup label,
+	div[data-name="mv_metadata_correspondents"] .body .container ul li.with-popup label
+		background #EEE
+		color black
 
-.person-popup
-	background backgroundColor
-	color white
-	border-radius 3px
-	position absolute
-	z-index 1000
-	
+	.person-popup
+		background backgroundColor
+		color white
+		border-radius 3px
+		position absolute
+		z-index 1000
+		
 
-	width: 240px;
-	padding: 10px;
-	border: 4px solid backgroundColor
-	border-radius: 5px;
-	text-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 1px;
-	box-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 2px 0px;
+		width: 240px;
+		padding: 10px;
+		border: 4px solid backgroundColor
+		border-radius: 5px;
+		text-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 1px;
+		box-shadow: rgba(0, 0, 0, 0.0980392) 1px 1px 2px 0px;
 
-	&:after
-		content: "";
-		position: absolute;
-		width: 0;
-		height: 0;
-		border-width: 10px;
-		border-style: solid;
-		border-color: transparent transparent backgroundColor transparent;
-		top: -24px;
-		left: 50px;
-		
-		
-	.person
-		margin-bottom 20px
-		
-		&:last-child
-			margin-bottom 0
-	
-		span.name
-			font-weight bold
-			font-size 1em
+		&:after
+			content: "";
+			position: absolute;
+			width: 0;
+			height: 0;
+			border-width: 10px;
+			border-style: solid;
+			border-color: transparent transparent backgroundColor transparent;
+			top: -24px;
+			left: 50px;
 			
-		.characteristics
-			font-size 0.9em
-			margin-top 4px
+			
+		.person
+			margin-bottom 20px
+			
+			&:last-child
+				margin-bottom 0
+		
+			span.name
+				font-weight bold
+				font-size 1em
+				
+			.characteristics
+				font-size 0.9em
+				margin-top 4px

@@ -1,66 +1,70 @@
-.person-detail
-	& > .person
-		padding-left 20px
-		height calc(100% - 103px)
-		overflow-y auto
-		display none
-
-	span.link
-		color blue
-		cursor pointer
-		
-		&:hover
-			color lightblue
-			
-	h2, i.fa-search
-		display inline-block
-		
-	h2
-		font-size 3em
-		margin 0
-		
-	i.fa-search
-		cursor pointer
-		color #888
-		font-size 1.3em
-		margin-left 10px
-		opacity 0
-		transition opacity 500ms
-		
-	small
-		color #888
-		margin-left 6px	
-		
-	ul
-		list-style none
-		padding 0
-		margin 0
-		width 600px
-
-	& > .person > ul > li > ul, 
-	& > .person > ul > li > span
-		background #EEE
-		padding 10px
-		box-shadow 0 1px 4px #AAA
-		display inline-block
-		width 100%
-		box-sizing border-box
-			
-	h3
-		font-size 11pt
-		color #8F8F8F
-		font-weight normal
-		margin-bottom 4px
-	
-	p
-		margin 0
-		
-	.lees-meer
-		margin 40px 0
-		
-		& > button
-			width 120px
-			
-		& > ul
+@media screen
+	.person-detail
+		&:not(:empty)
+			overflow-y auto
+			height 100%
+		& > .person
+			padding-left 20px
+			height calc(100% - 103px)
+			overflow-y auto
 			display none
+
+		span.link
+			color blue
+			cursor pointer
+			
+			&:hover
+				color lightblue
+				
+		h2, i.fa-search
+			display inline-block
+			
+		h2
+			font-size 3em
+			margin 0
+			
+		i.fa-search
+			cursor pointer
+			color #888
+			font-size 1.3em
+			margin-left 10px
+			opacity 0
+			transition opacity 500ms
+			
+		small
+			color #888
+			margin-left 6px	
+			
+		ul
+			list-style none
+			padding 0
+			margin 0
+			width 600px
+
+		& > .person > ul > li > ul, 
+		& > .person > ul > li > span
+			background #EEE
+			padding 10px
+			box-shadow 0 1px 4px #AAA
+			display inline-block
+			width 100%
+			box-sizing border-box
+				
+		h3
+			font-size 11pt
+			color #8F8F8F
+			font-weight normal
+			margin-bottom 4px
 		
+		p
+			margin 0
+			
+		.lees-meer
+			margin 40px 0
+			
+			& > button
+				width 120px
+				
+			& > ul
+				display none
+			

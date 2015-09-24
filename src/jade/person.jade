@@ -4,7 +4,7 @@
 header
 	h2= model.get('name')
 
-	i.fa.fa-search(title="Zoeken als correspondent")
+	i.fa.fa-search(title="Zoek brieven")
 
 ul
 	if model.get('altNames').length > 0
@@ -16,13 +16,20 @@ ul
 						small= "(" + altName.nametype + ")"
 	li
 		h3 Geboortejaar - Sterfjaar
-		- console.log(model)
-		span= (model.get('birthDate') || model.get('birthdateQualifier')) + " - " + (model.get('deathDate') || model.get('deathdateQualifier'))
+		ul
+			li
+				span= model.get('birthDate')
+				if model.get('birthdateQualifier') != ""
+					small= "(" + model.get('birthdateQualifier') + ")"
+				span= " - "
+				span= model.get('deathDate')
+				if model.get('deathdateQualifier') != ""
+					small= "(" + model.get('deathdateQualifier') + ")"
 	li
 		h3 Geslacht
 		span= geslacht[model.get('gender')]
 	li
-		h3 Netwerk(en)
+		h3 Netwerk
 		ul
 			for networkDomain in model.get('networkDomains')
 				li= networkDomain
@@ -34,20 +41,34 @@ ul
 				li= relative[0] + " van: "
 					span.link= relative[1]
 	li
-		h3 Karakteristiek(en)
+		h3 Karakteristiek
 		ul
 			for characteristic in model.get('characteristics')
 				li= characteristic
 	li
-		h3 Subdomein(en)
+		h3 Subdomein
 		ul
 			for subDomain in model.get('subDomains')
 				li= subDomain
 	li
-		h3 Domein(en)
+		h3 Domein
 		ul
 			for domain in model.get('domains')
 				li= domain
+
+	li
+		h3 Periodiek
+		ul
+			for periodical in model.get('periodicals')
+				li= periodical
+
+	li
+		h3 Lidmaatschap
+		ul
+			for membership in model.get('memberships')
+				li= membership
+
+
 	div.lees-meer
 		button Lees meer
 		ul

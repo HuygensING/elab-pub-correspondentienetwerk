@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 $ = require 'jquery'
+dom = require '../../funcky/dom'
 
 config = require '../../models/config'
 
@@ -25,13 +26,12 @@ class Entry extends Backbone.View
 		super
 
 		@subviews = []
-
-
-		if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
-			part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
-			$('a[name="entry"]').html "Editie <small>(#{part})</small>"
-		else
-			$('a[name="entry"]').html "Editie"
+		@listenTo config, "change:facetedSearchResponse", ->
+			if config.get('facetedSearchResponse')? and config.get('facetedSearchResponse').get('ids').length < entries.length
+				part = config.get('facetedSearchResponse').get('ids').length + ' of ' + entries.length
+				$('a[name="entry"]').html "Editie <small>(#{part})</small>"
+			else
+				$('a[name="entry"]').html "Editie"
 
 		@render @options.entryId
 
@@ -55,6 +55,8 @@ class Entry extends Backbone.View
 
 	# ### Render
 	render: (id) ->
+		@currentAnnotationDiv = $("<div>").addClass("current-annotation")
+		@el.appendChild(@currentAnnotationDiv.get(0))
 		unless @navBar?
 			@navBar = new Views.NavBar()
 			@el.appendChild @navBar.el
@@ -67,7 +69,6 @@ class Entry extends Backbone.View
 
 		@_loadModel id, =>
 			text = @model.get("paralleltexts")["Transcription"].text
-
 			# Doing this to ensure empty lines get correct height, so as not to mess with line numbering
 			if text?
 				text = String(text).replace /<div class="line">\s*<\/div>/mg, '<div class="line">&nbsp;</div>'
@@ -79,10 +80,14 @@ class Entry extends Backbone.View
 				title: replaceNamesWithLinks @model.get('name')
 
 			bs = []
-			for b in @el.querySelectorAll('b')
-				if b.innerHTML is "¶"
+			for b, i in @el.querySelectorAll('*')
+				if b.innerHTML is "¶" and b.children.length == 0 and @model.get("facsimiles")[bs.length]?
+					b.title = @model.get("facsimiles")[bs.length].title
+					b.className = "set-facsimile"
+					b.setAttribute "data-index", bs.length
 					bs.push(b)
 
+			prevBottom = 0
 			for b, i in bs
 				figure = document.createElement "figure"
 				figure.title = @model.get("facsimiles")[i].title
@@ -101,10 +106,38 @@ class Entry extends Backbone.View
 
 				b.parentNode.insertBefore figure, b.nextSibling
 				b.innerHTML = thumbnailsIconTpl()
+				rect = figure.getBoundingClientRect()
+				delta = rect.top - prevBottom
+				if delta < 0 && delta != -15
+					figure.style.top = -delta + "px"
+					rect = figure.getBoundingClientRect()
+					
+				prevBottom = rect.top + rect.height + 15
 
+			hl = null
+			supOver = (ev) =>
+				rect = ev.target.getBoundingClientRect()
+				annId = $(ev.target).attr("data-id")
+				begin = $(@el).find("[data-marker='begin'][data-id='" + annId + "']").get(0);
+				if @model.annotationsIndex[annId]
+					@currentAnnotationDiv.css({top: rect.top + 15 + "px", right: $(window).width() - rect.left + "px"}).html(@model.annotationsIndex[annId].text).fadeIn()
+				if begin
+					hl = dom(begin).highlightUntil(ev.target).on()
+				else
+					hl = null
+
+			supOut = (ev) =>
+				@currentAnnotationDiv.hide()
+				hl.off() if hl?
+			
+			$(@el).find("sup[data-marker='end']")
+				.on("mouseover", supOver)
+				.on("mouseout", supOut)
+			
 		@
 
 	events: ->
+		"click .set-facsimile": "_handleChangeFacsimile"
 		"click img.thumbnail": "_handleChangeFacsimile"
 		"click button.toggle-metadata": -> @$(".metadata .table-container").slideToggle("fast")
 		"click h2 span.link": "_handleSearchPerson"

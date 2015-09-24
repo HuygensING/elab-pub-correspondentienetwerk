@@ -43,6 +43,8 @@ switchView = do ->
 		else
 			showNewView()
 
+
+
 class MainRouter extends Backbone.Router
 
 	routes:
@@ -99,13 +101,29 @@ class MainRouter extends Backbone.Router
 
 	showSearch: do ->
 		searchView = null
-
 		(show=true) ->
 			unless searchView?
 				popup = null
 				timer = null
-				facetNames = ['metadata_afzender_s', 'metadata_ontvanger_s', 'mv_metadata_correspondents']
-
+				facetNames = [
+					'metadata_afzender', 
+					'metadata_ontvanger',
+					'mv_metadata_correspondents'
+				]
+				facetOrder = [
+					"metadata_datum_range",
+					"metadata_afzender",
+					"metadata_ontvanger",
+					"mv_metadata_correspondents",
+					"metadata_plaats",
+					"metadata_annotatie",
+					"metadata_taal",
+					"metadata_bijlage",
+					"metadata_herkomst_transcriptie",
+					"metadata_bewaarplaats",
+					"metadata_collectie",
+					"metadata_signatuur"
+				]
 				getSelector = (facetName) ->
 					"div[data-name=\"#{facetName}\"] .body .container ul li"
 
@@ -142,9 +160,9 @@ class MainRouter extends Backbone.Router
 
 							ids = []
 							for label in labels
-								# console.log persons.filter((p) -> p.get('koppelnaam').toLowerCase().indexOf('maria') > -1).map((p) -> p.get('koppelnaam'))
 								person = persons.findWhere koppelnaam: label
-								ids.push person.id
+								if person.id?
+									ids.push person.id
 
 							popup = new Views.PersonPopup
 								ids: ids
@@ -165,18 +183,27 @@ class MainRouter extends Backbone.Router
 				searchView = new Views.FS
 					el: $('.faceted-search-placeholder.letter')
 					baseUrl: config.get('baseURL')
+					customQueryNames:
+						metadata_datum_range: 'metadata_datum'
 					searchPath: config.get('searchPath')
 					textLayers: config.get('textLayers')
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('entryMetadataFields')
+					facetOrder: facetOrder
 					levels: config.get('levels')
+					rangeMonthMode: true
 					results: true
 					queryOptions:
 						resultFields: config.get('levels')
 					showMetadata: true
-					termSingular: "letter"
-					termPlural: "letters"
+					labels:
+						numFound: "Gevonden"
+						filterOptions: "Vind..."
+						sortAlphabetically: "Sorteer alfabetisch"
+						sortNumerically: "Sorteer op aantal"
+					termSingular: "brief"
+					termPlural: "brieven"
 					templates:
 						result: letterResultTpl
 					templateData:
@@ -188,12 +215,42 @@ class MainRouter extends Backbone.Router
 				@listenToOnce searchView, "change:results", ->
 					config.set "isLetterFacetedSearchLoaded", true
 	
-				@listenTo searchView, "change:results", ->
+				@listenTo searchView, "change:results", (data) ->
+					config.set "facetedSearchResponse", data
 					for facetName in facetNames
 						searchView.facets.views[facetName].optionsView.renderAll()
 						addHover facetName
 
 				@listenTo searchView, "results:render:finished", ->
+					$(".hibb-pagination .text").html("van")
+					$(".hibb-pagination .prev").attr("title", "Vorige pagina")
+					$(".hibb-pagination .prev10").attr("title", "Spring 10 pagina's terug")
+					$(".hibb-pagination .next").attr("title", "Volgende pagina")
+					$(".hibb-pagination .next10").attr("title", "Spring 10 pagina's vooruit")
+					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
+					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
+					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
+					$(".sort-levels .search button").html("Toepassen")
+					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
+#					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
+#					$(".facet.list[data-name='metadata_transcriptie']").hide()
+					$(".facet.range[data-name='metadata_datum_range'] h3").html("Datum").attr("title", "Datum")
+					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
+					for facetName, facetView of searchView.facets.views
+						do (facetName) =>
+							if !facetView.optionsView? 
+								return
+							@stopListening facetView.optionsView, "filter:finished"
+							@stopListening facetView.optionsView.collection, "sort"
+
+							@listenTo facetView.optionsView, "filter:finished", =>
+								addHover facetName
+
+							@listenTo facetView.optionsView.collection, "sort", (collection, opts) =>
+								if(opts.silent == false)
+									addHover facetName
+						
+
 					searchView.$(".results ul.page li i.fa").on 'click', (ev) =>
 						ev.stopPropagation()
 						person = persons.findWhere koppelnaam: ev.currentTarget.getAttribute('data-name')
@@ -202,15 +259,44 @@ class MainRouter extends Backbone.Router
 				@listenTo searchView, 'result:click', (data) ->
 					Backbone.history.navigate "entry/#{data.id}", trigger: true
 
-				@listenTo Backbone, "search-person", (koppelnaam) ->
-					Backbone.history.navigate "search", trigger: true
-					searchView.searchValue "mv_metadata_correspondents", koppelnaam
+
+				@listenTo Backbone, "search-person", (koppelnaam, el) ->
+					r = 0
+					rotate = -> 
+						el.style.transform = "rotate(" + r + "deg)"
+						r++
+
+					interv = window.setInterval(rotate, 10)
+
+					@listenToOnce searchView, "results:render:finished", ->
+						searchView.$el.find(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
+						@listenToOnce searchView, "results:render:finished", ->
+							window.clearInterval(interv)
+							Backbone.history.navigate "search", trigger: true
+					searchView.$el.find(".facets-menu .reset button").off("click").click()
+
+
 
 				# searchView.$el.hide()
 				searchView.search()
 
+			searchView.$el.find(".show-metadata label").html("Toon metadata")
+			searchView.$el.find(".text-search input[name='search']").attr("placeholder", "Zoeken in de tekst")
+			searchView.$el.find(".facets-menu .reset button")
+				.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+				.on "click", ->
+					document.location.reload()
+			searchView.$el.find(".facets-menu .collapse-expand button")
+				.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
+				.on "click", ->
+					if $(this).find("i").attr('class') == 'fa fa-compress'
+						$(this).html("<i class='fa fa-compress'></i> Filters uitklappen")
+					else
+						$(this).html("<i class='fa fa-expand'></i> Filters inklappen")
 			if show
 				searchView.$el.show()
+				if searchView.facets.views.metadata_datum_range?
+					searchView.facets.views.metadata_datum_range.postRender()
 				switchView searchView
 
 	showPersonSearch: do ->
@@ -226,7 +312,14 @@ class MainRouter extends Backbone.Router
 					entryTermSingular: config.get('entryTermSingular')
 					entryTermPlural: config.get('entryTermPlural')
 					entryMetadataFields: config.get('personMetadataFields')
-					levels: config.get('personLevels')
+					labels:
+						numFound: "Gevonden"
+						filterOptions: "Vind..."
+						sortAlphabetically: "Sorteer alfabetisch"
+						sortNumerically: "Sorteer op aantal"
+					termSingular: "correspondent"
+					termPlural: "correspondenten"
+					levels: config.get('personLevels')	
 					levelDisplayNames:
 						dynamic_k_birthDate: "Geboortejaar"
 						dynamic_k_deathDate: "Sterfjaar"
@@ -235,23 +328,22 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_gender: "Geslacht"
 					results: true
 					showMetadata: false
-					termSingular: "person"
-					termPlural: "persons"
 					templates:
 						result: personResultTpl
 					requestOptions:
 						headers:
 							VRE_ID: "CNW"
+					textSearchOptions:
+						caseSensitive: null
 					facetOrder: [
-						"dynamic_i_birthyear"
-						"dynamic_i_deathyear"
 						"dynamic_s_koppelnaam"
 						"dynamic_s_altname"
+						"dynamic_i_birthyear"
+						"dynamic_i_deathyear"
 						"dynamic_s_gender"
 						"dynamic_s_networkdomain"
 						"dynamic_s_characteristic"
-						"dynamic_s_subdomain"
-						"dynamic_s_domain"
+						"dynamic_s_combineddomain"
 						"dynamic_s_periodical"
 						"dynamic_s_membership"
 					]
@@ -270,6 +362,38 @@ class MainRouter extends Backbone.Router
 
 				@listenTo personSearchView, 'result:click', (data) ->
 					Backbone.history.navigate "person/#{data._id}", trigger: true
+
+				@listenTo personSearchView, "results:render:finished", ->
+					$(".hibb-pagination .text").html("van")
+					$(".hibb-pagination .prev").attr("title", "Vorige pagina")
+					$(".hibb-pagination .prev10").attr("title", "Spring 10 pagina's terug")
+					$(".hibb-pagination .next").attr("title", "Volgende pagina")
+					$(".hibb-pagination .next10").attr("title", "Spring 10 pagina's vooruit")
+					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
+					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
+					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
+					$(".sort-levels .search button").html("Toepassen")
+					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
+					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
+					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
+					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
+
+					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
+					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
+					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("Domein").attr("title", "Domein")
+
+				personSearchView.$el.find(".facets-menu .reset button")
+					.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
+					.on "click", (ev) ->
+						ev.preventDefault()
+						document.location.reload()
+				personSearchView.$el.find(".facets-menu .collapse-expand button")
+					.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
+					.on "click", ->
+						if $(this).find("i").attr('class') == 'fa fa-compress'
+							$(this).html("<i class='fa fa-compress'></i> Filters uitklappen")
+						else
+							$(this).html("<i class='fa fa-expand'></i> Filters inklappen")
 
 				personSearchView.$el.show()
 				personSearchView.search()

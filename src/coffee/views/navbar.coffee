@@ -6,10 +6,10 @@ config = require '../models/config'
 
 entries = require '../collections/entries'
 
-util = require 'funcky.util'
+util = require '../funcky/util'
 
-fStr = require('funcky.str').str
-fEl = require('funcky.el').el
+fStr = require('../funcky/str').str
+fEl = require('../funcky/el').el
 
 thumbnailTpl = require '../../jade/entry/thumbnail.jade'
 
@@ -22,36 +22,48 @@ class NavBar extends Backbone.View
 	# ### Initialize
 	initialize: (@options={}) ->
 		@loading = false
+		@initialSearchChange = true
 		@loadedThumbnails = []
 		@unloadedThumbnails = []
+		@thumbnailsUL = document.createElement('ul')
+		@thumbnailsUL.className = 'thumbnails'
+
+		@listenTo config, "change:facetedSearchResponse", =>
+			if @initialSearchChange == true
+				@initialSearchChange = false
+			else
+				@loadedThumbnails = []
+				@unloadedThumbnails = []
+				@render()
+
 		@render()
 
 	# ### Render
 	render: ->
-		@thumbnailsUL = document.createElement('ul')
-		@thumbnailsUL.className = 'thumbnails'
+		$(@thumbnailsUL).html("")
 
 		renderThumbnail = (entry) =>
 			unless entry instanceof entries.model
-				entry = entries.findWhere '_id': entry.id
+				entry = entries.findWhere '_id': parseInt(entry)
 
-			id = entry.get('_id')
+			if(entry)
+				id = entry.get('_id')
 
-			# Create an HTML element from the thumbnail template.
-			# First the template string is generated and second
-			# the element created fromt the string.
-			tplStr = thumbnailTpl
-				src: entry.get('thumbnails')[0]
-				id: "entry-" + entry.get("_id")
-				name: entry.get('shortName') ? id
-			thumb = fStr(tplStr).toElement()
-			thumb.loaded = false
+				# Create an HTML element from the thumbnail template.
+				# First the template string is generated and second
+				# the element created fromt the string.
+				tplStr = thumbnailTpl
+					src: entry.get('thumbnails')[0]
+					id: "entry-" + entry.get("_id")
+					name: entry.get('shortName') ? id
+				thumb = fStr(tplStr).toElement()
+				thumb.loaded = false
 
-			@unloadedThumbnails.push thumb
-			# Append the thumb element to the fragment.
-			@thumbnailsUL.appendChild thumb
+				@unloadedThumbnails.push thumb
+				# Append the thumb element to the fragment.
+				@thumbnailsUL.appendChild thumb
 
-		collection = if config.get('facetedSearchResponse') then config.get('facetedSearchResponse').get('results') else entries.models
+		collection = if config.get('facetedSearchResponse') then config.get('facetedSearchResponse').attributes.ids else entries.models
 		collection.map renderThumbnail
 
 		@el.appendChild @thumbnailsUL
@@ -145,6 +157,8 @@ class NavBar extends Backbone.View
 		entryId ?= entries.current.get("_id")
 
 		index = entries.indexOf entries.get(entryId)
+		if config.get('facetedSearchResponse') 
+			index = config.get('facetedSearchResponse').attributes.ids.indexOf("" + entryId)
 
 		@loading = true
 		@loadThumbnailsAtIndex index, =>
@@ -158,10 +172,12 @@ class NavBar extends Backbone.View
 
 			# Using jQuery with .position().left does not give the correct left, because I guess it does not use
 			# $entries as the parent to calculate relative left.
-			leftPos = fEl($active[0]).position($entries[0]).left
-			offset = ($(window).width()/2) - ($active.width()/2)
-
-			leftPos = $active[0].offsetLeft
+			leftPos = 0
+			offset = 0
+			if $active[0]
+				leftPos = fEl($active[0]).position($entries[0]).left
+				offset = ($(window).width()/2) - ($active.width()/2)
+				leftPos = $active[0].offsetLeft
 
 			if scroll
 				@$('.thumbnails').animate
