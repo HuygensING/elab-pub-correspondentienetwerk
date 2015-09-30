@@ -260,24 +260,26 @@ class MainRouter extends Backbone.Router
 					Backbone.history.navigate "entry/#{data.id}", trigger: true
 
 
-				@listenTo Backbone, "search-person", (koppelnaam, el) ->
+				@listenTo Backbone, "search-person", (values, el) ->
 					r = 0
 					rotate = -> 
-						el.style.transform = "rotate(" + r + "deg)"
-						r++
+						if el?
+							el.style.transform = "rotate(" + r + "deg)"
+							r++
 
 					interv = window.setInterval(rotate, 10)
 
 					@listenToOnce searchView, "results:render:finished", ->
-						searchView.$el.find(".facet[data-name=\"mv_metadata_correspondents\"] li[data-value=\"#{koppelnaam}\"]").click()
+						searchView.searchValue("mv_metadata_correspondents", values)
+
 						@listenToOnce searchView, "results:render:finished", ->
 							window.clearInterval(interv)
 							Backbone.history.navigate "search", trigger: true
+							searchView.$el.find(".facets-menu .reset button")
+								.on "click", ->
+									document.location.reload()
 					searchView.$el.find(".facets-menu .reset button").off("click").click()
 
-
-
-				# searchView.$el.hide()
 				searchView.search()
 
 			searchView.$el.find(".show-metadata label").html("Toon metadata")
@@ -377,16 +379,29 @@ class MainRouter extends Backbone.Router
 					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
 					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
-
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
 					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("Domein").attr("title", "Domein")
+					values = personSearchView.$el.find(".results .result .title").map((i, el) => $(el).clone().html().replace(/<small.*$/, "")).toArray();
+					searchPersonsButton = personSearchView.$el.find(".search-for-persons-button")
+					if searchPersonsButton.length == 0
+						searchPersonsButton = $("<button>").addClass("search-for-persons-button")
+						personSearchView.$el.find(".results-per-page").after($("<li>").html(searchPersonsButton))
+
+					name = if values.length is 1 then "correspondent" else "correspondenten" 
+					searchPersonsButton.html("<i class='fa fa-search'></i> Zoek brieven van " + values.length + " " + name).off("click")
+						.on "click", ->
+							Backbone.trigger "search-person", values, $(@).find("i")[0]
+
+					
+
 
 				personSearchView.$el.find(".facets-menu .reset button")
 					.html("<i class='fa fa-refresh'></i> &nbsp;Nieuwe zoekvraag")
 					.on "click", (ev) ->
 						ev.preventDefault()
 						document.location.reload()
+
 				personSearchView.$el.find(".facets-menu .collapse-expand button")
 					.html("<i class='fa fa-compress'></i> &nbsp;Filters inklappen")
 					.on "click", ->
