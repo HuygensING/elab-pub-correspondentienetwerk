@@ -13,14 +13,10 @@
 			li
 				span.key= 'Netwerk: '
 				span.value= data.networkDomains.join(", ")
-		if data.domains.length > 0
+		if data.combinedDomains.length > 0
 			li
 				span.key= 'Domeinen: '
-				span.value= data.domains.join(", ")
-		if data.subDomains.length > 0
-			li
-				span.key= 'Subdomeinen: '
-				span.value= data.subDomains.join(", ")
+				span.value= data.combinedDomains.join(", ")
 		if data.characteristics.length > 0
 			li
 				span.key= 'Karakteristieken: '
