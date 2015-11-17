@@ -14,5 +14,5 @@ h2!= title
 
 .container
 	.facsimile
-		iframe(src=model.get("facsimiles")[0].zoom)
+		iframe(src=model.get("facsimiles")[0] ? model.get("facsimiles")[0].zoom : "about:blank")
 	.text!= text

@@ -149,7 +149,7 @@ class Entry extends Backbone.View
 	_handleChangeFacsimile: (ev) ->
 		index = ev.currentTarget.getAttribute("data-index")
 		iframe = @el.querySelector ".facsimile iframe"
-		iframe.src = @model.get("facsimiles")[index].zoom
+		iframe.src = if @model.get("facsimiles")[index]? then @model.get("facsimiles")[index].zoom  else "about:blank"
 
 	changeEntry: (id) ->
 		

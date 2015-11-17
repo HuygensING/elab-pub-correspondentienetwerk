@@ -138,8 +138,7 @@ class NavBar extends Backbone.View
 		img.addEventListener 'error', onError
 
 		# Add the src to the image.
-		notFoundUrl = "#{config.getCdnUrl()}/images/not-found.svg"
-		img.src = li.getAttribute('data-src') ? notFoundUrl 
+		img.src = li.getAttribute('data-src') ? "" 
 
 	# ### Events
 	events: ->
