@@ -6,26 +6,42 @@
 
 .metadata
 	ul
-		li
+		li(data-facetname="dynamic_s_gender")
 			span.key= 'Geslacht: '
-			span.value= genderMap[data.gender]
+			span.value
+				span= genderMap[data.gender]
+
 		if data.networkDomains.length > 0
-			li
+			li(data-facetname="dynamic_s_networkdomain")
 				span.key= 'Netwerk: '
-				span.value= data.networkDomains.join(", ")
+				span.value
+					each val in data.networkDomains
+						span= val
+
 		if data.combinedDomains.length > 0
-			li
+			li(data-facetname="dynamic_s_combineddomain")
 				span.key= 'Domeinen: '
-				span.value= data.combinedDomains.join(", ")
+				span.value
+					each val in data.combinedDomains
+						span= val
+
 		if data.characteristics.length > 0
-			li
+			li(data-facetname="dynamic_s_characteristic")
 				span.key= 'Karakteristieken: '
-				span.value= data.characteristics.join(", ")
+				span.value
+					each val in data.characteristics
+						span= val
+
 		if data.memberships.length > 0
-			li
+			li(data-facetname="dynamic_s_membership")
 				span.key= 'Lidmaatschappen: '
-				span.value= data.memberships.join(", ")
+				span.value
+					each val in data.memberships
+						span= val
+
 		if data.periodicals.length > 0
-			li
+			li(data-facetname="dynamic_s_periodical")
 				span.key= 'Periodieken: '
-				span.value= data.periodicals.join(", ")
+				span.value
+					each val in data.periodicals
+						span= val

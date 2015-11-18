@@ -80,7 +80,19 @@
 
 							span.key
 								color #999
-					
+
+							span.value
+								span
+									display inline-block
+									border-radius 3px
+									margin-left 6px
+									&::after
+										content: ","
+									&:last-of-type::after
+										content: ""
+									&.highlight
+										background-color #b325a0
+										color #fff
 					&.fulltext
 						margin-top 20px
 						

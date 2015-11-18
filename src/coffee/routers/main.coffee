@@ -136,6 +136,7 @@ class MainRouter extends Backbone.Router
 					if popup?
 						popup.destroy()
 
+
 				addHover = (facetName) ->
 					selector = getSelector(facetName)
 					removeHover selector
@@ -365,6 +366,11 @@ class MainRouter extends Backbone.Router
 				@listenTo personSearchView, 'result:click', (data) ->
 					Backbone.history.navigate "person/#{data._id}", trigger: true
 
+				addHighlight = (elem, facetName, val) ->
+					found = elem.find("[data-facetname='" + facetName + "'] span.value span").filter (i, el1) => $(el1).html() == val
+					found.each (i, el) => $(el).addClass("highlight")
+
+
 				@listenTo personSearchView, "results:render:finished", ->
 					$(".hibb-pagination .text").html("van")
 					$(".hibb-pagination .prev").attr("title", "Vorige pagina")
@@ -375,8 +381,8 @@ class MainRouter extends Backbone.Router
 					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
 					$(".sort-levels .search button").html("Toepassen")
-					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
-					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
+#					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
+#					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
 					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
@@ -393,7 +399,21 @@ class MainRouter extends Backbone.Router
 						.on "click", ->
 							Backbone.trigger "search-person", values, $(@).find("i")[0]
 
-					
+
+					for facetName, facetView of personSearchView.facets.views
+						do (facetName, facetView) =>
+							if !facetView.optionsView?
+								return
+							facetView.$el.find("li.checked[data-value]").each (i, el) =>
+								val = $(el).attr("data-value")
+								genderMap = {MALE: "Man", FEMALE: "Vrouw", UNKNOWN: "Onbekend"}
+								if facetName == "dynamic_s_gender"
+									val = genderMap[val]
+								if val == "Verwey en Witsen"
+									addHighlight personSearchView.$el, facetName, "Verwey"
+									addHighlight personSearchView.$el, facetName, "Witsen"
+								else
+									addHighlight personSearchView.$el, facetName, val
 
 
 				personSearchView.$el.find(".facets-menu .reset button")
