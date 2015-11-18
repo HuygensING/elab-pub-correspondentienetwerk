@@ -123,7 +123,7 @@ class NavBar extends Backbone.View
 
 		# Handle loading errors.
 		onError = ->
-			img.src = notFoundUrl
+			img.src = notFoundUrl || ""
 			imgDone()
 
 		# Remove event listeners and call the callback.

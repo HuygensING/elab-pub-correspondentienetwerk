@@ -111,11 +111,11 @@ class MainRouter extends Backbone.Router
 					'mv_metadata_correspondents'
 				]
 				facetOrder = [
-					"metadata_datum_range",
 					"metadata_afzender",
 					"metadata_ontvanger",
 					"mv_metadata_correspondents",
 					"metadata_plaats",
+					"metadata_datum_range",
 					"metadata_annotatie",
 					"metadata_taal",
 					"metadata_bijlage",
@@ -411,7 +411,16 @@ class MainRouter extends Backbone.Router
 					if !personSearchView.$el.find(".show-metadata input").is(":checked")
 						personSearchView.$el.find(".show-metadata input").trigger("click").trigger("click")
 
-					# TODO: match order of sort levels in metadata presentation (just GENDER and NETWORK... we can swap them using jQuery)...
+					# CNW-44: match order of sort levels in metadata presentation
+					sortLevels = personSearchView.$el.find(".sort-levels select")
+						.map((i, el) => $(el).val()).toArray()
+						.filter((v) => v == "dynamic_sort_networkdomain" || v == "dynamic_sort_gender")
+					indexOfNetwork = sortLevels.indexOf("dynamic_sort_networkdomain")
+					indexOfGender = sortLevels.indexOf("dynamic_sort_gender")
+					if (indexOfNetwork > -1 and indexOfGender > -1 and indexOfNetwork < indexOfGender) or (indexOfNetwork > -1 and indexOfGender < 0)
+						personSearchView.$el.find(".results .result .metadata ul").each (i, el) =>
+							$(el).find("[data-facetname='dynamic_s_gender']").before($(el).find("[data-facetname='dynamic_s_networkdomain']"))
+
 
 					for facetName, facetView of personSearchView.facets.views
 						do (facetName, facetView) =>
