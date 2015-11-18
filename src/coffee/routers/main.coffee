@@ -195,6 +195,7 @@ class MainRouter extends Backbone.Router
 					levels: config.get('levels')
 					rangeMonthMode: true
 					results: true
+					rangeFacetAlwaysShowButton: true
 					queryOptions:
 						resultFields: config.get('levels')
 					showMetadata: true
@@ -329,6 +330,7 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_name: "Achternaam"
 						dynamic_sort_networkdomain: "Netwerk(en)"
 						dynamic_sort_gender: "Geslacht"
+					rangeFacetAlwaysShowButton: true
 					results: true
 					showMetadata: false
 					templates:
