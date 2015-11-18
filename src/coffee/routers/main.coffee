@@ -394,7 +394,7 @@ class MainRouter extends Backbone.Router
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
-					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("Domein").attr("title", "Domein")
+					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("(Sub)domein").attr("title", "(Sub)domein")
 					values = personSearchView.$el.find(".results .result .title").map((i, el) => $(el).clone().html().replace(/<small.*$/, "")).toArray();
 					searchPersonsButton = personSearchView.$el.find(".search-for-persons-button")
 					if searchPersonsButton.length == 0
@@ -410,6 +410,8 @@ class MainRouter extends Backbone.Router
 
 					if !personSearchView.$el.find(".show-metadata input").is(":checked")
 						personSearchView.$el.find(".show-metadata input").trigger("click").trigger("click")
+
+					# TODO: match order of sort levels in metadata presentation (just GENDER and NETWORK... we can swap them using jQuery)...
 
 					for facetName, facetView of personSearchView.facets.views
 						do (facetName, facetView) =>
