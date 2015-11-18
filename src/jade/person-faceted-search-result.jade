@@ -20,28 +20,28 @@
 
 		if data.combinedDomains.length > 0
 			li(data-facetname="dynamic_s_combineddomain")
-				span.key= 'Domeinen: '
+				span.key= 'Domein: '
 				span.value
 					each val in data.combinedDomains
 						span= val
 
 		if data.characteristics.length > 0
 			li(data-facetname="dynamic_s_characteristic")
-				span.key= 'Karakteristieken: '
+				span.key= 'Karakteristiek: '
 				span.value
 					each val in data.characteristics
 						span= val
 
 		if data.memberships.length > 0
 			li(data-facetname="dynamic_s_membership")
-				span.key= 'Lidmaatschappen: '
+				span.key= 'Lidmaatschap: '
 				span.value
 					each val in data.memberships
 						span= val
 
 		if data.periodicals.length > 0
 			li(data-facetname="dynamic_s_periodical")
-				span.key= 'Periodieken: '
+				span.key= 'Periodiek: '
 				span.value
 					each val in data.periodicals
 						span= val

@@ -382,6 +382,8 @@ class MainRouter extends Backbone.Router
 					$(".hibb-pagination .current").attr("title", "Bewerk huidige pagina")
 					$(".sort-levels .toggle").html("Sorteer op <i class='fa fa-caret-down'></i>")
 					$(".sort-levels label").each((i, el) -> $(el).html($(el).html().replace("Level ", "")))
+					$(".sort-levels select option[value='dynamic_sort_networkdomain']").html("Netwerk")
+
 					$(".sort-levels .search button").html("Toepassen")
 #					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
 #					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
