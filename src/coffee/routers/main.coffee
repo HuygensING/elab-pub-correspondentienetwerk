@@ -238,6 +238,12 @@ class MainRouter extends Backbone.Router
 #					$(".facet.list[data-name='metadata_transcriptie']").hide()
 					$(".facet.range[data-name='metadata_datum_range'] h3").html("Datum").attr("title", "Datum")
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
+
+					$(".facet h3").each (i, el) =>
+						if !$(el).find(".info-icon").length
+							$(el).append($("<span>").addClass("info-icon").attr("title", "INFORMATIEVE TEKST"))
+
+
 					for facetName, facetView of searchView.facets.views
 						do (facetName) =>
 							if !facetView.optionsView? 
@@ -391,10 +397,16 @@ class MainRouter extends Backbone.Router
 #					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
 #					$(".facet.list li[data-value='(empty)'] label").html("(Leeg)")
 					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
+
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
 					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("(Sub)domein").attr("title", "(Sub)domein")
+
+					$(".facet h3").each (i, el) =>
+						if !$(el).find(".info-icon").length
+							$(el).append($("<span>").addClass("info-icon").attr("title", "INFORMATIEVE TEKST"))
+
 					values = personSearchView.$el.find(".results .result .title").map((i, el) => $(el).clone().html().replace(/<small.*$/, "")).toArray();
 					searchPersonsButton = personSearchView.$el.find(".search-for-persons-button")
 					if searchPersonsButton.length == 0
