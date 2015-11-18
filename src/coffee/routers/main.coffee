@@ -258,6 +258,9 @@ class MainRouter extends Backbone.Router
 						person = persons.findWhere koppelnaam: ev.currentTarget.getAttribute('data-name')
 						Backbone.history.navigate "person/#{person.id}", trigger: true
 
+					if !searchView.$el.find(".show-metadata input").is(":checked")
+						searchView.$el.find(".show-metadata input").trigger("click").trigger("click")
+
 				@listenTo searchView, 'result:click', (data) ->
 					Backbone.history.navigate "entry/#{data.id}", trigger: true
 
@@ -332,7 +335,7 @@ class MainRouter extends Backbone.Router
 						dynamic_sort_gender: "Geslacht"
 					rangeFacetAlwaysShowButton: true
 					results: true
-					showMetadata: false
+					showMetadata: true
 					templates:
 						result: personResultTpl
 					requestOptions:
@@ -398,11 +401,15 @@ class MainRouter extends Backbone.Router
 						searchPersonsButton = $("<button>").addClass("search-for-persons-button")
 						personSearchView.$el.find(".results-per-page").after($("<li>").html(searchPersonsButton))
 
-					name = if values.length is 1 then "correspondent" else "correspondenten" 
+					name = if values.length is 1 then "correspondent" else "correspondenten"
+					personSearchView.$el.find(".show-metadata label").html("Toon metadata")
+
 					searchPersonsButton.html("<i class='fa fa-search'></i> Zoek brieven van " + values.length + " " + name).off("click")
 						.on "click", ->
 							Backbone.trigger "search-person", values, $(@).find("i")[0]
 
+					if !personSearchView.$el.find(".show-metadata input").is(":checked")
+						personSearchView.$el.find(".show-metadata input").trigger("click").trigger("click")
 
 					for facetName, facetView of personSearchView.facets.views
 						do (facetName, facetView) =>
