@@ -237,7 +237,7 @@ class MainRouter extends Backbone.Router
 					$(".facet.list li[data-value=':empty'] label").html("(Leeg)")
 #					$(".facet.list h3").each((i, el) -> $(el).html($(el).html().replace(/\(.+\)/, "")).attr("title", $(el).html().replace(/\(.+\)/, "")))
 #					$(".facet.list[data-name='metadata_transcriptie']").hide()
-					$(".facet.range[data-name='metadata_datum_range'] h3").html("Datum").attr("title", "Datum")
+					$(".facet.range[data-name='metadata_datum_range'] h3").html("Periode").attr("title", "Periode")
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 
 					$(".facet h3").each (i, el) =>
