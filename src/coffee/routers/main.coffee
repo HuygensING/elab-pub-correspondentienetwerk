@@ -115,6 +115,7 @@ class MainRouter extends Backbone.Router
 					"metadata_ontvanger",
 					"mv_metadata_correspondents",
 					"metadata_plaats",
+					"metadata_datum",
 					"metadata_datum_range",
 					"metadata_annotatie",
 					"metadata_taal",
