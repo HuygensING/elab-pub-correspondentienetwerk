@@ -240,9 +240,10 @@ class MainRouter extends Backbone.Router
 					$(".facet.range[data-name='metadata_datum_range'] h3").html("Periode").attr("title", "Periode")
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 
-					$(".facet h3").each (i, el) =>
+					searchView.$el.find(".facet.range[data-name='metadata_datum_range'] h3").each (i, el) =>
 						if !$(el).find(".info-icon").length
-							$(el).append($("<span>").addClass("info-icon").attr("title", "INFORMATIEVE TEKST"))
+							$(el).append($("<span>").addClass("info-icon").attr("title", "Met deze schuifbalk kunnen brieven in een bepaalde periode gezocht worden. De periodegrenzen worden gespecificeerd op maand. De selectie kan geactiveerd worden met de loep. "))
+
 
 
 					for facetName, facetView of searchView.facets.views
@@ -404,9 +405,25 @@ class MainRouter extends Backbone.Router
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
 					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("(Sub)domein").attr("title", "(Sub)domein")
 
-					$(".facet h3").each (i, el) =>
+					infoFields = [
+						".facet.list[data-name='dynamic_s_characteristic'] header .menu",
+						".facet.list[data-name='dynamic_s_combineddomain'] header .menu",
+						".facet.list[data-name='dynamic_s_periodical'] header .menu",
+						".facet.list[data-name='dynamic_s_membership'] header .menu"
+					];
+					personSearchView.$el.find(infoFields.join(", ")).each (i, el) =>
 						if !$(el).find(".info-icon").length
-							$(el).append($("<span>").addClass("info-icon").attr("title", "INFORMATIEVE TEKST"))
+							$(el).append($("<span>").addClass("info-icon").attr("title", "Selecteren van meerdere facetwaarden binnen deze facet heeft een uitbreiding van de selectie tot gevolg. Het getal achter de facetwaarde geeft het aantal treffers binnen de actieve selectie weer."))
+
+					personSearchView.$el.find(".facet.range[data-name='dynamic_i_birthyear'] h3").each (i, el) =>
+						if !$(el).find(".info-icon").length
+							$(el).append($("<span>").addClass("info-icon").attr("title", "Met deze schuifbalk kunnen correspondenten gezocht worden die in een bepaalde  periode geboren zijn. De periodegrenzen worden gespecificeerd op jaar. De selectie kan geactiveerd worden met de loep."))
+
+					personSearchView.$el.find(".facet.range[data-name='dynamic_i_deathyear'] h3").each (i, el) =>
+						if !$(el).find(".info-icon").length
+							$(el).append($("<span>").addClass("info-icon").attr("title", "Met deze schuifbalk kunnen correspondenten gezocht worden die in een bepaalde  periode overleden zijn. De periodegrenzen worden gespecificeerd op jaar. De selectie kan geactiveerd worden met de loep."))
+
+
 
 					values = personSearchView.$el.find(".results .result .title").map((i, el) => $(el).clone().html().replace(/<small.*$/, "")).toArray();
 					searchPersonsButton = personSearchView.$el.find(".search-for-persons-button")
