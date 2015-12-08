@@ -18,18 +18,18 @@
 					each val in data.networkDomains
 						span= val
 
-		if data.combinedDomains.length > 0
-			li(data-facetname="dynamic_s_combineddomain")
-				span.key= '(Sub)domein: '
-				span.value
-					each val in data.combinedDomains
-						span= val
-
 		if data.characteristics.length > 0
 			li(data-facetname="dynamic_s_characteristic")
 				span.key= 'Karakteristiek: '
 				span.value
 					each val in data.characteristics
+						span= val
+
+		if data.combinedDomains.length > 0
+			li(data-facetname="dynamic_s_combineddomain")
+				span.key= '(Sub)domein: '
+				span.value
+					each val in data.combinedDomains
 						span= val
 
 		if data.memberships.length > 0
