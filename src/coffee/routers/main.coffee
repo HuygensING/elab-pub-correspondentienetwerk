@@ -194,7 +194,6 @@ class MainRouter extends Backbone.Router
 					entryMetadataFields: config.get('entryMetadataFields')
 					facetOrder: facetOrder
 					levels: config.get('levels')
-					rangeMonthMode: true
 					results: true
 					rangeFacetAlwaysShowButton: true
 					queryOptions:
@@ -242,7 +241,7 @@ class MainRouter extends Backbone.Router
 
 					searchView.$el.find(".facet.range[data-name='metadata_datum_range'] h3").each (i, el) =>
 						if !$(el).find(".info-icon").length
-							$(el).append($("<span>").addClass("info-icon").attr("title", "Met deze schuifbalk kunnen brieven in een bepaalde periode gezocht worden. De periodegrenzen worden gespecificeerd op maand. De selectie kan geactiveerd worden met de loep. "))
+							$(el).append($("<span>").addClass("info-icon").attr("title", "Met deze schuifbalk kunnen brieven in een bepaalde periode gezocht worden. De periodegrenzen worden gespecificeerd op jaar. De selectie kan geactiveerd worden met de loep. "))
 
 
 
