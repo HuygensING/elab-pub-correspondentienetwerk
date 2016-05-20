@@ -401,8 +401,17 @@ class MainRouter extends Backbone.Router
 
 					$(".facet.range .slider button").attr("title", "Zoek binnen gegeven bereik")
 					$(".facet.list[data-name='dynamic_s_koppelnaam'] h3").html("Volledige naam").attr("title", "Volledige naam")
+					$(".facet.list[data-name='dynamic_s_altname'] h3").html("Alternatieve naam").attr("title", "Alternatieve naam")
+					$(".facet.range[data-name='dynamic_i_birthyear'] h3").html("Geboortejaar").attr("title", "Geboortejaar")
+					$(".facet.range[data-name='dynamic_i_deathyear'] h3").html("Sterfjaar").attr("title", "Sterfjaar")
+					$(".facet.list[data-name='dynamic_s_gender'] h3").html("Geslacht").attr("title", "Geslacht")
+					$(".facet.list[data-name='dynamic_s_networkdomain'] h3").html("Netwerk").attr("title", "Netwerk")
+					$(".facet.list[data-name='dynamic_s_characteristic'] h3").html("Karakteristiek").attr("title", "Karakteristiek")
+					$(".facet.list[data-name='dynamic_s_membership'] h3").html("Lidmaatschap").attr("title", "Lidmaatschap")
+
 					$(".facet.list[data-name='dynamic_s_periodical'] h3").html("Periodiek").attr("title", "Periodiek")
 					$(".facet.list[data-name='dynamic_s_combineddomain'] h3").html("(Sub)domein").attr("title", "(Sub)domein")
+
 
 					infoFields = [
 						".facet.list[data-name='dynamic_s_characteristic'] header .menu",
