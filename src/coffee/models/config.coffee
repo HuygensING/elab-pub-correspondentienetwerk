@@ -20,7 +20,7 @@ class Config extends Backbone.Model
 		entryTermPlural: 'entries'
 		searchPath: "api/search"
 		resultRows: 25
-		timbuctooBase: "http://acc.repository.huygens.knaw.nl/v2/"
+		timbuctooBase: "http://acc.repository.huygens.knaw.nl/v2.1/"
 		timbuctooPerson: "domain/cnwpersons/"
 		VRE_ID: "CNW"
 		isLetterFacetedSearchLoaded: false
