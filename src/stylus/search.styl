@@ -6,42 +6,57 @@
 		height calc(100% - 103px)
 		overflow-y auto
 		display none
-		
+
 		.faceted-search, .results
 			display inline-block
 			box-sizing border-box
 			vertical-align top
-			
+
 		.faceted-search
 			width 30%
-			
+
 			.facets-menu
 				.switch
 					display none
+
 			.text-search
 				.search-input
 					.search-icon
 						line-height 40px
-						
+
 						svg
 							width 12px
 							fill white
+
+				.menu
+					font-size 0.9em
+					ul.options > li
+						display inline-block
+
+						*
+							vertical-align middle
+
+						&:last-child
+							margin-left 20px
+
+						label
+							padding-left 4px
 			.facets
 				margin-top 20px
-				
+
 				.facet
 					margin-bottom 16px
-					
+
 					header
 						.menu
 							svg
 								width 12px
 								height 12px
 								margin-left 4px
-					
+
 					.body
 						margin-top 4px
-				
+
 				.facet.range .body .slider .dash
 					font-size 11px
 					margin-left 5px
@@ -50,27 +65,27 @@
 				.facet.range .body .slider .handle label.month-min
 					margin-left -24px
 					font-size 11px
-				
+
 				.facet.range .body .slider .handle input.month-max,
 				.facet.range .body .slider .handle label.month-max
 					margin-left 24px
 					font-size 11px
 
-		
+
 		.results
 			width 70%
-			
+
 			header
 				ul
 					button
 						line-height 1em
-			
+
 			ul.page
 				font-size 1.3em
-				
+
 				& > li
 					margin-top 6px
-					
+
 					.metadata
 						ul
 							margin 0
@@ -95,35 +110,35 @@
 										color #fff
 					&.fulltext
 						margin-top 20px
-						
+
 						ul.kwic
 							list-style none
 							padding-left 20px
-							
+
 						.kwic
 							font-size 0.9em
 							color #888
-							
+
 							& > li
 								margin-top 2px
-								
+
 								em
 									background defaultPurple
 									color white
 									padding 0 3px
 									border-radius 3px
 									font-style normal
-					
+
 					small
 						margin-left 6px
 						color #888
-					
+
 					i.fa
 						font-size 0.8em
 						color defaultPurple
 						margin-right 6px
-		
-		
+
+
 
 
 // @import './import/*'

@@ -76,14 +76,14 @@ class MainRouter extends Backbone.Router
 			if _.isObject arguments[0]
 				options = arguments[0]
 			else if _.isString arguments[0]
-				options = 
+				options =
 					entryId: arguments[0]
 					layerSlug: arguments[1]
 					annotation: arguments[2]
 
 			if entryView? and options? and options.hasOwnProperty('entryId')
 				entryView.navBar.navigateEntry options.entryId
-			
+
 			unless entryView?
 				entryView = new Views.Entry options
 				$('#main').append entryView.$el
@@ -106,7 +106,7 @@ class MainRouter extends Backbone.Router
 				popup = null
 				timer = null
 				facetNames = [
-					'metadata_afzender', 
+					'metadata_afzender',
 					'metadata_ontvanger',
 					'mv_metadata_correspondents'
 				]
@@ -130,9 +130,9 @@ class MainRouter extends Backbone.Router
 
 				removeHover = (selector) ->
 					searchView.$(selector).off "mouseenter", "mouseleave"
-					
+
 					if timer?
-						clearTimeout timer 
+						clearTimeout timer
 
 					if popup?
 						popup.destroy()
@@ -213,10 +213,13 @@ class MainRouter extends Backbone.Router
 							replace: replaceNamesWithLinks
 							createLink: (name) ->
 								"#{name} <i class=\"fa fa-external-link\" data-name=\"#{name}\" />"
+					textSearchOptions:
+						fuzzy: true
+						caseSensitive: true
 
 				@listenToOnce searchView, "change:results", ->
 					config.set "isLetterFacetedSearchLoaded", true
-	
+
 				@listenTo searchView, "change:results", (data) ->
 					config.set "facetedSearchResponse", data
 					for facetName in facetNames
@@ -247,7 +250,7 @@ class MainRouter extends Backbone.Router
 
 					for facetName, facetView of searchView.facets.views
 						do (facetName) =>
-							if !facetView.optionsView? 
+							if !facetView.optionsView?
 								return
 							@stopListening facetView.optionsView, "filter:finished"
 							@stopListening facetView.optionsView.collection, "sort"
@@ -258,7 +261,7 @@ class MainRouter extends Backbone.Router
 							@listenTo facetView.optionsView.collection, "sort", (collection, opts) =>
 								if(opts.silent == false)
 									addHover facetName
-						
+
 
 					searchView.$(".results ul.page li i.fa").on 'click', (ev) =>
 						ev.stopPropagation()
@@ -274,7 +277,7 @@ class MainRouter extends Backbone.Router
 
 				@listenTo Backbone, "search-person", (values, el) ->
 					r = 0
-					rotate = -> 
+					rotate = ->
 						if el?
 							el.style.transform = "rotate(" + r + "deg)"
 							r++
@@ -333,7 +336,7 @@ class MainRouter extends Backbone.Router
 						sortNumerically: "Sorteer op aantal"
 					termSingular: "correspondent"
 					termPlural: "correspondenten"
-					levels: config.get('personLevels')	
+					levels: config.get('personLevels')
 					levelDisplayNames:
 						dynamic_k_birthDate: "Geboortejaar"
 						dynamic_k_deathDate: "Sterfjaar"
@@ -502,7 +505,7 @@ class MainRouter extends Backbone.Router
 			unless annotationsView?
 				annotationsView = new Views.Annotations
 				$('.annotations-view').html annotationsView.$el
-				
+
 			switchView annotationsView
 
 	# ### Methods
@@ -525,7 +528,7 @@ class MainRouter extends Backbone.Router
 				options.highlightAnnotations = true
 
 			options.layerSlug = us.slugify(textLayer)
-		
+
 			url = "#{url}/#{options.layerSlug}"
 
 		@navigate url
@@ -533,7 +536,7 @@ class MainRouter extends Backbone.Router
 		# We have to manually trigger route, because we navigate without {trigger: true} and call @entry manually.
 		# The route listener is used to update the header.main menu.
 		@trigger 'route', 'entry'
-		
+
 		@entry options
 
 module.exports = new MainRouter()

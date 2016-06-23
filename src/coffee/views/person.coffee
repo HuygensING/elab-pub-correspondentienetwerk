@@ -16,7 +16,6 @@ class PersonView extends Backbone.View
 	className: 'person'
 
 	initialize: (@options) ->
-		console.log @options.id
 		@model = persons.get @options.id
 
 		@render()
@@ -70,7 +69,7 @@ class PersonView extends Backbone.View
 
 		leesMeer.find('button').hide()
 		leesMeer.find('ul').show()
-		
+
 	destroy: ->
 		@remove()
 
