@@ -1,17 +1,7 @@
 header
 	h1: a(href="/")
-	ul
-		li
-			a(href="/", name="entry") Editie
-		li
-			a(href="/search", name="showSearch") Zoek brieven
-		li
-			a(href="/person-search", name="showPersonSearch") Zoek correspondenten
-		if location.href.match(/\/draft/)
-			li
-				a(href="/annotations", name="annotationsIndex") Annotatieoverzicht
-
 	img(src="http://www.huygens.knaw.nl/wp-content/themes/BDboilerplate/images/logo.png", width="92px", height="66px")
+	
 #main
 	.faceted-search-placeholder.letter
 	.faceted-search-placeholder.person

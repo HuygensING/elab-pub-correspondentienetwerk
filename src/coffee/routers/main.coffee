@@ -214,8 +214,8 @@ class MainRouter extends Backbone.Router
 							createLink: (name) ->
 								"#{name} <i class=\"fa fa-external-link\" data-name=\"#{name}\" />"
 					textSearchOptions:
-						fuzzy: true
-						caseSensitive: true
+						fuzzy: false
+						caseSensitive: false
 
 				@listenToOnce searchView, "change:results", ->
 					config.set "isLetterFacetedSearchLoaded", true
