@@ -1,10 +1,13 @@
 .title!= replace(data.name, createLink)
+if sortParameters == null
+	- sortParameters = Object.keys(data.metadata)
+	
 .metadata
 	ul
-		each value, key in data.metadata
+		each key in sortParameters
 			li
 				span.key= key+': '
-				span.value= value
+				span.value= data.metadata[key]
 				
 if fulltext
 	//- .found= found
