@@ -48,11 +48,11 @@ module.exports = ->
 			$('header h1 a').text config.get('title')
 
 			# Load the menu from WordPress
-			$.get('../external/').done (menuDiv) => 
+			$.get('../external/').done (menuDiv) =>
 				menuDiv = $(menuDiv)
 				if menuDiv.hasClass 'menu-mainmenu-container'
 					a.setAttribute 'data-bypass', true for a in menuDiv.find 'a'
-					$('header > ul').after menuDiv
+					$('header > h1').after menuDiv
 
 			Backbone.history.start
 				root: rootURL
@@ -60,7 +60,7 @@ module.exports = ->
 
 			$(document).on 'click', 'a:not([data-bypass])', (e) ->
 				href = $(@).attr 'href'
-				
+
 				if href?
 					e.preventDefault()
 					Backbone.history.navigate href, trigger: true
