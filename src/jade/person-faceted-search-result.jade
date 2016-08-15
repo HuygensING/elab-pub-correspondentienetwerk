@@ -32,16 +32,16 @@
 					each val in data.combinedDomains
 						span= val
 
-		if data.memberships.length > 0
-			li(data-facetname="dynamic_s_membership")
-				span.key= 'Lidmaatschap: '
-				span.value
-					each val in data.memberships
-						span= val
-
 		if data.periodicals.length > 0
 			li(data-facetname="dynamic_s_periodical")
 				span.key= 'Periodiek: '
 				span.value
 					each val in data.periodicals
+						span= val
+
+		if data.memberships.length > 0
+			li(data-facetname="dynamic_s_membership")
+				span.key= 'Lidmaatschap: '
+				span.value
+					each val in data.memberships
 						span= val
