@@ -10,7 +10,7 @@ class Config extends Backbone.Model
 	getCdnUrl: ->
 		majorVersion = pck.version.split(".")[0]
 		"//cdn.huygens.knaw.nl/elaborate/publication/#{@get('templateName')}/v#{majorVersion}"
-	
+
 	defaults: ->
 		templateName: "collection"
 		annotationsIndexPath: "#{window.BASE_URL}data/annotation_index.json"
@@ -20,7 +20,7 @@ class Config extends Backbone.Model
 		entryTermPlural: 'entries'
 		searchPath: "api/search"
 		resultRows: 25
-		timbuctooBase: "http://acc.repository.huygens.knaw.nl/v2.1/"
+		timbuctooBase: "http://repository.huygens.knaw.nl/v2.1/"
 		timbuctooPerson: "domain/cnwpersons/"
 		VRE_ID: "CNW"
 		isLetterFacetedSearchLoaded: false
@@ -45,14 +45,14 @@ class Config extends Backbone.Model
 	initialize: ->
 		@on 'change:isLetterFacetedSearchLoaded', =>
 			Backbone.trigger "letter-faceted-search-loaded"
-			
+
 		# Set the page title. Use document.title to ensure IE compatibility.
 		@on 'change:title', =>
 			document.title = @get 'title'
 
 	parse: (data) ->
 		for entry in data.entries
-			entry._id = +entry.datafile.replace '.json', '' 
+			entry._id = +entry.datafile.replace '.json', ''
 			entry.thumbnails = data.thumbnails[entry._id]
 
 		tls = []
