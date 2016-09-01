@@ -48,7 +48,7 @@ module.exports = ->
 			$('header h1 a').text config.get('title')
 
 			# Load the menu from WordPress
-			$.get('../external/').done (menuDiv) =>
+			$.get('http://brieven-correspondenten-1900.huygens.knaw.nl/external/').done (menuDiv) =>
 				menuDiv = $(menuDiv)
 				if menuDiv.hasClass 'menu-mainmenu-container'
 					a.setAttribute 'data-bypass', true for a in menuDiv.find 'a'

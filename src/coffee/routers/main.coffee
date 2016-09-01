@@ -65,9 +65,12 @@ class MainRouter extends Backbone.Router
 				@showSearch false
 
 		@on 'route', (route, params) =>
-			$('header a.active').removeClass 'active'
-			a = $("header a[name=\"#{route}\"]")
-			a.addClass 'active' if a.length > 0
+			$('header li.menu-item.active').removeClass 'active'
+			doIt = () =>
+				$('#menu-item-14').addClass 'active' if route is 'showSearch'
+				$('#menu-item-40').addClass 'active' if route is 'showPersonSearch'
+
+			setTimeout doIt, 1000
 
 	entry: do ->
 		entryView = null

@@ -7,14 +7,15 @@
 		box-sizing border-box
 
 		h1
-			text-decoration none
 			font-size 3em
 			margin 0 0 5px 0
+			text-decoration none
 
 			a
-				font-family Samba
-				font-weight normal
-				color #B325A0
+				color defaultPurple
+				font-family "Roboto", sans-serif
+				font-size 0.9em
+				font-weight 100
 
 		img
 			position absolute
@@ -70,3 +71,30 @@
 
 						&[href="/edition"]
 							border-bottom: 2px solid #333;
+
+			.menu-item.active a
+				border-bottom 1px solid #333
+
+			.menu-item ul.sub-menu
+				display none
+
+				li
+					display block
+					width 320px
+					white-space nowrap
+					background white
+					padding-bottom 5px
+					padding-top 5px
+					padding-left 5px
+
+					&:first-child
+						padding-top 10px
+
+			#menu-item-12
+				position relative
+
+				&:hover ul.sub-menu
+					display block
+
+				ul.sub-menu
+					position absolute
