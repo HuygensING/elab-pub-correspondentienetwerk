@@ -123,6 +123,7 @@ class MainRouter extends Backbone.Router
 					"metadata_annotatie",
 					"metadata_taal",
 					"metadata_bijlage",
+					"metadata_herkomst_transcriptie",
 					"metadata_bewaarplaats",
 					"metadata_collectie",
 					"metadata_signatuur"
