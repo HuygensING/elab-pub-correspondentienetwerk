@@ -4,7 +4,6 @@ config = require './config'
 us = require 'underscore.string'
 
 class Entry extends Backbone.Model
-
 	annotationsIndex: {}
 	
 	url: ->

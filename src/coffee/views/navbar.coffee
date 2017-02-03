@@ -153,13 +153,18 @@ class NavBar extends Backbone.View
 		@remove()
 
 	activateThumb: (entryId, scroll = false) ->
+		if not entryId? and Backbone.history.fragment.slice(0,6) is 'entry/'
+			entryId = +Backbone.history.fragment.slice(6)
 
 		# If no entryId is given, use the current entry id.
 		entryId ?= entries.current.get("_id")
 
-		index = entries.indexOf entries.get(entryId)
-		if config.get('facetedSearchResponse') 
+		if config.get('facetedSearchResponse')?
 			index = config.get('facetedSearchResponse').attributes.ids.indexOf("" + entryId)
+			console.log('first', index)
+		else
+			index = entries.indexOf entries.findWhere({ _id: entryId })
+			console.log('second', index)
 
 		@loading = true
 		@loadThumbnailsAtIndex index, =>
