@@ -123,7 +123,9 @@ class NavBar extends Backbone.View
 
 		# Handle loading errors.
 		onError = ->
+			notFoundUrl = "#{config.getCdnUrl()}/images/not-found.svg"
 			img.src = notFoundUrl || ""
+			img.style.opacity = 1
 			imgDone()
 
 		# Remove event listeners and call the callback.
@@ -138,7 +140,7 @@ class NavBar extends Backbone.View
 		img.addEventListener 'error', onError
 
 		# Add the src to the image.
-		img.src = li.getAttribute('data-src') ? "" 
+		img.src = li.getAttribute('data-src') ? ""
 
 	# ### Events
 	events: ->
